@@ -2,3 +2,4 @@ node_modules
 voices.md
 secrets.js
 servicekey.json
+firebase-debug.log

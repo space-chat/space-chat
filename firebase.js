@@ -1,5 +1,6 @@
 const firebase = require('firebase')
 
+// // Initialize, config, and auth for firebase, app-wide
 var config = {
     apiKey: "AIzaSyCPXVLO8fKI5ALaSaaC9sGw_kr5IAXDSds",
     authDomain: "space-chat-166520.firebaseapp.com",
