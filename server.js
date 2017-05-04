@@ -21,10 +21,10 @@ app.get('/', (req, res, next) => {
 // send text to google translate API
 firebase.database().ref('messages').on('child_added', (snapshot) => {
   // The text to translate, e.g. "Hello, world!"
-  // const {text} = snapshot.val()
-  const text = "testing testing 123"
+  console.log('CATZZZZZZ')
+  const {text} = snapshot.val()
   // The target language, e.g. "ru"
-  const target = 'fr'
+  const target = 'id'
 
   if (!text) return
   console.log('translating "%s" into %s', text, target)
