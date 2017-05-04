@@ -11,10 +11,11 @@
 //     console.error(err);
 // });
 
+window.fire = require('./firebase')
 
 var msg = new SpeechSynthesisUtterance('Hi Fish.');
 // var msg = new SpeechSynthesisUtterance();
-window.speechSynthesis.onvoiceschanged = function () {
+ window.speechSynthesis.onvoiceschanged = function () {
     var voices = window.speechSynthesis.getVoices();
     msg.voice = voices[6]; // Note: some voices don't support altering params
     msg.voiceURI = 'native';

@@ -39,3 +39,4 @@ exports.helloWorld = functions.database.ref("/messages/{pushKey}/text").onWrite(
 
 
 // Translates some text into Russian
+
