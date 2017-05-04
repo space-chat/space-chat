@@ -1,6 +1,9 @@
 const express = require('express')
 const app = express()
 
+let magnitude = null; 
+let score = null; 
+
 // Imports the Google Cloud client library
 const language = require('@google-cloud/language')({
 	projectId: 'space-chat-166520',
@@ -24,6 +27,9 @@ app.get('/language', (req, res, next) => {
     console.log(`Text: ${text}`);
     console.log(`Sentiment score: ${sentiment.score}`);
     console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
+
+    magnitude = sentiment.magnitude; 
+    score = sentiment.score; 
   })
   .then(() => res.send('hello'))
   .catch((err) => {
@@ -31,6 +37,10 @@ app.get('/language', (req, res, next) => {
   });
 })
 
+module.exports = {
+  magnitude, 
+  score
+}
 
 app.listen(3000, function() {
     console.log("LISTENING ON PORT 3000")
