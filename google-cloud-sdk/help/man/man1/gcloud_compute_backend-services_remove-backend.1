@@ -1,0 +1,110 @@
+
+.TH "GCLOUD_COMPUTE_BACKEND\-SERVICES_REMOVE\-BACKEND" 1
+
+
+
+.SH "NAME"
+.HP
+gcloud compute backend\-services remove\-backend \- remove a backend from a backend service
+
+
+
+.SH "SYNOPSIS"
+.HP
+\f5gcloud compute backend\-services remove\-backend\fR \fIBACKEND_SERVICE_NAME\fR \fB\-\-instance\-group\fR=\fIINSTANCE_GROUP\fR [\fB\-\-global\fR\ |\ \fB\-\-region\fR=\fIREGION\fR] [\fB\-\-instance\-group\-region\fR=\fIINSTANCE_GROUP_REGION\fR\ |\ \fB\-\-instance\-group\-zone\fR=\fIINSTANCE_GROUP_ZONE\fR\ |\ \fB\-\-zone\fR=\fIZONE\fR] [\fIGLOBAL\-FLAG\ ...\fR]
+
+
+
+.SH "DESCRIPTION"
+
+\fBgcloud compute backend\-services remove\-backend\fR is used to remove a
+backend from a backend service.
+
+Before removing a backend, it is a good idea to "drain" the backend first. A
+backend can be drained by setting its capacity scaler to zero through 'gcloud
+compute backend\-services edit'.
+
+
+
+.SH "POSITIONAL ARGUMENTS"
+
+.RS 2m
+.TP 2m
+\fIBACKEND_SERVICE_NAME\fR
+The name of the backend service.
+
+
+.RE
+.sp
+
+.SH "REQUIRED FLAGS"
+
+.RS 2m
+.TP 2m
+\fB\-\-instance\-group\fR=\fIINSTANCE_GROUP\fR
+The name or URI of a Google Cloud Instance Group.
+
+
+.RE
+.sp
+
+.SH "OPTIONAL FLAGS"
+
+At most one of these may be specified:
+
+.RS 2m
+.TP 2m
+\fB\-\-global\fR
+If provided, it is assumed the backend service is global.
+
+.TP 2m
+\fB\-\-region\fR=\fIREGION\fR
+The region of the backend service to operate on. Overrides the default
+\fBcompute/region\fR property value for this command invocation.
+
+.RE
+.sp
+At most one of these may be specified:
+
+.RS 2m
+.TP 2m
+\fB\-\-instance\-group\-region\fR=\fIINSTANCE_GROUP_REGION\fR
+The region of the instance group to remove from the backend service. If not
+specified, you will be prompted to select a region.
+
+A list of regions can be fetched by running:
+
+.RS 2m
+$ gcloud compute regions list
+.RE
+
+Overrides the default \fBcompute/region\fR property value for this command
+invocation.
+
+.TP 2m
+\fB\-\-instance\-group\-zone\fR=\fIINSTANCE_GROUP_ZONE\fR
+The zone of the instance group to remove from the backend service. If not
+specified, you will be prompted to select a zone.
+
+A list of zones can be fetched by running:
+
+.RS 2m
+$ gcloud compute zones list
+.RE
+
+Overrides the default \fBcompute/zone\fR property value for this command
+invocation.
+
+.TP 2m
+\fB\-\-zone\fR=\fIZONE\fR
+The zone of the instance group to remove from the backend service. DEPRECATED,
+use \-\-instance\-group\-zone flag instead. Overrides the default
+\fBcompute/zone\fR property value for this command invocation.
+
+
+.RE
+.sp
+
+.SH "GLOBAL FLAGS"
+
+Run \fB$ gcloud help\fR for a description of flags available to all commands.

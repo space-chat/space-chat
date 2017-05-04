@@ -1,0 +1,61 @@
+
+.TH "GCLOUD_SQL_INSTANCES_RESTORE\-BACKUP" 1
+
+
+
+.SH "NAME"
+.HP
+gcloud sql instances restore\-backup \- restores a backup of a Cloud SQL instance
+
+
+
+.SH "SYNOPSIS"
+.HP
+\f5gcloud sql instances restore\-backup\fR \fIINSTANCE\fR \fB\-\-due\-time\fR=\fIDUE_TIME\fR, \fB\-d\fR \fIDUE_TIME\fR [\fB\-\-async\fR] [\fIGLOBAL\-FLAG\ ...\fR]
+
+
+
+.SH "DESCRIPTION"
+
+Restores a backup of a Cloud SQL instance.
+
+
+
+.SH "POSITIONAL ARGUMENTS"
+
+.RS 2m
+.TP 2m
+\fIINSTANCE\fR
+Cloud SQL instance ID.
+
+
+.RE
+.sp
+
+.SH "REQUIRED FLAGS"
+
+.RS 2m
+.TP 2m
+\fB\-\-due\-time\fR=\fIDUE_TIME\fR, \fB\-d\fR \fIDUE_TIME\fR
+The time when this run was due to start in RFC 3339 format, for example
+2012\-11\-15T16:19:00.094Z.
+
+
+.RE
+.sp
+
+.SH "OPTIONAL FLAGS"
+
+.RS 2m
+.TP 2m
+\fB\-\-async\fR
+Display information about the operation in progress, without waiting for the
+operation to complete.
+
+
+.RE
+.sp
+
+.SH "GLOBAL FLAGS"
+
+Run \fB$ gcloud help\fR for a description of flags available to all commands.
