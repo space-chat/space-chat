@@ -14,7 +14,10 @@ var config = {
 firebase.initializeApp(config);
 
 // Auto-authenticate
-firebase.auth().onAuthStateChanged(user => user || firebase.auth().signInAnonymously())
+firebase.auth().onAuthStateChanged(user => {
+  console.log('USER: ', user && user.uid)
+  user || firebase.auth().signInAnonymously()
+})
 
 module.exports = firebase
 

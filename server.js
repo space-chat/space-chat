@@ -1,5 +1,3 @@
-// const express = require('express')
-// const app = express()
 const bodyParser = require('body-parser')
 const firebase = require('./firebase')
 
@@ -12,48 +10,79 @@ const isConnected = firebase.database().ref(".info/connected")
 isConnected.on('value', snap => console.log('Firebase',
   snap.val() ? 'Connected' : 'Disconnected'))
 
-// // body parsing middleware
-// app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(bodyParser.json()) // for AJAX requests
 
-// app.use(express.static(__dirname + '/public'))
-
-// app.get('/', (req, res, next) => {
-//   res.sendFile('index.html')
-// })
-
-// send text to google translate API
-firebase.database().ref('messages').on('child_added', (snapshot) => {
-  // The text to translate, e.g. "Hello, world!"
-  console.log('CATZZZZZZ')
+const translateMessage = snapshot => {
+  // Text to translate, e.g. "Hello, world!"
   const {text} = snapshot.val()
-  // The target language, e.g. "ru"
+  // Two letters to represent target language, e.g. "ru"
   const target = 'id'
-
+  // If no 'text' key, ignore this entry, exit the function
   if (!text) return
+  
+  // Translates the text into the target language
+  // typeof text: 'text1' || [text1, text2, ...]
   console.log('translating "%s" into %s', text, target)
-
-  // Translates the text into the target language. "text" can be a string for
-  // translating a single piece of text, or an array of strings for translating
-  // multiple texts.
-  translate.translate(text, target)
+  return translate.translate(text, target)
     .then((results) => {
+      // Grabs relevant value from arr returned by API
       let translations = results[0]
-      translations = Array.isArray(translations) ? translations : [translations]
-
-      console.log('Translations:')
-      translations.forEach((translation, i) => {
-        console.log(`${text[i]} => (${target}) ${translation}`)
-      })
-      return snapshot.ref.parent.push({
-        type: 'TRANSLATION',
-        [target]: translations})
+      // Standardizes value as array
+      translations = Array.isArray(translations) 
+        ? translations 
+        : [translations]
+      // Pushes new entry to database
+      return Promise.all(
+        [snapshot.ref.parent.push({
+          type: 'TRANSLATION',
+          done: true,
+          [target]: translations}),
+        snapshot.ref.update({ done: true })])
     })
     .catch((err) => {
       console.error('ERROR:', err)
     })
+}
+
+// Processes all unprocessed messages in current room
+const processRoom = ref => {
+  // Finds all messages not yet translated
+  ref.orderByChild('done')
+    .equalTo(null)
+    // Sets temporary listener
+    .once('value')
+    // Sends messages to google translate API
+    .then(snap => {
+      const val = snap.val()
+      // console.log(val)
+      return Promise.all(
+        Object.keys(val)
+          // Sends fake snapshot to translateMessage fxn
+          .map(key => translateMessage({
+            ref: snap.ref.child(key),
+            val() { return val[key] }
+          }))
+        )
+    })
+}
+
+const onceWeAreLoggedIn = new Promise((resolve, reject) => {
+  const unsub = firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      resolve(user)
+      unsub()
+    }
+  })
 })
 
-// app.listen(3000, function () {
-//     console.log('LISTENING ON PORT 3000')
-// })
+// Pings ghost server hosted on Heroku
+require('express')()
+  .get('/:roomId', (req, res) =>
+    onceWeAreLoggedIn
+      .then(() => processRoom(
+        firebase.database().ref('rooms')
+          .child(req.params.roomId)
+      ))
+      .then(() => res.send('ok')))
+  .listen(process.env.PORT || 9999)
+
+
