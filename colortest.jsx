@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 
 const colortest = ({score, magnitude}) => {
 
+    console.log('score is', score, 'mag is', magnitude)
+
     const red = Math.floor(255 * score).toString(16)
     const green = Math.floor(255 * magnitude).toString(16)
     const color = `#${red}${green}00`
