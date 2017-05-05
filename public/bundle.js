@@ -1,5 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-const firebase = require('firebase')
+"use strict";
+
+var firebase = require('firebase');
 
 // // Initialize, config, and auth for firebase, app-wide
 var config = {
@@ -14,12 +16,11 @@ var config = {
 firebase.initializeApp(config);
 
 // Auto-authenticate
-firebase.auth().onAuthStateChanged(user => {
-  console.log('USER: ', user && user.uid)
-  user || firebase.auth().signInAnonymously()
-})
+firebase.auth().onAuthStateChanged(function (user) {
+    return user || firebase.auth().signInAnonymously();
+});
 
-module.exports = firebase
+module.exports = firebase;
 
 },{"firebase":6}],2:[function(require,module,exports){
 window.fire = require('./firebase')
