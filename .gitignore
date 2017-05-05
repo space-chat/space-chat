@@ -1,3 +1,7 @@
 node_modules
 google-cloud-sdk
 servicekey.json
+voices.md
+secrets.js
+servicekey.json
+firebase-debug.log

@@ -9,6 +9,7 @@
         "source": "**",
         "destination": "/index.html"
       }
-    ]
+    ],
+    "public": "public"
   }
 }

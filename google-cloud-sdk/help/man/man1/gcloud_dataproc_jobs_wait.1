@@ -1,0 +1,47 @@
+
+.TH "GCLOUD_DATAPROC_JOBS_WAIT" 1
+
+
+
+.SH "NAME"
+.HP
+gcloud dataproc jobs wait \- view the output of a job as it runs or after it completes
+
+
+
+.SH "SYNOPSIS"
+.HP
+\f5gcloud dataproc jobs wait\fR \fIJOB_ID\fR [\fIGLOBAL\-FLAG\ ...\fR]
+
+
+
+.SH "DESCRIPTION"
+
+View the output of a job as it runs or after it completes.
+
+
+
+.SH "POSITIONAL ARGUMENTS"
+
+.RS 2m
+.TP 2m
+\fIJOB_ID\fR
+The ID of the job to wait.
+
+
+.RE
+.sp
+
+.SH "GLOBAL FLAGS"
+
+Run \fB$ gcloud help\fR for a description of flags available to all commands.
+
+
+
+.SH "EXAMPLES"
+
+To view the output of a job as it runs, run:
+
+.RS 2m
+$ gcloud dataproc jobs wait job_id
+.RE

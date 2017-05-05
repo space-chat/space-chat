@@ -1,0 +1,354 @@
+
+.TH "GCLOUD_TOPIC_FORMATS" 1
+
+
+
+.SH "NAME"
+.HP
+gcloud topic formats \- resource formats supplementary help
+
+
+
+.SH "DESCRIPTION"
+
+Most \fBgcloud\fR commands return a list of resources on success. By default
+they are pretty\-printed on the standard output. The
+\fB\-\-format=\fR\fINAME\fR[\fIATTRIBUTES\fR]\fB(\fR\fIPROJECTION\fR\fB)\fR flag
+changes the default output:
+
+.RS 2m
+.TP 2m
+\fINAME\fR
+The format name.
+.TP 2m
+\fIATTRIBUTES\fR
+Format specific attributes. Resource formats are described in detail below.
+.TP 2m
+\fIPROJECTION\fR
+A list of resource keys that selects the data listed. For details run $ gcloud
+topic projections.
+.TP 2m
+\fIresource keys\fR
+Keys are names for resource resource items. For details run $ gcloud topic
+resource\-keys. Most \fBgcloud\fR \fBlist\fR commands have a
+\fB\-\-filter=\fR\fIEXPRESSION\fR flag that selects resources to be listed. For
+details run $ gcloud topic filters.
+
+
+.RE
+.sp
+
+.SH "Formats"
+
+A format expression has 3 parts:
+
+.RS 2m
+.TP 2m
+\fINAME\fR
+\fIname\fR
+.TP 2m
+\fIATTRIBUTES\fR
+\fB[\fR [no\-]\fIattribute\-name\fR[=\fIvalue\fR] [, ... ] \fB]\fR
+.TP 2m
+\fIPROJECTION\fR
+\fB(\fR \fIresource\-key\fR [, ...] \fB)\fR \fINAME\fR is required,
+\fIATTRIBUTES\fR are optional, and \fIPROJECTIONS\fR may be required for some
+formats. Unknown attribute names are silently ignored.
+
+.RE
+.sp
+Each \fBgcloud\fR \fBlist\fR command has a default format expression. The
+\fB\-\-format\fR flag can alter or replace the default. For example,
+
+.RS 2m
+\-\-format='[box]'
+.RE
+
+adds box decorations to a default table, and
+
+.RS 2m
+\-\-format=json
+.RE
+
+lists the resource in \fBjson\fR format.
+
+The formats and format specific attributes are:
+
+.RS 2m
+.TP 2m
+\fBconfig\fR
+A dictionary of dictionaries in config style.
+
+The format attributes are:
+
+.RS 2m
+.TP 2m
+\fBexport\fR
+Display the dictionary as a list of system specific environment export commands.
+.TP 2m
+\fBunset\fR
+Display the dictionary as a list of system specific environment unset commands.
+
+.RE
+.sp
+.TP 2m
+\fBcsv\fR
+Comma Separated Values (http://www.ietf.org/rfc/rfc4180.txt) with no keys. This
+format requires a projection to define the values to be printed.
+
+The format attributes are:
+
+.RS 2m
+.TP 2m
+\fBdelimiter="string"\fR
+The string printed between list value items, default ";".
+.TP 2m
+\fBno\-heading\fR
+Disables the initial key name heading record.
+.TP 2m
+\fBseparator="string"\fR
+The string printed between values, default ",".
+.TP 2m
+\fBterminator="string"\fR
+The string printed after each record, default "\en" (newline).
+
+.RE
+.sp
+.TP 2m
+\fBdefault\fR
+An alias for the \fByaml\fR format.
+
+.TP 2m
+\fBdiff\fR
+A unified diff of the first two projection columns.
+
+The format attributes are:
+
+.RS 2m
+.TP 2m
+\fBformat\fR
+The format of the diffed resources. Each resource is converted to this format
+and the diff of the converted resources is displayed. The default is
+\'flattened'.
+
+.RE
+.sp
+.TP 2m
+\fBdisable\fR
+Disables formatted output and does not consume the resources.
+
+.TP 2m
+\fBflattened\fR
+A flattened tree. Each output line contains one \fBkey\fR:\fBvalue\fR pair.
+
+The format attributes are:
+
+.RS 2m
+.TP 2m
+\fBno\-pad\fR
+Don't print space after the separator. The default adjusts the space to align
+the values into the same output column. Use \fBno\-pad\fR for comparing resource
+outputs.
+.TP 2m
+\fBseparator=\fISEPARATOR\fR\fR
+Print \fISEPARATOR\fR between the \fBkey\fR and \fBvalue\fR. The default is ":
+".
+
+.RE
+.sp
+.TP 2m
+\fBget\fR
+Equivalent to the \fBvalue[no\-transforms]\fR format. Default transforms are not
+applied to the displayed values.
+
+.TP 2m
+\fBjson\fR
+JSON (http://www.json.org), JavaScript Object Notation.
+
+The format attributes are:
+
+.RS 2m
+.TP 2m
+\fBno\-undefined\fR
+Does not display resource data items with null values.
+
+.RE
+.sp
+.TP 2m
+\fBlist\fR
+An ordered list of items.
+
+The format attributes are:
+
+.RS 2m
+.TP 2m
+\fBalways\-display\-title\fR
+Display the title even if there are no records.
+.TP 2m
+\fBcompact\fR
+Display all items in a record on one line.
+
+.RE
+.sp
+.TP 2m
+\fBmulti\fR
+Each projection key must have a subformat defined by the :format=FORMAT\-STRING
+attribute. For example,
+
+.RS 2m
+`\-\-format="multi(data:format=json, info:format='table[box](a, b, c)')"`
+.RE
+
+formats the \fBdata\fR field as JSON and the \fBinfo\fR field as a boxed table.
+
+.TP 2m
+\fBnone\fR
+Disables formatted output and consumes the resources.
+
+.TP 2m
+\fBobject\fR
+Bypasses JSON\-serialization and prints the object representation of each
+resource.
+
+The format attributes are:
+
+.RS 2m
+.TP 2m
+\fBseparator\fR
+The line printed between resources.
+.TP 2m
+\fBterminator\fR
+The line printed after each resource.
+
+.RE
+.sp
+.TP 2m
+\fBtable\fR
+Aligned left\-adjusted columns with optional title, column headings and sorting.
+This format requires a projection to define the table columns. The default
+column headings are the disambiguated right hand components of the column keys
+in ANGRY_SNAKE_CASE. For example, the projection keys (first.name, last.name)
+produce the default column heading ('NAME', 'LAST_NAME').
+
+If \fB\-\-page\-size\fR=\fIN\fR is specified then output is grouped into tables
+with at most \fIN\fR rows. Headings, alignment and sorting are done per\-page.
+The title, if any, is printed before the first table.
+
+The format attributes are:
+
+.RS 2m
+.TP 2m
+\fBbox\fR
+Prints a box around the entire table and each cell, including the title if any.
+.TP 2m
+\fBformat=\fIFORMAT\-STRING\fR\fR
+Prints the key data indented by 4 spaces using \fIFORMAT\-STRING\fR which can
+reference any of the supported formats.
+.TP 2m
+\fBno\-heading\fR
+Disables the column headings.
+.TP 2m
+\fBoptional\fR
+Does not display the column if it is empty.
+.TP 2m
+\fBpad=N\fR
+Sets the column horizontal pad to \fIN\fR spaces. The default is 1 for box, 2
+otherwise.
+.TP 2m
+\fBtitle=\fITITLE\fR\fR
+Prints a centered \fITITLE\fR at the top of the table, within the table box if
+\fBbox\fR is enabled.
+
+.RE
+.sp
+.TP 2m
+\fBtext\fR
+An alias for the \fBflattened\fR format.
+
+.TP 2m
+\fBvalue\fR
+CSV with no heading and <TAB> separator instead of <COMMA>. Used to retrieve
+individual resource values. This format requires a projection to define the
+value(s) to be printed.
+
+The format attributes are:
+
+.RS 2m
+.TP 2m
+\fBdelimiter="string"\fR
+The string printed between list value items, default ";".
+.TP 2m
+\fBquote\fR
+"..." quote values that contain delimiter, separator or terminator strings.
+.TP 2m
+\fBseparator="string"\fR
+The string printed between values, default "\et" (tab).
+.TP 2m
+\fBterminator="string"\fR
+The string printed after each record, default "\en" (newline).
+
+.RE
+.sp
+.TP 2m
+\fByaml\fR
+YAML (http://www.yaml.org), YAML ain't markup language.
+
+The format attributes are:
+
+.RS 2m
+.TP 2m
+\fBnull=string\fR
+Display string instead of \f5null\fR for null/None values.
+.TP 2m
+\fBno\-undefined\fR
+Does not display resource data items with null values.
+
+.RE
+.RE
+.sp
+All formats have these attributes:
+
+.RS 2m
+.TP 2m
+\fBdisable\fR
+Disables formatted output and does not consume the resources.
+.TP 2m
+\fBprivate\fR
+Disables log file output. Use this for sensitive resource data that should not
+be displayed in log files. Explicit command line IO redirection overrides this
+attribute.
+
+
+.RE
+.sp
+
+.SH "EXAMPLES"
+
+List a table of compute instance resources sorted by \fBname\fR with box
+decorations and title \fBInstances\fR:
+
+.RS 2m
+$ gcloud compute instances list \e
+    \-\-format='table[box,title=Instances](name:sort=1,
+ zone:title=zone, status)'
+.RE
+
+List the disk interfaces for all compute instances as a compact comma separated
+list:
+
+.RS 2m
+$ gcloud compute instances list \e
+    \-\-format='value(disks[].interface.list())'
+.RE
+
+List the URIs for all compute instances:
+
+.RS 2m
+$ gcloud compute instances list \-\-format='value(uri())'
+.RE
+
+List the project authenticated user email address:
+
+.RS 2m
+$ gcloud info \-\-format='value(config.account)'
+.RE

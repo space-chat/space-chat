@@ -1,0 +1,71 @@
+
+.TH "GCLOUD_CONTAINER_NODE\-POOLS_DELETE" 1
+
+
+
+.SH "NAME"
+.HP
+gcloud container node\-pools delete \- delete an existing node pool in a running cluster
+
+
+
+.SH "SYNOPSIS"
+.HP
+\f5gcloud container node\-pools delete\fR \fINAME\fR [\fB\-\-cluster\fR=\fICLUSTER\fR] [\fB\-\-no\-wait\fR] [\fB\-\-zone\fR=\fIZONE\fR,\ \fB\-z\fR\ \fIZONE\fR] [\fIGLOBAL\-FLAG\ ...\fR]
+
+
+
+.SH "DESCRIPTION"
+
+\fBgcloud container node\-pools delete\fR deletes a node pool from a Google
+Container Engine cluster.
+
+
+
+.SH "POSITIONAL ARGUMENTS"
+
+.RS 2m
+.TP 2m
+\fINAME\fR
+The name of the node pool to delete.
+
+
+.RE
+.sp
+
+.SH "FLAGS"
+
+.RS 2m
+.TP 2m
+\fB\-\-cluster\fR=\fICLUSTER\fR
+The cluster from which to delete the node pool. Overrides the default
+\fBcontainer/cluster\fR property value for this command invocation.
+
+.TP 2m
+\fB\-\-wait\fR
+Poll the operation for completion after issuing a delete request. Enabled by
+default, use \fB\-\-no\-wait\fR to disable.
+
+.TP 2m
+\fB\-\-zone\fR=\fIZONE\fR, \fB\-z\fR \fIZONE\fR
+The compute zone (e.g. us\-central1\-a) for the cluster. Overrides the default
+\fBcompute/zone\fR property value for this command invocation.
+
+
+.RE
+.sp
+
+.SH "GLOBAL FLAGS"
+
+Run \fB$ gcloud help\fR for a description of flags available to all commands.
+
+
+
+.SH "EXAMPLES"
+
+To delete the "node\-pool\-1" node pool from the cluster "sample\-cluster", run:
+
+.RS 2m
+$ gcloud container node\-pools delete node\-pool\-1 \e
+    \-\-cluster=sample\-cluster
+.RE

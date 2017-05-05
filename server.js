@@ -1,48 +1,51 @@
-const express = require('express')
-const app = express()
-
-let magnitude = null; 
-let score = null; 
+const bodyParser = require('body-parser')
+const firebase = require('./firebase')
 
 // Imports the Google Cloud client library
-const language = require('@google-cloud/language')({
-	projectId: 'space-chat-166520',
-  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
-})
+const Translate = require('@google-cloud/translate')
+// Instantiates a client
+const translate = Translate()
 
-app.use(express.static(__dirname))
+// body parsing middleware
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json()) // for AJAX requests
+
+app.use(express.static(__dirname + '/public'))
 
 app.get('/', (req, res, next) => {
-    res.sendfile('index.html')
+  res.sendFile('index.html')
 })
 
-app.get('/language', (req, res, next) => {
-	const text = 'Hello, world!';
-	const content = language.document({ content: text })
+// send text to google translate API
+firebase.database().ref('messages').on('child_added', (snapshot) => {
+  // The text to translate, e.g. "Hello, world!"
+  // const {text} = snapshot.val()
+  const text = "testing testing 123"
+  // The target language, e.g. "ru"
+  const target = 'fr'
 
-	content.detectSentiment(text)
-  	.then((results) => {
-    const sentiment = results[0];
+  if (!text) return
+  console.log('translating "%s" into %s', text, target)
 
-    console.log(`Text: ${text}`);
-    console.log(`Sentiment score: ${sentiment.score}`);
-    console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
+  // Translates the text into the target language. "text" can be a string for
+  // translating a single piece of text, or an array of strings for translating
+  // multiple texts.
+  translate.translate(text, target)
+    .then((results) => {
+      let translations = results[0]
+      translations = Array.isArray(translations) ? translations : [translations]
 
-    magnitude = sentiment.magnitude; 
-    score = sentiment.score; 
-  })
-  .then(() => res.send('hello'))
-  .catch((err) => {
-    console.error('ERROR:', err);
-  });
+      console.log('Translations:')
+      translations.forEach((translation, i) => {
+        console.log(`${text[i]} => (${target}) ${translation}`)
+      })
+      return snapshot.ref.update({[target]: translations})
+    })
+    .catch((err) => {
+      console.error('ERROR:', err)
+    })
 })
 
-module.exports = {
-  magnitude, 
-  score
-}
-
-app.listen(3000, function() {
-    console.log("LISTENING ON PORT 3000")
+app.listen(3000, function () {
+    console.log('LISTENING ON PORT 3000')
 })
-

@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "watchify index.js -o bundle.js -v",
-    "start": "nodemon server.js",
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "watchify index.js --extension=.jsx --verbose -o public/bundle.js",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -27,12 +27,34 @@
     "webpack": "^2.5.0"
   },
   "dependencies": {
-    "@google-cloud/language": "^0.10.3",
+    "@google-cloud/translate": "^0.8.1",
     "aframe": "^0.5.0",
+    "babelify": "^7.3.0",
+    "body-parser": "^1.17.1",
+    "browserify": "^14.3.0",
+    "express": "^4.15.2",
+    "firebase": "^3.9.0",
+    "google-translate-api": "^2.2.2",
+    "http-server": "^0.10.0", 
+    "@google-cloud/language": "^0.10.3",
     "babel-loader": "^7.0.0",
     "babel-preset-stage-2": "^6.24.1",
-    "browserify": "^14.3.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
-  }
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ], 
+    "extension": [
+      "jsx"
+    ]
+  }, 
+  "babel": {
+    "presets": [
+        "react",
+        "es2015",
+        "stage-2"
+    ]
+}
 }
