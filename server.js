@@ -1,5 +1,5 @@
-const express = require('express')
-const app = express()
+// const express = require('express')
+// const app = express()
 const bodyParser = require('body-parser')
 const firebase = require('./firebase')
 
@@ -8,15 +8,19 @@ const Translate = require('@google-cloud/translate')
 // Instantiates a client
 const translate = Translate()
 
-// body parsing middleware
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json()) // for AJAX requests
+const isConnected = firebase.database().ref(".info/connected")
+isConnected.on('value', snap => console.log('Firebase',
+  snap.val() ? 'Connected' : 'Disconnected'))
 
-app.use(express.static(__dirname + '/public'))
+// // body parsing middleware
+// app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.json()) // for AJAX requests
 
-app.get('/', (req, res, next) => {
-  res.sendFile('index.html')
-})
+// app.use(express.static(__dirname + '/public'))
+
+// app.get('/', (req, res, next) => {
+//   res.sendFile('index.html')
+// })
 
 // send text to google translate API
 firebase.database().ref('messages').on('child_added', (snapshot) => {
@@ -41,13 +45,15 @@ firebase.database().ref('messages').on('child_added', (snapshot) => {
       translations.forEach((translation, i) => {
         console.log(`${text[i]} => (${target}) ${translation}`)
       })
-      return snapshot.ref.update({[target]: translations})
+      return snapshot.ref.parent.push({
+        type: 'TRANSLATION',
+        [target]: translations})
     })
     .catch((err) => {
       console.error('ERROR:', err)
     })
 })
 
-app.listen(3000, function () {
-    console.log('LISTENING ON PORT 3000')
-})
+// app.listen(3000, function () {
+//     console.log('LISTENING ON PORT 3000')
+// })
