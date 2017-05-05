@@ -53,7 +53,7 @@ const processRoom = ref => {
     // Sends messages to google translate API
     .then(snap => {
       const val = snap.val()
-      // console.log(val)
+      console.log(val)
       return Promise.all(
         Object.keys(val)
           // Sends fake snapshot to translateMessage fxn
