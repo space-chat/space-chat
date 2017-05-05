@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 
-const colortest = () => {
-
 const colortest = ({score, magnitude}) => {
 
     const red = Math.floor(255 * score).toString(16)
