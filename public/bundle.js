@@ -51,9 +51,7 @@ var colortest = function colortest(_ref) {
 exports.default = colortest;
 
 },{"react":190,"react-dom":39}],2:[function(require,module,exports){
-"use strict";
-
-var firebase = require('firebase');
+const firebase = require('firebase')
 
 // // Initialize, config, and auth for firebase, app-wide
 var config = {
@@ -68,11 +66,9 @@ var config = {
 firebase.initializeApp(config);
 
 // Auto-authenticate
-firebase.auth().onAuthStateChanged(function (user) {
-    return user || firebase.auth().signInAnonymously();
-});
+firebase.auth().onAuthStateChanged(user => user || firebase.auth().signInAnonymously())
 
-module.exports = firebase;
+module.exports = firebase
 
 },{"firebase":30}],3:[function(require,module,exports){
 'use strict';
