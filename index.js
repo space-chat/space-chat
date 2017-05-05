@@ -15,6 +15,9 @@ window.fire = require('./firebase')
 // const projectId = 'YOUR_PROJECT_ID';
 
 
+// axios.get('/:roomId')
+//   .then(translations => translations.map(speakMessage())
+
 
 // exports.textToSpeech = functions.database.ref("/messages/{pushKey}/text").onWrite(event => {
 //     const original = event.data.val();
