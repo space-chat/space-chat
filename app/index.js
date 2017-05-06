@@ -1,12 +1,10 @@
-// window.fire = require('./firebase')
-// import firebase from './firebase'
+window.fire = require('../firebase')
+import firebase from '../firebase'
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Scene from './scene'
-import ChatBox from './chatbox'
+import {render} from 'react-dom'
+import ChatRoom from './ChatRoom'
 
-ReactDOM.render(
-  <Scene />,
-  <ChatBox />,
+render(
+<ChatRoom />,
   document.getElementById("app")
 )

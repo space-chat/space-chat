@@ -1,27 +1,29 @@
 import React from 'react';
 
-export default function ChatBox () {
+export default function ChatBox (props) {
   return (
-    <form>
+    <form onSubmit={props.handleSubmit}>
 
 	  {/* select input language */}
-      <select name="input-language">
+    <label htmlFor="">Input</label>
+      <select onChange={props.handleInputChange} name="input-language" >
         {/* can we loop through something here? */}
-        <option value="english">English</option>
-  	    <option value="spanish">Spanish</option>
+        <option value="en">English</option>
+  	    <option value="es">Spanish</option>
       </select>
 
 	  {/* select output language */}
-      <select name="output-language">
-	    <option value="english">English</option>
-	    <option value="spanish">Spanish</option>
+        <label htmlFor="">Output</label>
+      <select onChange={props.handleOutputChange} name="output-language">
+	    <option value="en">English</option>
+	    <option value="es">Spanish</option>
       </select>
 
 	  {/* message text area */}
-      <textarea name="text-input">Type your message here</textarea>
+      <textarea value={props.text} onChange={props.handleTextChange} name="text-input">Type your message here</textarea>
 
 	  {/* 'send' button */}
-      <button name="submit">Send</button>
+      <button  name="submit">Send</button>
 
     </form>
   )

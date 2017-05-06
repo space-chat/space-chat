@@ -54,6 +54,7 @@ isConnected.on('value', snap => console.log('Firebase',
 //     })
 // }
 
+
 const translateMessage = snapshot => {
   // Text to translate, e.g. "Hello, world!"
   const {text} = snapshot.val()
@@ -117,15 +118,35 @@ const onceWeAreLoggedIn = new Promise((resolve, reject) => {
   })
 })
 
+// const processIncomingMessage = data => {
+  
+// }
+
 // Pings ghost server hosted on Heroku
 require('express')()
-  .get('/:roomId', (req, res) =>
+.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:5000")
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With")
+  if ("OPTIONS" == req.method) {
+    res.sendStatus(200); 
+  } else {
+    next()
+  }
+})
+.use(bodyParser.json())
+.use(bodyParser.urlencoded({extended: false}))
+  .post('/:roomId', (req, res) => {
+    console.log("REQ", req.body)
     onceWeAreLoggedIn
+    .then(() => firebase.database().ref('rooms').child(req.params.roomId).push({
+      text: req.body.text
+    }))
       .then(() => processRoom(
         firebase.database().ref('rooms')
           .child(req.params.roomId)
       ))
-      .then(() => res.send('ok')))
+      .then(() => res.send(""))})
   .listen(process.env.PORT || 9999)
 
 
