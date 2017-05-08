@@ -1,1 +1,0 @@
-console.error("Error: Cannot find module '/Users/elsabrown/graceHopper/02-SeniorPhase/capstone/index.js' from '/Users/elsabrown/graceHopper/02-SeniorPhase/capstone'");
