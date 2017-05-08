@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "watchify index.js -o bundle.js -v",
-    "start": "http-server -c-1"
+    "watch": "watchify index.js -o public/bundle.js -v",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,13 @@
     "watchify": "^3.9.0"
   },
   "dependencies": {
+    "@google-cloud/translate": "^0.8.1",
     "aframe": "^0.5.0",
+    "body-parser": "^1.17.1",
     "browserify": "^14.3.0",
+    "express": "^4.15.2",
+    "firebase": "^3.9.0",
+    "google-translate-api": "^2.2.2",
     "http-server": "^0.10.0"
   }
 }
