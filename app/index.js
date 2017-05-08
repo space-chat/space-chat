@@ -1,10 +1,8 @@
-window.fire = require('../firebase')
-import firebase from '../firebase'
 import React from 'react'
 import {render} from 'react-dom'
-import ChatRoom from './ChatRoom'
+import AppContainer from './AppContainer.jsx'
 
 render(
-<ChatRoom />,
-  document.getElementById("app")
+  <AppContainer />,
+    document.getElementById("app")
 )
