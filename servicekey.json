@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "space-chat-166520",
+  "private_key_id": "79e940ffc8a89fd65109d9dcb01bafad92447434",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxortXIeyKcgI+\nwKgypDFzBju56+f4d/cqltOGUOX43G8504DZwvikDDFetaRMGGBfqVhy4IVgShwL\neopkYcnbXfiTiTrl32fwWcF+pfw3cK3uYAuYNvgqEdfgnGxgR8ryVXvYxPv87pPS\n2rqsJiZU8pShbnLHPtgLluEH5DdsiDEeND+qAghS0w61U/NLsRN9jVThCMr71YOx\nvT/rCGCohKDZoh41Uj23QncGlMMWKiQo9gNuGbZeWNZ79H7aoolsk/XO6JOqslis\n1BuXteECyQccEJPQVxKKmN8KsjO0LWjY3imiOa0z1T4K2WyvQ302xe0ry7kfimR4\nAj0RjE4FAgMBAAECggEARhZRGIX4EH//Rsc5FhIWuK2i7y6XLkAXM6Si/QH6WwCO\nmiBLXKBC/mcZK6c7lhKgI95rWZggx+c1vYmyBP1YacdgBsZEiOJm3jxrzg6rvywk\nVENtD7fQnri/lo3hbPOmrYrw/IxsaFWx2aYXtUiwIyA7aJ5thxPSpm/3heeTvqws\n6xEwUuTGFiOHtzJTPbWsni2PUJ8MTwqpuYMfvVs2W7lzkL/BndRcERTi8rxbpOJk\nS5RjEzJsOghFZAmKGcPzKCR1T34IXsGzQB4yhCc72yHzSvhB4s71MAobZcR/TvgI\nVczje/ibxGFXEGHaKJFMxTMhO1y8XdSfoEqnYxBVgQKBgQDnlSaQJuR6HMjGFGl5\nmNCO3DOGDEmWPwt1SJ+raqhjJsBCL24FWX680Sjw5Fu5QEedjhDLSrZLZoYlbxSU\nFTIGF5T9fj7bjH0//sdkucMOQ5fTBknnA6IQOPUcrE6X+JlzWDcz3gBROZ3rVnV9\nduS9ay6WFk2PK6q6uUAu+JB/8QKBgQDEXXOp95xEyDDqc1CpQlJ8eVUUpUgY24ee\nQlZ+dXSa+Hj/GxzEwCAm7l3qFw/tzjjDzvvOHGddJJEteSd0aTpy22zO+OTiYlcN\n2dBqafrSkKSs6wgHHmU2mh3GcudFSgx4rqLylwTKrANfR9rj4+MP9lxzCY2wq1W3\n/g6qizIDVQKBgBB7FNt9aRUnp0IxgbAdp/oCwcfwZ+xBYFdga7yPQpyLzXLoXTQU\nQmi9meRK3Bw67t3PlnJhRsfm6/UOCrDfMUgttXS031RQkzlSsG4CqlcBiHSEJg5C\nu+3bn9YCjTVTg9gplwQh8HPXXd25sXLUW0L/tbkIrUxbFzNiq6asGdyBAoGABiFc\nwQun50XQsSEUfZRCevxWuaRHUe9Yloo/pQcJsuTa8ivohAPzfQOoDuzVZHkxsHs/\nxTmByJihp6fGoY2/c2KCTRvcGW00howsQ4Y3fGdjnLphr8c1JbU+BLoFmlYreYEK\nOUSZs7IXENxvavnsVs08KaM8ty1CKdJWpuBdmVkCgYEArzjNJ5D5D3SZ44A2fGzk\n+bU31IxOPTaakwb0b0lyqw7NupF+nLBnmkIfp76OROz0fRI//YTLQ9H8o4UBtBjL\ncc54yxY1qD90Y+9ew9Hr79sn9svcch3nijQI/hObt3quWlvE7Fyjkwgb4VuPAws/\nO9ErpOYFuXsVtddk0pEGE6U=\n-----END PRIVATE KEY-----\n",
+  "client_email": "space-chat-admin@space-chat-166520.iam.gserviceaccount.com",
+  "client_id": "116299421953169893804",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/space-chat-admin%40space-chat-166520.iam.gserviceaccount.com"
+}
