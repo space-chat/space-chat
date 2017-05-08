@@ -27,7 +27,8 @@
     ]
   },
   "devDependencies": {
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-react": "^6.24.1",
+    "react-router": "^3.0.0"
   },
   "author": "Noah Burney",
   "license": "BSD-2-Clause"
