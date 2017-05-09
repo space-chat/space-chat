@@ -4,7 +4,7 @@ import React from 'react'  //dis be react
 import io from './sockets' //dis be socket.io's client side plugin. 
 const KEY = require('../config.js').peerjs.key
 
-const Scene =  () => {
+const Room =  () => {
 let socket = io()     //invoke io to create a socket...something that can listen for events and emit events.
 
 //from the peer js client library linked in html
@@ -61,7 +61,7 @@ console.log("PEER", peer)  //logs info about this peer, including their id
   )
 }
 
-export default Scene
+export default Room
 
 //Just some thoughts/notes...
 //How I would imagine the flow...

@@ -25,7 +25,7 @@ export default class Home extends Component {
           <option value="en">English</option>
           <option value="es">Spanish</option>
         </select>
-        <Link to="./Room" className="btn">Enter Space Chat</Link>
+        <Link to="/room" className="btn">Enter Space Chat</Link>
       </form>
 		</div>
 		)
