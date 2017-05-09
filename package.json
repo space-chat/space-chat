@@ -4,6 +4,7 @@
   "description": "Audio chat using WebRTC and PeerJS",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "build": "webpack --config webpack.dist.config.js"
   },
   "dependencies": {
@@ -18,6 +19,7 @@
     "peer": "^0.2.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "socket.io": "^2.0.1",
     "uuid": "~2.0.1",
     "webpack": "^2.5.1"
   },
