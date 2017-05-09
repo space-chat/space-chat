@@ -19,6 +19,8 @@ io.on('connection', function(socket){
   console.log('A new client has connected')
   console.log('socket id:', socket.id)
 
+  socket.emit('connect', { msg: 'A two-way connection has been established!'})
+
   socket.on('disconnect', function() {
   	console.log('socket id ' + socket.id + ' has disconnected.')
   })
