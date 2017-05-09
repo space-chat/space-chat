@@ -16166,7 +16166,11 @@ var Home = function (_Component) {
               { value: 'es' },
               'Spanish'
             )
-          ),
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
           _react2.default.createElement(
             _reactRouter.Link,
             { to: '/room', className: 'btn' },
