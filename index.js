@@ -1,15 +1,41 @@
-var path = require('path');
-var express = require('express');
+// var path = require('path');
+// var express = require('express');
 
-var routes = require('./routes');
+var PeerServer = require('peer').PeerServer,
+    express = require('express'),
+    Topics = require('./app/src/Topics.js'),
+    app = express(),
+    port = process.env.PORT || 3001;
 
-var app = express();
+app.use(express.static(__dirname + '/public'));
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+var expressServer = app.listen(port);
+var io = require('socket.io').listen(expressServer);
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', routes);
+console.log('Listening on port', port);
 
-app.listen(6767);
-console.log('Listening on 6767');
+var peerServer = new PeerServer({ port: 9000, path: '/chat' });
+
+peerServer.on('connection', function (id) {
+  io.emit(Topics.USER_CONNECTED, id);
+  console.log('User connected with #', id);
+});
+
+peerServer.on('disconnect', function (id) {
+  io.emit(Topics.USER_DISCONNECTED, id);
+  console.log('User disconnected with #', id);
+});
+
+
+// var routes = require('./routes');
+
+// var app = express();
+
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
+
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use('/', routes);
+
+// app.listen(6767);
+// console.log('Listening on 6767');
