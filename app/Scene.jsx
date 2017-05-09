@@ -1,47 +1,39 @@
 import React from 'react'  //dis be react
 import io from './sockets' //dis be socket.io's client side plugin. 
-const KEY = require('../config.js').peerjs.key
+
+import listenForSpeech from './speech_to_text.jsx'
 
 const Scene =  () => {
-let socket = io()     //invoke io to create a socket...something that can listen for events and emit events.
+  let socket = io()     //invoke io to create a socket...something that can listen for events and emit events.
 
-//from the peer js client library linked in html
-//Initiate a new peer connection using our peerjs api key
-var peer = new Peer({
-	key: KEY
-})
 
-//When a peer connection is created, use socket io to emit this connection's ID
-//To the other person.  
-peer.on('open', function(id) {
-    console.log("dis be my peer id: " + id)
-    socket.emit("peer id", id)
-})
+  listenForSpeech()
 
-//Rest of this code needs work...
 
-//axios.get('/peerid')
-//.then(id => this.setState(peerid: id))
+  //Rest of this code needs work...
 
-//Next the other person's server will connect using the id that was just emitted. 
-// var conn = peer.connect(id)
+  //axios.get('/peerid')
+  //.then(id => this.setState(peerid: id))
 
-// //Now the client will recieve the connection.
-// peer.on('connection', function(conn) {
-//     console.log("CONN", conn)
-// })
+  //Next the other person's server will connect using the id that was just emitted. 
+  // var conn = peer.connect(id)
 
-// conn.on('open', function() {
-//   // Receive messages
-//   conn.on('data', function(data) {
-//     console.log('Received', data);
-//   });
+  // //Now the client will recieve the connection.
+  // peer.on('connection', function(conn) {
+  //     console.log("CONN", conn)
+  // })
 
-//   // Send messages
-//   conn.send('Hello!');
-// });
+  // conn.on('open', function() {
+  //   // Receive messages
+  //   conn.on('data', function(data) {
+  //     console.log('Received', data);
+  //   });
 
-console.log("PEER", peer)  //logs info about this peer, including their id
+  //   // Send messages
+  //   conn.send('Hello!');
+  // });
+
+  console.log("PEER", peer)  //logs info about this peer, including their id
 
 
 // console.log("CONN", conn)

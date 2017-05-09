@@ -34,8 +34,13 @@ io.on('connection', function(socket){
   socket.on('peer id', function(id){
     console.log('message: ' + id);
     peerid = id; 
-  });
+  })
+  socket.on('Transcription', function(transcription){
+    console.log('for sentiment analysis: ' + transcription);
+  })
 });
+
+
 
 
 // io.on('connection', function(socket){
