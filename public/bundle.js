@@ -16206,7 +16206,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //dis be react
 var io = __webpack_require__(285); //dis be socket.io's client side plugin. 
 // Room sends props to Scene (sentiment analysis data for Scene to change)
-
 var KEY = __webpack_require__(141).peerjs.key;
 
 var Room = function Room() {

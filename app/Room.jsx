@@ -1,5 +1,4 @@
 // Room sends props to Scene (sentiment analysis data for Scene to change)
-
 import React from 'react'  //dis be react
 const io = require('socket.io-client') //dis be socket.io's client side plugin. 
 const KEY = require('../config.js').peerjs.key
