@@ -1,5 +1,6 @@
 import React, {Component} from 'react'  //dis be react
 import io from '../sockets' //dis be socket.io's client side plugin. 
+import axios from 'axios'
 import SpeechRecognition from 'react-speech-recognition'  //A higher order component that allows our component to transcribe speech
 import PropTypes from 'prop-types' //install prop-types, which is a react thing that the browser will yell at you for if it's not correct
 import {connect} from 'react-redux'
@@ -24,15 +25,18 @@ class Scene extends Component {
 //When the regular transcript and final transcript are the same, so when the final transcript has finalized, the put it on the state. 
 //We probably don't want to translate and analyze text word by word. Only when the user is finished talking/has made a short pause. 
 //The web speech API waits to finalize text until after a short pause. Pretty sure we can change how long this pause is. 
-componentWillReceiveProps() {
-  if (this.props.transcript === this.props.finalTranscript) {
-    this.setState({text: this.props.finalTranscript})
+componentWillReceiveProps({transcript, finalTranscript}) {
+  if (transcript === finalTranscript) {
+    this.setState({text: finalTranscript})
   }
-    if(this.state.text) {
-       this.props.sendForAnalysis(this.state.text)
-       console.log("yassssss")
+    if(finalTranscript) {
+      //  this.props.sendForAnalysis(this.state.text)
+      axios.post('api/sentiment', {finalTranscript})
+      .then(res => console.log(res))
     }  
 }
+
+
 
 //When the scene renders, the API will start recording them 
   render() {

@@ -11378,7 +11378,7 @@ module.exports = function bind(fn, thisArg) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.sendForAnalysis = exports.GOT_ANALYSIS = undefined;
+exports.sendForAnalysis = exports.gotAnalysis = exports.GOT_ANALYSIS = undefined;
 
 var _axios = __webpack_require__(169);
 
@@ -11394,12 +11394,12 @@ var GOT_ANALYSIS = exports.GOT_ANALYSIS = "GOT_ANALYSIS";
 
 //Actions
 
-// export const gotAnalysis = (res) => {
-//     return {
-//         type: GOT_ANALYSIS, 
-//         payload: res.data
-//     }
-// }
+var gotAnalysis = exports.gotAnalysis = function gotAnalysis(res) {
+    return {
+        type: GOT_ANALYSIS,
+        payload: res.data
+    };
+};
 
 //there may also be a broadcastSentiment...which would broadcast the latest sentiment data to all users in the room. 
 
@@ -11410,14 +11410,14 @@ var GOT_ANALYSIS = exports.GOT_ANALYSIS = "GOT_ANALYSIS";
 //     axios.post('/api/sentiment', {text})
 //     .then((res) => dispatch(gotAnalysis(res)))
 //     .catch(console.error)
-// }
+//}
 
 var sendForAnalysis = exports.sendForAnalysis = function sendForAnalysis(text) {
     var res = _axios2.default.post('/api/sentiment', { text: text });
     console.log("RESSSS");
     return {
         type: GOT_ANALYSIS,
-        payload: res.data
+        payload: res
     };
 };
 
@@ -18776,7 +18776,7 @@ var _reduxPromise2 = _interopRequireDefault(_reduxPromise);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)(_index2.default, (0, _redux.applyMiddleware)(_reduxPromise2.default, (0, _reduxLogger.createLogger)()));
+var store = (0, _redux.createStore)(_index2.default, (0, _redux.applyMiddleware)((0, _reduxLogger.createLogger)(), _reduxPromise2.default));
 // import thunkMiddleware from 'redux-thunk'
 
 // import { composeWithDevTools } from 'redux-devtools-extension'
@@ -19725,6 +19725,10 @@ var _sockets = __webpack_require__(190);
 
 var _sockets2 = _interopRequireDefault(_sockets);
 
+var _axios = __webpack_require__(169);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _reactSpeechRecognition = __webpack_require__(361);
 
 var _reactSpeechRecognition2 = _interopRequireDefault(_reactSpeechRecognition);
@@ -19779,13 +19783,18 @@ var Scene = function (_Component) {
 
   _createClass(Scene, [{
     key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps() {
-      if (this.props.transcript === this.props.finalTranscript) {
-        this.setState({ text: this.props.finalTranscript });
+    value: function componentWillReceiveProps(_ref) {
+      var transcript = _ref.transcript,
+          finalTranscript = _ref.finalTranscript;
+
+      if (transcript === finalTranscript) {
+        this.setState({ text: finalTranscript });
       }
-      if (this.state.text) {
-        this.props.sendForAnalysis(this.state.text);
-        console.log("yassssss");
+      if (finalTranscript) {
+        //  this.props.sendForAnalysis(this.state.text)
+        _axios2.default.post('api/sentiment', { finalTranscript: finalTranscript }).then(function (res) {
+          return console.log(res);
+        });
       }
     }
 
@@ -19838,8 +19847,8 @@ var Scene = function (_Component) {
 Scene.propTypes = propTypes;
 var EnhancedScene = (0, _reactSpeechRecognition2.default)(Scene);
 
-var mapState = function mapState(_ref) {
-  var sentiment = _ref.sentiment;
+var mapState = function mapState(_ref2) {
+  var sentiment = _ref2.sentiment;
   return { sentiment: sentiment };
 };
 

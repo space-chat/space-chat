@@ -6,6 +6,6 @@ import {createLogger} from 'redux-logger'
 import promise from 'redux-promise';
 
 
-const store = createStore(rootReducer, applyMiddleware(promise, createLogger()))
+const store = createStore(rootReducer, applyMiddleware(createLogger(), promise))
 
 export default store
