@@ -17,12 +17,13 @@ app.get('/', (req, res, next) => {
 // when a socket connects, emit message back to that socket
 io.on('connection', (socket) => {
   console.log('new socket connected')
-  socket.emit('message', 'hello i am your message')
   socket.on('join', language => {
     console.log('socket joined room! lang: ', language)
   })
-  socket.on('message', text => {
-    console.log('new spoken message! text: ', text)
+  socket.on('message', ({ spokenText, lang }) => {
+    console.log('new spoken message! text: ', spokenText)
+    let translatedBool = false
+    socket.emit('got message', { translatedBool, spokenText, lang })
   })
 })
 
