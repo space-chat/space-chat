@@ -1,16 +1,17 @@
-import React, {Component} from 'react'  //dis be react
-import io from '../sockets' //dis be socket.io's client side plugin. 
-import axios from 'axios'
-import SpeechRecognition from 'react-speech-recognition'  //A higher order component that allows our component to transcribe speech
-import PropTypes from 'prop-types' //install prop-types, which is a react thing that the browser will yell at you for if it's not correct
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import Scene from './Scene.jsx'
-import sendForAnalysis from '../reducers/sentimentReducer.jsx'
+// socket.io's client side plugin
+import io from '../sockets'  
+// higher order component that allows Room to transcribe speech
+import SpeechRecognition from 'react-speech-recognition'
+// react thing that the browser will yell at you for if it's not correct
+import PropTypes from 'prop-types' 
 
+import Scene from './Scene.jsx'
 
 const propTypes = {
-  // Props injected by SpeechRecognition
+  // props injected by SpeechRecognition
   transcript: PropTypes.string,
   resetTranscript: PropTypes.func,
   browserSupportsSpeechRecognition: PropTypes.bool
@@ -19,41 +20,41 @@ const propTypes = {
 class Room extends Component {
   constructor() {
     super()
+    // do we need text on state?
     this.state = {
       text: ''
     }
   }
 
-//When the regular transcript and final transcript are the same, so when the final transcript has finalized, the put it on the state. 
-//We probably don't want to translate and analyze text word by word. Only when the user is finished talking/has made a short pause. 
-//The web speech API waits to finalize text until after a short pause. Pretty sure we can change how long this pause is. 
-componentWillReceiveProps({transcript, finalTranscript}) {
-  if (transcript === finalTranscript) {
-    this.setState({text: finalTranscript})
-  }
-    if(finalTranscript) {
-      //  this.props.sendForAnalysis(this.state.text)
-      axios.post('api/sentiment', {finalTranscript})
-      .then(res => console.log(res))
+  // When the regular transcript and final transcript are the same, 
+  // the final transcript has finalized, so it goes on state
+  // The web speech API waits to finalize text until after a short pause.
+  componentWillReceiveProps({transcript, finalTranscript}) {
+    if (transcript === finalTranscript) {
+      this.setState({text: finalTranscript})
+    }
+    if (finalTranscript) {
+      // emit 'message' with finalTranscript as payload
+      console.log("received final transcript:", finalTranscript)
     }  
-}
+  }
 
-
-
-//When the scene renders, the API will start recording them 
+  //When the scene renders, the API will start recording 
   render() {
     // let socket = io()
     const { transcript, finalTranscript, resetTranscript, browserSupportsSpeechRecognition, recognition } = this.props
-    if (!browserSupportsSpeechRecognition) {   //This checks if the user's browswer supports the web speech api
+    // check if the user's browser supports the web speech api
+    if (!browserSupportsSpeechRecognition) {
       return null
     }
-    console.log("TRANSCRIPT", transcript) //this concats the interim and final together. so you can see the text editing itself. 
-    console.log("FINAL", finalTranscript) //this is just the final. you have to wait a few seconds before it prints. this might be better for sentiment analysis
-    //To log the final transcript here, first go into the node package and pass it down as as a prop. 
+    // concat interim and final, to show the text editing itself
+    console.log("TRANSCRIPT", transcript)
+    // to log final here, pass it down as a prop from node package
+    console.log("FINAL", finalTranscript)
 
-    //When the regular transcript and final transcript are the same, so when the final transcript has finalized, the put it on the state. 
     console.log(transcript === finalTranscript)
     console.log("STATE", this.state)
+
     return (
       <Scene />
     )
@@ -65,7 +66,8 @@ const EnhancedRoom = SpeechRecognition(Room)
 
 const mapState = ({sentiment}) => ({sentiment})
 
-export default connect(mapState, {sendForAnalysis})(EnhancedRoom)
+export default connect(mapState, null)(EnhancedRoom)
+
 
 /*
 1. I am importing react-speech-component which is a simple node package that is a higher order component that uses the web speech API. 
