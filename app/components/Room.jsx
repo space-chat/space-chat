@@ -43,7 +43,6 @@ class Room extends Component {
     }
     if (finalTranscript) {
       // emit 'message' with finalTranscript as payload
-      console.log("received final transcript:", finalTranscript)
       sendMessage(finalTranscript)
     }  
   }
