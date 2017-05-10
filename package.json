@@ -7,7 +7,7 @@
 
     "build": "webpack --config webpack.dist.config.js",
     "build-watch": "npm run build -- -w",
-    "start": "nodemon index.js"
+    "start": "nodemon server/index.js"
   },
   "dependencies": {
     "aframe": "^0.5.0",

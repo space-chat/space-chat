@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-export default const Scene = () => {
+const Scene = () => {
   return (
     <div>
       <a-scene>
@@ -14,3 +14,5 @@ export default const Scene = () => {
     </div>
   )
 }
+
+export default Scene
