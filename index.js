@@ -21,6 +21,9 @@ io.on('connection', (socket) => {
   socket.on('join', language => {
     console.log('socket joined room! lang: ', language)
   })
+  socket.on('message', text => {
+    console.log('new spoken message! text: ', text)
+  })
 })
 
 io.on('join', (socket) => {

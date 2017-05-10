@@ -18499,6 +18499,7 @@ var Room = function (_Component) {
       if (finalTranscript) {
         // emit 'message' with finalTranscript as payload
         console.log("received final transcript:", finalTranscript);
+        (0, _sockets.sendMessage)(finalTranscript);
       }
     }
 
