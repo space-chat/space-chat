@@ -1,17 +1,18 @@
 import React, { Component } from 'react' 
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { setLanguage } from '../reducers/languageReducer.jsx'
 
-export default class Home extends Component {
+class Home extends Component {
 	constructor() {
 		super()
-    this.state = {
-      language: ''
-    }
+    this.state = {}
     this.onChange = this.onChange.bind(this)
 	}
 
   onChange(e) {
-    this.setState({language: e.target.value})
+    // dispatch action with language
+    this.props.setLanguage(e.target.value)
   }
 
 	render() {
@@ -33,3 +34,5 @@ export default class Home extends Component {
 		)
 	}
 }
+
+export default connect(null, {setLanguage})(Home)
