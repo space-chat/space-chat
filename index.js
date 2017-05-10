@@ -14,7 +14,7 @@ app.get('/', (req, res, next) => {
   res.send("hi hi hi")
 })
 
-// when server connects, emit message to client-side sockets
+// when a socket connects, emit message back to that socket
 io.on('connection', (socket) => {
   socket.emit('message', 'hello i am your message')
 })
