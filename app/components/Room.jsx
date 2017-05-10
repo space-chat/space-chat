@@ -7,7 +7,7 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
-import { joinRoom, sendMessage } from '../sockets.js'
+import { joinRoom, sendMessage, receiveMessage } from '../sockets.js'
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -44,7 +44,7 @@ class Room extends Component {
     if (finalTranscript) {
       // emit 'message' with finalTranscript as payload
       console.log("received final transcript:", finalTranscript)
-      sendMessage(finalTranscript)
+      sendMessage(finalTranscript, this.state.language)
     }  
   }
 
@@ -55,13 +55,15 @@ class Room extends Component {
     if (!browserSupportsSpeechRecognition) {
       return null
     }
+
     // concat interim and final, to show the text editing itself
     console.log("TRANSCRIPT", transcript)
     // to log final here, pass it down as a prop from node package
     console.log("FINAL", finalTranscript)
 
-    console.log(transcript === finalTranscript)
     console.log("STATE", this.state)
+
+    receiveMessage() 
 
     return (
       <Scene />

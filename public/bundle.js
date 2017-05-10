@@ -18668,7 +18668,7 @@ var Room = function (_Component) {
       if (finalTranscript) {
         // emit 'message' with finalTranscript as payload
         console.log("received final transcript:", finalTranscript);
-        (0, _sockets.sendMessage)(finalTranscript);
+        (0, _sockets.sendMessage)(finalTranscript, this.state.language);
       }
     }
 
@@ -18688,13 +18688,15 @@ var Room = function (_Component) {
       if (!browserSupportsSpeechRecognition) {
         return null;
       }
+
       // concat interim and final, to show the text editing itself
       console.log("TRANSCRIPT", transcript);
       // to log final here, pass it down as a prop from node package
       console.log("FINAL", finalTranscript);
 
-      console.log(transcript === finalTranscript);
       console.log("STATE", this.state);
+
+      (0, _sockets.receiveMessage)();
 
       return _react2.default.createElement(_Scene2.default, null);
     }
@@ -19876,20 +19878,20 @@ function joinRoom(language) {
   socket.emit('join', language);
 }
 
-function sendMessage(spokenText) {
+function sendMessage(spokenText, lang) {
   // does google translate api need to know language of incoming text?
-  socket.emit('message', spokenText);
+  socket.emit('message', { spokenText: spokenText, lang: lang });
 }
 
 function receiveMessage() {
   socket.on('got message', function (_ref) {
     var translatedBool = _ref.translatedBool,
-        text = _ref.text,
+        spokenText = _ref.spokenText,
         lang = _ref.lang;
     return (
       // if lang in 'got message' payload matches socket user's language
       // speak text from 'got message' payload
-      console.log('translated? ' + translatedBool, 'text: ' + text, 'language: ' + lang)
+      console.log('translated? ' + translatedBool, 'text: ' + spokenText, 'language: ' + lang)
     );
   });
 }
