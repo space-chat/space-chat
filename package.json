@@ -1,23 +1,36 @@
 {
-  "name": "peerjs-audio-chat",
+  "name": "space-chat",
   "version": "0.0.0",
-  "description": "Audio chat using WebRTC and PeerJS",
+  "description": "vr sentiment analysis chat room",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.dist.config.js"
+    "build": "webpack --config webpack.dist.config.js",
+    "build-watch": "npm run build -- -w",
+    "start": "nodemon index.js"
   },
   "dependencies": {
     "aframe": "^0.5.0",
+    "axios": "^0.16.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babelify": "^7.3.0",
     "body-parser": "^1.17.1",
     "ejs": "~1.0.0",
     "express": "~4.10.2",
+    "indico.io": "^0.10.5",
     "path": "^0.12.7",
     "peer": "^0.2.8",
+    "prop-types": "^15.5.9",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
+    "react-router": "^3.0.5",
+    "react-speech-recognition": "^1.0.1",
+    "redux": "^3.6.0",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-logger": "^3.0.1",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0",
     "uuid": "~2.0.1",
     "webpack": "^2.5.1"
   },
@@ -31,6 +44,6 @@
   "devDependencies": {
     "babel-preset-react": "^6.24.1"
   },
-  "author": "Noah Burney",
+  "author": "Elsa Brown - Nicole Fish - Keziyah Lewis - Stefanie Sundby",
   "license": "BSD-2-Clause"
 }
