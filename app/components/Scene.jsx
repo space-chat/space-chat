@@ -6,7 +6,6 @@ import PropTypes from 'prop-types' //install prop-types, which is a react thing 
 import {connect} from 'react-redux'
 import sendForAnalysis from '../reducers/sentimentReducer.jsx'
 
-
 const propTypes = {
   // Props injected by SpeechRecognition
   transcript: PropTypes.string,
@@ -20,27 +19,31 @@ class Scene extends Component {
     this.state = {
       text: ''
     }
+    this.socket = socketOn()
+
+    // this.socketOnMessage = this.socketOnMessage.bind(this)
   }
 
-//When the regular transcript and final transcript are the same, so when the final transcript has finalized, the put it on the state. 
-//We probably don't want to translate and analyze text word by word. Only when the user is finished talking/has made a short pause. 
-//The web speech API waits to finalize text until after a short pause. Pretty sure we can change how long this pause is. 
-componentWillReceiveProps({transcript, finalTranscript}) {
-  if (transcript === finalTranscript) {
-    this.setState({text: finalTranscript})
+  //When the regular transcript and final transcript are the same, so when the final transcript has finalized, the put it on the state. 
+  //We probably don't want to translate and analyze text word by word. Only when the user is finished talking/has made a short pause. 
+  //The web speech API waits to finalize text until after a short pause. Pretty sure we can change how long this pause is. 
+  componentWillReceiveProps({transcript, finalTranscript}) {
+    if (transcript === finalTranscript) {
+      this.setState({text: finalTranscript})
+    }
+      if(finalTranscript) {
+        //  this.props.sendForAnalysis(this.state.text)
+        axios.post('api/sentiment', {finalTranscript})
+        .then(res => console.log(res))
+      }  
   }
-    if(finalTranscript) {
-      //  this.props.sendForAnalysis(this.state.text)
-      axios.post('api/sentiment', {finalTranscript})
-      .then(res => console.log(res))
-    }  
-}
 
 
 
-//When the scene renders, the API will start recording them 
+  //When the scene renders, the API will start recording them 
   render() {
-    // let socket = io()
+    // this.socketOnMessage()
+
     const { transcript, finalTranscript, resetTranscript, browserSupportsSpeechRecognition, recognition } = this.props
     if (!browserSupportsSpeechRecognition) {   //This checks if the user's browswer supports the web speech api
       return null

@@ -34,12 +34,9 @@ app.post('/api/sentiment', (req, res, next) => {
 
 //When the peer id comes in, send it to a component as a prop so that it can be
 //used in peer.connect
-// io.on('connection', function(socket){
-//   socket.on('peer id', function(id){
-//     console.log('message: ' + id);
-//     peerid = id; 
-//   });
-// });
+io.on('connection', function(socket){
+  socket.emit('message', 'hello i am your message')
+});
 
 
 // io.on('connection', function(socket){
