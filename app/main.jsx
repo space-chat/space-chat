@@ -7,10 +7,9 @@ import {Provider} from 'react-redux'
 
 import store from './store.jsx'
 
+import Home from './components/Home.jsx'
+import Room from './components/Room.jsx'
 import NotFound from './components/NotFound.jsx'
-import Home from './Home.jsx'
-import Room from './Room.jsx'
-
 
 render(
   <Provider store={store} >
@@ -21,5 +20,4 @@ render(
     </Router>
   </Provider>,
   document.getElementById('app')
-
 )
