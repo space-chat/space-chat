@@ -7,7 +7,6 @@ export default class Home extends Component {
     this.state = {
       language: ''
     }
-
     this.onChange = this.onChange.bind(this)
 	}
 
@@ -27,9 +26,8 @@ export default class Home extends Component {
         </select>
         </form>
         <div>
-          {/* need to pass language as prop to Room */}
+          {/* need to pass socket, language as prop to Room */}
           <Link to="/room" className="btn">Enter Space Chat</Link>
-          }
         </div>
 		</div>
 		)
