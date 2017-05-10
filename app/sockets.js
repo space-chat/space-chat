@@ -1,29 +1,27 @@
-import io from 'socket.io-client'
+const socket = {
+  joinRoom: function (language) {
+    socket.emit('join', language)
+  },
 
-let socket = io()
+  sendMessage: function (spokenText) {
+    // does google translate api need to know language of incoming text?
+    socket.emit('message', spokenText)
+  },
 
-function socketJoinRoom (language) {
-  socket.emit('join', language)
+  receiveMessage: function () {
+    socket.on('got message', ({ translatedBool, text, lang }) =>
+      // if lang in 'got message' payload matches socket user's language
+        // speak text from 'got message' payload
+      console.log(`translated? ${translatedBool}`, `text: ${text}`, `language: ${lang}`)
+    )
+  },
+
+  receiveSentiment: function () {
+    socket.on('got sentiment', ({ score, magnitude, entities }) => 
+      // update view with sentiment data
+      console.log(`score: ${score}`, `magnitude: ${magnitude}`, `entities: ${entities}`)
+    )
+  }
 }
 
-function socketSendMessage(spokenText) {
-  // does google translate api need to know language of incoming text?
-  socket.emit('message', spokenText)
-}
-
-function socketReceiveMessage() {
-  socket.on('got message', ({ translatedBool, text, lang }) =>
-    // if lang in 'got message' payload matches socket user's language
-      // speak text from 'got message' payload
-    console.log(`translated? ${translatedBool}`, `text: ${text}`, `language: ${lang}`)
-  )
-}
-
-function socketReceiveSentiment() {
-  socket.on('got sentiment', ({ score, magnitude, entities }) => 
-    // update view with sentiment data
-    console.log(`score: ${score}`, `magnitude: ${magnitude}`, `entities: ${entities}`)
-  )
-}
-
-export default io
+export default socket

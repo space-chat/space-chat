@@ -16,6 +16,7 @@ app.get('/', (req, res, next) => {
 
 // when a socket connects, emit message back to that socket
 io.on('connection', (socket) => {
+  console.log('new socket connected')
   socket.emit('message', 'hello i am your message')
 })
 
