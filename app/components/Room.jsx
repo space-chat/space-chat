@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-// socket.io's client side plugin
-import io from '../sockets'  
 // higher order component that allows Room to transcribe speech
 import SpeechRecognition from 'react-speech-recognition'
 // react thing that the browser will yell at you for if it's not correct
@@ -10,8 +8,6 @@ import PropTypes from 'prop-types'
 
 import Scene from './Scene.jsx'
 import { joinRoom } from '../sockets.js'
-
-const socket = window.socket
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -31,8 +27,11 @@ class Room extends Component {
   }
 
   componentWillMount() {
-    console.log("will mount language: ", this.state.language)
-    socket.joinRoom(this.state.language)
+    this.setState({ language: this.props.language })
+  }
+
+  componentDidMount() {
+    joinRoom(this.state.language)
   }
 
   // When the regular transcript and final transcript are the same, 
@@ -50,7 +49,6 @@ class Room extends Component {
 
   //When the scene renders, the API will start recording 
   render() {
-    console.log("language: ", this.state.language)
     const { transcript, finalTranscript, resetTranscript, browserSupportsSpeechRecognition, recognition } = this.props
     // check if the user's browser supports the web speech api
     if (!browserSupportsSpeechRecognition) {

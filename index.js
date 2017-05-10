@@ -18,9 +18,14 @@ app.get('/', (req, res, next) => {
 io.on('connection', (socket) => {
   console.log('new socket connected')
   socket.emit('message', 'hello i am your message')
+  socket.on('join', language => {
+    console.log('socket joined room! lang: ', language)
+  })
 })
 
-
+io.on('join', (socket) => {
+  console.log('socket joined room!')
+})
 
 // io.on('connection', (socket) => {
 //   console.log("YEAHHHH BABY WE LIVE. here's my id", socket.id)
