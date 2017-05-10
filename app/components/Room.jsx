@@ -9,6 +9,9 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
+import { joinRoom } from '../sockets.js'
+
+const socket = window.socket
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -22,8 +25,14 @@ class Room extends Component {
     super()
     // do we need text on state?
     this.state = {
-      text: ''
+      text: '',
+      language: ''
     }
+  }
+
+  componentWillMount() {
+    console.log("will mount language: ", this.state.language)
+    socket.joinRoom(this.state.language)
   }
 
   // When the regular transcript and final transcript are the same, 
@@ -41,7 +50,7 @@ class Room extends Component {
 
   //When the scene renders, the API will start recording 
   render() {
-    // let socket = io()
+    console.log("language: ", this.state.language)
     const { transcript, finalTranscript, resetTranscript, browserSupportsSpeechRecognition, recognition } = this.props
     // check if the user's browser supports the web speech api
     if (!browserSupportsSpeechRecognition) {
@@ -64,7 +73,7 @@ class Room extends Component {
 Room.propTypes = propTypes
 const EnhancedRoom = SpeechRecognition(Room)
 
-const mapState = ({sentiment}) => ({sentiment})
+const mapState = ({language}) => ({language})
 
 export default connect(mapState, null)(EnhancedRoom)
 

@@ -20,6 +20,8 @@ io.on('connection', (socket) => {
   socket.emit('message', 'hello i am your message')
 })
 
+
+
 // io.on('connection', (socket) => {
 //   console.log("YEAHHHH BABY WE LIVE. here's my id", socket.id)
 // })
