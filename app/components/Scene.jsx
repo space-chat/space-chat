@@ -2,6 +2,9 @@ import React, {Component} from 'react'  //dis be react
 import io from '../sockets' //dis be socket.io's client side plugin. 
 import SpeechRecognition from 'react-speech-recognition'  //A higher order component that allows our component to transcribe speech
 import PropTypes from 'prop-types' //install prop-types, which is a react thing that the browser will yell at you for if it's not correct
+import {connect} from 'react-redux'
+import sendForAnalysis from '../reducers/sentimentReducer.jsx'
+
 
 const propTypes = {
   // Props injected by SpeechRecognition
@@ -25,6 +28,10 @@ componentWillReceiveProps() {
   if (this.props.transcript === this.props.finalTranscript) {
     this.setState({text: this.props.finalTranscript})
   }
+    if(this.state.text) {
+       this.props.sendForAnalysis(this.state.text)
+       console.log("yassssss")
+    }  
 }
 
 //When the scene renders, the API will start recording them 
@@ -57,7 +64,11 @@ componentWillReceiveProps() {
 }
 
 Scene.propTypes = propTypes
-export default SpeechRecognition(Scene)
+const EnhancedScene = SpeechRecognition(Scene)
+
+const mapState = ({sentiment}) => ({sentiment})
+
+export default connect(mapState, {sendForAnalysis})(EnhancedScene)
 
 /*
 1. I am importing react-speech-component which is a simple node package that is a higher order component that uses the web speech API. 
@@ -66,7 +77,7 @@ export default SpeechRecognition(Scene)
     We might even want to rewrite it and adapt it to do text to speech, or anything else we want it to do. 
     The only thing I don't like about this component is that I don't know how to turn the speech to text off without exiting the page.  
 
-
+2. I am putting the final transcript on the state. 
 */
 
 //Get some text and put it in the state. 

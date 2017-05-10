@@ -22,6 +22,10 @@ app.get('/', (req, res, next) => {
     res.send("hi hi hi")
 })
 
+app.post('/api/sentiment', (req, res, next) => {
+    console.log("this is api/sentiment", req.body)
+    res.send("if you can't love yourself, how in the hell are you gonna love somebody else?")
+})
 //make an axios request from the component to get this peer id so that 
 //the client side can connect to their friend. 
 // app.get('/peerid', (req, res, next) => {
