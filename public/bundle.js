@@ -18329,13 +18329,15 @@ var Room = function (_Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(_ref) {
       var transcript = _ref.transcript,
-          finalTranscript = _ref.finalTranscript;
+          finalTranscript = _ref.finalTranscript,
+          resetTranscript = _ref.resetTranscript;
 
       //We only want final transcripts to be sent when they are finished finalizing
-      if (transcript === finalTranscript) {
+      if (transcript === finalTranscript && finalTranscript) {
         this.setState({ text: finalTranscript });
         // emit 'message' with finalTranscript as payload
         (0, _sockets.sendMessage)(finalTranscript, this.state.language);
+        resetTranscript();
       }
     }
 
