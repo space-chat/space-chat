@@ -7,7 +7,7 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
-import { joinRoom, sendMessage, receiveMessage } from '../sockets.js'
+import { joinRoom, sendMessage, receiveMessage, receiveSentiment } from '../sockets.js'
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -21,7 +21,6 @@ class Room extends Component {
     super()
     // do we need text on state?
     this.state = {
-      text: '',
       language: ''
     }
   }
@@ -40,12 +39,15 @@ class Room extends Component {
   componentWillReceiveProps({transcript, finalTranscript}) {
     if (transcript === finalTranscript) {
       this.setState({text: finalTranscript})
-    }
-    if (finalTranscript) {
-      // emit 'message' with finalTranscript as payload
-
+      receiveSentiment()
       sendMessage(finalTranscript, this.state.language)
-    }  
+    }
+    //We only want final transcripts to be sent when they are finished finalizing 
+    // if (finalTranscript) {
+    //   // emit 'message' with finalTranscript as payload
+
+    //   // sendMessage(finalTranscript, this.state.language)
+    // }  
   }
 
   //When the scene renders, the API will start recording 
@@ -55,16 +57,13 @@ class Room extends Component {
     if (!browserSupportsSpeechRecognition) {
       return null
     }
-
     // concat interim and final, to show the text editing itself
     console.log("TRANSCRIPT", transcript)
     // to log final here, pass it down as a prop from node package
     console.log("FINAL", finalTranscript)
-
     console.log("STATE", this.state)
 
     receiveMessage() 
-
     return (
       <Scene />
     )

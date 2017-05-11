@@ -20,8 +20,8 @@ export function receiveMessage () {
 }
 
 export function receiveSentiment () {
-  socket.on('got sentiment', ({ score, magnitude, entities }) => 
+  socket.on('got sentiment', ({ emotion, sentiment, personality }) => 
     // update view with sentiment data
-    console.log(`score: ${score}`, `magnitude: ${magnitude}`, `entities: ${entities}`)
+    console.log(`emotion: ${emotion}`, `sentiment: ${sentiment}`, `personality: ${personality}`)
   )
 }
