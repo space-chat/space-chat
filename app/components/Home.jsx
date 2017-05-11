@@ -29,6 +29,7 @@ class Home extends Component {
         <div>
           {/* need to pass language as prop to Room */}
           <Link to="/room" className="btn">Enter Space Chat</Link>
+          <Link to="/bubbles" className="btn">Bubbles!</Link>
         </div>
 		</div>
 		)
