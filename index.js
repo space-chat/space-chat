@@ -44,9 +44,8 @@ io.on('connection', (socket) => {
     console.log('new spoken message! text: ', messageText)
     let translatedBool = false
     socket.emit('got message', { translatedBool, messageText, lang })
-    let textCopy = messageText
     //see indicoroutes.js for more info about the apis...
-    indico.analyzeText([textCopy], { apis: ["personality", "sentiment", "emotion"] })
+    indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
       .then(data => {
         console.log("DATA", data)
         //Here--do we want to emit or broadcast?
