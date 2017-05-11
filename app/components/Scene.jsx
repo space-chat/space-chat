@@ -1,17 +1,16 @@
 import React, {Component} from 'react'
-import Avatar from '../../components-aframe/Avatar'
-import AssetLoader from '../../components-aframe/AssetLoader'
+import Avatar from './Avatar' //avatar not rendering rn
+import AssetsLoader from './AssetsLoader'
 
 const Scene = () => {
   return (
     <div>
       <a-scene>
-        <AssetLoader />
-        <Avatar />
-        <a-light color="white" position="-1 1 0"></a-light>
-        <a-sky src="#stars2"
-          material="shader: flat; color: #ff0000">
-        </a-sky>
+        <AssetsLoader />
+        <Avatar position="-1.5 1 -4"/>
+         <a-sphere id="avatar" position="-1 1.25 -5" radius="1.25" color="yellow"></a-sphere>
+        <a-light color="white" angle="45" position="-1 1 0" type="spot" target="avatar" ></a-light>
+        <a-sky src="#stars"></a-sky>
       </a-scene>
     </div>
   )
