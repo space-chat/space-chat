@@ -9,6 +9,7 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
+    "@google-cloud/translate": "^0.8.1",
     "aframe": "^0.5.0",
     "all": "^0.0.0",
     "axios": "^0.16.1",

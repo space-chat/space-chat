@@ -18329,13 +18329,15 @@ var Room = function (_Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(_ref) {
       var transcript = _ref.transcript,
-          finalTranscript = _ref.finalTranscript;
+          finalTranscript = _ref.finalTranscript,
+          resetTranscript = _ref.resetTranscript;
 
       //We only want final transcripts to be sent when they are finished finalizing
-      if (transcript === finalTranscript) {
+      if (transcript === finalTranscript && finalTranscript) {
         this.setState({ text: finalTranscript });
         // emit 'message' with finalTranscript as payload
         (0, _sockets.sendMessage)(finalTranscript, this.state.language);
+        resetTranscript();
       }
     }
 
@@ -19475,20 +19477,20 @@ function joinRoom(language) {
   socket.emit('join', language);
 }
 
-function sendMessage(spokenText, lang) {
+function sendMessage(messageText, lang) {
   // does google translate api need to know language of incoming text?
-  socket.emit('message', { spokenText: spokenText, lang: lang });
+  socket.emit('message', { messageText: messageText, lang: lang });
 }
 
 function receiveMessage() {
   socket.on('got message', function (_ref) {
     var translatedBool = _ref.translatedBool,
-        spokenText = _ref.spokenText,
+        messageText = _ref.messageText,
         lang = _ref.lang;
     return (
       // if lang in 'got message' payload matches socket user's language
       // speak text from 'got message' payload
-      console.log('translated? ' + translatedBool, 'text: ' + spokenText, 'language: ' + lang)
+      console.log('translated? ' + translatedBool, 'text: ' + messageText, 'language: ' + lang)
     );
   });
 }
