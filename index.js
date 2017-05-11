@@ -10,8 +10,13 @@ var indico = require('indico.io');
 indico.apiKey = require('./indicokey').api_key
 // Imports the Google Cloud client library
 const Translate = require('@google-cloud/translate')
+// provides project id
+const projectId = 'space-chat-166520'
 // Instantiates a client
-const translate = Translate() 
+const translate = Translate({
+  projectId: projectId,
+  keyFilename: './servicekey.json'
+}) 
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
