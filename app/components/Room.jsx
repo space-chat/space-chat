@@ -37,17 +37,13 @@ class Room extends Component {
   // the final transcript has finalized, so it goes on state
   // The web speech API waits to finalize text until after a short pause.
   componentWillReceiveProps({transcript, finalTranscript}) {
+    //We only want final transcripts to be sent when they are finished finalizing
     if (transcript === finalTranscript) {
       this.setState({text: finalTranscript})
       receiveSentiment()
+      // emit 'message' with finalTranscript as payload
       sendMessage(finalTranscript, this.state.language)
     }
-    //We only want final transcripts to be sent when they are finished finalizing 
-    // if (finalTranscript) {
-    //   // emit 'message' with finalTranscript as payload
-
-    //   // sendMessage(finalTranscript, this.state.language)
-    // }  
   }
 
   //When the scene renders, the API will start recording 
