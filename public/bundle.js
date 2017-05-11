@@ -19829,8 +19829,9 @@ var Scene = function Scene() {
       'a-scene',
       null,
       _react2.default.createElement(_AssetLoader2.default, null),
-      _react2.default.createElement(_Avatar2.default, null),
-      _react2.default.createElement('a-light', { color: 'white', position: '-1 1 0' }),
+      _react2.default.createElement(_Avatar2.default, { position: '-1.5 1 -4' }),
+      _react2.default.createElement('a-sphere', { id: 'avatar', position: '-1 1.25 -5', radius: '1.75', material: 'src: #blossoms', color: 'white' }),
+      _react2.default.createElement('a-light', { color: 'red', angle: '45', position: '-1 1 0', type: 'spot', target: 'avatar' }),
       _react2.default.createElement('a-sky', { id: 'sky', src: '#stars' })
     )
   );
@@ -44512,37 +44513,49 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // props passed from Room (or 'Scene') component
-// the Room is an A-frame smart component. Objects in the room are dumb components.
-exports.default = function (props) {
-	return (
-		/* -----------------
-   Define entity and components. 
-  	 - If we want the position or rotation to be responsive to sentiment, the x, y, z coordinates can be variables, as demonstrated here.
-  	 - 
-  ----------------- */
-		// Entity with id and compenents. I am assucming child entities inherit material components from parent (I know they inheret position compoonents for relative positioning)
-		/*<a-entity id="avatar" 
-  	position={`${props.x} ${props.y} ${props.z}`} 
-  	material={`color: ${props.avatarColor}`}>
-  	<a-entity id="avatar-body" 
-  		geometry={`primitive: cone; radiusBottom: ${props.bodyRadius}; radiusTop: ${props.bodyRadius}/10`} />
-  	<a-entity id="avatar-head"
-  		geometry={`primitive: dodecahedron; radius: ${props.bodyRadius}/4`}
-  		position={0, 1, 0} />
-  </a-entity>*/
-		_react2.default.createElement(
-			"a-entity",
-			{ id: "avatar",
-				position: "1 2 3",
-				material: "#000000" },
-			_react2.default.createElement("a-entity", { id: "avatar-body",
-				geometry: "primitive: cone; radiusBottom: 1; radiusTop: 2/10" }),
-			_react2.default.createElement("a-entity", { id: "avatar-head",
-				geometry: "primitive: dodecahedron; radius: 2/4",
-				position: "0, 1, 0" })
-		)
+
+// I am thinking the avatars are orbs with dedicated lights, the light is what changes based on sentiment: glowing orbs. If time, with WebRTC of people on them :D
+
+var Avatar = function Avatar() {
+	return _react2.default.createElement(
+		"div",
+		null,
+		_react2.default.createElement("a-sphere", {
+			radius: "1.25",
+			color: "yellow" })
 	);
 };
+
+exports.default = Avatar;
+
+/* ----------------------------------
+
+Old avatars
+
+	// Entity with id and compenents. I am assucming child entities inherit material components from parent (I know they inheret position compoonents for relative positioning)
+
+	<a-entity id="avatar" 
+		position={`${props.x} ${props.y} ${props.z}`} 
+		material={`color: ${props.avatarColor}`}>
+		<a-entity id="avatar-body" 
+			geometry={`primitive: cone; radiusBottom: ${props.bodyRadius}; radiusTop: ${props.bodyRadius}/10`} />
+		<a-entity id="avatar-head"
+			geometry={`primitive: dodecahedron; radius: ${props.bodyRadius}/4`}
+			position={0, 1, 0} />
+	</a-entity>
+
+
+	<a-entity id="avatar"
+		position="1 2 3"
+		material='#000000'>
+		<a-entity id="avatar-body"
+			geometry="primitive: cone; radiusBottom: 1; radiusTop: 2/10" />
+		<a-entity id="avatar-head"
+			geometry="primitive: dodecahedron; radius: 2/4"
+			position="0, 1, 0" />
+	</a-entity>
+
+----------------------------------- */
 
 /***/ }),
 /* 397 */
