@@ -18442,7 +18442,7 @@ var Home = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
 
-    _this.state = {};
+    _this.state = { lang: 'en' };
     _this.onChange = _this.onChange.bind(_this);
     return _this;
   }
@@ -18635,7 +18635,6 @@ var Room = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Room.__proto__ || Object.getPrototypeOf(Room)).call(this));
 
     _this.state = {
-      text: '',
       language: ''
     };
     return _this;
@@ -18664,12 +18663,15 @@ var Room = function (_Component) {
 
       if (transcript === finalTranscript) {
         this.setState({ text: finalTranscript });
-      }
-      if (finalTranscript) {
-        // emit 'message' with finalTranscript as payload
-        console.log("received final transcript:", finalTranscript);
+        (0, _sockets.receiveSentiment)();
         (0, _sockets.sendMessage)(finalTranscript, this.state.language);
       }
+      //We only want final transcripts to be sent when they are finished finalizing 
+      // if (finalTranscript) {
+      //   // emit 'message' with finalTranscript as payload
+
+      //   // sendMessage(finalTranscript, this.state.language)
+      // }  
     }
 
     //When the scene renders, the API will start recording 
@@ -18688,16 +18690,13 @@ var Room = function (_Component) {
       if (!browserSupportsSpeechRecognition) {
         return null;
       }
-
       // concat interim and final, to show the text editing itself
       console.log("TRANSCRIPT", transcript);
       // to log final here, pass it down as a prop from node package
       console.log("FINAL", finalTranscript);
-
       console.log("STATE", this.state);
 
       (0, _sockets.receiveMessage)();
-
       return _react2.default.createElement(_Scene2.default, null);
     }
   }]);
@@ -19898,12 +19897,12 @@ function receiveMessage() {
 
 function receiveSentiment() {
   socket.on('got sentiment', function (_ref2) {
-    var score = _ref2.score,
-        magnitude = _ref2.magnitude,
-        entities = _ref2.entities;
+    var emotion = _ref2.emotion,
+        sentiment = _ref2.sentiment,
+        personality = _ref2.personality;
     return (
       // update view with sentiment data
-      console.log('score: ' + score, 'magnitude: ' + magnitude, 'entities: ' + entities)
+      console.log('emotion: ' + emotion, 'sentiment: ' + sentiment, 'personality: ' + personality)
     );
   });
 }

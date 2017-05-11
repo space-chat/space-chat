@@ -7,7 +7,7 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
-import { joinRoom, sendMessage, receiveMessage } from '../sockets.js'
+import { joinRoom, sendMessage, receiveMessage, receiveSentiment } from '../sockets.js'
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -21,7 +21,6 @@ class Room extends Component {
     super()
     // do we need text on state?
     this.state = {
-      text: '',
       language: ''
     }
   }
@@ -38,14 +37,12 @@ class Room extends Component {
   // the final transcript has finalized, so it goes on state
   // The web speech API waits to finalize text until after a short pause.
   componentWillReceiveProps({transcript, finalTranscript}) {
+    //We only want final transcripts to be sent when they are finished finalizing
     if (transcript === finalTranscript) {
       this.setState({text: finalTranscript})
-    }
-    if (finalTranscript) {
       // emit 'message' with finalTranscript as payload
-
       sendMessage(finalTranscript, this.state.language)
-    }  
+    }
   }
 
   //When the scene renders, the API will start recording 
@@ -55,16 +52,15 @@ class Room extends Component {
     if (!browserSupportsSpeechRecognition) {
       return null
     }
-
     // concat interim and final, to show the text editing itself
     console.log("TRANSCRIPT", transcript)
     // to log final here, pass it down as a prop from node package
     console.log("FINAL", finalTranscript)
-
     console.log("STATE", this.state)
-
-    receiveMessage() 
-
+    
+    receiveSentiment()
+    receiveMessage()
+    
     return (
       <Scene />
     )
@@ -87,8 +83,3 @@ export default connect(mapState, null)(EnhancedRoom)
     The only thing I don't like about this component is that I don't know how to turn the speech to text off without exiting the page.  
 2. I am putting the final transcript on the state. 
 */
-
-//Get some text and put it in the state. 
-//Dispatch a reducer with the text that will hit an api route
-//This api route will send back some stuff from indico. 
-//Bing bam boom. Capstone KOd.
