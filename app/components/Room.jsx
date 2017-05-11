@@ -40,7 +40,6 @@ class Room extends Component {
     //We only want final transcripts to be sent when they are finished finalizing
     if (transcript === finalTranscript) {
       this.setState({text: finalTranscript})
-      receiveSentiment()
       // emit 'message' with finalTranscript as payload
       sendMessage(finalTranscript, this.state.language)
     }
@@ -58,8 +57,10 @@ class Room extends Component {
     // to log final here, pass it down as a prop from node package
     console.log("FINAL", finalTranscript)
     console.log("STATE", this.state)
-
-    receiveMessage() 
+    
+    receiveSentiment()
+    receiveMessage()
+    
     return (
       <Scene />
     )
@@ -82,8 +83,3 @@ export default connect(mapState, null)(EnhancedRoom)
     The only thing I don't like about this component is that I don't know how to turn the speech to text off without exiting the page.  
 2. I am putting the final transcript on the state. 
 */
-
-//Get some text and put it in the state. 
-//Dispatch a reducer with the text that will hit an api route
-//This api route will send back some stuff from indico. 
-//Bing bam boom. Capstone KOd.
