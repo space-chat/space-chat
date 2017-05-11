@@ -60,7 +60,7 @@ class Room extends Component {
     console.log("STATE", this.state)
     
     receiveSentiment()
-    receiveMessage()
+    receiveMessage(this.state.language)
     
     return (
       <Scene />

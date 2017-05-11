@@ -39,11 +39,18 @@ io.on('connection', (socket) => {
     console.log('socket joined room! lang: ', language)
     languages.push(language)
     console.log('languages on state are: ', languages)
+
+    // hardcoding text to test TTS call in receiveMessage()
+    // socket.emit('got message', { 
+    //   translatedBool: false, 
+    //   messageText: 'this is some dummy text', 
+    //   lang: 'en' })
+
   })
-  socket.on('message', ({ messageText, lang }) => {
+  socket.on('message', ({ messageText, lang, socketId }) => {
     console.log('new spoken message! text: ', messageText)
     let translatedBool = false
-    socket.emit('got message', { translatedBool, messageText, lang })
+    socket.emit('got message', { translatedBool, messageText, lang, socketId })
     //see indicoroutes.js for more info about the apis...
     indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
       .then(data => {
@@ -61,7 +68,7 @@ io.on('connection', (socket) => {
             console.log('results are', results)
             let translation = results[0]
             translatedBool = true
-            socket.emit('got message', { translatedBool, messageText: translation, lang: targetLang })
+            socket.emit('got message', { translatedBool, messageText: translation, lang: targetLang, socketId })
           })
           .catch(console.error)
       }
