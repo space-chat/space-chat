@@ -8,7 +8,6 @@ const Avatar = () => {
 	return (
 	<div>
 		<a-sphere 
-			position="-1 1.25 -5" 
 			radius="1.25" 
 			color="yellow">
 		</a-sphere>

@@ -19700,7 +19700,6 @@ var Avatar = function Avatar() {
 		"div",
 		null,
 		_react2.default.createElement("a-sphere", {
-			position: "-1 1.25 -5",
 			radius: "1.25",
 			color: "yellow" })
 	);
@@ -19756,8 +19755,8 @@ var Scene = function Scene() {
       null,
       _react2.default.createElement(_AssetsLoader2.default, null),
       _react2.default.createElement(_Avatar2.default, { position: '-1.5 1 -4' }),
-      _react2.default.createElement('a-sphere', { id: 'avatar', position: '-1 1.25 -5', radius: '1.25', color: 'yellow' }),
-      _react2.default.createElement('a-light', { color: 'white', angle: '45', position: '-1 1 0', type: 'spot', target: 'avatar' }),
+      _react2.default.createElement('a-sphere', { id: 'avatar', position: '-1 1.25 -5', radius: '1.75', color: 'white' }),
+      _react2.default.createElement('a-light', { color: 'red', angle: '45', position: '-1 1 0', type: 'spot', target: 'avatar' }),
       _react2.default.createElement('a-sky', { src: '#stars' })
     )
   );
