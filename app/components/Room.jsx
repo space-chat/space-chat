@@ -1,14 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-// socket.io's client side plugin
-import io from '../sockets'  
 // higher order component that allows Room to transcribe speech
 import SpeechRecognition from 'react-speech-recognition'
 // react thing that the browser will yell at you for if it's not correct
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
+import { joinRoom, sendMessage, receiveMessage, receiveSentiment } from '../sockets.js'
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -22,26 +21,32 @@ class Room extends Component {
     super()
     // do we need text on state?
     this.state = {
-      text: ''
+      language: ''
     }
+  }
+
+  componentWillMount() {
+    this.setState({ language: this.props.language })
+  }
+
+  componentDidMount() {
+    joinRoom(this.state.language)
   }
 
   // When the regular transcript and final transcript are the same, 
   // the final transcript has finalized, so it goes on state
   // The web speech API waits to finalize text until after a short pause.
   componentWillReceiveProps({transcript, finalTranscript}) {
+    //We only want final transcripts to be sent when they are finished finalizing
     if (transcript === finalTranscript) {
       this.setState({text: finalTranscript})
-    }
-    if (finalTranscript) {
       // emit 'message' with finalTranscript as payload
-      console.log("received final transcript:", finalTranscript)
-    }  
+      sendMessage(finalTranscript, this.state.language)
+    }
   }
 
   //When the scene renders, the API will start recording 
   render() {
-    // let socket = io()
     const { transcript, finalTranscript, resetTranscript, browserSupportsSpeechRecognition, recognition } = this.props
     // check if the user's browser supports the web speech api
     if (!browserSupportsSpeechRecognition) {
@@ -51,10 +56,11 @@ class Room extends Component {
     console.log("TRANSCRIPT", transcript)
     // to log final here, pass it down as a prop from node package
     console.log("FINAL", finalTranscript)
-
-    console.log(transcript === finalTranscript)
     console.log("STATE", this.state)
-
+    
+    receiveSentiment()
+    receiveMessage()
+    
     return (
       <Scene />
     )
@@ -64,7 +70,7 @@ class Room extends Component {
 Room.propTypes = propTypes
 const EnhancedRoom = SpeechRecognition(Room)
 
-const mapState = ({sentiment}) => ({sentiment})
+const mapState = ({language}) => ({language})
 
 export default connect(mapState, null)(EnhancedRoom)
 
@@ -77,8 +83,3 @@ export default connect(mapState, null)(EnhancedRoom)
     The only thing I don't like about this component is that I don't know how to turn the speech to text off without exiting the page.  
 2. I am putting the final transcript on the state. 
 */
-
-//Get some text and put it in the state. 
-//Dispatch a reducer with the text that will hit an api route
-//This api route will send back some stuff from indico. 
-//Bing bam boom. Capstone KOd.
