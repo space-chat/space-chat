@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import Avatar from '../../components-aframe/Avatar'
-import AssetLoader from '../../components-aframe/AssetLoader'
+import Avatar from './Avatar'
+import AssetLoader from './AssetLoader'
 
 const Scene = () => {
   return (
@@ -9,8 +9,8 @@ const Scene = () => {
         <AssetLoader />
         <Avatar />
         <a-light color="white" position="-1 1 0"></a-light>
-        <a-sky src="#stars2"
-          material="shader: flat; color: #ff0000">
+        <a-sky id="sky" src="#stars">
+          { /* need to use functionality in a-frame/set-sky-color.js here */ }
         </a-sky>
       </a-scene>
     </div>

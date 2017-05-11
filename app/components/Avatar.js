@@ -11,13 +11,22 @@ export default (props) => (
 	 - 
 	----------------- */
 	// Entity with id and compenents. I am assucming child entities inherit material components from parent (I know they inheret position compoonents for relative positioning)
-	<a-entity id="avatar" 
+	/*<a-entity id="avatar" 
 		position={`${props.x} ${props.y} ${props.z}`} 
 		material={`color: ${props.avatarColor}`}>
 		<a-entity id="avatar-body" 
 			geometry={`primitive: cone; radiusBottom: ${props.bodyRadius}; radiusTop: ${props.bodyRadius}/10`} />
 		<a-entity id="avatar-head"
-			geometry={`primitive: dodecahedron; radius: ${prpos.bodyRadius}/4`}
+			geometry={`primitive: dodecahedron; radius: ${props.bodyRadius}/4`}
 			position={0, 1, 0} />
+	</a-entity>*/
+	<a-entity id="avatar"
+		position="1 2 3"
+		material='#000000'>
+		<a-entity id="avatar-body"
+			geometry="primitive: cone; radiusBottom: 1; radiusTop: 2/10" />
+		<a-entity id="avatar-head"
+			geometry="primitive: dodecahedron; radius: 2/4"
+			position="0, 1, 0" />
 	</a-entity>
 )
