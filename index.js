@@ -20,11 +20,16 @@ app.get('/', (req, res, next) => {
   res.send("hi hi hi")
 })
 
+// store languages "State"
+let languages = []
+
 // when a socket connects, emit message back to that socket
 io.on('connection', (socket) => {
   console.log('new socket connected')
   socket.on('join', language => {
     console.log('socket joined room! lang: ', language)
+    languages.push(language)
+    console.log('languages on state are: ', languages)
   })
   socket.on('message', ({ spokenText, lang }) => {
     console.log('new spoken message! text: ', spokenText)
