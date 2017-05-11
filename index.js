@@ -54,16 +54,18 @@ io.on('connection', (socket) => {
       })
       .catch(console.error)
     // send text to translation
-    languages.forEach(lang => {
-      console.log('translating into ', lang)
-      translate.translate(messageText, lang)
-        .then(results => {
-          console.log('results are', results)
-          let translation = results[0]
-          translatedBool = true
-          socket.emit('got message', { translatedBool, messageText: translation, lang })
-        })
-        .catch(console.error)
+    languages.forEach(targetLang => {
+      if (targetLang !== lang ) {
+        console.log('translating into ', targetLang)
+        translate.translate(messageText, targetLang)
+          .then(results => {
+            console.log('results are', results)
+            let translation = results[0]
+            translatedBool = true
+            socket.emit('got message', { translatedBool, messageText: translation, lang: targetLang })
+          })
+          .catch(console.error)
+      }
     })
 
   })
