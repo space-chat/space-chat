@@ -18182,7 +18182,7 @@ var Home = function (_Component) {
         _react2.default.createElement(
           _reactRouter.Link,
           { className: 'btn btn-default', role: 'button', to: '/room' },
-          'ENTER SPACE CHAT'
+          'ENTER SPACECHAT'
         )
       );
     }

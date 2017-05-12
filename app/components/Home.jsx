@@ -35,7 +35,7 @@ class Home extends Component {
           </div>
         </div>
       </form>
-      <Link className="btn btn-default" role="button" to="/room">ENTER SPACE CHAT</Link>
+      <Link className="btn btn-default" role="button" to="/room">ENTER SPACECHAT</Link>
 		</div>
 		)
 	}
