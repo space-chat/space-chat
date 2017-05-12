@@ -29,9 +29,19 @@ class Home extends Component {
       <h1>SPACE CHAT</h1>
       <form>
         <h3>Select your language:</h3>
-        <select defaultValue='en' onChange={this.handleLanguageChange}>
+        <select onChange={this.handleLanguageChange}>
           <option value='en'>English</option>
           <option value='es'>Spanish</option>
+          <option value='zh'>Chinese</option>
+          <option value='ar'>Arabic</option>
+          <option value='de'>German</option>
+          <option value='fr'>French</option>
+          <option value='it'>Italian</option>
+          <option value='pt'>Portuguese</option>
+          <option value='nl'>Dutch</option>
+          <option value='ja'>Japanese</option>
+          <option value='ko'>Korean</option>
+          <option value='ru'>Russian</option>
         </select>
       </form>
       <div>
