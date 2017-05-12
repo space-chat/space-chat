@@ -64,6 +64,7 @@ io.on('connection', (socket) => {
 
     // 2) send text to API for translation
     languages.forEach(targetLang => {
+      console.log('target lang in server state array: ', targetLang, 'orig lang: ', lang)
       if (targetLang !== lang ) {
         console.log('server translating message into ', targetLang)
         translate.translate(messageText, targetLang)

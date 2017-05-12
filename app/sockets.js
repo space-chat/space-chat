@@ -4,23 +4,30 @@ import { updateEmotion } from './reducers/sentimentReducer.jsx'
 
 const socket = io()
 
+const synth = window.speechSynthesis
+let voices
+
 export function joinRoom(language) {
   socket.emit('join', language)
+  voices = synth.getVoices()
 }
 
-export function sendMessage (messageText, lang) {
+export function sendMessage(messageText, lang) {
   console.log('sending message ', messageText, ' in language ', lang)
   socket.emit('message', { messageText, lang })
 }
 
-export function receiveMessage (clientLang) {
+export function receiveMessage(clientLang) {
   socket.on('got message', ({ translatedBool, messageText, lang }) => {
     console.log('incoming message ', messageText, ' in language ', lang)
     // if lang in 'got message' payload matches socket user's language
     if (clientLang === lang && translatedBool) {
-      // speak text from 'got message' payload
+      // find correct voice, speak text from 'got message' payload
       var utterance = new SpeechSynthesisUtterance(messageText)
-      window.speechSynthesis.speak(utterance)
+      utterance.voice = voices.filter(voice => 
+        voice.lang.substr(0,2) === clientLang
+      )[0]
+      synth.speak(utterance)
     }
   })
 }

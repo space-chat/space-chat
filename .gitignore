@@ -3,5 +3,5 @@ config.js
 servicekey.json
 google-cloud-sdk
 indicokey.js
-bundle.js
-bundle.map.js
+public/bundle.js
+public/bundle.js.map
