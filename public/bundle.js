@@ -18267,16 +18267,25 @@ var Home = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
 
-    _this.state = {};
-    _this.onChange = _this.onChange.bind(_this);
+    _this.state = {
+      language: ''
+    };
+    _this.handleClick = _this.handleClick.bind(_this);
+    _this.handleLanguageChange = _this.handleLanguageChange.bind(_this);
     return _this;
   }
 
   _createClass(Home, [{
-    key: 'onChange',
-    value: function onChange(e) {
-      // dispatch action with language
-      this.props.setLanguage(e.target.value);
+    key: 'handleClick',
+    value: function handleClick(e) {
+      // dispatch action with language from state
+      this.props.setLanguage(this.state.language || 'en');
+    }
+  }, {
+    key: 'handleLanguageChange',
+    value: function handleLanguageChange(e) {
+      // set selected language on state
+      this.setState({ language: e.target.value });
     }
   }, {
     key: 'render',
@@ -18299,7 +18308,7 @@ var Home = function (_Component) {
           ),
           _react2.default.createElement(
             'select',
-            { onChange: this.onChange },
+            { defaultValue: 'en', onChange: this.handleLanguageChange },
             _react2.default.createElement(
               'option',
               { value: 'en' },
@@ -18317,7 +18326,7 @@ var Home = function (_Component) {
           null,
           _react2.default.createElement(
             _reactRouter.Link,
-            { to: '/room', className: 'btn' },
+            { to: '/room', className: 'btn', onClick: this.handleClick },
             'Enter Space Chat'
           )
         )
