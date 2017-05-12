@@ -4,35 +4,35 @@ var path = require('path')
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
 var bodyParser = require('body-parser')
-// var axios = require('axios')
 
+// import and authenticate with Indico Text APIs
 var indico = require('indico.io');
 indico.apiKey = require('./indicokey').api_key
-// Imports the Google Cloud client library
+
+// import the Google Cloud Translate API
 const Translate = require('@google-cloud/translate')
-// provides project id
+// instantiate a client
 const projectId = 'space-chat-166520'
-// Instantiates a client
 const translate = Translate({
   projectId: projectId,
   keyFilename: './servicekey.json'
 }) 
 
+// set up body parsing middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+// serve up static files
 app.use(express.static(path.join(__dirname, 'public')))
-
-// app.use('/api/analysis', require('./indicoroutes'))
 
 app.get('/', (req, res, next) => {
   res.send("hi hi hi")
 })
 
-// store languages "State"
+// store languages of connected sockets ("state")
 let languages = []
 
-// when a socket connects, emit message back to that socket
+// when a socket connects, store selected language of that socket
 io.on('connection', (socket) => {
   console.log('new socket connected')
   socket.on('join', language => {
@@ -44,39 +44,49 @@ io.on('connection', (socket) => {
     // socket.emit('got message', { 
     //   translatedBool: false, 
     //   messageText: 'this is some dummy text', 
-    //   lang: 'en' })
+    //   lang: 'en',
+    //   socketId
+    // })
 
   })
+  // when a socket sends a spoken message as text
   socket.on('message', ({ messageText, lang, socketId }) => {
     console.log('new spoken message! text: ', messageText)
     let translatedBool = false
+    // immediately emit message exactly as received to all other sockets
     socket.emit('got message', { translatedBool, messageText, lang, socketId })
-    //see indicoroutes.js for more info about the apis...
+
+    // send text to indico for analysis (okay if not english? otherwise add check)
     indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
       .then(data => {
         console.log("DATA", data)
-        //Here--do we want to emit or broadcast?
-        socket.emit('got sentiment', data)
+        // here--do we want to emit or broadcast?
+        // ^ io.sockets.emit should broadcast to ALL sockets, incl original sender
+        io.sockets.emit('got sentiment', data)
       })
       .catch(console.error)
-    // send text to translation
+
+    // send text for translation
     languages.forEach(targetLang => {
       if (targetLang !== lang ) {
         console.log('translating into ', targetLang)
         translate.translate(messageText, targetLang)
           .then(results => {
             console.log('results are', results)
+            // emit each translation to all other sockets
             let translation = results[0]
-            translatedBool = true
-            socket.emit('got message', { translatedBool, messageText: translation, lang: targetLang, socketId })
+            socket.emit('got message', { 
+              translatedBool: true, 
+              messageText: translation, 
+              lang: targetLang, 
+              socketId })
           })
           .catch(console.error)
       }
     })
-
   })
 })
 
-server.listen(3002, () => {
+server.listen(process.env.PORT || 3002, () => {
   console.log("listening on 3002 hey girrrlll")
 })
