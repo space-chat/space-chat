@@ -14,11 +14,11 @@ export function receiveMessage (clientLang) {
   socket.on('got message', ({ translatedBool, messageText, lang }) => {
     // if lang in 'got message' payload matches socket user's language
     console.log('RECEIVING MESSAGE FROM SERVER')
-    console.log('original lang' , lang)
+    console.log('original lang', lang)
     console.log('i am socket', socket.id, 'with lang ', clientLang)
-    if (clientLang === lang) {
+    if (clientLang === lang && translatedBool) {
       // speak text from 'got message' payload
-      console.log('SPEAKING TEXT...')
+      console.log('SPEAKING TEXT...', messageText)
       var utterance = new SpeechSynthesisUtterance(messageText)
       window.speechSynthesis.speak(utterance)
     }

@@ -7,7 +7,7 @@ var bodyParser = require('body-parser')
 
 // import and authenticate with Indico Text APIs
 var indico = require('indico.io');
-indico.apiKey = process.env.INDICO_API_KEY
+indico.apiKey = require('./indicokey.js')
 
 // import the Google Cloud Translate API
 const Translate = require('@google-cloud/translate')
