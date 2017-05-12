@@ -45,7 +45,9 @@ export default function sentimentReducer (state = initialState, action) {
 
     switch (action.type) {
         case UPDATE_EMOTION:
+        // if (newState.primaryEmotion[0] !== action.payload) {
             newState.primaryEmotion = [action.payload, ...newState.primaryEmotion]
+        
             break
 
         case UPDATE_INTENSITY:
