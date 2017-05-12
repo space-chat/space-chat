@@ -40,9 +40,8 @@ class Room extends Component {
   componentWillMount() {
     this.setState({ language: this.props.language })
 
-    if (this.props.sentiment.primaryEmotion[0] !== this.props.sentiment.primaryEmotion[1]) {
-      document.querySelector('#sky').emit('sentiment-change')
-    }
+    // if (this.props.sentiment.primaryEmotion[0] !== this.props.sentiment.primaryEmotion[1]) {
+    //}
 
   }
 

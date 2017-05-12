@@ -29,21 +29,18 @@ const Scene = (props) => {
         <a-sky
           id="sky"
           src="#stars" >
-        <a-animation
+        {/*<a-animation
             begin="sentiment-change"
             attribute="material.color"
             from={prevSkyColor}
             to="#000000"
-            dur="1000" 
-            ease="ease" />
+            ease="ease" />*/}
           <a-animation
             begin="sentiment-change"
-            delay="1000"
             attribute="material.color"
-            from="#000000"
+            from={prevSkyColor}
             to={skyColor}
-            dur="1000" 
-            ease="ease" />
+            ease="ease-in-circ" />
         </a-sky>
 
       </a-scene>
