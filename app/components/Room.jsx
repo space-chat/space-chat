@@ -29,7 +29,11 @@ class Room extends Component {
   }
 
   componentDidMount() {
+    // broadcast language to server
     joinRoom(this.state.language)
+    // set listeners to receive sentiment analyses, translated messages
+    receiveSentiment()
+    receiveMessage(this.state.language)
   }
 
   // web speech API waits to finalize text until after a short pause.
