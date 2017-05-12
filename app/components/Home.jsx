@@ -29,7 +29,7 @@ class Home extends Component {
       <h1>SPACE CHAT</h1>
       <form>
         <h3>Select your language:</h3>
-        <select defaultValue='en' onChange={this.handleLanguageChange}>
+        <select onChange={this.handleLanguageChange}>
           <option value='en'>English</option>
           <option value='es'>Spanish</option>
         </select>
