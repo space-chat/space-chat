@@ -7,7 +7,7 @@ var bodyParser = require('body-parser')
 
 // import and authenticate with Indico Text APIs
 var indico = require('indico.io');
-indico.apiKey = require('./indicokey').api_key
+indico.apiKey = process.env.INDICO_API_KEY
 
 // import the Google Cloud Translate API
 const Translate = require('@google-cloud/translate')
@@ -32,12 +32,16 @@ app.get('/', (req, res, next) => {
 // store languages of connected sockets ("state")
 let languages = []
 
-// when a socket connects, store selected language of that socket
+// when a socket connects, listen for messages
 io.on('connection', (socket) => {
   console.log('new socket connected')
+
+  // when a socket joins room, store selected language of that socket
   socket.on('join', language => {
     console.log('socket joined room! lang: ', language)
-    languages.push(language)
+    // check that language choice is not empty, and not already stored
+    if (language && languages.indexOf(language) === -1)
+      languages.push(language)
     console.log('languages on state are: ', languages)
 
     // hardcoding text to test TTS call in receiveMessage()
@@ -47,16 +51,17 @@ io.on('connection', (socket) => {
     //   lang: 'en',
     //   socketId
     // })
-
   })
+
   // when a socket sends a spoken message as text
   socket.on('message', ({ messageText, lang, socketId }) => {
     console.log('new spoken message! text: ', messageText)
     let translatedBool = false
-    // immediately emit message exactly as received to all other sockets
+    // 1) immediately emit message exactly as received to all other sockets
     socket.emit('got message', { translatedBool, messageText, lang, socketId })
 
-    // send text to indico for analysis (okay if not english? otherwise add check)
+    // 2) send text to indico for analysis
+    // (langs: 'en', 'zh', 'de', 'es', 'fr', 'it', 'ja', 'ru', 'ar', 'nl', 'ko', 'pt')
     indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
       .then(data => {
         console.log("DATA", data)
@@ -66,14 +71,14 @@ io.on('connection', (socket) => {
       })
       .catch(console.error)
 
-    // send text for translation
+    // 3) send text for translation
     languages.forEach(targetLang => {
       if (targetLang !== lang ) {
         console.log('translating into ', targetLang)
         translate.translate(messageText, targetLang)
           .then(results => {
             console.log('results are', results)
-            // emit each translation to all other sockets
+            // 3a) emit each translation to all other sockets
             let translation = results[0]
             socket.emit('got message', { 
               translatedBool: true, 
