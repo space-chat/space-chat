@@ -4,8 +4,12 @@ import { updateEmotion } from './reducers/sentimentReducer.jsx'
 
 const socket = io()
 
+const synth = window.speechSynthesis
+const voices = synth.getVoices()
+
 export function joinRoom(language) {
   socket.emit('join', language)
+  console.log('HERE ARE THE VOICES ', voices)
 }
 
 export function sendMessage (messageText, lang) {
@@ -20,7 +24,7 @@ export function receiveMessage (clientLang) {
     if (clientLang === lang && translatedBool) {
       // speak text from 'got message' payload
       var utterance = new SpeechSynthesisUtterance(messageText)
-      window.speechSynthesis.speak(utterance)
+      synth.speak(utterance)
     }
   })
 }
