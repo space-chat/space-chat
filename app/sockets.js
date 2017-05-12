@@ -4,6 +4,7 @@ import { updateEmotion } from './reducers/sentimentReducer.jsx'
 
 const socket = io()
 
+// enable text-to-speech in browser
 const synth = window.speechSynthesis
 let voices
 
