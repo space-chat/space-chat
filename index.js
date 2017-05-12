@@ -15,7 +15,7 @@ const Translate = require('@google-cloud/translate')
 const projectId = 'space-chat-166520'
 const translate = Translate({
   projectId: projectId,
-  keyFilename: './servicekey.json'
+  keyFilename: process.env.GOOGLE_API_KEY_FILE
 }) 
 
 // set up body parsing middleware
