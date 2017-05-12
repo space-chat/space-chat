@@ -43,22 +43,14 @@ io.on('connection', (socket) => {
     if (language && languages.indexOf(language) === -1)
       languages.push(language)
     console.log('all languages on server state are: ', languages)
-
-    // hardcoding text to test TTS call in receiveMessage()
-    // socket.emit('got message', { 
-    //   translatedBool: false, 
-    //   messageText: 'this is some dummy text', 
-    //   lang: 'en',
-    //   socketId
-    // })
   })
 
   // when a socket sends a spoken message as text
-  socket.on('message', ({ messageText, lang, socketId }) => {
+  socket.on('message', ({ messageText, lang }) => {
     console.log('new spoken message! server emitting original text: ', messageText)
     let translatedBool = false
     // 1) immediately emit message exactly as received to all other sockets
-    socket.emit('got message', { translatedBool, messageText, lang, socketId })
+    socket.emit('got message', { translatedBool, messageText, lang })
 
     // 2) send text to indico for analysis
     // (langs: 'en', 'zh', 'de', 'es', 'fr', 'it', 'ja', 'ru', 'ar', 'nl', 'ko', 'pt')
@@ -81,11 +73,10 @@ io.on('connection', (socket) => {
             let translation = results[0]
             console.log('translation successful: ', translation)
             console.log('server emitting translation')
-            socket.emit('got message', { 
+            socket.broadcast.emit('got message', { 
               translatedBool: true, 
               messageText: translation, 
-              lang: targetLang, 
-              socketId })
+              lang: targetLang })
           })
           .catch(console.error)
       }
