@@ -40,9 +40,7 @@ export function receiveSentiment() {
     }
 
     // update store with new emotion data
-    // then emit 'sentiment-change' event to <a-sky>
     store.dispatch(updateEmotion(primaryEmotion))
-      .then(document.querySelector('#sky').emit('sentiment-change'))
   }
 
     /* ----- Example of output: ------

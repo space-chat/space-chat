@@ -41,6 +41,11 @@ class Room extends Component {
 
   componentWillMount() {
     this.setState({ language: this.props.language })
+
+    if (this.props.sentiment.primaryEmotion[0] !== this.props.sentiment.primaryEmotion[1]) {
+      document.querySelector('#sky').emit('sentiment-change')
+    }
+
   }
 
   componentDidMount() {
@@ -71,8 +76,8 @@ class Room extends Component {
     // // concat interim and final, to show the text editing itself
     // console.log("TRANSCRIPT", transcript)
     // // to log final here, pass it down as a prop from node package
-    // console.log("FINAL", finalTranscript)
-    // console.log("STATE", this.state)
+    console.log("FINAL", finalTranscript)
+    console.log("STATE", this.state)
     
     receiveMessage()
 
