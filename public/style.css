@@ -2,19 +2,32 @@ body {
 /*  font-family: monospace;
   font-size: 16px;
   line-height: 150%;*/
-  text-align: center;
-  margin: 60px auto;
+  margin: 0px auto;
 }
 
-a { color: blue; }
+a {
+  color: white; 
+ }
+
+h3 {
+  text-align: center
+}
 
 .wrapper {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 80px auto;
 }
 
 .overview {
   padding-top: 10%;
+}
+
+.form-horizontal {
+  margin: 0 auto;
+}
+
+.btn {
+  margin: 0 auto;
 }
 
 #display {

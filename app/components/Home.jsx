@@ -18,19 +18,24 @@ class Home extends Component {
 	render() {
 		return (
 		<div className="wrapper">
-      <h3>You are about to enter a virtual experience in which users from across the world will understand your language, and where space itself will understand how you feel.</h3>
-      <div className="form-group">
-        <label className="col-lg-2 control-label">Select your language:</label>
-          <select onChange={this.onChange}>
-            <option value="en">English</option>
-            <option value="es">Spanish</option>
-          </select>
-        
+      <h3>You are about to enter a virtual experience in<br />which users from across the world will<br />understand your language.<br /><br />And where space will understand how you feel.</h3>
+      <br />
+      <br />
+      <br />
+      <form className="form-horizontal">
+        <div className="form-group">
+          <div>
+            <label className="control-label">Select your language:</label>
+          </div>
+          <div className="col-md-2">
+            <select className="form-control" id="select" onChange={this.onChange}>
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+            </select>
+          </div>
         </div>
-        <div>
-          {/* need to pass language as prop to Room */}
-          <h4><Link to="/room" className="btn">Enter Space Chat</Link></h4>
-        </div>
+      </form>
+      <Link className="btn btn-default" role="button" to="/room">ENTER SPACE CHAT</Link>
 		</div>
 		)
 	}

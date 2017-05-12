@@ -18132,43 +18132,57 @@ var Home = function (_Component) {
         _react2.default.createElement(
           'h3',
           null,
-          'You are about to enter a virtual experience in which users from across the world will understand your language, and where space itself will understand how you feel.'
+          'You are about to enter a virtual experience in',
+          _react2.default.createElement('br', null),
+          'which users from across the world will',
+          _react2.default.createElement('br', null),
+          'understand your language.',
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null),
+          'And where space will understand how you feel.'
         ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('br', null),
         _react2.default.createElement(
-          'div',
-          { className: 'form-group' },
+          'form',
+          { className: 'form-horizontal' },
           _react2.default.createElement(
-            'label',
-            { className: 'col-lg-2 control-label' },
-            'Select your language:'
-          ),
-          _react2.default.createElement(
-            'select',
-            { onChange: this.onChange },
+            'div',
+            { className: 'form-group' },
             _react2.default.createElement(
-              'option',
-              { value: 'en' },
-              'English'
+              'div',
+              null,
+              _react2.default.createElement(
+                'label',
+                { className: 'control-label' },
+                'Select your language:'
+              )
             ),
             _react2.default.createElement(
-              'option',
-              { value: 'es' },
-              'Spanish'
+              'div',
+              { className: 'col-md-2' },
+              _react2.default.createElement(
+                'select',
+                { className: 'form-control', id: 'select', onChange: this.onChange },
+                _react2.default.createElement(
+                  'option',
+                  { value: 'en' },
+                  'English'
+                ),
+                _react2.default.createElement(
+                  'option',
+                  { value: 'es' },
+                  'Spanish'
+                )
+              )
             )
           )
         ),
         _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'h4',
-            null,
-            _react2.default.createElement(
-              _reactRouter.Link,
-              { to: '/room', className: 'btn' },
-              'Enter Space Chat'
-            )
-          )
+          _reactRouter.Link,
+          { className: 'btn btn-default', role: 'button', to: '/room' },
+          'ENTER SPACE CHAT'
         )
       );
     }
