@@ -56,8 +56,6 @@ class Room extends Component {
         ru: 'ru-RU'
       }})
     if (!this.props.browserSupportsSpeechRecognition) return null
-    // if (this.props.sentiment.primaryEmotion[0] !== this.props.sentiment.primaryEmotion[1]) {
-    //}
   }
 
   componentDidMount() {
@@ -70,6 +68,7 @@ class Room extends Component {
 
   // NB: web speech API waits to finalize text until after a short pause
   componentWillReceiveProps({transcript, finalTranscript, resetTranscript, recognition}) {
+    // set language for speech recognition input
     recognition.lang = this.state.langDict[this.state.language]
     // when transcript finalized/ regular transcript and final transcript are the same
     if (transcript === finalTranscript && finalTranscript) {
@@ -81,16 +80,8 @@ class Room extends Component {
 
   // when the scene renders, API will start recording 
   render() {
-
-    // const { transcript, 
-    //   finalTranscript, 
-    //   resetTranscript, 
-    //   browserSupportsSpeechRecognition, 
-    //   recognition } = this.props
-    // check if browser supports the web speech API
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
-
     return (
       <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
     )
