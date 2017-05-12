@@ -34,15 +34,15 @@ let languages = []
 
 // when a socket connects, listen for messages
 io.on('connection', (socket) => {
-  console.log('new socket connected')
+  console.log('new socket ', socket.id, ' connected')
 
   // when a socket joins room, store selected language of that socket
   socket.on('join', language => {
-    console.log('socket joined room! lang: ', language)
+    console.log('socket ', socket.id, ' joined room! lang: ', language)
     // check that language choice is not empty, and not already stored
     if (language && languages.indexOf(language) === -1)
       languages.push(language)
-    console.log('languages on state are: ', languages)
+    console.log('all languages on server state are: ', languages)
 
     // hardcoding text to test TTS call in receiveMessage()
     // socket.emit('got message', { 
@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
 
   // when a socket sends a spoken message as text
   socket.on('message', ({ messageText, lang, socketId }) => {
-    console.log('new spoken message! text: ', messageText)
+    console.log('new spoken message! server emitting original text: ', messageText)
     let translatedBool = false
     // 1) immediately emit message exactly as received to all other sockets
     socket.emit('got message', { translatedBool, messageText, lang, socketId })
@@ -74,12 +74,13 @@ io.on('connection', (socket) => {
     // 3) send text for translation
     languages.forEach(targetLang => {
       if (targetLang !== lang ) {
-        console.log('translating into ', targetLang)
+        console.log('server translating message into ', targetLang)
         translate.translate(messageText, targetLang)
           .then(results => {
-            console.log('results are', results)
             // 3a) emit each translation to all other sockets
             let translation = results[0]
+            console.log('translation successful: ', translation)
+            console.log('server emitting translation')
             socket.emit('got message', { 
               translatedBool: true, 
               messageText: translation, 

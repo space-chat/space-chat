@@ -13,14 +13,16 @@ export function sendMessage (messageText, lang) {
 export function receiveMessage (clientLang) {
   socket.on('got message', ({ translatedBool, messageText, lang, socketId }) => {
     // if lang in 'got message' payload matches socket user's language
-    console.log('client: ', clientLang, socket.id, 'incoming: ', lang, socketId)
+    console.log('RECEIVING MESSAGE FROM SERVER')
+    console.log('original socket: ', socketId, 'with lang' , lang)
+    console.log('i am socket', socket.id, 'with lang ', clientLang)
     // and the original message didn't originate from this client
     if (clientLang === lang && socket.id !== socketId) {
       // speak text from 'got message' payload
+      console.log('SPEAKING TEXT...')
       var utterance = new SpeechSynthesisUtterance(messageText)
       window.speechSynthesis.speak(utterance)
     }
-    console.log(`translated? ${translatedBool}`, `text: ${messageText}`, `language: ${lang}`)
   })
 }
 

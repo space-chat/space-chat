@@ -54,9 +54,9 @@ class Room extends Component {
       return null
     }
     // concat interim and final, to show the text editing itself
-    console.log("TRANSCRIPT", transcript)
+    // console.log("TRANSCRIPT", transcript)
     // to log final here, pass it down as a prop from node package
-    console.log("FINAL", finalTranscript)
+    // console.log("FINAL", finalTranscript)
     console.log("STATE", this.state)
     
     // set listeners to receive sentiment analyses, translated messages
