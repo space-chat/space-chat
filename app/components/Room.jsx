@@ -1,3 +1,17 @@
+/* ------------------------------------------------
+When Room loads, it:
+(0) Renders dumb <Scene /> component
+(1) Starts recording and transcribing audio input (thanks to SpeechRecognition API)
+(2) Sets user's chosen language on state
+(3) Emits a 'join' message to server through socket (via joinRoom())
+(4) When speech transcription is finalized (happens when user pauses), emits 'message' msg to server through socket (via sendMesssage())
+   - server then processes transcription:
+      - analyzes sentiment, emits 'got sentiment' with sentiment data
+      - translates into target language, emits 'got message' with translated text
+(5) Receives sentiment data from server via receiveSentiment()
+(6) Receives translated text from server via receiveMessage()
+------------------------------------------------ */
+
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
@@ -16,8 +30,8 @@ const propTypes = {
 }
 
 class Room extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       language: ''
     }
@@ -25,6 +39,11 @@ class Room extends Component {
 
   componentWillMount() {
     this.setState({ language: this.props.language })
+
+    if (this.props.sentiment.primaryEmotion[0] !== this.props.sentiment.primaryEmotion[1]) {
+      document.querySelector('#sky').emit('sentiment-change')
+    }
+
   }
 
   componentDidMount() {
@@ -43,10 +62,12 @@ class Room extends Component {
       sendMessage(finalTranscript, this.state.language)
       resetTranscript()
     }
+    receiveSentiment()
   }
 
   // when the scene renders, API will start recording 
   render() {
+
     const { transcript, 
       finalTranscript, 
       resetTranscript, 
@@ -54,8 +75,11 @@ class Room extends Component {
       recognition } = this.props
     // check if browser supports the web speech API
     if (!browserSupportsSpeechRecognition) return null
+    let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
+    let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
+
     return (
-      <Scene />
+      <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
     )
   }
 }
@@ -63,7 +87,7 @@ class Room extends Component {
 Room.propTypes = propTypes
 const EnhancedRoom = SpeechRecognition(Room)
 
-const mapState = ({language}) => ({language})
+const mapState = ({language, sentiment}) => ({language, sentiment})
 
 export default connect(mapState, null)(EnhancedRoom)
 

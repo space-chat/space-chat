@@ -1,18 +1,57 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import Avatar from './Avatar'
+import AssetLoader from './AssetLoader'
 
-const Scene = () => {
+
+const Scene = (props) => {
+
+  // get primary emotion from props, convert it to color for sky animation 
+  let emotionColors = {
+      anger: '#FF0000',     // red
+      surprise: '#FF8300',  // orange
+      sadness: '#20A7D2',   // blue
+      fear: '#494850',      // dark grey
+      joy: '#FBFF00'        // yellow
+  }
+
+  let skyColor = emotionColors[props.currEmotion]
+  let prevSkyColor = emotionColors[props.prevEmotion]
+
+  console.log('skyColor is', skyColor, 'prevSkyColor is', prevSkyColor)
   return (
     <div>
       <a-scene>
-        <a-assets>
-          <img id="flowerSky" src="blossoms.jpg" />
-        </a-assets>
-        <a-sphere position="-1 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-        <a-torus-knot position="3 0.6 -3" radius="0.5" height="1.5" color="#FFC65D"></a-torus-knot>
-        <a-sky src="#flowerSky"></a-sky>
+        <AssetLoader />
+        <Avatar position="-1.5 1 -4" />
+        <a-sphere id="avatar" position="-1 1.25 -5" radius="1.75" material="src: #blossoms" color="white" />
+        <a-light color="red" angle="45" position="-1 1 0" type="spot" target="avatar" />
+
+        <a-sky
+          id="sky"
+          src="#stars" >
+        <a-animation
+            begin="sentiment-change"
+            attribute="material.color"
+            from={prevSkyColor}
+            to="#000000"
+            dur="1000" 
+            ease="ease" />
+          <a-animation
+            begin="sentiment-change"
+            delay="1000"
+            attribute="material.color"
+            from="#000000"
+            to={skyColor}
+            dur="1000" 
+            ease="ease" />
+        </a-sky>
+
       </a-scene>
     </div>
   )
 }
 
 export default Scene
+
+// fill="forward"
+// begin="sentiment-change"
