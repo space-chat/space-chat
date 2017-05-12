@@ -17,7 +17,6 @@ import {connect} from 'react-redux'
 
 // higher order component that allows Room to transcribe speech
 import SpeechRecognition from 'react-speech-recognition'
-// react thing that the browser will yell at you for if it's not correct
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
@@ -33,7 +32,6 @@ const propTypes = {
 class Room extends Component {
   constructor(props) {
     super(props)
-    // do we need text on state?
     this.state = {
       language: ''
     }
@@ -49,16 +47,17 @@ class Room extends Component {
   }
 
   componentDidMount() {
+    // broadcast language to server
     joinRoom(this.state.language)
+    // set listeners to receive sentiment analyses, translated messages
+    receiveSentiment()
+    receiveMessage(this.state.language)
   }
 
-  // When the regular transcript and final transcript are the same, 
-  // the final transcript has finalized, so it goes on state
-  // The web speech API waits to finalize text until after a short pause.
+  // NB: web speech API waits to finalize text until after a short pause
   componentWillReceiveProps({transcript, finalTranscript, resetTranscript}) {
-    //We only want final transcripts to be sent when they are finished finalizing
+    // when transcript finalized/ regular transcript and final transcript are the same
     if (transcript === finalTranscript && finalTranscript) {
-      this.setState({text: finalTranscript})
       // emit 'message' with finalTranscript as payload
       sendMessage(finalTranscript, this.state.language)
       resetTranscript()
@@ -66,21 +65,16 @@ class Room extends Component {
     receiveSentiment()
   }
 
-  //When the scene renders, the API will start recording 
+  // when the scene renders, API will start recording 
   render() {
-    const { transcript, finalTranscript, resetTranscript, browserSupportsSpeechRecognition, recognition } = this.props
-    // check if the user's browser supports the web speech api
-    if (!browserSupportsSpeechRecognition) {
-      return null
-    }
-    // // concat interim and final, to show the text editing itself
-    // console.log("TRANSCRIPT", transcript)
-    // // to log final here, pass it down as a prop from node package
-    console.log("FINAL", finalTranscript)
-    console.log("STATE", this.state)
-    
-    receiveMessage()
 
+    const { transcript, 
+      finalTranscript, 
+      resetTranscript, 
+      browserSupportsSpeechRecognition, 
+      recognition } = this.props
+    // check if browser supports the web speech API
+    if (!browserSupportsSpeechRecognition) return null
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
 

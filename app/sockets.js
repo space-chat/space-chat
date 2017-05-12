@@ -9,20 +9,21 @@ export function joinRoom(language) {
 }
 
 export function sendMessage (messageText, lang) {
-
-  // does google translate api need to know language of incoming text?
+  console.log('sending message ', messageText, ' in language ', lang)
   socket.emit('message', { messageText, lang })
 }
 
-export function receiveMessage () {
-  socket.on('got message', ({ translatedBool, messageText, lang }) =>
+export function receiveMessage (clientLang) {
+  socket.on('got message', ({ translatedBool, messageText, lang }) => {
+    console.log('incoming message ', messageText, ' in language ', lang)
     // if lang in 'got message' payload matches socket user's language
+    if (clientLang === lang && translatedBool) {
       // speak text from 'got message' payload
-    console.log(`translated? ${translatedBool}`, `text: ${messageText}`, `language: ${lang}`)
-  )
+      var utterance = new SpeechSynthesisUtterance(messageText)
+      window.speechSynthesis.speak(utterance)
+    }
+  })
 }
-
-export var skyColor = ''
 
 export function receiveSentiment() {
   socket.on('got sentiment', ({ emotion, sentiment, personality }) => {

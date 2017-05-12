@@ -23,33 +23,39 @@ class Home extends Component {
     this.setState({ language: e.target.value })
   }
 
-  render() {
-    return (
-    <div>
-      <h1>SPACE CHAT</h1>
-      <form>
-        <h3>Select your language:</h3>
-        <select onChange={this.handleLanguageChange}>
-          <option value='en'>English</option>
-          <option value='es'>Spanish</option>
-          <option value='zh'>Chinese</option>
-          <option value='ar'>Arabic</option>
-          <option value='de'>German</option>
-          <option value='fr'>French</option>
-          <option value='it'>Italian</option>
-          <option value='pt'>Portuguese</option>
-          <option value='nl'>Dutch</option>
-          <option value='ja'>Japanese</option>
-          <option value='ko'>Korean</option>
-          <option value='ru'>Russian</option>
-        </select>
-      </form>
-      <div>
-        <Link to='/room' className='btn' onClick={this.handleClick}>Enter Space Chat</Link>
-      </div>
-    </div>
-    )
-  }
+	render() {
+		return (
+  		<div className="wrapper">
+        <h3>You are about to enter a virtual experience in<br />which users from across the world will<br />understand your language.<br /><br />And where space will understand how you feel.</h3>
+        <br />
+        <br />
+        <br />
+        <div className="form">
+          <label className="control-label">Select your language:</label>
+        </div>
+        <div>
+          <select className="form-control" id="select"onChange={this.handleLanguageChange}>
+            <option value='en'>English</option>
+            <option value='es'>Spanish</option>
+            <option value='zh'>Chinese</option>
+            <option value='ar'>Arabic</option>
+            <option value='de'>German</option>
+            <option value='fr'>French</option>
+            <option value='it'>Italian</option>
+            <option value='pt'>Portuguese</option>
+            <option value='nl'>Dutch</option>
+            <option value='ja'>Japanese</option>
+            <option value='ko'>Korean</option>
+            <option value='ru'>Russian</option>
+          </select>
+        </div>
+        <br />
+        <br />
+        <br />
+        <Link className="btn btn-default" role="button" to="/room" onClick={this.handleClick}>ENTER SPACECHAT</Link>
+  		</div>
+		)
+	}
 }
 
 export default connect(null, {setLanguage})(Home)

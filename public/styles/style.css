@@ -1,18 +1,38 @@
 body {
-  font-family: monospace;
-  font-size: 16px;
-  line-height: 150%;
+  margin: 0px auto;
 }
 
-a { color: blue; }
+a {
+  color: white; 
+ }
+
+h3 {
+  text-align: center
+}
 
 .wrapper {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 80px auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .overview {
   padding-top: 10%;
+}
+
+.form {
+  width: 150px;
+  margin: 0 auto;
+}
+
+.form-control {
+  width: 150px;
+  margin: 0 auto;
+}
+
+.btn {
+  margin: 0 auto;
 }
 
 #display {
