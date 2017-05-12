@@ -46,7 +46,6 @@ export default function sentimentReducer (state = initialState, action) {
     switch (action.type) {
         case UPDATE_EMOTION:
             newState.primaryEmotion = [action.payload, ...newState.primaryEmotion]
-            // document.querySelector('#sky').emit('sentiment-change')
             break
 
         case UPDATE_INTENSITY:
