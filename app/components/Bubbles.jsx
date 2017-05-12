@@ -13,6 +13,8 @@ export default class Bubbles extends Component {
     //to do later:
     //Make this component customizable so that it could take in
     //different skies and bubble faces
+    //AKA make it a higher order component
+
     //Make bubbles.js easier to read/look at
     //Hook up sentiment analysis
     //Over the weekend, work on a solar system component
@@ -45,7 +47,7 @@ export default class Bubbles extends Component {
                     <a-assets>
                         <img id="flowerSky" src="blossoms.jpg" />
                     </a-assets>
-                    <a-sphere position="-1 1.25 -5" radius="0.01" color="#EF2D5E" id="pink"></a-sphere>
+                    <a-sphere position="-1 1.25 -5" radius="0.001" color="#EF2D5E" id="pink"></a-sphere>
                     <a-sky src="#flowerSky"></a-sky>
                 </a-scene>
             </div>

@@ -7,14 +7,12 @@ var bodyParser = require('body-parser')
 // var axios = require('axios')
 
 var indico = require('indico.io');
-indico.apiKey = require('./indicokey').api_key
+indico.apiKey = 'b895b4cf93b2701d2b26c5e918f141e2'
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use(express.static(path.join(__dirname, 'public')))
-
-// app.use('/api/analysis', require('./indicoroutes'))
 
 app.get('/', (req, res, next) => {
   res.send("hi hi hi")

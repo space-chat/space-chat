@@ -17870,7 +17870,7 @@ function on (obj, ev, fn) {
 
 var parser = __webpack_require__(89);
 var Emitter = __webpack_require__(88);
-var toArray = __webpack_require__(394);
+var toArray = __webpack_require__(392);
 var on = __webpack_require__(158);
 var bind = __webpack_require__(97);
 var debug = __webpack_require__(40)('socket.io-client:socket');
@@ -18450,6 +18450,8 @@ var Bubbles = function (_Component) {
         //to do later:
         //Make this component customizable so that it could take in
         //different skies and bubble faces
+        //AKA make it a higher order component
+
         //Make bubbles.js easier to read/look at
         //Hook up sentiment analysis
         //Over the weekend, work on a solar system component
@@ -19819,7 +19821,7 @@ exports.default = Scene;
 "use strict";
 
 
-var _three = __webpack_require__(393);
+var _three = __webpack_require__(391);
 
 var THREE = _interopRequireWildcard(_three);
 
@@ -24420,7 +24422,7 @@ var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(395);
+    NodeWebSocket = __webpack_require__(393);
   } catch (e) { }
 }
 
@@ -43750,9 +43752,7 @@ function symbolObservablePonyfill(root) {
 };
 
 /***/ }),
-/* 391 */,
-/* 392 */,
-/* 393 */
+/* 391 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -87435,7 +87435,7 @@ function CanvasRenderer() {
 
 
 /***/ }),
-/* 394 */
+/* 392 */
 /***/ (function(module, exports) {
 
 module.exports = toArray
@@ -87454,7 +87454,7 @@ function toArray(list, index) {
 
 
 /***/ }),
-/* 395 */
+/* 393 */
 /***/ (function(module, exports) {
 
 /* (ignored) */

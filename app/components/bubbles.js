@@ -22,6 +22,8 @@ function initScene() {
 	camera.setAttribute('focalLength', 3)
 }
 
+//This function should take a number for bubble size, number for metalness
+//a src for the bubble material
 function makeBubbles() {
 	for (var i = 0; i < 200; i++) {
 		var sphere = document.createElement('a-sphere')
@@ -39,6 +41,30 @@ function makeBubbles() {
 	window.addEventListener('resize', onWindowResize, false);
 	document.addEventListener('mousemove', onDocumentMouseMove, false)
 }
+
+//add bubbles --> called depending on sentiment
+
+//delete bubbles --> called depending on sentiment. 
+
+//makeBigger -->
+
+//--> make smaller
+
+//bubble circle swirl
+
+//increase speed
+
+//bubbles stand still
+
+//bubbles increase altitude
+
+//bubbles decrease altitude 
+
+//bubbles light up in random colors
+
+//bubbles increase metalness
+
+//bubbles decrease metalness
 
 function onWindowResize() {
 	var camera = document.getElementById('bubbleCamera')
