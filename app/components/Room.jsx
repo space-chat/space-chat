@@ -19,7 +19,6 @@ const propTypes = {
 class Room extends Component {
   constructor() {
     super()
-    // do we need text on state?
     this.state = {
       language: ''
     }
@@ -33,22 +32,23 @@ class Room extends Component {
     joinRoom(this.state.language)
   }
 
-  // When the regular transcript and final transcript are the same, 
-  // the final transcript has finalized, so it goes on state
-  // The web speech API waits to finalize text until after a short pause.
+  // web speech API waits to finalize text until after a short pause.
   componentWillReceiveProps({transcript, finalTranscript, resetTranscript}) {
-    //We only want final transcripts to be sent when they are finished finalizing
+    // when transcript finalized/ regular transcript and final transcript are the same
     if (transcript === finalTranscript && finalTranscript) {
-      this.setState({text: finalTranscript})
       // emit 'message' with finalTranscript as payload
       sendMessage(finalTranscript, this.state.language)
       resetTranscript()
     }
   }
 
-  //When the scene renders, the API will start recording 
+  // when the scene renders, API will start recording 
   render() {
-    const { transcript, finalTranscript, resetTranscript, browserSupportsSpeechRecognition, recognition } = this.props
+    const { transcript, 
+      finalTranscript, 
+      resetTranscript, 
+      browserSupportsSpeechRecognition, 
+      recognition } = this.props
     // check if the user's browser supports the web speech api
     if (!browserSupportsSpeechRecognition) {
       return null
