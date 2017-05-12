@@ -52,16 +52,7 @@ io.on('connection', (socket) => {
     // 1) immediately send message exactly as received to all OTHER sockets
     socket.broadcast.emit('got message', { translatedBool, messageText, lang })
 
-    // 2) send text to indico for analysis
-    indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
-      .then(data => {
-        console.log("DATA", data)
-        // io.sockets.emit sends to ALL sockets, INCL original sender
-        io.sockets.emit('got sentiment', data)
-      })
-      .catch(console.error)
-
-    // 3) send text to API for translation
+    // 2) send text to API for translation
     languages.forEach(targetLang => {
       if (targetLang !== lang ) {
         console.log('server translating message into ', targetLang)
@@ -79,6 +70,16 @@ io.on('connection', (socket) => {
           .catch(console.error)
       }
     })
+
+    // 3) send text to indico for analysis
+    indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
+      .then(data => {
+        console.log("DATA", data)
+        // io.sockets.emit sends to ALL sockets, INCL original sender
+        io.sockets.emit('got sentiment', data)
+      })
+      .catch(console.error)
+
   })
 })
 

@@ -7,11 +7,13 @@ export function joinRoom (language) {
 }
 
 export function sendMessage (messageText, lang) {
+  console.log('sending message ', messageText, ' in language ', lang)
   socket.emit('message', { messageText, lang })
 }
 
 export function receiveMessage (clientLang) {
   socket.on('got message', ({ translatedBool, messageText, lang }) => {
+    console.log('incoming message ', messageText, ' in language ', lang)
     // if lang in 'got message' payload matches socket user's language
     if (clientLang === lang && translatedBool) {
       // speak text from 'got message' payload
