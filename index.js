@@ -7,7 +7,7 @@ var bodyParser = require('body-parser')
 // var axios = require('axios')
 
 var indico = require('indico.io');
-indico.apiKey = require('./indicokey').api_key
+indico.apiKey = process.env.INDICO_API_KEY
 // Imports the Google Cloud client library
 const Translate = require('@google-cloud/translate')
 // provides project id
@@ -77,6 +77,6 @@ io.on('connection', (socket) => {
   })
 })
 
-server.listen(3002, () => {
+server.listen(process.env.PORT || 3002, () => {
   console.log("listening on 3002 hey girrrlll")
 })
