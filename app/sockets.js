@@ -7,27 +7,25 @@ export function joinRoom (language) {
 }
 
 export function sendMessage (messageText, lang) {
-  // does google translate api need to know language of incoming text?
-  socket.emit('message', { messageText, lang, socketId: socket.id })
+  console.log('sending message ', messageText, ' in language ', lang)
+  socket.emit('message', { messageText, lang })
 }
 
 export function receiveMessage (clientLang) {
-  socket.on('got message', ({ translatedBool, messageText, lang, socketId }) => {
+  socket.on('got message', ({ translatedBool, messageText, lang }) => {
+    console.log('incoming message ', messageText, ' in language ', lang)
     // if lang in 'got message' payload matches socket user's language
-    console.log('client: ', clientLang, socket.id, 'incoming: ', lang, socketId)
-    // and the original message didn't originate from this client
-    if (clientLang === lang && socket.id !== socketId) {
+    if (clientLang === lang && translatedBool) {
       // speak text from 'got message' payload
       var utterance = new SpeechSynthesisUtterance(messageText)
       window.speechSynthesis.speak(utterance)
     }
-    console.log(`translated? ${translatedBool}`, `text: ${messageText}`, `language: ${lang}`)
   })
 }
 
 export function receiveSentiment () {
   socket.on('got sentiment', ({ emotion, sentiment, personality }) => 
-    // update view with sentiment data
+    // TO DO: update view with sentiment data
     console.log(`emotion: ${emotion}`, `sentiment: ${sentiment}`, `personality: ${personality}`)
   )
 }
