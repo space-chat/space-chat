@@ -13,13 +13,21 @@ h3 {
 .wrapper {
   max-width: 800px;
   margin: 80px auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .overview {
   padding-top: 10%;
 }
 
-.form-horizontal {
+.form {
+  width: 150px;
+  margin: 0 auto;
+}
+
+.form-control {
+  width: 150px;
   margin: 0 auto;
 }
 

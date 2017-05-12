@@ -18145,40 +18145,35 @@ var Home = function (_Component) {
         _react2.default.createElement('br', null),
         _react2.default.createElement('br', null),
         _react2.default.createElement(
-          'form',
-          { className: 'form-horizontal' },
+          'div',
+          { className: 'form' },
           _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
+            'label',
+            { className: 'control-label' },
+            'Select your language:'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'select',
+            { className: 'form-control', id: 'select', onChange: this.onChange },
             _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                'label',
-                { className: 'control-label' },
-                'Select your language:'
-              )
+              'option',
+              { value: 'en' },
+              'English'
             ),
             _react2.default.createElement(
-              'div',
-              { className: 'col-md-2' },
-              _react2.default.createElement(
-                'select',
-                { className: 'form-control', id: 'select', onChange: this.onChange },
-                _react2.default.createElement(
-                  'option',
-                  { value: 'en' },
-                  'English'
-                ),
-                _react2.default.createElement(
-                  'option',
-                  { value: 'es' },
-                  'Spanish'
-                )
-              )
+              'option',
+              { value: 'es' },
+              'Spanish'
             )
           )
         ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('br', null),
         _react2.default.createElement(
           _reactRouter.Link,
           { className: 'btn btn-default', role: 'button', to: '/room' },

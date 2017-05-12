@@ -22,19 +22,18 @@ class Home extends Component {
       <br />
       <br />
       <br />
-      <form className="form-horizontal">
-        <div className="form-group">
-          <div>
-            <label className="control-label">Select your language:</label>
-          </div>
-          <div className="col-md-2">
-            <select className="form-control" id="select" onChange={this.onChange}>
-              <option value="en">English</option>
-              <option value="es">Spanish</option>
-            </select>
-          </div>
-        </div>
-      </form>
+      <div className="form">
+        <label className="control-label">Select your language:</label>
+      </div>
+      <div>
+        <select className="form-control" id="select"onChange={this.onChange}>
+          <option value="en">English</option>
+          <option value="es">Spanish</option>
+        </select>
+      </div>
+      <br />
+      <br />
+      <br />
       <Link className="btn btn-default" role="button" to="/room">ENTER SPACECHAT</Link>
 		</div>
 		)
