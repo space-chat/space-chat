@@ -3,6 +3,19 @@ import Avatar from './Avatar'
 import AssetLoader from './AssetLoader'
 
 
+const animate = (skyColor, prevSkyColor) => {
+  if (skyColor !== prevSkyColor) {
+    return (
+       <a-animation
+            begin="sentiment-change"
+            attribute="material.color"
+            from={prevSkyColor}
+            to={skyColor}
+            ease="ease-in-circ" />
+    )
+  }
+}
+
 const Scene = (props) => {
 
   // get primary emotion from props, convert it to color for sky animation 
@@ -35,12 +48,9 @@ const Scene = (props) => {
             from={prevSkyColor}
             to="#000000"
             ease="ease" />*/}
-          <a-animation
-            begin="sentiment-change"
-            attribute="material.color"
-            from={prevSkyColor}
-            to={skyColor}
-            ease="ease-in-circ" />
+
+            {animate(skyColor, prevSkyColor)}
+      
         </a-sky>
 
       </a-scene>
