@@ -7,7 +7,6 @@ export function joinRoom (language) {
 }
 
 export function sendMessage (messageText, lang) {
-  // does google translate api need to know language of incoming text?
   socket.emit('message', { messageText, lang, socketId: socket.id })
 }
 
@@ -27,7 +26,7 @@ export function receiveMessage (clientLang) {
 
 export function receiveSentiment () {
   socket.on('got sentiment', ({ emotion, sentiment, personality }) => 
-    // update view with sentiment data
+    // TO DO: update view with sentiment data
     console.log(`emotion: ${emotion}`, `sentiment: ${sentiment}`, `personality: ${personality}`)
   )
 }

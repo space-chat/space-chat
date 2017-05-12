@@ -59,6 +59,7 @@ class Room extends Component {
     console.log("FINAL", finalTranscript)
     console.log("STATE", this.state)
     
+    // set listeners to receive sentiment analyses, translated messages
     receiveSentiment()
     receiveMessage(this.state.language)
     
