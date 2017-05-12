@@ -26,14 +26,18 @@ io.on('connection', (socket) => {
   socket.on('join', language => {
     console.log('socket joined room! lang: ', language)
   })
+
+  // receive message text from the browser
   socket.on('message', ({ spokenText, lang }) => {
     console.log('new spoken message! text: ', spokenText)
     let translatedBool = false
+    // server confirms that it received the message (still untranslated)
     socket.emit('got message', { translatedBool, spokenText, lang })
-    //see indicoroutes.js for more info about the apis...
-    indico.analyzeText([spokenText], { apis: ["personality", "sentiment", "emotion"] })
+    
+    // perform sentiment analysis on received message then send back data to browser
+    indico.analyzeText([spokenText], { apis: ['personality', 'sentiment', 'emotion'] })
       .then(data => {
-        console.log("DATA", data)
+        console.log('DATA', data)
         //Here--do we want to emit or broadcast?
         socket.emit('got sentiment', data)
       })
