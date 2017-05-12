@@ -70,6 +70,6 @@ io.on('connection', (socket) => {
   })
 })
 
-server.listen(3002, () => {
+server.listen(process.env.PORT || 3002, () => {
   console.log("listening on 3002 hey girrrlll")
 })
