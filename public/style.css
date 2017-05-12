@@ -1,7 +1,9 @@
 body {
-  font-family: monospace;
+/*  font-family: monospace;
   font-size: 16px;
-  line-height: 150%;
+  line-height: 150%;*/
+  text-align: center;
+  margin: 60px auto;
 }
 
 a { color: blue; }
