@@ -49,21 +49,19 @@ io.on('connection', (socket) => {
   socket.on('message', ({ messageText, lang }) => {
     console.log('new spoken message! server emitting original text: ', messageText)
     let translatedBool = false
-    // 1) immediately emit message exactly as received to all other sockets
-    socket.emit('got message', { translatedBool, messageText, lang })
+    // 1) immediately send message exactly as received to all OTHER sockets
+    socket.broadcast.emit('got message', { translatedBool, messageText, lang })
 
     // 2) send text to indico for analysis
-    // (langs: 'en', 'zh', 'de', 'es', 'fr', 'it', 'ja', 'ru', 'ar', 'nl', 'ko', 'pt')
     indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
       .then(data => {
         console.log("DATA", data)
-        // here--do we want to emit or broadcast?
-        // ^ io.sockets.emit should broadcast to ALL sockets, incl original sender
+        // io.sockets.emit sends to ALL sockets, INCL original sender
         io.sockets.emit('got sentiment', data)
       })
       .catch(console.error)
 
-    // 3) send text for translation
+    // 3) send text to API for translation
     languages.forEach(targetLang => {
       if (targetLang !== lang ) {
         console.log('server translating message into ', targetLang)
@@ -72,7 +70,7 @@ io.on('connection', (socket) => {
             // 3a) emit each translation to all other sockets
             let translation = results[0]
             console.log('translation successful: ', translation)
-            console.log('server emitting translation')
+            // broadcast.emit sends to OTHER sockets, NOT original sender
             socket.broadcast.emit('got message', { 
               translatedBool: true, 
               messageText: translation, 

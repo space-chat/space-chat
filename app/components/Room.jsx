@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 
 // higher order component that allows Room to transcribe speech
 import SpeechRecognition from 'react-speech-recognition'
-// react thing that the browser will yell at you for if it's not correct
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
@@ -36,7 +35,7 @@ class Room extends Component {
     receiveMessage(this.state.language)
   }
 
-  // web speech API waits to finalize text until after a short pause.
+  // NB: web speech API waits to finalize text until after a short pause
   componentWillReceiveProps({transcript, finalTranscript, resetTranscript}) {
     // when transcript finalized/ regular transcript and final transcript are the same
     if (transcript === finalTranscript && finalTranscript) {
@@ -53,20 +52,8 @@ class Room extends Component {
       resetTranscript, 
       browserSupportsSpeechRecognition, 
       recognition } = this.props
-    // check if the user's browser supports the web speech api
-    if (!browserSupportsSpeechRecognition) {
-      return null
-    }
-    // concat interim and final, to show the text editing itself
-    // console.log("TRANSCRIPT", transcript)
-    // to log final here, pass it down as a prop from node package
-    // console.log("FINAL", finalTranscript)
-    console.log("STATE", this.state)
-    
-    // set listeners to receive sentiment analyses, translated messages
-    receiveSentiment()
-    receiveMessage(this.state.language)
-    
+    // check if browser supports the web speech API
+    if (!browserSupportsSpeechRecognition) return null
     return (
       <Scene />
     )
