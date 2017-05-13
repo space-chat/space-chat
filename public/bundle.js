@@ -40853,24 +40853,24 @@ props - prevEmotion, currEmotion, prevIntensity, currIntensity
 var Lights = function Lights(props) {
 
 	// emotion controls light color
-	var emotionColors = {
-		anger: '#FF0000', // red
-		surprise: '#FF8300', // orange
-		sadness: '#20A7D2', // blue
-		fear: '#494850', // dark grey
-		joy: '#FBFF00' // yellow
-	};
+	// let emotionColors = {
+	// 	anger: '#FF0000',     // red
+	//    surprise: '#FF8300',  // orange
+	//    sadness: '#20A7D2',   // blue
+	//    fear: '#494850',      // dark grey
+	//    joy: '#FBFF00'        // yellow
+	// }
 
-	// let lightAEmotionColors = {
-	// 	anger:
+	// let fixedLightA_color = {
+	// 	anger: '#FF0000',     // red
 	// 	surprise:
 	// 	sadness:
 	// 	fear:
 	// 	joy:
 	// }
 
-	// let lightBEmotionColors = {
-	// 	anger:
+	// let fixedLightB_color = {
+	// 	anger: '#FF8300',  // orange
 	// 	surprise:
 	// 	sadness:
 	// 	fear:
@@ -40882,6 +40882,35 @@ var Lights = function Lights(props) {
 	// 	//duration conversion
 	// }
 
+	// functions for producing knot shapes in scene
+	// adapted from: https://github.com/aframevr/aframe/blob/master/examples/showcase/dynamic-lights/index.html 
+	var createShapes = function createShapes() {
+		console.log('inside createShapes');
+		// Helper functions
+		var getRandColor = function getRandColor() {
+			var letters = '0123456789ABCDEF'.split('');
+			var color = '#';
+			for (var i = 0; i < 6; i++) {
+				color += letters[Math.floor(Math.random() * 16)];
+			}
+			return color;
+		};
+
+		var getRandCoord = function getRandCoord() {
+			var coord = Math.random() * 60;
+			return Math.random() < 0.5 ? coord + 5 : coord * -1 - 5;
+		};
+
+		// Generate random knots
+		for (var i = 0; i < 120; i++) {
+			console.log('inside createShapes 2');
+			return _react2.default.createElement('a-entity', {
+				geometry: '\n\t  \t\t\tprimitive: torusKnot;\n\t    \t\tradius: ' + Math.random() * 10 + ';\n\t    \t\tradiusTubular: ' + Math.random() * 0.75 + ';\n\t    \t\tp: ' + Math.round(Math.random() * 10) + ';\n\t    \t\tq: ' + Math.round(Math.random() * 10) + '\n\t    \t',
+				material: '\n\t    \t\tcolor: ' + getRandColor() + ';\n\t    \t\tmetalness: ' + Math.random() + ';\n\t    \t\troughness: ' + Math.random() + '\n\t\t\t\t',
+				position: '\n\t    \t\tx: ' + getRandCoord() + ';\n\t    \t\ty: ' + getRandCoord() + ';\n\t    \t\tz: ' + getRandCoord() + '\n\t\t\t\t'
+			});
+		}
+	};
 
 	return _react2.default.createElement(
 		'div',
@@ -40899,12 +40928,14 @@ var Lights = function Lights(props) {
 				_react2.default.createElement('a-mixin', { id: 'torus-knot', geometry: 'primitive: torusKnot',
 					material: 'color: red' })
 			),
-			_react2.default.createElement('a-entity', { id: 'avatar', geometry: 'primitive: torusKnot; radius: 3',
+			_react2.default.createElement('a-entity', { id: 'avatar',
+				geometry: 'primitive: torusKnot; radius: 3',
 				position: '-1 1.25 -5',
 				material: 'color: white',
-				light: 'color: green; type: point' }),
-			_react2.default.createElement('a-light', { color: 'blue', angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar' }),
-			_react2.default.createElement('a-light', { color: 'purple', angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar' }),
+				metalness: '.9',
+				roughness: '-2' }),
+			_react2.default.createElement('a-light', { id: 'fixedLightA', color: 'blue', angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar' }),
+			_react2.default.createElement('a-light', { id: 'fixedLightB', color: 'green', angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar' }),
 			_react2.default.createElement(
 				'a-entity',
 				{ position: '0 0 20' },
@@ -40918,56 +40949,20 @@ var Lights = function Lights(props) {
 				{ position: '0 0 0' },
 				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
 					repeat: 'indefinite', easing: 'linear', dur: '1096' }),
-				_react2.default.createElement('a-entity', { mixin: 'light', light: 'color: orange', position: '30 0 0' })
+				_react2.default.createElement('a-entity', { mixin: 'light', light: 'color: red', position: '30 0 0' })
 			),
 			_react2.default.createElement(
 				'a-entity',
 				{ position: '0 0 0' },
 				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '360 0 0',
 					repeat: 'indefinite', easing: 'linear', dur: '1096' }),
-				_react2.default.createElement('a-entity', { mixin: 'light', light: 'color: red', position: '0 0 40' })
+				_react2.default.createElement('a-entity', { mixin: 'light', light: 'color: orange', position: '0 0 40' })
 			)
 		)
 	);
 };
 //import Avatar from './Avatar'  // not rendering
 exports.default = Lights;
-
-// functions for producing knot shapes in scene
-// var scene = document.querySelector('a-scene');
-// for (var i = 0; i < 120; i++) {
-//   var obj = document.createElement('a-entity');
-//   obj.setAttribute('geometry', {
-//     primitive: 'torusKnot',
-//     radius: Math.random() * 10,
-//     radiusTubular: Math.random() * .75,
-//     p: Math.round(Math.random() * 10),
-//     q: Math.round(Math.random() * 10)
-//   });
-//   obj.setAttribute('material', {
-//     color: getRandColor(),
-//     metalness: Math.random(),
-//     roughness: Math.random()
-//   });
-//   obj.setAttribute('position', {
-//     x: getRandCoord(),
-//     y: getRandCoord(),
-//     z: getRandCoord()
-//   });
-//   scene.appendChild(obj);
-// }
-// function getRandColor () {
-//     var letters = '0123456789ABCDEF'.split('');
-//     var color = '#';
-//     for (var i = 0; i < 6; i++) {
-//       color += letters[Math.floor(Math.random() * 16)];
-//     }
-//     return color;
-// }
-// function getRandCoord () {
-//   var coord = Math.random() * 60;
-//   return Math.random() < .5 ? coord + 5 : coord * -1 - 5;
-// }
 
 /***/ })
 /******/ ]);
