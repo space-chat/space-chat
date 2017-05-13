@@ -18074,7 +18074,7 @@ props - prevEmotion, currEmotion, prevIntensity, currIntensity
 
 // Component with camera, skysphere, lights
 var Lights = function Lights(props) {
-	console.log('props', props);
+	console.log('props', props.currIntensity);
 
 	// emotion controls light color
 	var emotionColorsA = {
@@ -18100,6 +18100,7 @@ var Lights = function Lights(props) {
 
 	// intensity controls rate of lights spinning
 	var rate = props.currIntensity * 1000;
+	console.log('rate is', rate);
 
 	// functions for producing knot shapes in scene. not working.
 	// adapted from: https://github.com/aframevr/aframe/blob/master/examples/showcase/dynamic-lights/index.html 
@@ -18170,14 +18171,14 @@ var Lights = function Lights(props) {
 				'a-entity',
 				{ position: '0 0 0' },
 				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
-					repeat: 'indefinite', easing: 'linear', dur: '1096' }),
+					repeat: 'indefinite', easing: 'linear', dur: rate }),
 				_react2.default.createElement('a-entity', { mixin: 'lightA', position: '30 0 0' })
 			),
 			_react2.default.createElement(
 				'a-entity',
 				{ position: '0 0 0' },
 				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '360 0 0',
-					repeat: 'indefinite', easing: 'linear', dur: '1096' }),
+					repeat: 'indefinite', easing: 'linear', dur: rate }),
 				_react2.default.createElement('a-entity', { mixin: 'lightB', position: '0 0 40' })
 			)
 		)

@@ -10,7 +10,7 @@ props - prevEmotion, currEmotion, prevIntensity, currIntensity
 
 // Component with camera, skysphere, lights
 const Lights = (props) => {
-  console.log('props', props)
+  console.log('props', props.currIntensity)
 
 	// emotion controls light color
 	let emotionColorsA = {
@@ -34,8 +34,9 @@ const Lights = (props) => {
 
   console.log('colorA', colorA, 'colorB', colorB)
 
-	// intensity controls rate of lights spinning
-	let rate = props.currIntensity * 1000
+// intensity controls rate of lights spinning
+let rate = props.currIntensity * 1000
+console.log('rate is', rate)
 
 // functions for producing knot shapes in scene. not working.
 // adapted from: https://github.com/aframevr/aframe/blob/master/examples/showcase/dynamic-lights/index.html 
@@ -135,14 +136,14 @@ const createShapes = () => {
 			{/* x-axis rotation */}
 		    <a-entity position="0 0 0">
 		      <a-animation attribute="rotation" to="0 360 0"
-		                   repeat="indefinite" easing="linear" dur="1096">
+		                   repeat="indefinite" easing="linear" dur={rate}>
 		      </a-animation>
 		      <a-entity mixin="lightA" position="30 0 0"></a-entity>
 		    </a-entity>
         {/* y-axis rotation */}
 	      <a-entity position="0 0 0">
 	        <a-animation attribute="rotation" to="360 0 0"
-	                     repeat="indefinite" easing="linear" dur="1096">
+	                     repeat="indefinite" easing="linear" dur={rate}>
 	        </a-animation>
 	        <a-entity mixin="lightB" position="0 0 40"></a-entity>
 	      </a-entity>
