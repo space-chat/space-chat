@@ -15,7 +15,6 @@ export const UPDATE_PERSONALITY = "UPDATE_PERSONALITY"
 // Take sentiment analysis data sent back from server upon calling receiveSentiment()
 
 export const updateEmotion = (primaryEmotion) => {
-  console.log('you hit the updateEmotion action creator!')
   return {
     type: UPDATE_EMOTION,
     payload: primaryEmotion
@@ -49,7 +48,7 @@ export default function sentimentReducer (state = initialState, action) {
       break
 
     case UPDATE_INTENSITY:
-      newState.intensity = action.payload
+      newState.intensity = [action.payload, ...newState.intensity]
       break
 
     case UPDATE_PERSONALITY:

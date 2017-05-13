@@ -10613,7 +10613,6 @@ var UPDATE_PERSONALITY = exports.UPDATE_PERSONALITY = "UPDATE_PERSONALITY";
 // Take sentiment analysis data sent back from server upon calling receiveSentiment()
 
 var updateEmotion = exports.updateEmotion = function updateEmotion(primaryEmotion) {
-  console.log('you hit the updateEmotion action creator!');
   return {
     type: UPDATE_EMOTION,
     payload: primaryEmotion
@@ -10649,7 +10648,7 @@ function sentimentReducer() {
       break;
 
     case UPDATE_INTENSITY:
-      newState.intensity = action.payload;
+      newState.intensity = [action.payload].concat(_toConsumableArray(newState.intensity));
       break;
 
     case UPDATE_PERSONALITY:
@@ -17872,7 +17871,9 @@ var Room = function (_Component) {
     value: function render() {
       var prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy';
       var currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy';
-      return _react2.default.createElement(_Lights2.default, { prevEmotion: prevEmotion, currEmotion: currEmotion });
+      var prevIntensity = this.props.sentiment.intensity[1] || 0.5;
+      var currIntensity = this.props.sentiment.intensity[0] || 0.5;
+      return _react2.default.createElement(_Lights2.default, { prevEmotion: prevEmotion, currEmotion: currEmotion, prevIntensity: prevIntensity, currIntensity: currIntensity });
     }
   }]);
 
@@ -18258,20 +18259,25 @@ function receiveSentiment() {
 
     console.log('emotion: ' + emotion, 'sentiment: ' + sentiment, 'personality: ' + personality);
 
-    // update view with sentiment data
+    // get emotions, intensity
     var emotions = emotion[0];
 
     // identify strongest emotion
     var primaryEmotion = 'joy'; // default
+    var intensity = 0.5;
     for (var e in emotions) {
       if (emotions[e] > emotions[primaryEmotion]) {
         primaryEmotion = e;
+        intensity = emotions[e];
       }
     }
 
+    console.log('intensity is', intensity);
+
     // update store with new emotion data
     _store2.default.dispatch((0, _sentimentReducer.updateEmotion)(primaryEmotion));
-    document.querySelector('#sky').emit('sentiment-change');
+    _store2.default.dispatch((0, _sentimentReducer.updateIntensity)(intensity));
+    //document.querySelector('#sky').emit('sentiment-change')
   }
 
   /* ----- Example of output: ------
@@ -40831,63 +40837,29 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Avatar = __webpack_require__(162);
-
-var _Avatar2 = _interopRequireDefault(_Avatar);
-
 var _AssetLoader = __webpack_require__(161);
 
 var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// functions for producing knot shapes in scene
-// var scene = document.querySelector('a-scene');
-// for (var i = 0; i < 120; i++) {
-//   var obj = document.createElement('a-entity');
-//   obj.setAttribute('geometry', {
-//     primitive: 'torusKnot',
-//     radius: Math.random() * 10,
-//     radiusTubular: Math.random() * .75,
-//     p: Math.round(Math.random() * 10),
-//     q: Math.round(Math.random() * 10)
-//   });
-//   obj.setAttribute('material', {
-//     color: getRandColor(),
-//     metalness: Math.random(),
-//     roughness: Math.random()
-//   });
-//   obj.setAttribute('position', {
-//     x: getRandCoord(),
-//     y: getRandCoord(),
-//     z: getRandCoord()
-//   });
-//   scene.appendChild(obj);
-// }
-// function getRandColor () {
-//     var letters = '0123456789ABCDEF'.split('');
-//     var color = '#';
-//     for (var i = 0; i < 6; i++) {
-//       color += letters[Math.floor(Math.random() * 16)];
-//     }
-//     return color;
-// }
-// function getRandCoord () {
-//   var coord = Math.random() * 60;
-//   return Math.random() < .5 ? coord + 5 : coord * -1 - 5;
-// }
+/* -------------
+props - prevEmotion, currEmotion, prevIntensity, currIntensity
+# intensity will equal duration of rotation of light mixins
+# emotion will dictate colors of lights
+------------- */
 
 // Component with camera, skysphere, lights
 var Lights = function Lights(props) {
 
 	// emotion controls light color
-	// let avatarEmotionColors = {
-	// 	anger:
-	// 	surprise:
-	// 	sadness:
-	// 	fear:
-	// 	joy:
-	// }
+	var emotionColors = {
+		anger: '#FF0000', // red
+		surprise: '#FF8300', // orange
+		sadness: '#20A7D2', // blue
+		fear: '#494850', // dark grey
+		joy: '#FBFF00' // yellow
+	};
 
 	// let lightAEmotionColors = {
 	// 	anger:
@@ -40927,7 +40899,6 @@ var Lights = function Lights(props) {
 				_react2.default.createElement('a-mixin', { id: 'torus-knot', geometry: 'primitive: torusKnot',
 					material: 'color: red' })
 			),
-			_react2.default.createElement(_Avatar2.default, { position: '0 0 0' }),
 			_react2.default.createElement('a-entity', { id: 'avatar', geometry: 'primitive: torusKnot; radius: 3',
 				position: '-1 1.25 -5',
 				material: 'color: white',
@@ -40937,8 +40908,7 @@ var Lights = function Lights(props) {
 			_react2.default.createElement(
 				'a-entity',
 				{ position: '0 0 20' },
-				_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' }),
-				'}'
+				_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
 			),
 			_react2.default.createElement('a-entity', { geometry: 'primitive: sphere; radius: 600',
 				material: 'color: white',
@@ -40947,21 +40917,57 @@ var Lights = function Lights(props) {
 				'a-entity',
 				{ position: '0 0 0' },
 				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
-					repeat: 'indefinite', easing: 'linear', dur: '3096' }),
+					repeat: 'indefinite', easing: 'linear', dur: '1096' }),
 				_react2.default.createElement('a-entity', { mixin: 'light', light: 'color: orange', position: '30 0 0' })
 			),
 			_react2.default.createElement(
 				'a-entity',
 				{ position: '0 0 0' },
 				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '360 0 0',
-					repeat: 'indefinite', easing: 'linear', dur: '4096' }),
+					repeat: 'indefinite', easing: 'linear', dur: '1096' }),
 				_react2.default.createElement('a-entity', { mixin: 'light', light: 'color: red', position: '0 0 40' })
 			)
 		)
 	);
 };
-
+//import Avatar from './Avatar'  // not rendering
 exports.default = Lights;
+
+// functions for producing knot shapes in scene
+// var scene = document.querySelector('a-scene');
+// for (var i = 0; i < 120; i++) {
+//   var obj = document.createElement('a-entity');
+//   obj.setAttribute('geometry', {
+//     primitive: 'torusKnot',
+//     radius: Math.random() * 10,
+//     radiusTubular: Math.random() * .75,
+//     p: Math.round(Math.random() * 10),
+//     q: Math.round(Math.random() * 10)
+//   });
+//   obj.setAttribute('material', {
+//     color: getRandColor(),
+//     metalness: Math.random(),
+//     roughness: Math.random()
+//   });
+//   obj.setAttribute('position', {
+//     x: getRandCoord(),
+//     y: getRandCoord(),
+//     z: getRandCoord()
+//   });
+//   scene.appendChild(obj);
+// }
+// function getRandColor () {
+//     var letters = '0123456789ABCDEF'.split('');
+//     var color = '#';
+//     for (var i = 0; i < 6; i++) {
+//       color += letters[Math.floor(Math.random() * 16)];
+//     }
+//     return color;
+// }
+// function getRandCoord () {
+//   var coord = Math.random() * 60;
+//   return Math.random() < .5 ? coord + 5 : coord * -1 - 5;
+// }
 
 /***/ })
 /******/ ]);

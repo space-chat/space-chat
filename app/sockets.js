@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { updateEmotion } from './reducers/sentimentReducer.jsx'
+import { updateEmotion, updateIntensity } from './reducers/sentimentReducer.jsx'
 
 const socket = io()
 
@@ -37,20 +37,25 @@ export function receiveSentiment() {
   socket.on('got sentiment', ({ emotion, sentiment, personality }) => {
     console.log(`emotion: ${emotion}`, `sentiment: ${sentiment}`, `personality: ${personality}`)
 
-    // update view with sentiment data
+    // get emotions, intensity
     let emotions = emotion[0]
 
     // identify strongest emotion
     let primaryEmotion = 'joy' // default
+    let intensity = 0.5
     for (var e in emotions) {
       if (emotions[e] > emotions[primaryEmotion]) {
         primaryEmotion = e
+        intensity = emotions[e]
       }
     }
 
+    console.log('intensity is', intensity)
+    
     // update store with new emotion data
     store.dispatch(updateEmotion(primaryEmotion))
-    document.querySelector('#sky').emit('sentiment-change')
+    store.dispatch(updateIntensity(intensity))
+    //document.querySelector('#sky').emit('sentiment-change')
   }
 
     /* ----- Example of output: ------
