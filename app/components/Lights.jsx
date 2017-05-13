@@ -10,23 +10,29 @@ props - prevEmotion, currEmotion, prevIntensity, currIntensity
 
 // Component with camera, skysphere, lights
 const Lights = (props) => {
+  console.log('props', props)
 
 	// emotion controls light color
-	// let emotionColors = {
-	// 	anger: '#FF0000',     // red
- //    surprise: '#FF8300',  // orange
- //    sadness: '#20A7D2',   // blue
- //    fear: '#494850',      // dark grey
- //    joy: '#FBFF00'        // yellow
-	// }
+	let emotionColorsA = {
+		  anger: 'red',     // red
+    	surprise: '#CC0033',  // pink
+    	sadness: 'blue',   // blue
+    	fear: '#330000',      // brown
+    	joy: 'yellow'        // yellow
+	}
 
-	// let fixedLightA_color = {
-	// 	anger: '#FF0000',     // red
-	// 	surprise:
-	// 	sadness:
-	// 	fear:
-	// 	joy:
-	// }
+	let emotionColorsB = {
+		anger: '#FF6600', // orange    
+		surprise: '#FF66FF', // pink
+		sadness: 'green', // green
+		fear: '#006600', // dark green
+		joy: '#993300' // burnt orange
+	}
+
+  let colorA = emotionColorsA[props.currEmotion]
+  let colorB = emotionColorsB[props.currEmotion]
+
+  console.log('colorA', colorA, 'colorB', colorB)
 
 	// let fixedLightB_color = {
 	// 	anger: '#FF8300',  // orange
@@ -41,7 +47,7 @@ const Lights = (props) => {
 	// 	//duration conversion
 	// }
 
-// functions for producing knot shapes in scene
+// functions for producing knot shapes in scene. not working.
 // adapted from: https://github.com/aframevr/aframe/blob/master/examples/showcase/dynamic-lights/index.html 
 const createShapes = () => {
 	console.log('inside createShapes')
@@ -93,9 +99,13 @@ const createShapes = () => {
 	   <a-scene fog="type: exponential; color: purple">
 				<AssetLoader />
 				<a-assets>
-	        <a-mixin id="light" geometry="primitive: sphere; radius: 1.5"
+	        <a-mixin id="lightA" geometry="primitive: sphere; radius: 1.5"
 	                 material="color: black; shader: flat"
-	                 light="color: #DDDDFF; distance: 120; intensity: 2; type: point">
+	                 light="color: blue; distance: 120; intensity: 2; type: point">
+	        </a-mixin>
+	        <a-mixin id="lightB" geometry="primitive: sphere; radius: 1.5"
+	                 material="color: black; shader: flat"
+	                 light="color: orange; distance: 120; intensity: 2; type: point">
 	        </a-mixin>
 	        <a-mixin id="torus-knot" geometry="primitive: torusKnot"
 	                 material="color: red">
@@ -113,8 +123,8 @@ const createShapes = () => {
 	      	material="color: white"
 	      	metalness=".9"
 	      	roughness="-2" />
-        <a-light id="fixedLightA" color="blue" angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar" />
-        <a-light id="fixedLightB" color="green" angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar" />
+        <a-light id="fixedLightA" color={colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar" />
+        <a-light id="fixedLightB" color={colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar" />
 
 		    {/* Camera:
 		    	# Position should always be placed on an entity wrapper around camera.
@@ -132,19 +142,19 @@ const createShapes = () => {
 		    </a-entity>
 
 		    {/* Lights. */}
-				{/* x-axis rotation */}
+			{/* x-axis rotation */}
 		    <a-entity position="0 0 0">
 		      <a-animation attribute="rotation" to="0 360 0"
 		                   repeat="indefinite" easing="linear" dur="1096">
 		      </a-animation>
-		      <a-entity mixin="light" light="color: red" position="30 0 0"></a-entity>
+		      <a-entity mixin="lightA" position="30 0 0"></a-entity>
 		    </a-entity>
-		  {/* y-axis rotation */}
+        {/* y-axis rotation */}
 	      <a-entity position="0 0 0">
 	        <a-animation attribute="rotation" to="360 0 0"
 	                     repeat="indefinite" easing="linear" dur="1096">
 	        </a-animation>
-	        <a-entity mixin="light" light="color: orange" position="0 0 40"></a-entity>
+	        <a-entity mixin="lightB" position="0 0 40"></a-entity>
 	      </a-entity>
 			</a-scene>
 		</div>
