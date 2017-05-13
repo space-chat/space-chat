@@ -35,7 +35,7 @@ const Lights = (props) => {
   console.log('colorA', colorA, 'colorB', colorB)
 
 // intensity controls rate of lights spinning
-let rate = props.currIntensity * 1000
+let rate = (props.currIntensity - 1) * -2000
 console.log('rate is', rate)
 
 // functions for producing knot shapes in scene. not working.

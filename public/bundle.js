@@ -18099,7 +18099,7 @@ var Lights = function Lights(props) {
 	console.log('colorA', colorA, 'colorB', colorB);
 
 	// intensity controls rate of lights spinning
-	var rate = props.currIntensity * 1000;
+	var rate = (props.currIntensity - 1) * -2000;
 	console.log('rate is', rate);
 
 	// functions for producing knot shapes in scene. not working.
