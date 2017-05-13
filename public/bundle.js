@@ -17879,8 +17879,9 @@ var Room = function (_Component) {
     value: function render() {
       var prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy';
       var currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy';
-      // let prevSecondEmotion = this.props.sentiment.secondaryEmotion[1] || 0.5
-      // let currSecondEmotion = this.props.sentiment.secondaryEmotion[0] || 0.5
+      console.log('emotions in Room are', prevEmotion, currEmotion);
+      // let prevSecondEmotion = this.props.sentiment.secondaryEmotion[1] || 'surprise'
+      // let currSecondEmotion = this.props.sentiment.secondaryEmotion[0] || 'surprise'
       return _react2.default.createElement(_Scene2.default, { prevEmotion: prevEmotion, currEmotion: currEmotion });
     }
   }]);
