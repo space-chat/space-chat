@@ -3,3 +3,7 @@ config.js
 servicekey.json
 google-cloud-sdk
 indicokey.js
+reference
+app/a-frame
+bundle.js
+bundle.js.map

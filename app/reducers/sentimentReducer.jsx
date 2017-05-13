@@ -1,47 +1,73 @@
-import axios from 'axios'
 
-//CONSTANTS
-
-export const GOT_ANALYSIS = "GOT_ANALYSIS"
-
-//Actions
-
-export const gotAnalysis = (res) => {
-    return {
-        type: GOT_ANALYSIS, 
-        payload: res.data
-    }
+const initialState = {
+  primaryEmotion: [],
+  intensity: [],
+  personality: []
 }
 
-//there may also be a broadcastSentiment...which would broadcast the latest sentiment data to all users in the room. 
+/* ------------------    ACTIONS    ------------------ */
+export const UPDATE_EMOTION = "UPDATE_EMOTION"
+export const UPDATE_INTENSITY = "UPDATE_INTENSITY"          // 'sentiment' = 'intensity'
+export const UPDATE_PERSONALITY = "UPDATE_PERSONALITY"
 
-//Action Creators
 
-// export const sendForAnanlysis = (text) => {
-//     return dispatch => 
-//     axios.post('/api/sentiment', {text})
-//     .then((res) => dispatch(gotAnalysis(res)))
-//     .catch(console.error)
-//}
+/* ------------------    ACTION CREATORS    ------------------ */
+// Take sentiment analysis data sent back from server upon calling receiveSentiment()
 
-export const sendForAnalysis = (text) => {
-    const res = axios.post('/api/sentiment', { text })
-    console.log("RESSSS")
-    return {
-        type: GOT_ANALYSIS,
-        payload: res
-    }
+export const updateEmotion = (primaryEmotion) => {
+  console.log('you hit the updateEmotion action creator!')
+  return {
+    type: UPDATE_EMOTION,
+    payload: primaryEmotion
+  }
 }
 
-//Perhaps the sentiment store could be more complex...keeping seperate entries for different emotions, etc. 
-const sentimentReducer = (state = [], action) => {
-    console.log(action)
-    switch (action.type) {
-        case GOT_ANALYSIS:
-            return [...state, action.payload]
-        default: return state
-    }
+export const updateIntensity = (intensityData) => {
+  return {
+    type: UPDATE_INTENSITY,
+    payload: intensityData
+  }
 }
 
-export default sentimentReducer;
+export const updatePersonality = (personalityData) => {
+  return {
+    type: UPDATE_PERSONALITY,
+    payload: personalityData
+  }
+}
+
+
+/* ------------------    REDUCERS    ------------------ */
+
+export default function sentimentReducer (state = initialState, action) {
+
+  const newState = Object.assign({}, state)
+
+  switch (action.type) {
+    case UPDATE_EMOTION:
+      newState.primaryEmotion = [action.payload, ...newState.primaryEmotion]
+      break
+
+    case UPDATE_INTENSITY:
+      newState.intensity = action.payload
+      break
+
+    case UPDATE_PERSONALITY:
+      newState.personality = action.payload
+      break
+
+    default:
+      return state
+  }
+
+  return newState
+}
+
+
+/* ------------------    DISPATCHERS    ------------------ */
+
+
+
+
+
 
