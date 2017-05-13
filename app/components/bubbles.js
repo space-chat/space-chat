@@ -1,5 +1,6 @@
 //This component controls sphere rendering and animations of Bubbles.jsx. 
-//Some of this code is based on Three.js' example here:  https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html
+//Much of this code is based on Three.js' example here:  https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html
+
 var spheres = [];
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
@@ -8,9 +9,10 @@ var height = window.innerHeight || 2;
 var directionalLight, pointLight;
 var mouseX = 0;
 var mouseY = 0;
-var defaultScale = 0.2
+var currentScale = 0.2
 var tickSpeed = 0.00005
 var movementPath = "trig";
+var altitude = "normal"
 
 //Set up orbital camera, mouse listener, and window resize listener. 
 function initScene() {
@@ -26,13 +28,18 @@ function initScene() {
 	document.addEventListener('mousemove', onDocumentMouseMove, false)
 }
 
-//Create a single bubble
-function createBubble(scaleNum) {
+//Create a single bubble with a specified material, scale, and altitude
+function createBubble(scaleNum, img, color) {
 	var sphere = document.createElement('a-sphere')
 	let x = Math.random() * 10;
-	let y = Math.random() * 10;
+	var y; 
+	if (altitude === "high") {
+		y = Math.floor(Math.random()*(10-6+1)+6)
+	} else {
+		y = Math.random() * 10
+	}
 	let z = Math.random() * 10;
-	sphere.setAttribute('material', "src:#flowerSky; roughness: 0.01")
+	sphere.setAttribute('material', `src:${img}; roughness: 0.01; color: ${color}`)
 	sphere.setAttribute('position', { x: x, y: y, z: z })
 	let scale = Math.random() * 0.5 + scaleNum   //default is 0.2
 	sphere.setAttribute('scale', { x: scale, y: scale, z: scale })
@@ -41,16 +48,18 @@ function createBubble(scaleNum) {
 	document.querySelector('a-scene').appendChild(sphere);
 }
 
-//Create any number of bubbles with any material and level of metalness. 
-function makeBubbles(numBubbles) {
+//Create any number of bubbles with any material. 
+function makeBubbles(numBubbles, img, color) {
 	for (var i = 0; i < numBubbles; i++) {
-		createBubble(defaultScale)
+		createBubble(currentScale, img, color)
 	}
+	console.log("making!")
 }
 
 //Add more bubbles to the scene
-function addBubbles(numBubbles) {
-	makeBubbles(numBubbles)
+function addBubbles(numBubbles, img, color) {
+	console.log("adding!")
+	makeBubbles(numBubbles, img, color)
 }
 
 //Remove bubbles from the scene
@@ -61,17 +70,17 @@ function destroyBubbles(numBubbles) {
 	}
 }
 
-//Make some bubbles increase or decrease in size
-function sizeBubbles(scale) {
+//Make some bubbles increase or decrease in size, or change color
+function sizeOrColor(scale, img, color) {
 	var n = spheres.length / 5
 	destroyBubbles(n)
 
 	for (var i = 0; i < n; i++) {
-		createBubble(scale)
+		createBubble(scale, img, color)
 	}
 }
 
-//Use to increase + decrease speed, and to stop the bubbles. 
+//Use to increase or decrease speed, and to stop the bubbles. 
 function updateSpeed(n) {
 	tickSpeed = n
 }
@@ -81,15 +90,13 @@ function updatePath(pathName) {
 	movementPath = pathName
 }
 
-//bubbles increase altitude
-
-//bubbles decrease altitude 
-
-//bubbles light up in random colors
-
-//bubbles increase metalness
-
-//bubbles decrease metalness
+//Use to change the altitude: normal, or high. (low altitude seems to be at eye level which is annoying)
+function updateAltitude(alt, img, color) {
+	altitude = alt
+	var len = spheres.length; 
+	destroyBubbles(len)
+	makeBubbles(len, img, color)
+}
 
 function animate() {
 	requestAnimationFrame(animate);
@@ -138,17 +145,6 @@ function render() {
 	}
 }
 
-
-
-// function circleAnim(ticker) {
-// 	for (var i = 0, il = spheres.length; i < il; i++) {
-// 		var sphere = spheres[i];
-
-// 		sphere.setAttribute('position', { x: 7 * Math.sin(timer + (2 * Math.PI)) }) 
-// 		sphere.setAttribute('position', { y: 7 * Math.cos(timer + (2 * Math.PI)) })
-// 	}
-// }
-
 function onWindowResize() {
 	var camera = document.getElementById('bubbleCamera')
 	windowHalfX = window.innerWidth / 2;
@@ -162,4 +158,4 @@ function onDocumentMouseMove(event) {
 }
 
 
-module.exports = { initScene, makeBubbles, animate, addBubbles, destroyBubbles, sizeBubbles, updateSpeed, updatePath }
+module.exports = { initScene, makeBubbles, animate, addBubbles, destroyBubbles, sizeOrColor, updateSpeed, updatePath, updateAltitude }

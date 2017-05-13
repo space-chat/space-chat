@@ -1,35 +1,42 @@
 import React, { Component } from 'react';
 
-import { initScene, makeBubbles, animate, addBubbles, destroyBubbles, sizeBubbles, updateSpeed, updatePath } from './bubbles.js'
+import { initScene, makeBubbles, animate, addBubbles, destroyBubbles, sizeOrColor, updateSpeed, updatePath, updateAltitude } from './bubbles.js'
 
 export default class Bubbles extends Component {
 
     constructor() {
         super()
 
+        this.state = {
+            sky: '#flowerSky', 
+            color: "yellow", 
+            scale: 1
+        }
+
         this.handleAdd = this.handleAdd.bind(this)
         this.handleSubtract = this.handleSubtract.bind(this)
-        this.handleSize = this.handleSize.bind(this)
+        this.handleSizeOrColor = this.handleSizeOrColor.bind(this)
         this.handleSpeed = this.handleSpeed.bind(this)
         this.handlePath = this.handlePath.bind(this)
+        this.handleAltitude = this.handleAltitude.bind(this)
     }
 
     componentDidMount() {
         initScene()
-        makeBubbles(200)
+        makeBubbles(200, this.state.sky, this.state.color)
         animate()
     }
 
     handleAdd() {
-        addBubbles(200)
+        addBubbles(200, this.state.sky, this.state.color)
     }
 
     handleSubtract() {
         destroyBubbles(100)
     }
 
-    handleSize() {
-        sizeBubbles(1)
+    handleSizeOrColor() {
+        sizeOrColor(this.state.scale, this.state.sky, this.state.color)
     }
 
     //Default speed is 0.0005
@@ -42,16 +49,11 @@ export default class Bubbles extends Component {
         updatePath(name)
     }
 
-    //to do later:
-    //Make this component customizable so that it could take in
-    //different skies and bubble faces
-    //AKA make it a higher order component
+    handleAltitude(alt) {
+        updateAltitude(alt, this.state.sky, this.state.color)
+    }
 
-    //Make bubbles.js easier to read/look at
-    //Hook up sentiment analysis
-    //Over the weekend, work on a solar system component
-
-    //For sentiment analysis:
+    
 
 
     //bubbles move in circle, revolving around something
@@ -75,9 +77,10 @@ export default class Bubbles extends Component {
                 <div>
                     <button onClick={this.handleAdd}>Add bubbles</button>
                     <button onClick={this.handleSubtract}>Remove bubbles</button>
-                    <button onClick={this.handleSize}>Size bubbles</button>
+                    <button onClick={this.handleSizeOrColor}>Size bubbles</button>
                     <button onClick={() => this.handleSpeed(0.001)}>Change bubble speed</button>
                     <button onClick={() => this.handlePath("pendulum")}>Change to circleZ</button>
+                    <button onClick={() => this.handleAltitude("high")}>Mak bubbles higher</button>
                 </div>
                 <div>
                     <a-scene vr-mode-ui="enabled: true">
