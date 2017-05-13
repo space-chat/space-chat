@@ -17653,7 +17653,7 @@ var Home = function (_Component) {
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           _reactRouter.Link,
-          { className: 'btn btn-default', role: 'button', to: '/lights', onClick: this.handleClick },
+          { className: 'btn btn-default', role: 'button', to: '/room', onClick: this.handleClick },
           'ENTER SPACECHAT'
         )
       );
@@ -40824,7 +40824,7 @@ function toArray(list, index) {
 
 
 Object.defineProperty(exports, "__esModule", {
-		value: true
+	value: true
 });
 
 var _react = __webpack_require__(6);
@@ -40834,83 +40834,83 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // functions for producting shapes in scene
-var scene = document.querySelector('a-scene');
-for (var i = 0; i < 120; i++) {
-		var obj = document.createElement('a-entity');
-		obj.setAttribute('geometry', {
-				primitive: 'torusKnot',
-				radius: Math.random() * 10,
-				radiusTubular: Math.random() * .75,
-				p: Math.round(Math.random() * 10),
-				q: Math.round(Math.random() * 10)
-		});
-		obj.setAttribute('material', {
-				color: getRandColor(),
-				metalness: Math.random(),
-				roughness: Math.random()
-		});
-		obj.setAttribute('position', {
-				x: getRandCoord(),
-				y: getRandCoord(),
-				z: getRandCoord()
-		});
-		scene.appendChild(obj);
-}
-function getRandColor() {
-		var letters = '0123456789ABCDEF'.split('');
-		var color = '#';
-		for (var i = 0; i < 6; i++) {
-				color += letters[Math.floor(Math.random() * 16)];
-		}
-		return color;
-}
-function getRandCoord() {
-		var coord = Math.random() * 60;
-		return Math.random() < .5 ? coord + 5 : coord * -1 - 5;
-}
+// var scene = document.querySelector('a-scene');
+// for (var i = 0; i < 120; i++) {
+//   var obj = document.createElement('a-entity');
+//   obj.setAttribute('geometry', {
+//     primitive: 'torusKnot',
+//     radius: Math.random() * 10,
+//     radiusTubular: Math.random() * .75,
+//     p: Math.round(Math.random() * 10),
+//     q: Math.round(Math.random() * 10)
+//   });
+//   obj.setAttribute('material', {
+//     color: getRandColor(),
+//     metalness: Math.random(),
+//     roughness: Math.random()
+//   });
+//   obj.setAttribute('position', {
+//     x: getRandCoord(),
+//     y: getRandCoord(),
+//     z: getRandCoord()
+//   });
+//   scene.appendChild(obj);
+// }
+// function getRandColor () {
+//     var letters = '0123456789ABCDEF'.split('');
+//     var color = '#';
+//     for (var i = 0; i < 6; i++) {
+//       color += letters[Math.floor(Math.random() * 16)];
+//     }
+//     return color;
+// }
+// function getRandCoord () {
+//   var coord = Math.random() * 60;
+//   return Math.random() < .5 ? coord + 5 : coord * -1 - 5;
+// }
 
 // Component with camera, skysphere, lights
-var Lights = function Lights() {
-		return _react2.default.createElement(
-				'div',
+var Lights = function Lights(props) {
+	return _react2.default.createElement(
+		"div",
+		null,
+		_react2.default.createElement(
+			"a-scene",
+			null,
+			_react2.default.createElement(
+				"a-assets",
 				null,
-				_react2.default.createElement(
-						'a-scene',
-						null,
-						_react2.default.createElement(
-								'a-assets',
-								null,
-								_react2.default.createElement('a-mixin', { id: 'light', geometry: 'primitive: sphere; radius: 1.5',
-										material: 'color: #FFF; shader: flat',
-										light: 'color: #DDDDFF; distance: 120; intensity: 2; type: point' }),
-								_react2.default.createElement('a-mixin', { id: 'torus-knot', geometry: 'primitive: torusKnot',
-										material: 'color: red' })
-						),
-						_react2.default.createElement(
-								'a-entity',
-								{ position: '0 0 20' },
-								_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' }),
-								'}'
-						),
-						_react2.default.createElement('a-entity', { geometry: 'primitive: sphere; radius: 600',
-								material: 'color: #111; shader: flat',
-								scale: '-1 -1 -1' }),
-						_react2.default.createElement(
-								'a-entity',
-								{ position: '0 0 0' },
-								_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
-										repeat: 'indefinite', easing: 'linear', dur: '8096' }),
-								_react2.default.createElement('a-entity', { mixin: 'light', position: '30 0 0' })
-						),
-						_react2.default.createElement(
-								'a-entity',
-								{ position: '0 0 0' },
-								_react2.default.createElement('a-animation', { attribute: 'rotation', to: '360 0 0',
-										repeat: 'indefinite', easing: 'linear', dur: '8096' }),
-								_react2.default.createElement('a-entity', { mixin: 'light', position: '0 0 40' })
-						)
-				)
-		);
+				_react2.default.createElement("a-mixin", { id: "light", geometry: "primitive: sphere; radius: 1.5",
+					material: "color: #FFF; shader: flat",
+					light: "color: #DDDDFF; distance: 120; intensity: 2; type: point" }),
+				_react2.default.createElement("a-mixin", { id: "torus-knot", geometry: "primitive: torusKnot",
+					material: "color: red" })
+			),
+			_react2.default.createElement(
+				"a-entity",
+				{ position: "0 0 20" },
+				_react2.default.createElement("a-camera", { fov: "45", "user-height": "0" }),
+				"}"
+			),
+			_react2.default.createElement("a-entity", { geometry: "primitive: sphere; radius: 600",
+				material: "color: #111; shader: flat",
+				scale: "-1 -1 -1" }),
+			_react2.default.createElement(
+				"a-entity",
+				{ position: "0 0 0" },
+				_react2.default.createElement("a-animation", { attribute: "rotation", to: "0 360 0",
+					repeat: "indefinite", easing: "linear", dur: "8096" }),
+				_react2.default.createElement("a-entity", { mixin: "light", position: "30 0 0" })
+			),
+			_react2.default.createElement(
+				"a-entity",
+				{ position: "0 0 0" },
+				_react2.default.createElement("a-animation", { attribute: "rotation", to: "360 0 0",
+					repeat: "indefinite", easing: "linear", dur: "8096" }),
+				_react2.default.createElement("a-entity", { mixin: "light", position: "0 0 40" })
+			)
+		)
+	);
 };
 
 exports.default = Lights;
