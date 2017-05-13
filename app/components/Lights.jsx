@@ -34,18 +34,8 @@ const Lights = (props) => {
 
   console.log('colorA', colorA, 'colorB', colorB)
 
-	// let fixedLightB_color = {
-	// 	anger: '#FF8300',  // orange
-	// 	surprise:
-	// 	sadness:
-	// 	fear:
-	// 	joy:
-	// }
-
-	// // sentiment controls rate of lights spinning
-	// let sentimentRate = {
-	// 	//duration conversion
-	// }
+	// intensity controls rate of lights spinning
+	let rate = props.currIntensity * 1000
 
 // functions for producing knot shapes in scene. not working.
 // adapted from: https://github.com/aframevr/aframe/blob/master/examples/showcase/dynamic-lights/index.html 
