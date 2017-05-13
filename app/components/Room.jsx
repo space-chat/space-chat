@@ -20,6 +20,7 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
+import Lights from './Lights.jsx'
 import { joinRoom, sendMessage, receiveMessage, receiveSentiment } from '../sockets.js'
 
 const propTypes = {
@@ -83,7 +84,7 @@ class Room extends Component {
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
     return (
-      <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
+      <Lights prevEmotion={prevEmotion} currEmotion={currEmotion} />
     )
   }
 }

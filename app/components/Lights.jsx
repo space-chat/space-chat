@@ -1,5 +1,42 @@
 import React from 'react'
 
+// functions for producting shapes in scene
+var scene = document.querySelector('a-scene');
+for (var i = 0; i < 120; i++) {
+  var obj = document.createElement('a-entity');
+  obj.setAttribute('geometry', {
+    primitive: 'torusKnot',
+    radius: Math.random() * 10,
+    radiusTubular: Math.random() * .75,
+    p: Math.round(Math.random() * 10),
+    q: Math.round(Math.random() * 10)
+  });
+  obj.setAttribute('material', {
+    color: getRandColor(),
+    metalness: Math.random(),
+    roughness: Math.random()
+  });
+  obj.setAttribute('position', {
+    x: getRandCoord(),
+    y: getRandCoord(),
+    z: getRandCoord()
+  });
+  scene.appendChild(obj);
+}
+function getRandColor () {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+function getRandCoord () {
+  var coord = Math.random() * 60;
+  return Math.random() < .5 ? coord + 5 : coord * -1 - 5;
+}
+
+// Component with camera, skysphere, lights
 const Lights = () => {
 	return (
 		<div>
