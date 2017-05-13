@@ -10603,7 +10603,8 @@ var initialState = {
   secondaryEmotion: [],
   primaryIntensity: [],
   secondaryIntensity: [],
-  personality: []
+  extraversion: [],
+  agreeableness: []
 };
 
 /* ------------------    ACTIONS    ------------------ */
@@ -10630,10 +10631,11 @@ var updateIntensity = exports.updateIntensity = function updateIntensity(primary
   };
 };
 
-var updatePersonality = exports.updatePersonality = function updatePersonality(personalityData) {
+var updatePersonality = exports.updatePersonality = function updatePersonality(extraversion, agreeableness) {
   return {
     type: UPDATE_PERSONALITY,
-    payload: personalityData
+    extraversion: extraversion,
+    agreeableness: agreeableness
   };
 };
 
@@ -10658,7 +10660,8 @@ function sentimentReducer() {
       break;
 
     case UPDATE_PERSONALITY:
-      newState.personality = action.payload;
+      newState.extraversion = [action.extraversion].concat(_toConsumableArray(newState.extraversion));
+      newState.agreeableness = [action.agreeableness].concat(_toConsumableArray(newState.agreeableness));
       break;
 
     default:

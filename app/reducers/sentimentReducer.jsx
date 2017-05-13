@@ -4,7 +4,8 @@ const initialState = {
   secondaryEmotion: [],
   primaryIntensity: [],
   secondaryIntensity: [],
-  personality: []
+  extraversion: [],
+  agreeableness: []
 }
 
 /* ------------------    ACTIONS    ------------------ */
@@ -32,10 +33,11 @@ export const updateIntensity = (primaryIntensity, secondaryIntensity) => {
   }
 }
 
-export const updatePersonality = (personalityData) => {
+export const updatePersonality = (extraversion, agreeableness) => {
   return {
     type: UPDATE_PERSONALITY,
-    payload: personalityData
+    extraversion: extraversion,
+    agreeableness: agreeableness
   }
 }
 
@@ -58,7 +60,8 @@ export default function sentimentReducer (state = initialState, action) {
       break
 
     case UPDATE_PERSONALITY:
-      newState.personality = action.payload
+      newState.extraversion = [action.extraversion, ...newState.extraversion]
+      newState.agreeableness = [action.agreeableness, ...newState.agreeableness]
       break
 
     default:
