@@ -52,7 +52,7 @@ class Home extends Component {
         <br />
         <br />
         <br />
-        <Link className="btn btn-default" role="button" to="/room" onClick={this.handleClick}>ENTER SPACECHAT</Link>
+        <Link className="btn btn-default" role="button" to="/lights" onClick={this.handleClick}>ENTER SPACECHAT</Link>
   		</div>
 		)
 	}
