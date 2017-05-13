@@ -13,27 +13,33 @@ const Lights = () => {
 	                 material="color: red"></a-mixin>
 	      </a-assets>
 
-		    {/*Camera.*/}
-		    <a-entity position="0 0 80">
+		    {/* Camera:
+		    	# Position should always be placed on an entity wrapper around camera.
+		    	# fov = field of view, a cone shape that deliniates what the camera sees.
+		    	# user-height default is 0, when not in VR mode. In VR it is reset to approximate user height.
+		    */}
+		    <a-entity position="0 0 20">
+
 		      <a-camera fov="45" user-height="0"></a-camera>
+		    	}
 		    </a-entity>
 
-		    {/*Skysphere.*/}
-		    <a-entity geometry="primitive: sphere; radius: 300"
+		    {/* Skysphere. */}
+		    <a-entity geometry="primitive: sphere; radius: 600"
 		              material="color: #111; shader: flat"
 		              scale="-1 -1 -1"></a-entity>
 
-		    {/*Lights.*/}
+		    {/* Lights. */}
 		    <a-entity position="0 0 0">
-		      <a-animation attribute="rotation" to="0 0 360"
-		                   repeat="indefinite" easing="linear" dur="4096">
+		      <a-animation attribute="rotation" to="0 360 0"
+		                   repeat="indefinite" easing="linear" dur="8096">
 		      </a-animation>
 		      <a-entity mixin="light" position="30 0 0"></a-entity>
 		    </a-entity>
 
 	      <a-entity position="0 0 0">
 	        <a-animation attribute="rotation" to="360 0 0"
-	                     repeat="indefinite" easing="linear" dur="4096">
+	                     repeat="indefinite" easing="linear" dur="8096">
 	        </a-animation>
 	        <a-entity mixin="light" position="0 0 40"></a-entity>
 	      </a-entity>

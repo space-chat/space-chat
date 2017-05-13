@@ -40852,24 +40852,25 @@ var Lights = function Lights() {
 			),
 			_react2.default.createElement(
 				"a-entity",
-				{ position: "0 0 80" },
-				_react2.default.createElement("a-camera", { fov: "45", "user-height": "0" })
+				{ position: "0 0 20" },
+				_react2.default.createElement("a-camera", { fov: "45", "user-height": "0" }),
+				"}"
 			),
-			_react2.default.createElement("a-entity", { geometry: "primitive: sphere; radius: 300",
+			_react2.default.createElement("a-entity", { geometry: "primitive: sphere; radius: 600",
 				material: "color: #111; shader: flat",
 				scale: "-1 -1 -1" }),
 			_react2.default.createElement(
 				"a-entity",
 				{ position: "0 0 0" },
-				_react2.default.createElement("a-animation", { attribute: "rotation", to: "0 0 360",
-					repeat: "indefinite", easing: "linear", dur: "4096" }),
+				_react2.default.createElement("a-animation", { attribute: "rotation", to: "0 360 0",
+					repeat: "indefinite", easing: "linear", dur: "8096" }),
 				_react2.default.createElement("a-entity", { mixin: "light", position: "30 0 0" })
 			),
 			_react2.default.createElement(
 				"a-entity",
 				{ position: "0 0 0" },
 				_react2.default.createElement("a-animation", { attribute: "rotation", to: "360 0 0",
-					repeat: "indefinite", easing: "linear", dur: "4096" }),
+					repeat: "indefinite", easing: "linear", dur: "8096" }),
 				_react2.default.createElement("a-entity", { mixin: "light", position: "0 0 40" })
 			)
 		)
