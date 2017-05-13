@@ -18,6 +18,8 @@ export const UPDATE_PERSONALITY = "UPDATE_PERSONALITY"
 // Take sentiment analysis data sent back from server upon calling receiveSentiment()
 
 export const updateEmotion = (primaryEmotion, secondaryEmotion) => {
+    console.log(
+      'primary is', primaryEmotion, 'secondary is', secondaryEmotion)
   return {
     type: UPDATE_EMOTION,
     primary: primaryEmotion,
