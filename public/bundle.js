@@ -40831,6 +40831,14 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Avatar = __webpack_require__(162);
+
+var _Avatar2 = _interopRequireDefault(_Avatar);
+
+var _AssetLoader = __webpack_require__(161);
+
+var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // functions for producting shapes in scene
@@ -40872,42 +40880,49 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Component with camera, skysphere, lights
 var Lights = function Lights(props) {
 	return _react2.default.createElement(
-		"div",
+		'div',
 		null,
 		_react2.default.createElement(
-			"a-scene",
-			null,
+			'a-scene',
+			{ fog: 'type: exponential; color: purple' },
+			_react2.default.createElement(_AssetLoader2.default, null),
 			_react2.default.createElement(
-				"a-assets",
+				'a-assets',
 				null,
-				_react2.default.createElement("a-mixin", { id: "light", geometry: "primitive: sphere; radius: 1.5",
-					material: "color: #FFF; shader: flat",
-					light: "color: #DDDDFF; distance: 120; intensity: 2; type: point" }),
-				_react2.default.createElement("a-mixin", { id: "torus-knot", geometry: "primitive: torusKnot",
-					material: "color: red" })
+				_react2.default.createElement('a-mixin', { id: 'light', geometry: 'primitive: sphere; radius: 1.5',
+					material: 'color: black; shader: flat',
+					light: 'color: #DDDDFF; distance: 120; intensity: 2; type: point' }),
+				_react2.default.createElement('a-mixin', { id: 'torus-knot', geometry: 'primitive: torusKnot',
+					material: 'color: red' })
+			),
+			_react2.default.createElement(_Avatar2.default, { position: '0 1 22' }),
+			_react2.default.createElement('a-entity', { id: 'avatar', geometry: 'primitive: sphere; radius: 1.75',
+				position: '-1 1.25 -5',
+				material: 'color: white',
+				light: 'color: orange; distance: 180; intensity: 1; type: spot' }),
+			_react2.default.createElement('a-light', { color: 'blue', angle: '45', position: '-1 1 0', type: 'point', target: 'avatar' }),
+			_react2.default.createElement(
+				'a-entity',
+				{ position: '0 0 20' },
+				_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' }),
+				'}'
+			),
+			_react2.default.createElement('a-entity', { geometry: 'primitive: sphere; radius: 600',
+				material: 'color: white',
+				scale: '-1 -1 -1' }),
+			_react2.default.createElement(
+				'a-entity',
+				{ position: '0 0 0' },
+				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
+					repeat: 'indefinite', easing: 'linear', dur: '6096' }),
+				_react2.default.createElement('a-entity', { mixin: 'light', light: 'color: yellow', position: '30 0 0' })
 			),
 			_react2.default.createElement(
-				"a-entity",
-				{ position: "0 0 20" },
-				_react2.default.createElement("a-camera", { fov: "45", "user-height": "0" }),
-				"}"
-			),
-			_react2.default.createElement("a-entity", { geometry: "primitive: sphere; radius: 600",
-				material: "color: #111; shader: flat",
-				scale: "-1 -1 -1" }),
-			_react2.default.createElement(
-				"a-entity",
-				{ position: "0 0 0" },
-				_react2.default.createElement("a-animation", { attribute: "rotation", to: "0 360 0",
-					repeat: "indefinite", easing: "linear", dur: "8096" }),
-				_react2.default.createElement("a-entity", { mixin: "light", position: "30 0 0" })
-			),
-			_react2.default.createElement(
-				"a-entity",
-				{ position: "0 0 0" },
-				_react2.default.createElement("a-animation", { attribute: "rotation", to: "360 0 0",
-					repeat: "indefinite", easing: "linear", dur: "8096" }),
-				_react2.default.createElement("a-entity", { mixin: "light", position: "0 0 40" })
+				'a-entity',
+				{ position: '0 0 0' },
+				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '360 0 0',
+					repeat: 'indefinite', easing: 'linear', dur: '4096' }),
+				_react2.default.createElement('a-entity', { mixin: 'light', light: 'color: red', position: '0 0 40' })
 			)
 		)
 	);
