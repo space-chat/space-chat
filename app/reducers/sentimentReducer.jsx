@@ -1,7 +1,9 @@
 
 const initialState = {
   primaryEmotion: [],
-  intensity: [],
+  secondaryEmotion: [],
+  primaryIntensity: [],
+  secondaryIntensity: [],
   personality: []
 }
 
@@ -14,17 +16,19 @@ export const UPDATE_PERSONALITY = "UPDATE_PERSONALITY"
 /* ------------------    ACTION CREATORS    ------------------ */
 // Take sentiment analysis data sent back from server upon calling receiveSentiment()
 
-export const updateEmotion = (primaryEmotion) => {
+export const updateEmotion = (primaryEmotion, secondaryEmotion) => {
   return {
     type: UPDATE_EMOTION,
-    payload: primaryEmotion
+    primary: primaryEmotion,
+    secondary: secondaryEmotion
   }
 }
 
-export const updateIntensity = (intensityData) => {
+export const updateIntensity = (primaryIntensity, secondaryIntensity) => {
   return {
     type: UPDATE_INTENSITY,
-    payload: intensityData
+    primary: primaryIntensity,
+    secondary: secondaryIntensity,
   }
 }
 
@@ -44,11 +48,13 @@ export default function sentimentReducer (state = initialState, action) {
 
   switch (action.type) {
     case UPDATE_EMOTION:
-      newState.primaryEmotion = [action.payload, ...newState.primaryEmotion]
+      newState.primaryEmotion = [action.primary, ...newState.primaryEmotion]
+      newState.secondaryEmotion = [action.secondary, ...newState.secondaryEmotion]
       break
 
     case UPDATE_INTENSITY:
-      newState.intensity = [action.payload, ...newState.intensity]
+      newState.primaryIntensity = [action.primary, ...newState.primaryIntensity]
+      newState.secondaryIntensity = [action.secondary, ...newState.secondaryIntensity]
       break
 
     case UPDATE_PERSONALITY:

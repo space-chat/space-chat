@@ -39,22 +39,33 @@ export function receiveSentiment() {
 
     // get emotions, intensity
     let emotions = emotion[0]
+    let sortedEmotions = [['joy', 0.5], ['sadness', 0.5]] //default primary and secondary emotions
 
-    // identify strongest emotion
+    // rank emotions in sorted array: least intense to most intense
+    let keys = Object.keys(emotions)
+    console.log('keys are', keys)
+    sortedEmotions = keys.map(key => emotions[key])
+      .sort().reverse().map(intensity => {
+      for (let e in emotions) {
+        if (emotions[e] === intensity) return [e, intensity]
+      }
+    })
+
+
+    // identify strongest personality trait
     let primaryEmotion = 'joy' // default
     let intensity = 0.5
     for (var e in emotions) {
       if (emotions[e] > emotions[primaryEmotion]) {
         primaryEmotion = e
-        intensity = emotions[e]
       }
     }
 
-    console.log('intensity is', intensity)
+    console.log('sortedEmotions is', sortedEmotions.slice(0, 2))
     
     // update store with new emotion data
-    store.dispatch(updateEmotion(primaryEmotion))
-    store.dispatch(updateIntensity(intensity))
+    store.dispatch(updateEmotion(sortedEmotions[0][0], sortedEmotions[1][0]))
+    store.dispatch(updateIntensity(sortedEmotions[0][1], sortedEmotions[1][1]))
     //document.querySelector('#sky').emit('sentiment-change')
   }
 

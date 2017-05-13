@@ -10600,7 +10600,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var initialState = {
   primaryEmotion: [],
-  intensity: [],
+  secondaryEmotion: [],
+  primaryIntensity: [],
+  secondaryIntensity: [],
   personality: []
 };
 
@@ -10612,17 +10614,19 @@ var UPDATE_PERSONALITY = exports.UPDATE_PERSONALITY = "UPDATE_PERSONALITY";
 /* ------------------    ACTION CREATORS    ------------------ */
 // Take sentiment analysis data sent back from server upon calling receiveSentiment()
 
-var updateEmotion = exports.updateEmotion = function updateEmotion(primaryEmotion) {
+var updateEmotion = exports.updateEmotion = function updateEmotion(primaryEmotion, secondaryEmotion) {
   return {
     type: UPDATE_EMOTION,
-    payload: primaryEmotion
+    primary: primaryEmotion,
+    secondary: secondaryEmotion
   };
 };
 
-var updateIntensity = exports.updateIntensity = function updateIntensity(intensityData) {
+var updateIntensity = exports.updateIntensity = function updateIntensity(primaryIntensity, secondaryIntensity) {
   return {
     type: UPDATE_INTENSITY,
-    payload: intensityData
+    primary: primaryIntensity,
+    secondary: secondaryIntensity
   };
 };
 
@@ -10644,11 +10648,13 @@ function sentimentReducer() {
 
   switch (action.type) {
     case UPDATE_EMOTION:
-      newState.primaryEmotion = [action.payload].concat(_toConsumableArray(newState.primaryEmotion));
+      newState.primaryEmotion = [action.primary].concat(_toConsumableArray(newState.primaryEmotion));
+      newState.secondaryEmotion = [action.secondary].concat(_toConsumableArray(newState.secondaryEmotion));
       break;
 
     case UPDATE_INTENSITY:
-      newState.intensity = [action.payload].concat(_toConsumableArray(newState.intensity));
+      newState.primaryIntensity = [action.primary].concat(_toConsumableArray(newState.primaryIntensity));
+      newState.secondaryIntensity = [action.secondary].concat(_toConsumableArray(newState.secondaryIntensity));
       break;
 
     case UPDATE_PERSONALITY:
@@ -17871,9 +17877,9 @@ var Room = function (_Component) {
     value: function render() {
       var prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy';
       var currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy';
-      var prevIntensity = this.props.sentiment.intensity[1] || 0.5;
-      var currIntensity = this.props.sentiment.intensity[0] || 0.5;
-      return _react2.default.createElement(_Lights2.default, { prevEmotion: prevEmotion, currEmotion: currEmotion, prevIntensity: prevIntensity, currIntensity: currIntensity });
+      // let prevIntensity = this.props.sentiment.intensity[1] || 0.5
+      // let currIntensity = this.props.sentiment.intensity[0] || 0.5
+      return _react2.default.createElement(_Lights2.default, { prevEmotion: prevEmotion, currEmotion: currEmotion });
     }
   }]);
 
@@ -18261,22 +18267,33 @@ function receiveSentiment() {
 
     // get emotions, intensity
     var emotions = emotion[0];
+    var sortedEmotions = [['joy', 0.5], ['sadness', 0.5]]; //default primary and secondary emotions
 
-    // identify strongest emotion
+    // rank emotions in sorted array: least intense to most intense
+    var keys = Object.keys(emotions);
+    console.log('keys are', keys);
+    sortedEmotions = keys.map(function (key) {
+      return emotions[key];
+    }).sort().reverse().map(function (intensity) {
+      for (var _e in emotions) {
+        if (emotions[_e] === intensity) return [_e, intensity];
+      }
+    });
+
+    // identify strongest personality trait
     var primaryEmotion = 'joy'; // default
     var intensity = 0.5;
     for (var e in emotions) {
       if (emotions[e] > emotions[primaryEmotion]) {
         primaryEmotion = e;
-        intensity = emotions[e];
       }
     }
 
-    console.log('intensity is', intensity);
+    console.log('sortedEmotions is', sortedEmotions.slice(0, 2));
 
     // update store with new emotion data
-    _store2.default.dispatch((0, _sentimentReducer.updateEmotion)(primaryEmotion));
-    _store2.default.dispatch((0, _sentimentReducer.updateIntensity)(intensity));
+    _store2.default.dispatch((0, _sentimentReducer.updateEmotion)(sortedEmotions[0][0], sortedEmotions[1][0]));
+    _store2.default.dispatch((0, _sentimentReducer.updateIntensity)(sortedEmotions[0][1], sortedEmotions[1][1]));
     //document.querySelector('#sky').emit('sentiment-change')
   }
 
