@@ -40841,7 +40841,7 @@ var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// functions for producting shapes in scene
+// functions for producing knot shapes in scene
 // var scene = document.querySelector('a-scene');
 // for (var i = 0; i < 120; i++) {
 //   var obj = document.createElement('a-entity');
@@ -40879,6 +40879,38 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Component with camera, skysphere, lights
 var Lights = function Lights(props) {
+
+	// emotion controls light color
+	// let avatarEmotionColors = {
+	// 	anger:
+	// 	surprise:
+	// 	sadness:
+	// 	fear:
+	// 	joy:
+	// }
+
+	// let lightAEmotionColors = {
+	// 	anger:
+	// 	surprise:
+	// 	sadness:
+	// 	fear:
+	// 	joy:
+	// }
+
+	// let lightBEmotionColors = {
+	// 	anger:
+	// 	surprise:
+	// 	sadness:
+	// 	fear:
+	// 	joy:
+	// }
+
+	// // sentiment controls rate of lights spinning
+	// let sentimentRate = {
+	// 	//duration conversion
+	// }
+
+
 	return _react2.default.createElement(
 		'div',
 		null,
@@ -40895,12 +40927,13 @@ var Lights = function Lights(props) {
 				_react2.default.createElement('a-mixin', { id: 'torus-knot', geometry: 'primitive: torusKnot',
 					material: 'color: red' })
 			),
-			_react2.default.createElement(_Avatar2.default, { position: '0 1 22' }),
-			_react2.default.createElement('a-entity', { id: 'avatar', geometry: 'primitive: sphere; radius: 1.75',
+			_react2.default.createElement(_Avatar2.default, { position: '0 0 0' }),
+			_react2.default.createElement('a-entity', { id: 'avatar', geometry: 'primitive: torusKnot; radius: 3',
 				position: '-1 1.25 -5',
 				material: 'color: white',
-				light: 'color: orange; distance: 180; intensity: 1; type: spot' }),
-			_react2.default.createElement('a-light', { color: 'blue', angle: '45', position: '-1 1 0', type: 'point', target: 'avatar' }),
+				light: 'color: green; type: point' }),
+			_react2.default.createElement('a-light', { color: 'blue', angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar' }),
+			_react2.default.createElement('a-light', { color: 'purple', angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar' }),
 			_react2.default.createElement(
 				'a-entity',
 				{ position: '0 0 20' },
@@ -40914,8 +40947,8 @@ var Lights = function Lights(props) {
 				'a-entity',
 				{ position: '0 0 0' },
 				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
-					repeat: 'indefinite', easing: 'linear', dur: '6096' }),
-				_react2.default.createElement('a-entity', { mixin: 'light', light: 'color: yellow', position: '30 0 0' })
+					repeat: 'indefinite', easing: 'linear', dur: '3096' }),
+				_react2.default.createElement('a-entity', { mixin: 'light', light: 'color: orange', position: '30 0 0' })
 			),
 			_react2.default.createElement(
 				'a-entity',

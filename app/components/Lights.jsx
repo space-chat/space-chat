@@ -2,7 +2,7 @@ import React from 'react'
 import Avatar from './Avatar'
 import AssetLoader from './AssetLoader'
 
-// functions for producting shapes in scene
+// functions for producing knot shapes in scene
 // var scene = document.querySelector('a-scene');
 // for (var i = 0; i < 120; i++) {
 //   var obj = document.createElement('a-entity');
@@ -40,6 +40,38 @@ import AssetLoader from './AssetLoader'
 
 // Component with camera, skysphere, lights
 const Lights = (props) => {
+
+	// emotion controls light color
+	// let avatarEmotionColors = {
+	// 	anger:
+	// 	surprise:
+	// 	sadness:
+	// 	fear:
+	// 	joy:
+	// }
+
+	// let lightAEmotionColors = {
+	// 	anger:
+	// 	surprise:
+	// 	sadness:
+	// 	fear:
+	// 	joy:
+	// }
+
+	// let lightBEmotionColors = {
+	// 	anger:
+	// 	surprise:
+	// 	sadness:
+	// 	fear:
+	// 	joy:
+	// }
+
+	// // sentiment controls rate of lights spinning
+	// let sentimentRate = {
+	// 	//duration conversion
+	// }
+
+
 	return (
 		<div>
 	   <a-scene fog="type: exponential; color: purple">
@@ -53,12 +85,13 @@ const Lights = (props) => {
 	                 material="color: red"></a-mixin>
 	      </a-assets>
 
-	      <Avatar position ="0 1 22" />
-	      <a-entity id="avatar" geometry="primitive: sphere; radius: 1.75" 
+	      <Avatar position ="0 0 0" />
+	      <a-entity id="avatar" geometry="primitive: torusKnot; radius: 3" 
 	      	position="-1 1.25 -5" 
 	      	material="color: white"
-	      	light="color: orange; distance: 180; intensity: 1; type: spot" />
-        <a-light color="blue" angle="45" position="-1 1 0" type="point" target="avatar" />
+	      	light="color: green; type: point" />
+        <a-light color="blue" angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar" />
+        <a-light color="purple" angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar" />
 
 		    {/* Camera:
 		    	# Position should always be placed on an entity wrapper around camera.
@@ -80,9 +113,9 @@ const Lights = (props) => {
 		  	{/* x-axis rotation */}
 		    <a-entity position="0 0 0">
 		      <a-animation attribute="rotation" to="0 360 0"
-		                   repeat="indefinite" easing="linear" dur="6096">
+		                   repeat="indefinite" easing="linear" dur="3096">
 		      </a-animation>
-		      <a-entity mixin="light" light="color: yellow" position="30 0 0"></a-entity>
+		      <a-entity mixin="light" light="color: orange" position="30 0 0"></a-entity>
 		    </a-entity>
 		  {/* y-axis rotation */}
 	      <a-entity position="0 0 0">
