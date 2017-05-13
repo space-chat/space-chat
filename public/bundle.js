@@ -18265,35 +18265,31 @@ function receiveSentiment() {
 
     console.log('emotion: ' + emotion, 'sentiment: ' + sentiment, 'personality: ' + personality);
 
-    // get emotions, intensity
+    // get primary and secondary emotions, and their intensities
     var emotions = emotion[0];
-    var sortedEmotions = [['joy', 0.5], ['sadness', 0.5]]; //default primary and secondary emotions
+    var sortedEmotions = [['joy', 0.5], ['surprise', 0.5]]; // default 
 
-    // rank emotions in sorted array: least intense to most intense
+    // rank emotions in sorted array: most intense to least intense
     var keys = Object.keys(emotions);
     console.log('keys are', keys);
     sortedEmotions = keys.map(function (key) {
       return emotions[key];
     }).sort().reverse().map(function (intensity) {
-      for (var _e in emotions) {
-        if (emotions[_e] === intensity) return [_e, intensity];
+      for (var e in emotions) {
+        if (emotions[e] === intensity) return [e, intensity];
       }
     });
+    console.log('top two emotions are', sortedEmotions.slice(0, 2));
 
-    // identify strongest personality trait
-    var primaryEmotion = 'joy'; // default
-    var intensity = 0.5;
-    for (var e in emotions) {
-      if (emotions[e] > emotions[primaryEmotion]) {
-        primaryEmotion = e;
-      }
-    }
-
-    console.log('sortedEmotions is', sortedEmotions.slice(0, 2));
+    // get personality trait ratings
+    var extraversion = personality[0].extraversion || 0.5;
+    var agreeableness = personality[0].agreeableness || 0.5;
+    console.log('extraversion is ', extraversion, 'agreeableness is ', agreeableness);
 
     // update store with new emotion data
     _store2.default.dispatch((0, _sentimentReducer.updateEmotion)(sortedEmotions[0][0], sortedEmotions[1][0]));
     _store2.default.dispatch((0, _sentimentReducer.updateIntensity)(sortedEmotions[0][1], sortedEmotions[1][1]));
+    _store2.default.dispatch((0, _sentimentReducer.updatePersonality)(extraversion, agreeableness));
     //document.querySelector('#sky').emit('sentiment-change')
   }
 

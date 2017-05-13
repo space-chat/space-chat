@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { updateEmotion, updateIntensity } from './reducers/sentimentReducer.jsx'
+import { updateEmotion, updateIntensity, updatePersonality } from './reducers/sentimentReducer.jsx'
 
 const socket = io()
 
@@ -37,11 +37,11 @@ export function receiveSentiment() {
   socket.on('got sentiment', ({ emotion, sentiment, personality }) => {
     console.log(`emotion: ${emotion}`, `sentiment: ${sentiment}`, `personality: ${personality}`)
 
-    // get emotions, intensity
+    // get primary and secondary emotions, and their intensities
     let emotions = emotion[0]
-    let sortedEmotions = [['joy', 0.5], ['sadness', 0.5]] //default primary and secondary emotions
+    let sortedEmotions = [['joy', 0.5], ['surprise', 0.5]] // default 
 
-    // rank emotions in sorted array: least intense to most intense
+    // rank emotions in sorted array: most intense to least intense
     let keys = Object.keys(emotions)
     console.log('keys are', keys)
     sortedEmotions = keys.map(key => emotions[key])
@@ -50,22 +50,17 @@ export function receiveSentiment() {
         if (emotions[e] === intensity) return [e, intensity]
       }
     })
+    console.log('top two emotions are', sortedEmotions.slice(0, 2))
 
-
-    // identify strongest personality trait
-    let primaryEmotion = 'joy' // default
-    let intensity = 0.5
-    for (var e in emotions) {
-      if (emotions[e] > emotions[primaryEmotion]) {
-        primaryEmotion = e
-      }
-    }
-
-    console.log('sortedEmotions is', sortedEmotions.slice(0, 2))
+    // get personality trait ratings
+    let extraversion = personality[0].extraversion || 0.5
+    let agreeableness = personality[0].agreeableness || 0.5
+    console.log('extraversion is ', extraversion, 'agreeableness is ', agreeableness)
     
     // update store with new emotion data
     store.dispatch(updateEmotion(sortedEmotions[0][0], sortedEmotions[1][0]))
     store.dispatch(updateIntensity(sortedEmotions[0][1], sortedEmotions[1][1]))
+    store.dispatch(updatePersonality(extraversion, agreeableness))
     //document.querySelector('#sky').emit('sentiment-change')
   }
 
