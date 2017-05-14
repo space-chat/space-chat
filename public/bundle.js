@@ -40879,9 +40879,9 @@ var Blossoms = function Blossoms(props) {
   ----- */
   var emotionColors = {
     anger: ['#FF3333', 3],
-    surprise: [''],
+    surprise: ['#FF33CC', 2],
     sadness: ['#99CCFF', 1],
-    fear: [''],
+    fear: ['#99CC00', 2],
     joy: [null, 1]
   };
 
