@@ -5,9 +5,15 @@ var server = require('http').Server(app)
 var io = require('socket.io')(server)
 var bodyParser = require('body-parser')
 
+<<<<<<< HEAD
 var indico = require('indico.io');
 indico.apiKey = 'b895b4cf93b2701d2b26c5e918f141e2'
 
+=======
+// import and authenticate with Indico Text APIs
+var indico = require('indico.io')
+indico.apiKey = 'b895b4cf93b2701d2b26c5e918f141e2'
+>>>>>>> master
 
 // import the Google Cloud Translate API
 const Translate = require('@google-cloud/translate')
@@ -15,7 +21,7 @@ const Translate = require('@google-cloud/translate')
 const projectId = 'space-chat-166520'
 const translate = Translate({
   projectId: projectId,
-  keyFilename: process.env.GOOGLE_API_KEY_FILE
+  keyFilename: './servicekey.json'
 }) 
 
 // set up body parsing middleware
@@ -49,15 +55,6 @@ io.on('connection', (socket) => {
   socket.on('message', ({ messageText, lang }) => {
     console.log('new spoken message! server emitting original text: ', messageText)
     let translatedBool = false
-    socket.emit('got message', { translatedBool, messageText, lang })
-    //see indicoroutes.js for more info about the apis...
-    indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
-      .then(data => {
-        console.log('DATA', data)
-        //io.emit sends to all users
-        io.emit('got sentiment', data)
-      })
-      .catch(console.error)
       
     // 1) immediately send message exactly as received to all OTHER sockets
     socket.broadcast.emit('got message', { translatedBool, messageText, lang })
