@@ -50,7 +50,8 @@ export function receiveSentiment() {
 
     // update store with new emotion data
     store.dispatch(updateEmotion(primaryEmotion))
-    document.querySelector('#sky').emit('sentiment-change')
+    //document.querySelector('#sky').emit('sentiment-change')
+    document.querySelector('#animate').emit('sentiment-change')
   }
 
     /* ----- Example of output: ------
