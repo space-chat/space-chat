@@ -32,23 +32,27 @@ const createCube = (scaleNum, images) => {
 	let cube = document.createElement('a-box')
 
 	// set cube position
-	let x = (Math.random() * 200) - 100
-	let y = (Math.random() * 100) - 50
-	let z = (Math.random() * 100) - 50
+	let x = (Math.random() * 201) - 100
+	let y = (Math.random() * 301) - 150
+	let z = (Math.random() * 241) - 120
 	cube.setAttribute('position', { x: x, y: y, z: z})
-	
+
 	// set cube image
 	let i = Math.floor(Math.random() * images.length)
 	cube.setAttribute('material', `src: ${images[i]}`)
-	
+
 	// set cube size
-	let j = Math.floor((Math.random() * (12 - 2)) + 2)
+	let j = Math.floor((Math.random() * (15 - 2)) + 2)
 	console.log('j is', j)
 	cube.setAttribute('depth', j)
 	cube.setAttribute('height', j)
 	cube.setAttribute('width', j)
 
 	// set cube rotation
+	let xR = Math.random() * 180
+	let yR = Math.random() * 180
+	let zR = Math.random() * 180
+	cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
 
 	// set cube id
 	cubes.push(cube)

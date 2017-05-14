@@ -18371,9 +18371,9 @@ var initScene = function initScene() {}
 	var cube = document.createElement('a-box');
 
 	// set cube position
-	var x = Math.random() * 200 - 100;
-	var y = Math.random() * 100 - 50;
-	var z = Math.random() * 100 - 50;
+	var x = Math.random() * 201 - 100;
+	var y = Math.random() * 301 - 150;
+	var z = Math.random() * 241 - 120;
 	cube.setAttribute('position', { x: x, y: y, z: z });
 
 	// set cube image
@@ -18381,13 +18381,17 @@ var initScene = function initScene() {}
 	cube.setAttribute('material', 'src: ' + images[i]);
 
 	// set cube size
-	var j = Math.floor(Math.random() * (12 - 2) + 2);
+	var j = Math.floor(Math.random() * (15 - 2) + 2);
 	console.log('j is', j);
 	cube.setAttribute('depth', j);
 	cube.setAttribute('height', j);
 	cube.setAttribute('width', j);
 
 	// set cube rotation
+	var xR = Math.random() * 180;
+	var yR = Math.random() * 180;
+	var zR = Math.random() * 180;
+	cube.setAttribute('rotation', { x: xR, y: 0, z: zR });
 
 	// set cube id
 	cubes.push(cube);
