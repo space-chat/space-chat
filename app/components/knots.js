@@ -26,31 +26,47 @@ const setLights = () => {
 
 
 
+const createKnot = (colorA, colorB) => {
 
+  // helper funcs to generate random color and coords
+  const getRandColor = () => {
+  var letters = '0123456789ABCDEF'.split('');
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+  }
 
+  const getRandCoord = () => {
+  var coord = Math.random() * 60;
+  return Math.random() < 0.5 ? coord + 5 : coord * -1 - 5;
+  }
 
+  // create random knot
+  let knot = document.createElement('a-torus-knot')
 
+  knot.setAttribute('radius', {Math.random() * 10})
+  knot.setAttribute('radiusTubular', {Math.random() * 0.75})
+  knot.setAttribute('p', {Math.round(Math.random() * 10})
+  knot.setAttribute('q', {Math.round(Math.random() * 10})
 
+  knot.setAttribute('material', {getRandColor()})
+  knot.setAttribute('metalness', {Math.random()})
+  knot.setAttribute('roughness', {Math.random()})
 
+  knot.setAttribute('position', {
+    x: {getRandCoord()},
+    y: {getRandCoord()},
+    z: {getRandCoord()},
+  })
 
+  // set random knot into scene
+  document.querySelector('a-scene').appendChild(knot)
 
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = { setLights }
+module.exports = { setLights, createKnot }
 
 
 // functions for producing knot shapes in scene. not working.

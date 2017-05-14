@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 
-import { setLights, makeKnots, animate, updateColor, updateRate } from './knots.js'
+import { setLights, createKnot, animate, updateColor, updateRate } from './knots.js'
 
 /* -------------
 props - prevEmotion, currEmotion, prevIntensity, currIntensity
@@ -15,7 +15,7 @@ export default class Knots extends Component {
 		super()
 
 		this.state = {
-			numKnots: 100,
+			numKnots: 60,
 			colorA: '',
 			colorB: '',
 			rotationRate: ''
@@ -27,7 +27,8 @@ export default class Knots extends Component {
 
 	componentDidMount() {
 		setLights()
-		makeKnots(this.state.numKnots, this.state.color)
+		createKnot()
+		//makeKnots(this.state.numKnots, this.state.color)
 	}
 
 	handleColor() {
