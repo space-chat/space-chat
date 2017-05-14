@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { updateEmotion, updateIntensity, updatePersonality } from './reducers/sentimentReducer.jsx'
+import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment } from './reducers/sentimentReducer.jsx'
 
 const socket = io()
 
@@ -43,7 +43,6 @@ export function receiveSentiment() {
 
     // rank emotions in sorted array: most intense to least intense
     let keys = Object.keys(emotions)
-    console.log('keys are', keys)
     sortedEmotions = keys.map(key => emotions[key])
       .sort().reverse().map(intensity => {
       for (let e in emotions) {
@@ -53,15 +52,31 @@ export function receiveSentiment() {
     console.log('top two emotions are', sortedEmotions.slice(0, 2))
 
     // get personality trait ratings
-    let extraversion = personality[0].extraversion || 0.5
-    let agreeableness = personality[0].agreeableness || 0.5
-    console.log('extraversion is ', extraversion, 'agreeableness is ', agreeableness)
+    let primEmo = sortedEmotions[0][0]  //primary emotion
+    // let secEmo = sortedEmotions[1][0]   //secondary emotion
+    // let primInt = sortedEmotions[0][1]  //primary emotion's intensity
+    // let secInt = sortedEmotions[1][1]   //secondary emotion's intensity
+    // let extraversion = personality[0].extraversion || 0.001
+    // let openness = personality[0].agreeableness || 0.001
+    // let conscientiousness = personality[0].agreeableness || 0.001
+    // let agreeableness = personality[0].agreeableness || 0.001
+    // let sentScore = sentiment[0]        //sentiment score
+
+    // console.log('extraversion is ', extraversion, 'agreeableness is ', agreeableness, 'openness is ', openness, 'conscientiousness is ', conscientiousness)
     
     // update store with new emotion data
-    store.dispatch(updateEmotion(sortedEmotions[0][0], sortedEmotions[1][0]))
-    store.dispatch(updateIntensity(sortedEmotions[0][1], sortedEmotions[1][1]))
-    store.dispatch(updatePersonality(extraversion, agreeableness))
-    //document.querySelector('#sky').emit('sentiment-change')
+
+    store.dispatch(primaryEmotion(primEmo))
+    // store.dispatch(secondaryEmotion(secEmo))
+    // store.dispatch(primaryIntensity(primInt))
+    // store.dispatch(secondaryIntensity(secInt))
+    // store.dispatch(updateExtraversion(extraversion))
+    // store.dispatch(updateOpenness(openness))
+    // store.dispatch(updateConscientiousness(conscientiousness))
+    // store.dispatch(updateAgreeableness(agreeableness))
+    // store.dispatch(updateSentiment(sentScore))
+
+    document.querySelector('#sky').emit('sentiment-change')
   }
 
     /* ----- Example of output: ------

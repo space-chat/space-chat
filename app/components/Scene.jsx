@@ -31,6 +31,8 @@ const Scene = (props) => {
   let prevSkyColor = emotionColors[props.prevEmotion]
 
   console.log('skyColor is', skyColor, 'prevSkyColor is', prevSkyColor)
+
+  console.log("PROPS IN SCENE", props)
   return (
     <div>
       <a-scene>
@@ -42,12 +44,6 @@ const Scene = (props) => {
         <a-sky
           id="sky"
           src="#stars" >
-        {/*<a-animation
-            begin="sentiment-change"
-            attribute="material.color"
-            from={prevSkyColor}
-            to="#000000"
-            ease="ease" />*/}
 
             {animate(skyColor, prevSkyColor)}
       
@@ -60,5 +56,3 @@ const Scene = (props) => {
 
 export default Scene
 
-// fill="forward"
-// begin="sentiment-change"
