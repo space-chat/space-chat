@@ -40836,10 +40836,199 @@ function toArray(list, index) {
 
 /***/ }),
 /* 367 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-throw new Error("Module build failed: SyntaxError: Unexpected token (1:13)\n\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 1 | \u001b[39m\u001b[36mimport\u001b[39m \u001b[33mReact\u001b[39m {\u001b[33mComponent\u001b[39m} from \u001b[32m'react'\u001b[39m\n \u001b[90m   | \u001b[39m             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 2 | \u001b[39m\u001b[36mimport\u001b[39m \u001b[33mAssetLoader\u001b[39m from \u001b[32m'./AssetLoader'\u001b[39m\n \u001b[90m 3 | \u001b[39m\n \u001b[90m 4 | \u001b[39m\u001b[36mimport\u001b[39m { initScene\u001b[33m,\u001b[39m makeCubes\u001b[33m,\u001b[39m animate\u001b[33m,\u001b[39m addCubes\u001b[33m,\u001b[39m destroyCubes\u001b[33m,\u001b[39m sizeOrColor\u001b[33m,\u001b[39m updateSpeed\u001b[33m,\u001b[39m updatePath\u001b[33m,\u001b[39m updateAltitude } from \u001b[32m'./cubes.js'\u001b[39m\u001b[0m\n");
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _AssetLoader = __webpack_require__(161);
+
+var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
+
+var _cubes = __webpack_require__(368);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// const animate = (cubeColor, prevCubeColor) => {
+//   console.log('inside animation function')
+//   // Animate colors if sentiment changes
+//   if (cubeColor !== prevCubeColor) {
+//     return (
+//         <a-animation
+//           begin="sentiment-change"
+//           attribute="material.color"
+//           from={prevCubeColor}
+//           to={cubeColor}
+//           ease="ease-in-circ" />
+//     )
+//   }
+// }
+
+var Cubes = function (_Component) {
+  _inherits(Cubes, _Component);
+
+  function Cubes(props) {
+    _classCallCheck(this, Cubes);
+
+    var _this = _possibleConstructorReturn(this, (Cubes.__proto__ || Object.getPrototypeOf(Cubes)).call(this));
+
+    _this.state = {
+      sky: '#fractal',
+      color: 'blue',
+      scale: 1
+    };
+
+    _this.handleAdd = _this.handleAdd.bind(_this);
+    _this.handleSubtract = _this.handleSubtract.bind(_this);
+    _this.handleSizeOrColor = _this.handleSizeOrColor.bind(_this);
+    _this.handleSpeed = _this.handleSpeed.bind(_this);
+    _this.handlePath = _this.handlePath.bind(_this);
+    _this.handleAltitude = _this.handleAltitude.bind(_this);
+    return _this;
+  }
+
+  _createClass(Cubes, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      (0, _cubes.initScene)();
+      (0, _cubes.makeCubes)(60, this.state.sky);
+      (0, _cubes.animate)();
+    }
+  }, {
+    key: 'handleAdd',
+    value: function handleAdd() {
+      (0, _cubes.addCubes)(60, this.state.sky);
+    }
+  }, {
+    key: 'handleSubtract',
+    value: function handleSubtract() {
+      (0, _cubes.destroyCubes)(30);
+    }
+  }, {
+    key: 'handleSizeOrColor',
+    value: function handleSizeOrColor() {
+      (0, _cubes.sizeOrColor)(this.state.scale, this.state.sky, this.state.color);
+    }
+
+    // Default speed is 0.0005
+
+  }, {
+    key: 'handleSpeed',
+    value: function handleSpeed(n) {
+      (0, _cubes.updateSpeed)(n);
+    }
+
+    // make cubes reverse spin direction based on sentiment
+
+  }, {
+    key: 'handlePath',
+    value: function handlePath(name) {
+      (0, _cubes.updatePath)(name);
+    }
+
+    // cubes spin in place on random axes 
+    // emotion - color and color intensity (controlled via ambient light)
+    // sentiment - rotation direction
+    // agreeableness - cubes spin more quickly
+
+    // let emotionColors = {
+    //   anger: ['#FF3333', 3],
+    //   surprise: ['#ffcc99', 4],
+    //   sadness: ['#ff8533', 1],
+    //   fear: ['#99CC00', 2],
+    //   joy: [null, 1],
+    // }
+
+
+    // let cubeColor = emotionColors[props.currEmotion]
+    // let prevCubeColor = emotionColors[props.prevEmotion]
+
+    // console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
+
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'button',
+            { onClick: this.handleAdd },
+            'Add cubes'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.handleSubtract },
+            'Subtract cubes'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.handleSizeOrColor },
+            'Size cubes'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: function onClick() {
+                return _this2.handleSpeed(0.001);
+              } },
+            'Change rotation speed'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: function onClick() {
+                return _this2.handlePath("pendulum");
+              } },
+            'Change rotation direction'
+          )
+        ),
+        _react2.default.createElement(
+          'a-scene',
+          { 'vr-mode-ui': 'enabled: true' },
+          _react2.default.createElement(_AssetLoader2.default, null),
+          _react2.default.createElement('a-entity', { id: 'cubeCamera',
+            camera: 'userHeight: 1.6',
+            'look-controls': true,
+            'orbit-controls': 'autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;',
+            'mouse-cursor': '' }),
+          _react2.default.createElement('a-sphere', { position: '-1 1.25 -5', radius: '0.001', color: '#EF2D5E', id: 'pink' }),
+          _react2.default.createElement('a-sky', { src: '#fractal' })
+        )
+      );
+    }
+  }]);
+
+  return Cubes;
+}(_react.Component);
+
+exports.default = Cubes;
+
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 /***/ })
 /******/ ]);
