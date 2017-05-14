@@ -16,9 +16,9 @@ export default class Knots extends Component {
 
 		this.state = {
 			numKnots: 60,
-			colorA: '',
-			colorB: '',
-			rotationRate: ''
+			colorA: 'red',
+			colorB: 'orange',
+			rotationRate: '2000'
 		}
 
 		this.handleColor = this.handleColor.bind(this)
@@ -32,7 +32,7 @@ export default class Knots extends Component {
 	}
 
 	handleColor() {
-		updateColor(this.state.color)
+		updateColor(this.state.colorA, this.state.colorB)
 	}
 
 	handleRate() {
@@ -109,8 +109,8 @@ console.log('rate is', rate)
 		      	p="5"
 		      	metalness=".9"
 		      	roughness="-2" />
-	        <a-light id="fixedLightA" color={colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar" />
-	        <a-light id="fixedLightB" color={colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar" />
+	        <a-light id="fixedLightA" color={this.state.colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar" />
+	        <a-light id="fixedLightB" color={this.state.colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar" />
 
 	        <a-entity id="avatar2"
 		      geometry="primitive: torusKnot; radius: 2"
@@ -119,21 +119,21 @@ console.log('rate is', rate)
 		      	material="color: white"
 		      	metalness=".9"
 		      	roughness="-2" />
-	        <a-light id="fixedLightA" color={colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar2" />
-	        <a-light id="fixedLightB" color={colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar2" />
+	        <a-light id="fixedLightA" color={this.state.colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar2" />
+	        <a-light id="fixedLightB" color={this.state.colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar2" />
 
 			    {/* Lights. */}
 				{/* x-axis rotation */}
 			    <a-entity position="0 0 0">
 			      <a-animation attribute="rotation" to="0 360 0"
-			                   repeat="indefinite" easing="linear" dur={rate}>
+			                   repeat="indefinite" easing="linear" dur={this.state.rate}>
 			      </a-animation>
 			      <a-entity mixin="lightA" position="30 0 0"></a-entity>
 			    </a-entity>
 	        {/* y-axis rotation */}
 		      <a-entity position="0 0 0">
 		        <a-animation attribute="rotation" to="360 0 0"
-		                     repeat="indefinite" easing="linear" dur={rate}>
+		                     repeat="indefinite" easing="linear" dur={this.state.rate}>
 		        </a-animation>
 		        <a-entity mixin="lightB" position="0 0 40"></a-entity>
 		      </a-entity>

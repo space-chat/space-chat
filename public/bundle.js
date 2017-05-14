@@ -40871,9 +40871,9 @@ var Knots = function (_Component) {
 
 		_this.state = {
 			numKnots: 60,
-			colorA: '',
-			colorB: '',
-			rotationRate: ''
+			colorA: 'red',
+			colorB: 'orange',
+			rotationRate: '2000'
 		};
 
 		_this.handleColor = _this.handleColor.bind(_this);
@@ -40891,7 +40891,7 @@ var Knots = function (_Component) {
 	}, {
 		key: 'handleColor',
 		value: function handleColor() {
-			(0, _knots.updateColor)(this.state.color);
+			(0, _knots.updateColor)(this.state.colorA, this.state.colorB);
 		}
 	}, {
 		key: 'handleRate',
@@ -40986,8 +40986,8 @@ var Knots = function (_Component) {
 							p: '5',
 							metalness: '.9',
 							roughness: '-2' }),
-						_react2.default.createElement('a-light', { id: 'fixedLightA', color: colorA, angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar' }),
-						_react2.default.createElement('a-light', { id: 'fixedLightB', color: colorB, angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar' }),
+						_react2.default.createElement('a-light', { id: 'fixedLightA', color: this.state.colorA, angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar' }),
+						_react2.default.createElement('a-light', { id: 'fixedLightB', color: this.state.colorB, angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar' }),
 						_react2.default.createElement('a-entity', { id: 'avatar2',
 							geometry: 'primitive: torusKnot; radius: 2',
 							position: '15 2 -1',
@@ -40995,20 +40995,20 @@ var Knots = function (_Component) {
 							material: 'color: white',
 							metalness: '.9',
 							roughness: '-2' }),
-						_react2.default.createElement('a-light', { id: 'fixedLightA', color: colorA, angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar2' }),
-						_react2.default.createElement('a-light', { id: 'fixedLightB', color: colorB, angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar2' }),
+						_react2.default.createElement('a-light', { id: 'fixedLightA', color: this.state.colorA, angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar2' }),
+						_react2.default.createElement('a-light', { id: 'fixedLightB', color: this.state.colorB, angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar2' }),
 						_react2.default.createElement(
 							'a-entity',
 							{ position: '0 0 0' },
 							_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
-								repeat: 'indefinite', easing: 'linear', dur: rate }),
+								repeat: 'indefinite', easing: 'linear', dur: this.state.rate }),
 							_react2.default.createElement('a-entity', { mixin: 'lightA', position: '30 0 0' })
 						),
 						_react2.default.createElement(
 							'a-entity',
 							{ position: '0 0 0' },
 							_react2.default.createElement('a-animation', { attribute: 'rotation', to: '360 0 0',
-								repeat: 'indefinite', easing: 'linear', dur: rate }),
+								repeat: 'indefinite', easing: 'linear', dur: this.state.rate }),
 							_react2.default.createElement('a-entity', { mixin: 'lightB', position: '0 0 40' })
 						),
 						_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' })
@@ -41025,9 +41025,121 @@ exports.default = Knots;
 
 /***/ }),
 /* 368 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected , (49:35)\n\n\u001b[0m \u001b[90m 47 | \u001b[39m  let knot \u001b[33m=\u001b[39m document\u001b[33m.\u001b[39mcreateElement(\u001b[32m'a-torus-knot'\u001b[39m)\n \u001b[90m 48 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 49 | \u001b[39m  knot\u001b[33m.\u001b[39msetAttribute(\u001b[32m'radius'\u001b[39m\u001b[33m,\u001b[39m {\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m*\u001b[39m \u001b[35m10\u001b[39m})\n \u001b[90m    | \u001b[39m                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 50 | \u001b[39m  knot\u001b[33m.\u001b[39msetAttribute(\u001b[32m'radiusTubular'\u001b[39m\u001b[33m,\u001b[39m {\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m*\u001b[39m \u001b[35m0.75\u001b[39m})\n \u001b[90m 51 | \u001b[39m  knot\u001b[33m.\u001b[39msetAttribute(\u001b[32m'p'\u001b[39m\u001b[33m,\u001b[39m {\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mround(\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m*\u001b[39m \u001b[35m10\u001b[39m})\n \u001b[90m 52 | \u001b[39m  knot\u001b[33m.\u001b[39msetAttribute(\u001b[32m'q'\u001b[39m\u001b[33m,\u001b[39m {\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mround(\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m*\u001b[39m \u001b[35m10\u001b[39m})\u001b[0m\n");
+"use strict";
+
+
+// This component controls sphere rendering and animations of Knots.jsx. 
+// Adapted from: (1) https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html (2) https://github.com/aframevr/aframe/blob/master/examples/showcase/dynamic-lights/index.html 
+
+var knots = [];
+var tickSpeed = 0.00005;
+
+var setLights = function setLights() {
+
+  // light A
+  var lightA = document.createElement('a-light');
+  lightA.setAttribute('geometry', 'primitive: sphere; radius: 1.5');
+  lightA.setAttribute('material', 'color: white; shader: flat');
+  lightA.setAttribute('light', 'color: blue; distance: 120; intensity: 3; type: point');
+
+  // light B
+  var lightB = document.createElement('a-light');
+  lightB.setAttribute('geometry', 'primitive: sphere; radius: 2');
+  lightB.setAttribute('material', 'color: white; shader: flat');
+  lightB.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point');
+
+  // set lights in scene
+  document.querySelector('a-scene').appendChild(lightA);
+  document.querySelector('a-scene').appendChild(lightB);
+};
+
+var createKnot = function createKnot(colorA, colorB) {
+
+  // helper funcs to generate random color and coords
+  var getRandColor = function getRandColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  var getRandCoord = function getRandCoord() {
+    var coord = Math.random() * 60;
+    return Math.random() < 0.5 ? coord + 5 : coord * -1 - 5;
+  };
+
+  // create random knot
+  var knot = document.createElement('a-torus-knot');
+
+  knot.setAttribute('radius', '' + Math.random() * 10);
+  knot.setAttribute('radiusTubular', '' + Math.random() * 0.75);
+  knot.setAttribute('p', '' + Math.round(Math.random() * 10));
+  knot.setAttribute('q', '' + Math.round(Math.random() * 10));
+
+  knot.setAttribute('material', '' + getRandColor());
+  knot.setAttribute('metalness', '' + Math.random());
+  knot.setAttribute('roughness', '' + Math.random());
+
+  knot.setAttribute('position', {
+    x: '' + getRandCoord(),
+    y: '' + getRandCoord(),
+    z: '' + getRandCoord()
+  });
+
+  // set random knot into scene
+  document.querySelector('a-scene').appendChild(knot);
+};
+
+module.exports = { setLights: setLights, createKnot: createKnot };
+
+// functions for producing knot shapes in scene. not working.
+/*const createShapes = () => {
+	console.log('inside createShapes')
+	// Helper functions
+	const getRandColor = () => {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+	}
+
+	const getRandCoord = () => {
+	  var coord = Math.random() * 60;
+	  return Math.random() < 0.5 ? coord + 5 : coord * -1 - 5;
+	}
+
+	// Generate random knots
+	for (var i=0; i<120; i++) {
+	console.log('inside createShapes 2')
+	  return (
+			<a-entity
+				geometry={`
+	  			primitive: torusKnot;
+	    		radius: ${Math.random() * 10};
+	    		radiusTubular: ${ Math.random() * 0.75 };
+	    		p: ${ Math.round(Math.random() * 10)};
+	    		q: ${ Math.round(Math.random() * 10) }
+	    	`}
+				material={`
+	    		color: ${getRandColor()};
+	    		metalness: ${Math.random()};
+	    		roughness: ${Math.random()}
+				`}
+				position={`
+	    		x: ${getRandCoord()};
+	    		y: ${getRandCoord()};
+	    		z: ${getRandCoord()}
+				`}
+			/>
+		)
+	}
+}*/
 
 /***/ })
 /******/ ]);

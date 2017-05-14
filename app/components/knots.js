@@ -46,19 +46,19 @@ const createKnot = (colorA, colorB) => {
   // create random knot
   let knot = document.createElement('a-torus-knot')
 
-  knot.setAttribute('radius', {Math.random() * 10})
-  knot.setAttribute('radiusTubular', {Math.random() * 0.75})
-  knot.setAttribute('p', {Math.round(Math.random() * 10})
-  knot.setAttribute('q', {Math.round(Math.random() * 10})
+  knot.setAttribute('radius', `${Math.random() * 10}`)
+  knot.setAttribute('radiusTubular', `${Math.random() * 0.75}`)
+  knot.setAttribute('p', `${Math.round(Math.random() * 10)}`)
+  knot.setAttribute('q', `${Math.round(Math.random() * 10)}`)
 
-  knot.setAttribute('material', {getRandColor()})
-  knot.setAttribute('metalness', {Math.random()})
-  knot.setAttribute('roughness', {Math.random()})
+  knot.setAttribute('material', `${getRandColor()}`)
+  knot.setAttribute('metalness', `${Math.random()}`)
+  knot.setAttribute('roughness', `${Math.random()}`)
 
   knot.setAttribute('position', {
-    x: {getRandCoord()},
-    y: {getRandCoord()},
-    z: {getRandCoord()},
+    x: `${getRandCoord()}`,
+    y: `${getRandCoord()}`,
+    z: `${getRandCoord()}`,
   })
 
   // set random knot into scene
