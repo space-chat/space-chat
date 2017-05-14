@@ -5,15 +5,9 @@ var server = require('http').Server(app)
 var io = require('socket.io')(server)
 var bodyParser = require('body-parser')
 
-<<<<<<< HEAD
-var indico = require('indico.io');
-indico.apiKey = 'b895b4cf93b2701d2b26c5e918f141e2'
-
-=======
 // import and authenticate with Indico Text APIs
 var indico = require('indico.io')
 indico.apiKey = 'b895b4cf93b2701d2b26c5e918f141e2'
->>>>>>> master
 
 // import the Google Cloud Translate API
 const Translate = require('@google-cloud/translate')
