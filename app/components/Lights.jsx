@@ -35,7 +35,7 @@ const Lights = (props) => {
   console.log('colorA', colorA, 'colorB', colorB)
 
 // intensity controls rate of lights spinning
-let rate = (props.currIntensity - 1) * -2000
+let rate = (props.currIntensity - 1) * -4000
 console.log('rate is', rate)
 
 // functions for producing knot shapes in scene. not working.
@@ -87,7 +87,7 @@ const createShapes = () => {
 
 	return (
 		<div>
-	   <a-scene fog="type: exponential; color: purple">
+	   <a-scene>
 				<AssetLoader />
 				<a-assets>
 	        <a-mixin id="lightA" geometry="primitive: sphere; radius: 1.5"
@@ -117,6 +117,16 @@ const createShapes = () => {
         <a-light id="fixedLightA" color={colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar" />
         <a-light id="fixedLightB" color={colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar" />
 
+        <a-entity id="avatar2"
+	      geometry="primitive: torusKnot; radius: 2"
+	      	position="15 2 -1"
+	      	p="10"
+	      	material="color: white"
+	      	metalness=".9"
+	      	roughness="-2" />
+        <a-light id="fixedLightA" color={colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar2" />
+        <a-light id="fixedLightB" color={colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar2" />
+
 		    {/* Camera:
 		    	# Position should always be placed on an entity wrapper around camera.
 		    	# fov = field of view, a cone shape that deliniates what the camera sees.
@@ -141,8 +151,8 @@ const createShapes = () => {
 		      <a-entity mixin="lightA" position="30 0 0"></a-entity>
 		    </a-entity>
         {/* y-axis rotation */}
-	      <a-entity position="0 0 0">
-	        <a-animation attribute="rotation" to="360 0 0"
+	      <a-entity position="360 0 0">
+	        <a-animation attribute="rotation" to="0 0 0"
 	                     repeat="indefinite" easing="linear" dur={rate}>
 	        </a-animation>
 	        <a-entity mixin="lightB" position="0 0 40"></a-entity>
