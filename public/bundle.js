@@ -17797,7 +17797,7 @@ var _Scene = __webpack_require__(164);
 
 var _Scene2 = _interopRequireDefault(_Scene);
 
-var _Lights = __webpack_require__(368);
+var _Lights = __webpack_require__(163);
 
 var _Lights2 = _interopRequireDefault(_Lights);
 
@@ -18048,7 +18048,156 @@ var Avatar = function Avatar() {
 exports.default = Avatar;
 
 /***/ }),
-/* 163 */,
+/* 163 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _AssetLoader = __webpack_require__(88);
+
+var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* -------------
+props - prevEmotion, currEmotion, prevIntensity, currIntensity
+# intensity will equal duration of rotation of light mixins
+# emotion will dictate colors of lights
+------------- */
+
+// Component with camera, skysphere, lights
+var Lights = function Lights(props) {
+	console.log('props', props.currIntensity);
+
+	// emotion controls light color
+	var emotionColorsA = {
+		anger: 'red', // red
+		surprise: '#CC0033', // pink
+		sadness: 'blue', // blue
+		fear: '#330000', // brown
+		joy: 'orange' // yellow
+	};
+
+	var emotionColorsB = {
+		anger: '#FF6600', // orange    
+		surprise: '#FF66FF', // pink
+		sadness: 'green', // green
+		fear: '#006600', // dark green
+		joy: '#993300' // burnt orange
+	};
+
+	var colorA = emotionColorsA[props.currEmotion];
+	var colorB = emotionColorsB[props.currEmotion];
+
+	console.log('colorA', colorA, 'colorB', colorB);
+
+	// intensity controls rate of lights spinning
+	var rate = (props.currIntensity - 1) * -4000;
+	console.log('rate is', rate);
+
+	// functions for producing knot shapes in scene. not working.
+	// adapted from: https://github.com/aframevr/aframe/blob/master/examples/showcase/dynamic-lights/index.html 
+	var createShapes = function createShapes() {
+		console.log('inside createShapes');
+		// Helper functions
+		var getRandColor = function getRandColor() {
+			var letters = '0123456789ABCDEF'.split('');
+			var color = '#';
+			for (var i = 0; i < 6; i++) {
+				color += letters[Math.floor(Math.random() * 16)];
+			}
+			return color;
+		};
+
+		var getRandCoord = function getRandCoord() {
+			var coord = Math.random() * 60;
+			return Math.random() < 0.5 ? coord + 5 : coord * -1 - 5;
+		};
+
+		// Generate random knots
+		for (var i = 0; i < 120; i++) {
+			console.log('inside createShapes 2');
+			return _react2.default.createElement('a-entity', {
+				geometry: '\n\t  \t\t\tprimitive: torusKnot;\n\t    \t\tradius: ' + Math.random() * 10 + ';\n\t    \t\tradiusTubular: ' + Math.random() * 0.75 + ';\n\t    \t\tp: ' + Math.round(Math.random() * 10) + ';\n\t    \t\tq: ' + Math.round(Math.random() * 10) + '\n\t    \t',
+				material: '\n\t    \t\tcolor: ' + getRandColor() + ';\n\t    \t\tmetalness: ' + Math.random() + ';\n\t    \t\troughness: ' + Math.random() + '\n\t\t\t\t',
+				position: '\n\t    \t\tx: ' + getRandCoord() + ';\n\t    \t\ty: ' + getRandCoord() + ';\n\t    \t\tz: ' + getRandCoord() + '\n\t\t\t\t'
+			});
+		}
+	};
+
+	return _react2.default.createElement(
+		'div',
+		null,
+		_react2.default.createElement(
+			'a-scene',
+			{ fog: 'type: exponential; color: purple' },
+			_react2.default.createElement(_AssetLoader2.default, null),
+			_react2.default.createElement(
+				'a-assets',
+				null,
+				_react2.default.createElement('a-mixin', { id: 'lightA', geometry: 'primitive: sphere; radius: 1.5',
+					material: 'color: white; shader: flat',
+					light: 'color: blue; distance: 120; intensity: 3; type: point' }),
+				_react2.default.createElement('a-mixin', { id: 'lightB', geometry: 'primitive: sphere; radius: 2',
+					material: 'color: white; shader: flat',
+					light: 'color: orange; distance: 120; intensity: 2; type: point' }),
+				_react2.default.createElement('a-mixin', { id: 'torus-knot', geometry: 'primitive: torusKnot',
+					material: 'color: red' })
+			),
+			_react2.default.createElement('a-entity', { id: 'avatar',
+				geometry: 'primitive: torusKnot; radius: 3',
+				position: '-1 1.25 -5',
+				material: 'color: white',
+				p: '5',
+				metalness: '.9',
+				roughness: '-2' }),
+			_react2.default.createElement('a-light', { id: 'fixedLightA', color: colorA, angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar' }),
+			_react2.default.createElement('a-light', { id: 'fixedLightB', color: colorB, angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar' }),
+			_react2.default.createElement('a-entity', { id: 'avatar2',
+				geometry: 'primitive: torusKnot; radius: 2',
+				position: '15 2 -1',
+				p: '10',
+				material: 'color: white',
+				metalness: '.9',
+				roughness: '-2' }),
+			_react2.default.createElement('a-light', { id: 'fixedLightA', color: colorA, angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar2' }),
+			_react2.default.createElement('a-light', { id: 'fixedLightB', color: colorB, angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar2' }),
+			_react2.default.createElement(
+				'a-entity',
+				{ position: '0 0 20' },
+				_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
+			),
+			_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' }),
+			_react2.default.createElement(
+				'a-entity',
+				{ position: '0 0 0' },
+				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
+					repeat: 'indefinite', easing: 'linear', dur: rate }),
+				_react2.default.createElement('a-entity', { mixin: 'lightA', position: '30 0 0' })
+			),
+			_react2.default.createElement(
+				'a-entity',
+				{ position: '0 0 0' },
+				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '360 0 0',
+					repeat: 'indefinite', easing: 'linear', dur: rate }),
+				_react2.default.createElement('a-entity', { mixin: 'lightB', position: '0 0 40' })
+			)
+		)
+	);
+};
+//import Avatar from './Avatar'  // not rendering
+exports.default = Lights;
+
+/***/ }),
 /* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40824,155 +40973,6 @@ function toArray(list, index) {
 /***/ (function(module, exports) {
 
 /* (ignored) */
-
-/***/ }),
-/* 368 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _react = __webpack_require__(6);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _AssetLoader = __webpack_require__(88);
-
-var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* -------------
-props - prevEmotion, currEmotion, prevIntensity, currIntensity
-# intensity will equal duration of rotation of light mixins
-# emotion will dictate colors of lights
-------------- */
-
-// Component with camera, skysphere, lights
-var Lights = function Lights(props) {
-	console.log('props', props.currIntensity);
-
-	// emotion controls light color
-	var emotionColorsA = {
-		anger: 'red', // red
-		surprise: '#CC0033', // pink
-		sadness: 'blue', // blue
-		fear: '#330000', // brown
-		joy: 'goldenrod' // yellow
-	};
-
-	var emotionColorsB = {
-		anger: '#FF6600', // orange    
-		surprise: '#FF66FF', // pink
-		sadness: 'green', // green
-		fear: '#006600', // dark green
-		joy: '#993300' // burnt orange
-	};
-
-	var colorA = emotionColorsA[props.currEmotion];
-	var colorB = emotionColorsB[props.currEmotion];
-
-	console.log('colorA', colorA, 'colorB', colorB);
-
-	// intensity controls rate of lights spinning
-	var rate = (props.currIntensity - 1) * -4000;
-	console.log('rate is', rate);
-
-	// functions for producing knot shapes in scene. not working.
-	// adapted from: https://github.com/aframevr/aframe/blob/master/examples/showcase/dynamic-lights/index.html 
-	var createShapes = function createShapes() {
-		console.log('inside createShapes');
-		// Helper functions
-		var getRandColor = function getRandColor() {
-			var letters = '0123456789ABCDEF'.split('');
-			var color = '#';
-			for (var i = 0; i < 6; i++) {
-				color += letters[Math.floor(Math.random() * 16)];
-			}
-			return color;
-		};
-
-		var getRandCoord = function getRandCoord() {
-			var coord = Math.random() * 60;
-			return Math.random() < 0.5 ? coord + 5 : coord * -1 - 5;
-		};
-
-		// Generate random knots
-		for (var i = 0; i < 120; i++) {
-			console.log('inside createShapes 2');
-			return _react2.default.createElement('a-entity', {
-				geometry: '\n\t  \t\t\tprimitive: torusKnot;\n\t    \t\tradius: ' + Math.random() * 10 + ';\n\t    \t\tradiusTubular: ' + Math.random() * 0.75 + ';\n\t    \t\tp: ' + Math.round(Math.random() * 10) + ';\n\t    \t\tq: ' + Math.round(Math.random() * 10) + '\n\t    \t',
-				material: '\n\t    \t\tcolor: ' + getRandColor() + ';\n\t    \t\tmetalness: ' + Math.random() + ';\n\t    \t\troughness: ' + Math.random() + '\n\t\t\t\t',
-				position: '\n\t    \t\tx: ' + getRandCoord() + ';\n\t    \t\ty: ' + getRandCoord() + ';\n\t    \t\tz: ' + getRandCoord() + '\n\t\t\t\t'
-			});
-		}
-	};
-
-	return _react2.default.createElement(
-		'div',
-		null,
-		_react2.default.createElement(
-			'a-scene',
-			{ fog: 'type: exponential; color: purple' },
-			_react2.default.createElement(_AssetLoader2.default, null),
-			_react2.default.createElement(
-				'a-assets',
-				null,
-				_react2.default.createElement('a-mixin', { id: 'lightA', geometry: 'primitive: sphere; radius: 1.5',
-					material: 'color: white; shader: flat',
-					light: 'color: blue; distance: 120; intensity: 3; type: point' }),
-				_react2.default.createElement('a-mixin', { id: 'lightB', geometry: 'primitive: sphere; radius: 2',
-					material: 'color: white; shader: flat',
-					light: 'color: orange; distance: 120; intensity: 2; type: point' }),
-				_react2.default.createElement('a-mixin', { id: 'torus-knot', geometry: 'primitive: torusKnot',
-					material: 'color: red' })
-			),
-			_react2.default.createElement('a-entity', { id: 'avatar',
-				geometry: 'primitive: torusKnot; radius: 3',
-				position: '-1 1.25 -5',
-				material: 'color: white',
-				metalness: '.9',
-				roughness: '-2' }),
-			_react2.default.createElement('a-light', { id: 'fixedLightA', color: colorA, angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar' }),
-			_react2.default.createElement('a-light', { id: 'fixedLightB', color: colorB, angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar' }),
-			_react2.default.createElement('a-entity', { id: 'avatar2',
-				geometry: 'primitive: torusKnot; radius: 2',
-				position: '15 2 -1',
-				p: '10',
-				material: 'color: white',
-				metalness: '.9',
-				roughness: '-2' }),
-			_react2.default.createElement('a-light', { id: 'fixedLightA', color: colorA, angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar2' }),
-			_react2.default.createElement('a-light', { id: 'fixedLightB', color: colorB, angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar2' }),
-			_react2.default.createElement(
-				'a-entity',
-				{ position: '0 0 20' },
-				_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
-			),
-			_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' }),
-			_react2.default.createElement(
-				'a-entity',
-				{ position: '0 0 0' },
-				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
-					repeat: 'indefinite', easing: 'linear', dur: rate }),
-				_react2.default.createElement('a-entity', { mixin: 'lightA', position: '30 0 0' })
-			),
-			_react2.default.createElement(
-				'a-entity',
-				{ position: '0 0 0' },
-				_react2.default.createElement('a-animation', { attribute: 'rotation', to: '360 0 0',
-					repeat: 'indefinite', easing: 'linear', dur: rate }),
-				_react2.default.createElement('a-entity', { mixin: 'lightB', position: '0 0 40' })
-			)
-		)
-	);
-};
-//import Avatar from './Avatar'  // not rendering
-exports.default = Lights;
 
 /***/ })
 /******/ ]);

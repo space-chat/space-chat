@@ -18,7 +18,7 @@ const Lights = (props) => {
     	surprise: '#CC0033',  // pink
     	sadness: 'blue',   // blue
     	fear: '#330000',      // brown
-    	joy: 'goldenrod'        // yellow
+    	joy: 'orange'        // yellow
 	}
 
 	let emotionColorsB = {
@@ -112,6 +112,7 @@ const createShapes = () => {
 	      geometry="primitive: torusKnot; radius: 3"
 	      	position="-1 1.25 -5"
 	      	material="color: white"
+	      	p="5"
 	      	metalness=".9"
 	      	roughness="-2" />
         <a-light id="fixedLightA" color={colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar" />
