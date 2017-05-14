@@ -86,7 +86,7 @@ class Room extends Component {
     let prevIntensity = this.props.sentiment.intensity[1] || 0.5
     let currIntensity = this.props.sentiment.intensity[0] || 0.5
     return (
-      <Lights prevEmotion={prevEmotion} currEmotion={currEmotion} prevIntensity={prevIntensity} currIntensity={currIntensity} />
+      <Knots prevEmotion={prevEmotion} currEmotion={currEmotion} prevIntensity={prevIntensity} currIntensity={currIntensity} />
     )
   }
 }
