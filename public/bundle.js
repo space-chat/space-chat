@@ -10572,10 +10572,6 @@ function AssetLoader() {
 			{ timeout: "3000" },
 			_react2.default.createElement("img", { id: "blossoms", src: "/images/blossoms.jpg" }),
 			_react2.default.createElement("img", { id: "stars", src: "/images/sky-stars.png" }),
-			_react2.default.createElement("img", { id: "fractal", src: "/images/fractal.jpg" }),
-			_react2.default.createElement("img", { id: "deer", src: "/images/deer.jpg" }),
-			_react2.default.createElement("img", { id: "cliff", src: "/images/cliff.jpg" }),
-			_react2.default.createElement("img", { id: "gh", src: "/images/gh.jpg" }),
 			_react2.default.createElement("a-mixin", { id: "chair-part", geometry: "primitive: box", material: "color: #BFBFBF" })
 		)
 	);
