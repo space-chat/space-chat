@@ -28,7 +28,7 @@ export default class Cubes extends Component {
       sky: '#fractal',
       color: 'blue',
       scale: 1,
-      cubeImages: ['#deer', '#cliff', '#gh']
+      cubeImages: ['#deer', '#gh', '#roses', '#rainbow']
     }
 
     this.handleAdd = this.handleAdd.bind(this)

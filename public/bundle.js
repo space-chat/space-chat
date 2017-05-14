@@ -10576,6 +10576,9 @@ function AssetLoader() {
 			_react2.default.createElement("img", { id: "deer", src: "/images/deer.jpg" }),
 			_react2.default.createElement("img", { id: "cliff", src: "/images/cliff.jpg" }),
 			_react2.default.createElement("img", { id: "gh", src: "/images/gh.jpg" }),
+			_react2.default.createElement("img", { id: "roses", src: "/images/roses.jpg" }),
+			_react2.default.createElement("img", { id: "rainbow", src: "/images/rainbow.jpg" }),
+			_react2.default.createElement("img", { id: "sunset", src: "/images/sunset.jpg" }),
 			_react2.default.createElement("a-mixin", { id: "chair-part", geometry: "primitive: box", material: "color: #BFBFBF" })
 		)
 	);
@@ -18119,7 +18122,7 @@ var Cubes = function (_Component) {
       sky: '#fractal',
       color: 'blue',
       scale: 1,
-      cubeImages: ['#deer', '#cliff', '#gh']
+      cubeImages: ['#deer', '#gh', '#roses', '#rainbow']
     };
 
     _this.handleAdd = _this.handleAdd.bind(_this);
@@ -18378,7 +18381,7 @@ var initScene = function initScene() {}
 	cube.setAttribute('material', 'src: ' + images[i]);
 
 	// set cube size
-	var j = Math.floor(Math.random() * (10 - 1) + 1);
+	var j = Math.floor(Math.random() * (12 - 2) + 2);
 	console.log('j is', j);
 	cube.setAttribute('depth', j);
 	cube.setAttribute('height', j);

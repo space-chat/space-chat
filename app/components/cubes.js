@@ -42,7 +42,7 @@ const createCube = (scaleNum, images) => {
 	cube.setAttribute('material', `src: ${images[i]}`)
 	
 	// set cube size
-	let j = Math.floor((Math.random() * (10 - 1)) + 1)
+	let j = Math.floor((Math.random() * (12 - 2)) + 2)
 	console.log('j is', j)
 	cube.setAttribute('depth', j)
 	cube.setAttribute('height', j)
