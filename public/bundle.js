@@ -18119,8 +18119,8 @@ var Cubes = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Cubes.__proto__ || Object.getPrototypeOf(Cubes)).call(this));
 
     _this.state = {
-      numCubes: 200,
-      cubeImages: ['#deer', '#gh', '#roses', '#rainbow'],
+      numCubes: 350,
+      cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
       color: 'blue', // will update based on primary emotion
       speed: 0, // will update based on sentiment analysis
       direction: 'forward' // will update based on sentiment analysis
@@ -18217,7 +18217,7 @@ var Cubes = function (_Component) {
             { position: '0 0 0' },
             _react2.default.createElement('a-camera', null)
           ),
-          _react2.default.createElement('a-sky', { src: '#fractal' })
+          _react2.default.createElement('a-sky', { id: '#sky', src: '#fractal' })
         )
       );
     }
@@ -18344,9 +18344,9 @@ var createCube = function createCube(images) {
 	var cube = document.createElement('a-box');
 
 	// set cube position
-	var x = Math.random() * 201 - 100;
+	var x = Math.random() * 401 - 200;
 	var y = Math.random() * 301 - 150;
-	var z = Math.random() * 241 - 120;
+	var z = Math.random() * 301 - 150;
 	cube.setAttribute('position', { x: x, y: y, z: z });
 
 	// set cube image
@@ -18365,6 +18365,9 @@ var createCube = function createCube(images) {
 	var yR = Math.random() * 180;
 	var zR = Math.random() * 180;
 	cube.setAttribute('rotation', { x: xR, y: 0, z: zR });
+
+	// set environment map
+	//cube.setAttribute('sphericalEnvMap: #sky')
 
 	// set cube id
 	cubes.push(cube);

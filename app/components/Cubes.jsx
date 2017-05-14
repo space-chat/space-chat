@@ -25,8 +25,8 @@ export default class Cubes extends Component {
     super()
 
     this.state = {
-      numCubes: 200,
-      cubeImages: ['#deer', '#gh', '#roses', '#rainbow'],
+      numCubes: 350,
+      cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
       color: 'blue', // will update based on primary emotion
       speed: 0, // will update based on sentiment analysis
       direction: 'forward' // will update based on sentiment analysis
@@ -101,7 +101,7 @@ export default class Cubes extends Component {
           {/*<a-sphere position="-1 1.25 -5" radius="0.001" color="#EF2D5E" id="pink">
           </a-sphere> */}
 
-          <a-sky src="#fractal" />
+          <a-sky id="#sky" src="#fractal" />
         </a-scene>
       </div>
     )

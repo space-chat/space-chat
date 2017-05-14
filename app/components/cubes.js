@@ -30,9 +30,9 @@ const createCube = (images) => {
 	let cube = document.createElement('a-box')
 
 	// set cube position
-	let x = (Math.random() * 201) - 100
+	let x = (Math.random() * 401) - 200
 	let y = (Math.random() * 301) - 150
-	let z = (Math.random() * 241) - 120
+	let z = (Math.random() * 301) - 150
 	cube.setAttribute('position', { x: x, y: y, z: z})
 
 	// set cube image
@@ -51,6 +51,9 @@ const createCube = (images) => {
 	let yR = Math.random() * 180
 	let zR = Math.random() * 180
 	cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
+
+	// set environment map
+	//cube.setAttribute('sphericalEnvMap: #sky')
 
 	// set cube id
 	cubes.push(cube)
