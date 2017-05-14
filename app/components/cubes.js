@@ -25,7 +25,6 @@ const initScene = () => {
 	camera.setAttribute('focalLength', 3)
 
 	window.addEventListener('resize', onWindowResize, false);
-	document.addEventListener('mousemove', onDocumentMouseMove, false)
 }
 
 // Create a single cube with specified material, scale and altitude
@@ -111,11 +110,6 @@ const onWindowResize = () => {
 	windowHalfX = window.innerWidth / 2;
 	windowHalfY = window.innerHeight / 2;
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
-}
-
-const onDocumentMouseMove = (e) => {
-	mouseX = (e.clientX - windowHalfX) / 100
-	mouseY = (e.clientY - windowHalfY) / 100
 }
 
 module.exports = { initScene, makeCubes, animate, addCubes, destroyCubes, sizeOrColor, updateSpeed, updatePath}

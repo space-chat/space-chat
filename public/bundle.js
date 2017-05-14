@@ -41008,8 +41008,7 @@ var Cubes = function (_Component) {
           _react2.default.createElement('a-entity', { id: 'cubeCamera',
             camera: 'userHeight: 1.6',
             'look-controls': true,
-            'orbit-controls': 'autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;',
-            'mouse-cursor': '' }),
+            'orbit-controls': 'autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;' }),
           _react2.default.createElement('a-sphere', { position: '-1 1.25 -5', radius: '0.001', color: '#EF2D5E', id: 'pink' }),
           _react2.default.createElement('a-sky', { src: '#fractal' })
         )
@@ -41056,7 +41055,6 @@ var initScene = function initScene() {
 	camera.setAttribute('focalLength', 3);
 
 	window.addEventListener('resize', onWindowResize, false);
-	document.addEventListener('mousemove', onDocumentMouseMove, false);
 };
 
 // Create a single cube with specified material, scale and altitude
@@ -41142,11 +41140,6 @@ var onWindowResize = function onWindowResize() {
 	windowHalfX = window.innerWidth / 2;
 	windowHalfY = window.innerHeight / 2;
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight);
-};
-
-var onDocumentMouseMove = function onDocumentMouseMove(e) {
-	mouseX = (e.clientX - windowHalfX) / 100;
-	mouseY = (e.clientY - windowHalfY) / 100;
 };
 
 module.exports = { initScene: initScene, makeCubes: makeCubes, animate: animate, addCubes: addCubes, destroyCubes: destroyCubes, sizeOrColor: sizeOrColor, updateSpeed: updateSpeed, updatePath: updatePath };
