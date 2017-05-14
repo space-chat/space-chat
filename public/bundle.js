@@ -40906,7 +40906,7 @@ var Cubes = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       (0, _cubes.initScene)();
-      (0, _cubes.makeCubes)(60, this.state.sky);
+      (0, _cubes.makeCubes)(300, this.state.sky);
       (0, _cubes.animate)();
     }
   }, {
@@ -41005,10 +41005,11 @@ var Cubes = function (_Component) {
           'a-scene',
           { 'vr-mode-ui': 'enabled: true' },
           _react2.default.createElement(_AssetLoader2.default, null),
-          _react2.default.createElement('a-entity', { id: 'cubeCamera',
-            camera: 'userHeight: 1.6',
-            'look-controls': true,
-            'orbit-controls': 'autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;' }),
+          _react2.default.createElement(
+            'a-entity',
+            { position: '0 0 0' },
+            _react2.default.createElement('a-camera', null)
+          ),
           _react2.default.createElement('a-sphere', { position: '-1 1.25 -5', radius: '0.001', color: '#EF2D5E', id: 'pink' }),
           _react2.default.createElement('a-sky', { src: '#fractal' })
         )
@@ -41045,25 +41046,26 @@ var movementPath = 'clockwise';
 
 // Set up orbital camera, mouse listener, and window resize listener
 
-var initScene = function initScene() {
-	var camera = document.getElementById('cubeCamera');
-	camera.setAttribute('fov', 60);
-	camera.setAttribute('aspect', window.innerWidth / window.innerHeight);
-	camera.setAttribute('near', 0.01); //near
-	camera.setAttribute('far', 1000); //far
-	camera.setAttribute('position', { z: 5 });
-	camera.setAttribute('focalLength', 3);
+var initScene = function initScene() {}
+// let camera = document.getElementById('cubeCamera')
+// camera.setAttribute('fov', 60)
+// camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
+// camera.setAttribute('near', 0.01) //near
+// camera.setAttribute('far', 1000) //far
+// camera.setAttribute('position', { z: 5 })
+// camera.setAttribute('focalLength', 3)
 
-	window.addEventListener('resize', onWindowResize, false);
-};
+//window.addEventListener('resize', onWindowResize, false);
+
 
 // Create a single cube with specified material, scale and altitude
-var createCube = function createCube(scaleNum, img, color) {
+;var createCube = function createCube(scaleNum, img) {
 	var cube = document.createElement('a-box');
-	var x = Math.random() * 10;
-	var y = Math.random() * 10;
-	var z = Math.random() * 10;
-	cube.setAttribute('material', 'src: ' + img + '; roughness: 0.01; color: ' + color);
+	var x = Math.random() * 45;
+	var y = Math.random() * 45;
+	var z = Math.random() * 10 - 5;
+	console.log('coordinates are', x, y, z);
+	cube.setAttribute('material', 'src: ' + img + '; roughness: 0.01');
 	cube.setAttribute('position', { x: x, y: y, z: z });
 	var scale = Math.random() * 0.5 + scaleNum; //default is 0.2
 	cube.setAttribute('scale', { x: scale, y: scale, z: scale });
@@ -41116,12 +41118,12 @@ var updatePath = function updatePath(direction) {
 };
 
 var render = function render() {
-	var camera = document.getElementById('cubeCamera');
+	//let camera = document.getElementById('cubeCamera')
 	var timer = tickSpeed * Date.now(); //change the number for cube speed
-	var curr = camera.getAttribute('position');
-	var addx = curr.x + (mouseX = curr.x) * 0.05;
-	var addy = curr.y + (-mouseY - curr.y) * 0.05;
-	camera.setAttribute('position', { x: addx, y: addy, z: 5 });
+	// let curr = camera.getAttribute('position')
+	// let addx = curr.x + ((mouseX = curr.x) * 0.05)
+	// let addy = curr.y + ((- mouseY - curr.y) * 0.05)
+	// camera.setAttribute('position', { x: addx, y: addy, z: 5})
 
 	if (movementPath === 'clockwise') {
 		// clockwise rotation logic
@@ -41135,12 +41137,12 @@ var animate = function animate() {
 	render();
 };
 
-var onWindowResize = function onWindowResize() {
-	var camera = document.getElementById('cubeCamera');
-	windowHalfX = window.innerWidth / 2;
-	windowHalfY = window.innerHeight / 2;
-	camera.setAttribute('aspect', window.innerWidth / window.innerHeight);
-};
+// const onWindowResize = () => {
+// 	let camera = document.getElementById('cubeCamera')
+// 	windowHalfX = window.innerWidth / 2;
+// 	windowHalfY = window.innerHeight / 2;
+// 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
+// }
 
 module.exports = { initScene: initScene, makeCubes: makeCubes, animate: animate, addCubes: addCubes, destroyCubes: destroyCubes, sizeOrColor: sizeOrColor, updateSpeed: updateSpeed, updatePath: updatePath };
 

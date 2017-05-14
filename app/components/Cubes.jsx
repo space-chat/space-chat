@@ -39,7 +39,7 @@ export default class Cubes extends Component {
 
   componentDidMount() {
     initScene()
-    makeCubes(60, this.state.sky)
+    makeCubes(300, this.state.sky)
     animate()
   }
 
@@ -95,13 +95,15 @@ export default class Cubes extends Component {
         </div>
         <a-scene vr-mode-ui="enabled: true">
           <AssetLoader />
-          <a-entity id="cubeCamera" 
+          {/*<a-entity id="cubeCamera" 
             camera="userHeight: 1.6"
-            look-controls
             orbit-controls="autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;">
+          </a-entity>*/}
+          <a-entity position="0 0 0">
+            <a-camera />
           </a-entity>
           <a-sphere position="-1 1.25 -5" radius="0.001" color="#EF2D5E" id="pink">
-          </a-sphere>
+          </a-sphere> 
           <a-sky src="#fractal"></a-sky>
 
           {/* Cubes */}

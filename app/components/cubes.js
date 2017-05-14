@@ -16,24 +16,25 @@ let movementPath = 'clockwise'
 // Set up orbital camera, mouse listener, and window resize listener
 
 const initScene = () => {
-	let camera = document.getElementById('cubeCamera')
-	camera.setAttribute('fov', 60)
-	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
-	camera.setAttribute('near', 0.01) //near
-	camera.setAttribute('far', 1000) //far
-	camera.setAttribute('position', { z: 5 })
-	camera.setAttribute('focalLength', 3)
+	// let camera = document.getElementById('cubeCamera')
+	// camera.setAttribute('fov', 60)
+	// camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
+	// camera.setAttribute('near', 0.01) //near
+	// camera.setAttribute('far', 1000) //far
+	// camera.setAttribute('position', { z: 5 })
+	// camera.setAttribute('focalLength', 3)
 
-	window.addEventListener('resize', onWindowResize, false);
+	//window.addEventListener('resize', onWindowResize, false);
 }
 
 // Create a single cube with specified material, scale and altitude
-const createCube = (scaleNum, img, color) => {
+const createCube = (scaleNum, img) => {
 	let cube = document.createElement('a-box')
-	let x = Math.random() * 10
-	let y = Math.random() * 10
-	let z = Math.random() * 10
-	cube.setAttribute('material', `src: ${img}; roughness: 0.01; color: ${color}`)
+	let x = Math.random() * 45
+	let y = Math.random() * 45
+	let z = Math.random() * 10 - 5
+	console.log('coordinates are', x, y, z)
+	cube.setAttribute('material', `src: ${img}; roughness: 0.01`)
 	cube.setAttribute('position', { x: x, y: y, z: z})
 	let scale = Math.random() * 0.5 + scaleNum //default is 0.2
 	cube.setAttribute('scale', { x: scale, y: scale, z: scale })
@@ -86,12 +87,12 @@ const updatePath = (direction) => {
 }
 
 const render = () => {
-	let camera = document.getElementById('cubeCamera')
+	//let camera = document.getElementById('cubeCamera')
 	let timer = tickSpeed * Date.now() //change the number for cube speed
-	let curr = camera.getAttribute('position')
-	let addx = curr.x + ((mouseX = curr.x) * 0.05)
-	let addy = curr.y + ((- mouseY - curr.y) * 0.05)
-	camera.setAttribute('position', { x: addx, y: addy, z: 5})
+	// let curr = camera.getAttribute('position')
+	// let addx = curr.x + ((mouseX = curr.x) * 0.05)
+	// let addy = curr.y + ((- mouseY - curr.y) * 0.05)
+	// camera.setAttribute('position', { x: addx, y: addy, z: 5})
 
 	if (movementPath === 'clockwise') {
 		// clockwise rotation logic
@@ -105,12 +106,12 @@ const animate = () => {
 	render()
 }
 
-const onWindowResize = () => {
-	let camera = document.getElementById('cubeCamera')
-	windowHalfX = window.innerWidth / 2;
-	windowHalfY = window.innerHeight / 2;
-	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
-}
+// const onWindowResize = () => {
+// 	let camera = document.getElementById('cubeCamera')
+// 	windowHalfX = window.innerWidth / 2;
+// 	windowHalfY = window.innerHeight / 2;
+// 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
+// }
 
 module.exports = { initScene, makeCubes, animate, addCubes, destroyCubes, sizeOrColor, updateSpeed, updatePath}
 
