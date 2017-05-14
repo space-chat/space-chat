@@ -11,6 +11,7 @@
   "dependencies": {
     "@google-cloud/translate": "^0.8.1",
     "aframe": "^0.5.0",
+    "aframe-particle-system-component": "^1.0.9",
     "all": "^0.0.0",
     "axios": "^0.16.1",
     "babel-loader": "^7.0.0",

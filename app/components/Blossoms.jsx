@@ -34,10 +34,10 @@ const Blossoms = (props) => {
         </a-scene>
       </div>
     )
-  } else {
+  } else if (props.currEmotion !== 'fear') {
     return (
         <div>
-        <a-scene>
+        <a-scene fog="type: none">
           <AssetLoader />
           <a-sphere id="avatar" position="-1 1.25 -5" radius="1.75" material="src: #blossoms" color="white" />
           <a-sphere id="avatar" position="4 3.25 -10" radius="1.75" material="src: #blossoms" color="white" />

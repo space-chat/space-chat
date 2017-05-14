@@ -18091,13 +18091,13 @@ var Blossoms = function Blossoms(props) {
           src: '#blossoms' })
       )
     );
-  } else {
+  } else if (props.currEmotion !== 'fear') {
     return _react2.default.createElement(
       'div',
       null,
       _react2.default.createElement(
         'a-scene',
-        null,
+        { fog: 'type: none' },
         _react2.default.createElement(_AssetLoader2.default, null),
         _react2.default.createElement('a-sphere', { id: 'avatar', position: '-1 1.25 -5', radius: '1.75', material: 'src: #blossoms', color: 'white' }),
         _react2.default.createElement('a-sphere', { id: 'avatar', position: '4 3.25 -10', radius: '1.75', material: 'src: #blossoms', color: 'white' }),
