@@ -28,23 +28,46 @@ const initScene = () => {
 }
 
 // Create a single cube with specified material, scale and altitude
-const createCube = (scaleNum, img) => {
+const createCube = (scaleNum, images) => {
 	let cube = document.createElement('a-box')
-	let x = (Math.random() * 60) - 30
-	let y = (Math.random() * 60) - 30
-	let z = (Math.random() * 60) - 30
-	console.log('coordinates are', x, y, z)
-	cube.setAttribute('material', `src: ${img}; roughness: 0.01`)
+
+	// set cube position
+	let x = (Math.random() * 200) - 100
+	let y = (Math.random() * 100) - 50
+	let z = (Math.random() * 100) - 50
 	cube.setAttribute('position', { x: x, y: y, z: z})
-	let scale = Math.random() * 0.5 + scaleNum //default is 0.2
-	cube.setAttribute('scale', { x: scale, y: scale, z: scale })
+	
+	// set cube image
+	let i = Math.floor(Math.random() * images.length)
+	cube.setAttribute('material', `src: ${images[i]}`)
+	
+	// set cube size
+	let j = Math.floor((Math.random() * (10 - 1)) + 1)
+	console.log('j is', j)
+	cube.setAttribute('depth', j)
+	cube.setAttribute('height', j)
+	cube.setAttribute('width', j)
+
+	// set cube rotation
+
+	// set cube id
 	cubes.push(cube)
 	cube.setAttribute('id', cubes.length)
+
+	// add cube to scene
 	document.querySelector('a-scene').appendChild(cube)
 }
 
 // Create any number of cubes with any material
 const makeCubes = (numCubes, img, color) => {
+	let light = document.createElement('a-light')
+	light.setAttribute('id', 'animate')
+	light.setAttribute('type', 'ambient')
+	light.setAttribute('color', 'white')
+	light.setAttribute('intensity', 1)
+	light.setAttribute('distance', 60) 
+	light.setAttribute('decay', 12)
+	document.querySelector('a-scene').appendChild(light)
 	for (let i = 0; i < numCubes; i++) {
 		createCube(currentScale, img, color)
 	}

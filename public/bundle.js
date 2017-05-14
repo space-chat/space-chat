@@ -18118,7 +18118,8 @@ var Cubes = function (_Component) {
     _this.state = {
       sky: '#fractal',
       color: 'blue',
-      scale: 1
+      scale: 1,
+      cubeImages: ['#deer', '#cliff', '#gh']
     };
 
     _this.handleAdd = _this.handleAdd.bind(_this);
@@ -18133,7 +18134,7 @@ var Cubes = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       (0, _cubes.initScene)();
-      (0, _cubes.makeCubes)(300, this.state.sky);
+      (0, _cubes.makeCubes)(200, this.state.cubeImages);
       (0, _cubes.animate)();
     }
   }, {
@@ -18363,23 +18364,46 @@ var initScene = function initScene() {}
 
 
 // Create a single cube with specified material, scale and altitude
-;var createCube = function createCube(scaleNum, img) {
+;var createCube = function createCube(scaleNum, images) {
 	var cube = document.createElement('a-box');
-	var x = Math.random() * 60 - 30;
-	var y = Math.random() * 60 - 30;
-	var z = Math.random() * 60 - 30;
-	console.log('coordinates are', x, y, z);
-	cube.setAttribute('material', 'src: ' + img + '; roughness: 0.01');
+
+	// set cube position
+	var x = Math.random() * 200 - 100;
+	var y = Math.random() * 100 - 50;
+	var z = Math.random() * 100 - 50;
 	cube.setAttribute('position', { x: x, y: y, z: z });
-	var scale = Math.random() * 0.5 + scaleNum; //default is 0.2
-	cube.setAttribute('scale', { x: scale, y: scale, z: scale });
+
+	// set cube image
+	var i = Math.floor(Math.random() * images.length);
+	cube.setAttribute('material', 'src: ' + images[i]);
+
+	// set cube size
+	var j = Math.floor(Math.random() * (10 - 1) + 1);
+	console.log('j is', j);
+	cube.setAttribute('depth', j);
+	cube.setAttribute('height', j);
+	cube.setAttribute('width', j);
+
+	// set cube rotation
+
+	// set cube id
 	cubes.push(cube);
 	cube.setAttribute('id', cubes.length);
+
+	// add cube to scene
 	document.querySelector('a-scene').appendChild(cube);
 };
 
 // Create any number of cubes with any material
 var makeCubes = function makeCubes(numCubes, img, color) {
+	var light = document.createElement('a-light');
+	light.setAttribute('id', 'animate');
+	light.setAttribute('type', 'ambient');
+	light.setAttribute('color', 'white');
+	light.setAttribute('intensity', 1);
+	light.setAttribute('distance', 60);
+	light.setAttribute('decay', 12);
+	document.querySelector('a-scene').appendChild(light);
 	for (var i = 0; i < numCubes; i++) {
 		createCube(currentScale, img, color);
 	}

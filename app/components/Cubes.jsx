@@ -27,7 +27,8 @@ export default class Cubes extends Component {
     this.state={
       sky: '#fractal',
       color: 'blue',
-      scale: 1
+      scale: 1,
+      cubeImages: ['#deer', '#cliff', '#gh']
     }
 
     this.handleAdd = this.handleAdd.bind(this)
@@ -39,7 +40,7 @@ export default class Cubes extends Component {
 
   componentDidMount() {
     initScene()
-    makeCubes(300, this.state.sky)
+    makeCubes(200, this.state.cubeImages)
     animate()
   }
 
