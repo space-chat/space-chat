@@ -32,7 +32,6 @@ export default class Cubes extends Component {
       direction: 'forward' // will update based on sentiment analysis
     }
 
-    this.handleAdd = this.handleAdd.bind(this)
     this.handleColor = this.handleColor.bind(this)
     this.handleSpeed = this.handleSpeed.bind(this)
     this.handleDirection = this.handleDirection.bind(this)

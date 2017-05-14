@@ -18126,7 +18126,6 @@ var Cubes = function (_Component) {
       direction: 'forward' // will update based on sentiment analysis
     };
 
-    _this.handleAdd = _this.handleAdd.bind(_this);
     _this.handleColor = _this.handleColor.bind(_this);
     _this.handleSpeed = _this.handleSpeed.bind(_this);
     _this.handleDirection = _this.handleDirection.bind(_this);
