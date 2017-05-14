@@ -41030,6 +41030,128 @@ exports.default = Cubes;
 "use strict";
 
 
+// This component controls sphere rendering and animations of Cubes.jsx. 
+// Much of this code is based on Three.js' example here:  https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html
+
+var cubes = [];
+var windowHalfX = window.innerWidth / 2;
+var windowHalfY = window.innerHeight / 2;
+var width = window.innerWidth || 2;
+var height = window.innerHeight || 2;
+// let ambientLight
+var mouseX = 0;
+var mouseY = 0;
+var currentScale = 0.2;
+var tickSpeed = 0.00005;
+var movementPath = 'clockwise';
+
+// Set up orbital camera, mouse listener, and window resize listener
+
+var initScene = function initScene() {
+	var camera = document.getElementById('cubeCamera');
+	camera.setAttribute('fov', 60);
+	camera.setAttribute('aspect', window.innerWidth / window.innerHeight);
+	camera.setAttribute('near', 0.01); //near
+	camera.setAttribute('far', 1000); //far
+	camera.setAttribute('position', { z: 5 });
+	camera.setAttribute('focalLength', 3);
+
+	window.addEventListener('resize', onWindowResize, false);
+	document.addEventListener('mousemove', onDocumentMouseMove, false);
+};
+
+// Create a single cube with specified material, scale and altitude
+var createCube = function createCube(scaleNum, img, color) {
+	var cube = document.createElement('a-box');
+	var x = Math.random() * 10;
+	var y = Math.random() * 10;
+	var z = Math.random() * 10;
+	cube.setAttribute('material', 'src: ' + img + '; roughness: 0.01; color: ' + color);
+	cube.setAttribute('position', { x: x, y: y, z: z });
+	var scale = Math.random() * 0.5 + scaleNum; //default is 0.2
+	cube.setAttribute('scale', { x: scale, y: scale, z: scale });
+	cubes.push(cube);
+	cube.setAttribute('id', cubes.length);
+	document.querySelector('a-scene').appendChild(cube);
+};
+
+// Create any number of cubes with any material
+var makeCubes = function makeCubes(numCubes, img, color) {
+	for (var i = 0; i < numCubes; i++) {
+		createCube(currentScale, img, color);
+	}
+	console.log('making cubes');
+};
+
+// add more cubes to scene
+var addCubes = function addCubes(numCubes, img, color) {
+	console.log('adding cubes');
+	makeCubes(numCubes, img, color);
+};
+
+// remove cubes from scene
+var destroyCubes = function destroyCubes(numCubes) {
+	for (var i = 0; i < numCubes; i++) {
+		var cube = cubes.pop();
+		document.querySelector('a-scene').removeChild(cube);
+	}
+};
+
+// some cubes increase or decrease in size, or change color
+var sizeOrColor = function sizeOrColor(scale, img, color) {
+	var n = cubes.length / 5;
+	destroyCubes(n);
+
+	while (n >= 0) {
+		createCube(scale, img, color);
+		n--;
+	}
+};
+
+// Use to increase or decrease speed, or stop cubes:
+var updateSpeed = function updateSpeed(n) {
+	tickSpeed = n;
+};
+
+// Use to change rotation direction of cubes:
+var updatePath = function updatePath(direction) {
+	movementPath = direction;
+};
+
+var render = function render() {
+	var camera = document.getElementById('cubeCamera');
+	var timer = tickSpeed * Date.now(); //change the number for cube speed
+	var curr = camera.getAttribute('position');
+	var addx = curr.x + (mouseX = curr.x) * 0.05;
+	var addy = curr.y + (-mouseY - curr.y) * 0.05;
+	camera.setAttribute('position', { x: addx, y: addy, z: 5 });
+
+	if (movementPath === 'clockwise') {
+		// clockwise rotation logic
+	} else {
+			// counter-clockwise rotation logic
+		}
+};
+
+var animate = function animate() {
+	requestAnimationFrame(animate);
+	render();
+};
+
+var onWindowResize = function onWindowResize() {
+	var camera = document.getElementById('cubeCamera');
+	windowHalfX = window.innerWidth / 2;
+	windowHalfY = window.innerHeight / 2;
+	camera.setAttribute('aspect', window.innerWidth / window.innerHeight);
+};
+
+var onDocumentMouseMove = function onDocumentMouseMove(e) {
+	mouseX = (e.clientX - windowHalfX) / 100;
+	mouseY = (e.clientY - windowHalfY) / 100;
+};
+
+module.exports = { initScene: initScene, makeCubes: makeCubes, animate: animate, addCubes: addCubes, destroyCubes: destroyCubes, sizeOrColor: sizeOrColor, updateSpeed: updateSpeed, updatePath: updatePath };
+
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map
