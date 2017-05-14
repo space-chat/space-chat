@@ -10572,6 +10572,10 @@ function AssetLoader() {
 			{ timeout: "3000" },
 			_react2.default.createElement("img", { id: "blossoms", src: "/images/blossoms.jpg" }),
 			_react2.default.createElement("img", { id: "stars", src: "/images/sky-stars.png" }),
+			_react2.default.createElement("img", { id: "fractal", src: "/images/fractal.jpg" }),
+			_react2.default.createElement("img", { id: "deer", src: "/images/deer.jpg" }),
+			_react2.default.createElement("img", { id: "cliff", src: "/images/cliff.jpg" }),
+			_react2.default.createElement("img", { id: "gh", src: "/images/gh.jpg" }),
 			_react2.default.createElement("a-mixin", { id: "chair-part", geometry: "primitive: box", material: "color: #BFBFBF" })
 		)
 	);
@@ -18075,39 +18079,21 @@ var Blossoms = function Blossoms(props) {
       secondaryIntensity
     }
   ----- */
-  if (props.currEmotion === 'fear') {
-    return _react2.default.createElement(
-      'div',
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'a-scene',
       null,
-      _react2.default.createElement(
-        'a-scene',
-        { fog: 'type: exponential; color: gray' },
-        _react2.default.createElement(_AssetLoader2.default, null),
-        _react2.default.createElement('a-sphere', { id: 'avatar', position: '-1 1.25 -5', radius: '1.75', material: 'src: #blossoms', color: 'white' }),
-        _react2.default.createElement('a-sphere', { id: 'avatar', position: '4 3.25 -10', radius: '1.75', material: 'src: #blossoms', color: 'white' }),
-        _react2.default.createElement('a-entity', { light: 'type: hemisphere; color: #33C; groundColor: #3C3; intensity: 2' }),
-        _react2.default.createElement('a-sky', {
-          id: 'sky',
-          src: '#blossoms' })
-      )
-    );
-  } else if (props.currEmotion !== 'fear') {
-    return _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement(
-        'a-scene',
-        { fog: 'type: none' },
-        _react2.default.createElement(_AssetLoader2.default, null),
-        _react2.default.createElement('a-sphere', { id: 'avatar', position: '-1 1.25 -5', radius: '1.75', material: 'src: #blossoms', color: 'white' }),
-        _react2.default.createElement('a-sphere', { id: 'avatar', position: '4 3.25 -10', radius: '1.75', material: 'src: #blossoms', color: 'white' }),
-        _react2.default.createElement('a-entity', { light: 'type: hemisphere; color: #33C; groundColor: #3C3; intensity: 2' }),
-        _react2.default.createElement('a-sky', {
-          id: 'sky',
-          src: '#blossoms' })
-      )
-    );
-  }
+      _react2.default.createElement(_AssetLoader2.default, null),
+      _react2.default.createElement('a-box', { id: 'avatar', position: '-1 1.25 -5', rotation: '45 76 100', depth: '3', height: '3', width: '3', material: 'src: #gh', 'normal-texture-repeat': '50', color: 'white' }),
+      _react2.default.createElement('a-box', { id: 'avatar', position: '4 3.25 -10', rotation: '45 76 100', depth: '1.5', height: '1.5', width: '1.5', material: 'src: #cliff', color: 'white' }),
+      _react2.default.createElement('a-box', { id: 'avatar', position: '8 1.25 -6', rotation: '45 100 68', depth: '2', height: '2', width: '2', material: 'src: #deer', 'normal-texture-repeat': '50', color: 'white' }),
+      _react2.default.createElement('a-sky', {
+        id: 'sky',
+        src: '#fractal' })
+    )
+  );
 };
 
 exports.default = Blossoms;
