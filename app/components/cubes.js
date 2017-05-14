@@ -30,9 +30,9 @@ const initScene = () => {
 // Create a single cube with specified material, scale and altitude
 const createCube = (scaleNum, img) => {
 	let cube = document.createElement('a-box')
-	let x = Math.random() * 45
-	let y = Math.random() * 45
-	let z = Math.random() * 10 - 5
+	let x = (Math.random() * 60) - 30
+	let y = (Math.random() * 60) - 30
+	let z = (Math.random() * 60) - 30
 	console.log('coordinates are', x, y, z)
 	cube.setAttribute('material', `src: ${img}; roughness: 0.01`)
 	cube.setAttribute('position', { x: x, y: y, z: z})
