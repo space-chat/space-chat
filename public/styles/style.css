@@ -35,6 +35,12 @@ h3 {
   margin: 0 auto;
 }
 
+.navigation {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+
 #display {
   padding-top: 24px;
 }
