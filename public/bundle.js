@@ -17800,9 +17800,9 @@ var _Scene = __webpack_require__(164);
 
 var _Scene2 = _interopRequireDefault(_Scene);
 
-var _Blossoms = __webpack_require__(163);
+var _Cubes = __webpack_require__(368);
 
-var _Blossoms2 = _interopRequireDefault(_Blossoms);
+var _Cubes2 = _interopRequireDefault(_Cubes);
 
 var _sockets = __webpack_require__(167);
 
@@ -17909,7 +17909,7 @@ var Room = function (_Component) {
     value: function render() {
       var prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy';
       var currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy';
-      return _react2.default.createElement(_Blossoms2.default, { prevEmotion: prevEmotion, currEmotion: currEmotion });
+      return _react2.default.createElement(_Cubes2.default, { prevEmotion: prevEmotion, currEmotion: currEmotion });
     }
   }]);
 
@@ -18049,56 +18049,7 @@ var Avatar = function Avatar() {
 exports.default = Avatar;
 
 /***/ }),
-/* 163 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(6);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _AssetLoader = __webpack_require__(88);
-
-var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Blossoms = function Blossoms(props) {
-  console.log('props are', props);
-  /* -----
-    props {
-      primaryEmotion
-      secondaryEmotion
-      primaryIntensity
-      secondaryIntensity
-    }
-  ----- */
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'a-scene',
-      null,
-      _react2.default.createElement(_AssetLoader2.default, null),
-      _react2.default.createElement('a-box', { id: 'avatar', position: '-1 1.25 -5', rotation: '45 76 100', depth: '3', height: '3', width: '3', material: 'src: #gh', 'normal-texture-repeat': '50', color: 'white' }),
-      _react2.default.createElement('a-box', { id: 'avatar', position: '4 3.25 -10', rotation: '45 76 100', depth: '1.5', height: '1.5', width: '1.5', material: 'src: #cliff', color: 'white' }),
-      _react2.default.createElement('a-box', { id: 'avatar', position: '8 1.25 -6', rotation: '45 100 68', depth: '2', height: '2', width: '2', material: 'src: #deer', 'normal-texture-repeat': '50', color: 'white' }),
-      _react2.default.createElement('a-sky', {
-        id: 'sky',
-        src: '#fractal' })
-    )
-  );
-};
-
-exports.default = Blossoms;
-
-/***/ }),
+/* 163 */,
 /* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40869,6 +40820,61 @@ function toArray(list, index) {
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _AssetLoader = __webpack_require__(88);
+
+var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Blossoms = function Blossoms(props) {
+  console.log('props are', props);
+  /* -----
+    props {
+      primaryEmotion
+      secondaryEmotion
+      primaryIntensity
+      secondaryIntensity
+       joy: white / none
+      sad: #99ccff intensity 1
+      mad: #ff3333 intensity 3
+    }
+  ----- */
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'a-scene',
+      null,
+      _react2.default.createElement(_AssetLoader2.default, null),
+      _react2.default.createElement('a-box', { id: 'avatar', position: '-1 1.25 -5', rotation: '45 76 100', depth: '3', height: '3', width: '3', material: 'src: #gh', 'normal-texture-repeat': '50', color: 'white' }),
+      _react2.default.createElement('a-box', { id: 'avatar', position: '4 3.25 -10', rotation: '45 76 100', depth: '1.5', height: '1.5', width: '1.5', material: 'src: #cliff', color: 'white' }),
+      _react2.default.createElement('a-box', { id: 'avatar', position: '8 1.25 -6', rotation: '45 100 68', depth: '2', height: '2', width: '2', material: 'src: #deer', 'normal-texture-repeat': '50', color: 'white' }),
+      _react2.default.createElement('a-box', { id: 'avatar', position: '-10 5 -8', rotation: '12 128 50', depth: '2', height: '2', width: '2', material: 'src: #blossoms', 'normal-texture-repeat': '50', color: 'white' }),
+      _react2.default.createElement('a-light', { type: 'ambient', color: '#ff3333', intensity: '3', distance: '60', decay: '12' }),
+      _react2.default.createElement('a-sky', {
+        id: 'sky',
+        src: '#fractal' })
+    )
+  );
+};
+
+exports.default = Blossoms;
 
 /***/ })
 /******/ ]);
