@@ -74,19 +74,18 @@ console.log('rate is', rate)
 
         {/* temporary buttons for testing */}
         <div>
-          <button onClick={() => this.handleColor()}>Change light color</button>
-          <button onClick={() => this.handleSpeed()}>Change rotation speed</button>
-          <button onClick={() => this.handleDirection()}>Change rotation direction</button>
+          <button onClick={() => this.handleColor()}>Change color</button>
+          <button onClick={() => this.handleRate()}>Change rotation rate</button>
         </div>
         <div>
-		   	<a-scene fog="type: exponential; color: purple">
+				<a-scene fog="type: exponential; color: purple">
 					<AssetLoader />
 
 					{/* Camera */}
 			    <a-entity position="0 0 20">
 			      <a-camera fov="45" user-height="0" />
 			    </a-entity>
-			    
+
 					<a-assets>
 		        <a-mixin id="lightA" geometry="primitive: sphere; radius: 1.5"
 		                 material="color: white; shader: flat"

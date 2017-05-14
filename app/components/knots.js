@@ -1,6 +1,28 @@
-// adapted from: https://github.com/aframevr/aframe/blob/master/examples/showcase/dynamic-lights/index.html 
+// This component controls sphere rendering and animations of Knots.jsx. 
+// Adapted from: (1) https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html (2) https://github.com/aframevr/aframe/blob/master/examples/showcase/dynamic-lights/index.html 
 
 let knots = []
+let tickSpeed = 0.00005
+
+const setLights = () => {
+
+  // light A
+  let lightA = document.createElement('a-light')
+  lightA.setAttribute('geometry', 'primitive: sphere; radius: 1.5')
+  lightA.setAttribute('material', 'color: white; shader: flat')
+  lightA.setAttribute('light', 'color: blue; distance: 120; intensity: 3; type: point')
+
+  // light B
+  let lightB = document.createElement('a-light')
+  lightB.setAttribute('geometry', 'primitive: sphere; radius: 2')
+  lightB.setAttribute('material', 'color: white; shader: flat')
+  lightB.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point')
+
+  // set lights in scene
+  document.querySelector('a-scene').appendChild(lightA)
+  document.querySelector('a-scene').appendChild(lightB)
+
+}
 
 
 
@@ -28,11 +50,7 @@ let knots = []
 
 
 
-
-
-
-
-
+module.exports = { setLights }
 
 
 // functions for producing knot shapes in scene. not working.
