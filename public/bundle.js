@@ -40899,7 +40899,6 @@ var Cubes = function (_Component) {
     _this.handleSizeOrColor = _this.handleSizeOrColor.bind(_this);
     _this.handleSpeed = _this.handleSpeed.bind(_this);
     _this.handlePath = _this.handlePath.bind(_this);
-    _this.handleAltitude = _this.handleAltitude.bind(_this);
     return _this;
   }
 

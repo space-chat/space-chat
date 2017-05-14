@@ -30,12 +30,11 @@ export default class Cubes extends Component {
       scale: 1
     }
 
-   this.handleAdd = this.handleAdd.bind(this)
+    this.handleAdd = this.handleAdd.bind(this)
     this.handleSubtract = this.handleSubtract.bind(this)
     this.handleSizeOrColor = this.handleSizeOrColor.bind(this)
     this.handleSpeed = this.handleSpeed.bind(this)
     this.handlePath = this.handlePath.bind(this)
-    this.handleAltitude = this.handleAltitude.bind(this)
   }
 
   componentDidMount() {
