@@ -84,7 +84,12 @@ class Room extends Component {
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
     return (
-      <Cubes prevEmotion={prevEmotion} currEmotion={currEmotion} />
+      <div>
+        <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
+        <div className="navigation">
+          <button>NAVIGATION</button>
+        </div>
+      </div>
     )
   }
 }
