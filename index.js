@@ -49,7 +49,6 @@ io.on('connection', (socket) => {
   socket.on('message', ({ messageText, lang }) => {
     console.log('new spoken message! server emitting original text: ', messageText)
     let translatedBool = false
-    socket.emit('got message', { translatedBool, messageText, lang })
       
     // 1) immediately send message exactly as received to all OTHER sockets
     socket.broadcast.emit('got message', { translatedBool, messageText, lang })
