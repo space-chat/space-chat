@@ -87,7 +87,7 @@ const createShapes = () => {
 
 	return (
 		<div>
-	   <a-scene>
+	   <a-scene fog="type: exponential; color: purple">
 				<AssetLoader />
 				<a-assets>
 	        <a-mixin id="lightA" geometry="primitive: sphere; radius: 1.5"
@@ -137,10 +137,11 @@ const createShapes = () => {
 		    </a-entity>
 
 		    {/* Skysphere. */}
-		    <a-entity geometry="primitive: sphere; radius: 600"
+		    {/*<a-entity geometry="primitive: sphere; radius: 600"
 		              material="color: white"
 		              scale="-1 -1 -1">
-		    </a-entity>
+		    </a-entity>*/}
+		    <a-sky id="sky" color="turquoise"></a-sky>
 
 		    {/* Lights. */}
 			{/* x-axis rotation */}
@@ -151,8 +152,8 @@ const createShapes = () => {
 		      <a-entity mixin="lightA" position="30 0 0"></a-entity>
 		    </a-entity>
         {/* y-axis rotation */}
-	      <a-entity position="360 0 0">
-	        <a-animation attribute="rotation" to="0 0 0"
+	      <a-entity position="0 0 0">
+	        <a-animation attribute="rotation" to="360 0 0"
 	                     repeat="indefinite" easing="linear" dur={rate}>
 	        </a-animation>
 	        <a-entity mixin="lightB" position="0 0 40"></a-entity>
