@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AssetLoader from './AssetLoader'
 
-import { initScene, makeCubes, animate, addCubes, destroyCubes, sizeOrColor, updateSpeed, updatePath } from './cubes.js'
+import { setLight, makeCubes, animate, updateColor, updateSpeed, updateDirection } from './cubes.js'
 
 
 // const animate = (cubeColor, prevCubeColor) => {
@@ -24,52 +24,42 @@ export default class Cubes extends Component {
   constructor(props) {
     super()
 
-    this.state={
-      sky: '#fractal',
-      color: 'blue',
-      scale: 1,
-      cubeImages: ['#deer', '#gh', '#roses', '#rainbow']
+    this.state = {
+      numCubes: 200,
+      cubeImages: ['#deer', '#gh', '#roses', '#rainbow'],
+      color: 'blue', // will update based on primary emotion
+      speed: 0, // will update based on sentiment analysis
+      direction: 'forward' // will update based on sentiment analysis
     }
 
     this.handleAdd = this.handleAdd.bind(this)
-    this.handleSubtract = this.handleSubtract.bind(this)
-    this.handleSizeOrColor = this.handleSizeOrColor.bind(this)
+    this.handleColor = this.handleColor.bind(this)
     this.handleSpeed = this.handleSpeed.bind(this)
-    this.handlePath = this.handlePath.bind(this)
+    this.handleDirection = this.handleDirection.bind(this)
   }
 
   componentDidMount() {
-    initScene()
-    makeCubes(200, this.state.cubeImages)
+    setLight()
+    makeCubes(this.state.numCubes, this.state.cubeImages)
     animate()
   }
 
-  handleAdd() {
-    addCubes(60, this.state.sky)
-  }
-
-  handleSubtract() {
-    destroyCubes(30)
-  }
-
-  handleSizeOrColor() {
-    sizeOrColor(this.state.scale, this.state.sky, this.state.color)
+  handleColor() {
+    updateColor(this.state.color)
   }
 
   // Default speed is 0.0005
-  handleSpeed(n) {
-    updateSpeed(n)
+  handleSpeed() {
+    updateSpeed(this.state.speed)
   }
 
   // make cubes reverse spin direction based on sentiment
-  handlePath(name) {
-    updatePath(name)
+  handleDirection() {
+    updateDirection(this.state.direction)
   }
 
-  // cubes spin in place on random axes 
-  // emotion - color and color intensity (controlled via ambient light)
-  // sentiment - rotation direction
-  // agreeableness - cubes spin more quickly
+  /* ---------------
+  Logic for translating sentiment analysis:
 
   // let emotionColors = {
   //   anger: ['#FF3333', 3],
@@ -79,47 +69,40 @@ export default class Cubes extends Component {
   //   joy: [null, 1],
   // }
 
-
   // let cubeColor = emotionColors[props.currEmotion]
   // let prevCubeColor = emotionColors[props.prevEmotion]
 
   // console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
+  ------------------ */
+
   render() {
     return (
       <div>
+        {/* temporary buttons for testing */}
         <div>
-          <button onClick={this.handleAdd}>Add cubes</button>
-          <button onClick={this.handleSubtract}>Subtract cubes</button>
-          <button onClick={this.handleSizeOrColor}>Size cubes</button>
-          <button onClick={() => this.handleSpeed(0.001)}>Change rotation speed</button>
-          <button onClick={() => this.handlePath("pendulum")}>Change rotation direction</button>
+          <button onClick={() => this.handleColor()}>Change light color</button>
+          <button onClick={() => this.handleSpeed()}>Change rotation speed</button>
+          <button onClick={() => this.handleDirection()}>Change rotation direction</button>
         </div>
         <a-scene vr-mode-ui="enabled: true">
           <AssetLoader />
-          {/*<a-entity id="cubeCamera" 
+
+          {/* Camera - artifact from bubbles code. */}
+          {/*<a-entity id="cubeCamera"
             camera="userHeight: 1.6"
             orbit-controls="autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;">
           </a-entity>*/}
+
+          {/* Camera */}
           <a-entity position="0 0 0">
             <a-camera />
           </a-entity>
-          <a-sphere position="-1 1.25 -5" radius="0.001" color="#EF2D5E" id="pink">
-          </a-sphere> 
-          <a-sky src="#fractal"></a-sky>
 
-          {/* Cubes */}
-          {/* <a-box id="avatar" position="-1 1.25 -5" rotation="45 76 100" depth="3" height="3" width="3" material="src: #gh" normal-texture-repeat="50" color="white"> </a-box>
-          <a-box id="avatar" position="4 3.25 -10" rotation="45 76 100" depth="1.5" height="1.5" width="1.5" material="src: #cliff" color="white" />
-          <a-box id="avatar" position="8 1.25 -6" rotation="45 100 68" depth="2" height="2" width="2" material="src: #deer" normal-texture-repeat="50" color="white" />
-           <a-box id="avatar" position="-10 5 -8" rotation="12 128 50" depth="2" height="2" width="2" material="src: #blossoms" normal-texture-repeat="50" color="white" /> */}
+          {/* Not sure if I need this. Artifact from bubbles code. */}
+          {/*<a-sphere position="-1 1.25 -5" radius="0.001" color="#EF2D5E" id="pink">
+          </a-sphere> */}
 
-          {/* Ambient Light */}
-          {/* <a-light id="animate" type="ambient" color={cubeColor[0]} intensity={cubeColor[1]}distance="60" decay="12" /> */}
-
-          {/* Fractal Sky */}
-          {/* <a-sky
-            id="sky"
-            src="#fractal" /> */}
+          <a-sky src="#fractal" />
         </a-scene>
       </div>
     )

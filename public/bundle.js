@@ -18119,77 +18119,62 @@ var Cubes = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Cubes.__proto__ || Object.getPrototypeOf(Cubes)).call(this));
 
     _this.state = {
-      sky: '#fractal',
-      color: 'blue',
-      scale: 1,
-      cubeImages: ['#deer', '#gh', '#roses', '#rainbow']
+      numCubes: 200,
+      cubeImages: ['#deer', '#gh', '#roses', '#rainbow'],
+      color: 'blue', // will update based on primary emotion
+      speed: 0, // will update based on sentiment analysis
+      direction: 'forward' // will update based on sentiment analysis
     };
 
     _this.handleAdd = _this.handleAdd.bind(_this);
-    _this.handleSubtract = _this.handleSubtract.bind(_this);
-    _this.handleSizeOrColor = _this.handleSizeOrColor.bind(_this);
+    _this.handleColor = _this.handleColor.bind(_this);
     _this.handleSpeed = _this.handleSpeed.bind(_this);
-    _this.handlePath = _this.handlePath.bind(_this);
+    _this.handleDirection = _this.handleDirection.bind(_this);
     return _this;
   }
 
   _createClass(Cubes, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      (0, _cubes.initScene)();
-      (0, _cubes.makeCubes)(200, this.state.cubeImages);
+      (0, _cubes.setLight)();
+      (0, _cubes.makeCubes)(this.state.numCubes, this.state.cubeImages);
       (0, _cubes.animate)();
     }
   }, {
-    key: 'handleAdd',
-    value: function handleAdd() {
-      (0, _cubes.addCubes)(60, this.state.sky);
-    }
-  }, {
-    key: 'handleSubtract',
-    value: function handleSubtract() {
-      (0, _cubes.destroyCubes)(30);
-    }
-  }, {
-    key: 'handleSizeOrColor',
-    value: function handleSizeOrColor() {
-      (0, _cubes.sizeOrColor)(this.state.scale, this.state.sky, this.state.color);
+    key: 'handleColor',
+    value: function handleColor() {
+      (0, _cubes.updateColor)(this.state.color);
     }
 
     // Default speed is 0.0005
 
   }, {
     key: 'handleSpeed',
-    value: function handleSpeed(n) {
-      (0, _cubes.updateSpeed)(n);
+    value: function handleSpeed() {
+      (0, _cubes.updateSpeed)(this.state.speed);
     }
 
     // make cubes reverse spin direction based on sentiment
 
   }, {
-    key: 'handlePath',
-    value: function handlePath(name) {
-      (0, _cubes.updatePath)(name);
+    key: 'handleDirection',
+    value: function handleDirection() {
+      (0, _cubes.updateDirection)(this.state.direction);
     }
 
-    // cubes spin in place on random axes 
-    // emotion - color and color intensity (controlled via ambient light)
-    // sentiment - rotation direction
-    // agreeableness - cubes spin more quickly
-
-    // let emotionColors = {
+    /* ---------------
+    Logic for translating sentiment analysis:
+     // let emotionColors = {
     //   anger: ['#FF3333', 3],
     //   surprise: ['#ffcc99', 4],
     //   sadness: ['#ff8533', 1],
     //   fear: ['#99CC00', 2],
     //   joy: [null, 1],
     // }
-
-
-    // let cubeColor = emotionColors[props.currEmotion]
+     // let cubeColor = emotionColors[props.currEmotion]
     // let prevCubeColor = emotionColors[props.prevEmotion]
-
-    // console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
+     // console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
+    ------------------ */
 
   }, {
     key: 'render',
@@ -18204,30 +18189,22 @@ var Cubes = function (_Component) {
           null,
           _react2.default.createElement(
             'button',
-            { onClick: this.handleAdd },
-            'Add cubes'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.handleSubtract },
-            'Subtract cubes'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.handleSizeOrColor },
-            'Size cubes'
+            { onClick: function onClick() {
+                return _this2.handleColor();
+              } },
+            'Change light color'
           ),
           _react2.default.createElement(
             'button',
             { onClick: function onClick() {
-                return _this2.handleSpeed(0.001);
+                return _this2.handleSpeed();
               } },
             'Change rotation speed'
           ),
           _react2.default.createElement(
             'button',
             { onClick: function onClick() {
-                return _this2.handlePath("pendulum");
+                return _this2.handleDirection();
               } },
             'Change rotation direction'
           )
@@ -18241,7 +18218,6 @@ var Cubes = function (_Component) {
             { position: '0 0 0' },
             _react2.default.createElement('a-camera', null)
           ),
-          _react2.default.createElement('a-sphere', { position: '-1 1.25 -5', radius: '0.001', color: '#EF2D5E', id: 'pink' }),
           _react2.default.createElement('a-sky', { src: '#fractal' })
         )
       );
@@ -18341,33 +18317,31 @@ exports.default = Scene;
 // Much of this code is based on Three.js' example here:  https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html
 
 var cubes = [];
-var windowHalfX = window.innerWidth / 2;
-var windowHalfY = window.innerHeight / 2;
-var width = window.innerWidth || 2;
-var height = window.innerHeight || 2;
+// let windowHalfX = window.innerWidth / 2
+// let windowHalfY = window.innerHeight / 2
+// let width = window.innerWidth || 2
+// let height = window.innerHeight || 2
 // let ambientLight
-var mouseX = 0;
-var mouseY = 0;
-var currentScale = 0.2;
+// let mouseX = 0
+// let mouseY = 0
+// let currentScale = 0.2
 var tickSpeed = 0.00005;
 var movementPath = 'clockwise';
 
-// Set up orbital camera, mouse listener, and window resize listener
-
-var initScene = function initScene() {}
-// let camera = document.getElementById('cubeCamera')
-// camera.setAttribute('fov', 60)
-// camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
-// camera.setAttribute('near', 0.01) //near
-// camera.setAttribute('far', 1000) //far
-// camera.setAttribute('position', { z: 5 })
-// camera.setAttribute('focalLength', 3)
-
-//window.addEventListener('resize', onWindowResize, false);
-
+// Set up ambient light. Color will respond to emotion updates
+var setLight = function setLight() {
+	var light = document.createElement('a-light');
+	light.setAttribute('id', 'animate');
+	light.setAttribute('type', 'ambient');
+	light.setAttribute('color', 'white');
+	light.setAttribute('intensity', 1);
+	light.setAttribute('distance', 60);
+	light.setAttribute('decay', 12);
+	document.querySelector('a-scene').appendChild(light);
+};
 
 // Create a single cube with specified material, scale and altitude
-;var createCube = function createCube(scaleNum, images) {
+var createCube = function createCube(images) {
 	var cube = document.createElement('a-box');
 
 	// set cube position
@@ -18402,54 +18376,27 @@ var initScene = function initScene() {}
 };
 
 // Create any number of cubes with any material
-var makeCubes = function makeCubes(numCubes, img, color) {
-	var light = document.createElement('a-light');
-	light.setAttribute('id', 'animate');
-	light.setAttribute('type', 'ambient');
-	light.setAttribute('color', 'white');
-	light.setAttribute('intensity', 1);
-	light.setAttribute('distance', 60);
-	light.setAttribute('decay', 12);
-	document.querySelector('a-scene').appendChild(light);
-	for (var i = 0; i < numCubes; i++) {
-		createCube(currentScale, img, color);
+var makeCubes = function makeCubes(numCubes, images) {
+	while (numCubes >= 0) {
+		createCube(images);
+		numCubes--;
 	}
 	console.log('making cubes');
 };
 
-// add more cubes to scene
-var addCubes = function addCubes(numCubes, img, color) {
-	console.log('adding cubes');
-	makeCubes(numCubes, img, color);
-};
+// update color based on emotion
+var updateColor = function updateColor(color) {}
+// update ambient light color based on emotion
 
-// remove cubes from scene
-var destroyCubes = function destroyCubes(numCubes) {
-	for (var i = 0; i < numCubes; i++) {
-		var cube = cubes.pop();
-		document.querySelector('a-scene').removeChild(cube);
-	}
-};
 
-// some cubes increase or decrease in size, or change color
-var sizeOrColor = function sizeOrColor(scale, img, color) {
-	var n = cubes.length / 5;
-	destroyCubes(n);
-
-	while (n >= 0) {
-		createCube(scale, img, color);
-		n--;
-	}
-};
-
-// Use to increase or decrease speed, or stop cubes:
-var updateSpeed = function updateSpeed(n) {
+// updated speed based on intensity or a personality trait
+;var updateSpeed = function updateSpeed(n) {
 	tickSpeed = n;
 };
 
-// Use to change rotation direction of cubes:
-var updatePath = function updatePath(direction) {
-	movementPath = direction;
+// update rotation direction based on sentiment
+var updateDirection = function updateDirection(direction) {
+	// logic
 };
 
 var render = function render() {
@@ -18472,6 +18419,7 @@ var animate = function animate() {
 	render();
 };
 
+// Artifact from bubbles
 // const onWindowResize = () => {
 // 	let camera = document.getElementById('cubeCamera')
 // 	windowHalfX = window.innerWidth / 2;
@@ -18479,7 +18427,7 @@ var animate = function animate() {
 // 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
 // }
 
-module.exports = { initScene: initScene, makeCubes: makeCubes, animate: animate, addCubes: addCubes, destroyCubes: destroyCubes, sizeOrColor: sizeOrColor, updateSpeed: updateSpeed, updatePath: updatePath };
+module.exports = { setLight: setLight, makeCubes: makeCubes, animate: animate, updateColor: updateColor, updateSpeed: updateSpeed, updateDirection: updateDirection };
 
 /***/ }),
 /* 166 */
