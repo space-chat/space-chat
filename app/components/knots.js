@@ -6,24 +6,23 @@ let tickSpeed = 0.00005
 
 const setLights = () => {
 
-  // light A
-  let lightA = document.createElement('a-light')
-  lightA.setAttribute('geometry', 'primitive: sphere; radius: 1.5')
-  lightA.setAttribute('material', 'color: white; shader: flat')
-  lightA.setAttribute('light', 'color: blue; distance: 120; intensity: 3; type: point')
+  // light X: x-axis rotating
+  let lightX = document.createElement('a-light')
+  lightX.setAttribute('geometry', 'primitive: sphere; radius: 1.5')
+  lightX.setAttribute('material', 'color: white; shader: flat')
+  lightX.setAttribute('light', 'color: blue; distance: 120; intensity: 3; type: point')
 
-  // light B
-  let lightB = document.createElement('a-light')
-  lightB.setAttribute('geometry', 'primitive: sphere; radius: 2')
-  lightB.setAttribute('material', 'color: white; shader: flat')
-  lightB.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point')
+  // light Y: y-axis rotating
+  let lightY = document.createElement('a-light')
+  lightY.setAttribute('geometry', 'primitive: sphere; radius: 2')
+  lightY.setAttribute('material', 'color: white; shader: flat')
+  lightY.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point')
 
   // set lights in scene
-  document.querySelector('a-scene').appendChild(lightA)
-  document.querySelector('a-scene').appendChild(lightB)
+  document.querySelector('a-scene').appendChild(lightX)
+  document.querySelector('a-scene').appendChild(lightY)
 
 }
-
 
 
 const createKnot = (colorA, colorB) => {

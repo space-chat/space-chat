@@ -89,11 +89,11 @@ console.log('rate is', rate)
 
 					<a-assets>
 		        <a-mixin id="lightA" geometry="primitive: sphere; radius: 1.5"
-		                 material="color: white; shader: flat"
+		                 material="color: white; shader: flat; opacity: 0.01"
 		                 light="color: blue; distance: 120; intensity: 3; type: point">
 		        </a-mixin>
 		        <a-mixin id="lightB" geometry="primitive: sphere; radius: 2"
-		                 material="color: white; shader: flat"
+		                 material="color: white; shader: flat; opacity: 0.01"
 		                 light="color: orange; distance: 120; intensity: 2; type: point">
 		        </a-mixin>
 		        <a-mixin id="torus-knot" geometry="primitive: torusKnot"

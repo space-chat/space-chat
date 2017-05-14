@@ -40971,10 +40971,10 @@ var Knots = function (_Component) {
 							'a-assets',
 							null,
 							_react2.default.createElement('a-mixin', { id: 'lightA', geometry: 'primitive: sphere; radius: 1.5',
-								material: 'color: white; shader: flat',
+								material: 'color: white; shader: flat; opacity: 0.01',
 								light: 'color: blue; distance: 120; intensity: 3; type: point' }),
 							_react2.default.createElement('a-mixin', { id: 'lightB', geometry: 'primitive: sphere; radius: 2',
-								material: 'color: white; shader: flat',
+								material: 'color: white; shader: flat; opacity: 0.01',
 								light: 'color: orange; distance: 120; intensity: 2; type: point' }),
 							_react2.default.createElement('a-mixin', { id: 'torus-knot', geometry: 'primitive: torusKnot',
 								material: 'color: red' })
@@ -41038,21 +41038,21 @@ var tickSpeed = 0.00005;
 
 var setLights = function setLights() {
 
-  // light A
-  var lightA = document.createElement('a-light');
-  lightA.setAttribute('geometry', 'primitive: sphere; radius: 1.5');
-  lightA.setAttribute('material', 'color: white; shader: flat');
-  lightA.setAttribute('light', 'color: blue; distance: 120; intensity: 3; type: point');
+  // light X: x-axis rotating
+  var lightX = document.createElement('a-light');
+  lightX.setAttribute('geometry', 'primitive: sphere; radius: 1.5');
+  lightX.setAttribute('material', 'color: white; shader: flat');
+  lightX.setAttribute('light', 'color: blue; distance: 120; intensity: 3; type: point');
 
-  // light B
-  var lightB = document.createElement('a-light');
-  lightB.setAttribute('geometry', 'primitive: sphere; radius: 2');
-  lightB.setAttribute('material', 'color: white; shader: flat');
-  lightB.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point');
+  // light Y: y-axis rotating
+  var lightY = document.createElement('a-light');
+  lightY.setAttribute('geometry', 'primitive: sphere; radius: 2');
+  lightY.setAttribute('material', 'color: white; shader: flat');
+  lightY.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point');
 
   // set lights in scene
-  document.querySelector('a-scene').appendChild(lightA);
-  document.querySelector('a-scene').appendChild(lightB);
+  document.querySelector('a-scene').appendChild(lightX);
+  document.querySelector('a-scene').appendChild(lightY);
 };
 
 var createKnot = function createKnot(colorA, colorB) {
