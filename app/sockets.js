@@ -53,30 +53,30 @@ export function receiveSentiment() {
 
     // get personality trait ratings
     let primEmo = sortedEmotions[0][0]  //primary emotion
-    // let secEmo = sortedEmotions[1][0]   //secondary emotion
-    // let primInt = sortedEmotions[0][1]  //primary emotion's intensity
-    // let secInt = sortedEmotions[1][1]   //secondary emotion's intensity
-    // let extraversion = personality[0].extraversion || 0.001
-    // let openness = personality[0].agreeableness || 0.001
-    // let conscientiousness = personality[0].agreeableness || 0.001
-    // let agreeableness = personality[0].agreeableness || 0.001
-    // let sentScore = sentiment[0]        //sentiment score
+    let secEmo = sortedEmotions[1][0]   //secondary emotion
+    let primInt = sortedEmotions[0][1]  //primary emotion's intensity
+    let secInt = sortedEmotions[1][1]   //secondary emotion's intensity
+    let extraversion = personality[0].extraversion || 0.001
+    let openness = personality[0].agreeableness || 0.001
+    let conscientiousness = personality[0].agreeableness || 0.001
+    let agreeableness = personality[0].agreeableness || 0.001
+    let sentScore = sentiment[0]        //sentiment score
 
-    // console.log('extraversion is ', extraversion, 'agreeableness is ', agreeableness, 'openness is ', openness, 'conscientiousness is ', conscientiousness)
+    console.log('extraversion is ', extraversion, 'agreeableness is ', agreeableness, 'openness is ', openness, 'conscientiousness is ', conscientiousness)
     
     // update store with new emotion data
 
     store.dispatch(primaryEmotion(primEmo))
-    // store.dispatch(secondaryEmotion(secEmo))
-    // store.dispatch(primaryIntensity(primInt))
-    // store.dispatch(secondaryIntensity(secInt))
-    // store.dispatch(updateExtraversion(extraversion))
-    // store.dispatch(updateOpenness(openness))
-    // store.dispatch(updateConscientiousness(conscientiousness))
-    // store.dispatch(updateAgreeableness(agreeableness))
-    // store.dispatch(updateSentiment(sentScore))
+    store.dispatch(secondaryEmotion(secEmo))
+    store.dispatch(primaryIntensity(primInt))
+    store.dispatch(secondaryIntensity(secInt))
+    store.dispatch(updateExtraversion(extraversion))
+    store.dispatch(updateOpenness(openness))
+    store.dispatch(updateConscientiousness(conscientiousness))
+    store.dispatch(updateAgreeableness(agreeableness))
+    store.dispatch(updateSentiment(sentScore))
 
-    document.querySelector('#sky').emit('sentiment-change')
+    // document.querySelector('#sky').emit('sentiment-change')
   }
 
     /* ----- Example of output: ------

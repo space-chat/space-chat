@@ -3,7 +3,7 @@ import Avatar from './Avatar'
 import AssetLoader from './AssetLoader'
 
 
-const animate = (skyColor, prevSkyColor) => {
+/*const animate = (skyColor, prevSkyColor) => {
   if (skyColor !== prevSkyColor) {
     return (
      <a-animation
@@ -14,7 +14,7 @@ const animate = (skyColor, prevSkyColor) => {
         ease="ease-in-circ" />
     )
   }
-}
+}*/
 
 const Scene = (props) => {
 
@@ -43,10 +43,8 @@ const Scene = (props) => {
 
         <a-sky
           id="sky"
-          src="#stars" >
-
-            {animate(skyColor, prevSkyColor)}
-      
+          src="#stars"
+          color={skyColor} >
         </a-sky>
 
       </a-scene>

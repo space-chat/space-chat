@@ -18468,16 +18468,18 @@ var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var animate = function animate(skyColor, prevSkyColor) {
+/*const animate = (skyColor, prevSkyColor) => {
   if (skyColor !== prevSkyColor) {
-    return _react2.default.createElement('a-animation', {
-      begin: 'sentiment-change',
-      attribute: 'material.color',
-      from: prevSkyColor,
-      to: skyColor,
-      ease: 'ease-in-circ' });
+    return (
+     <a-animation
+        begin="sentiment-change"
+        attribute="material.color"
+        from={prevSkyColor}
+        to={skyColor}
+        ease="ease-in-circ" />
+    )
   }
-};
+}*/
 
 var Scene = function Scene(props) {
 
@@ -18506,13 +18508,10 @@ var Scene = function Scene(props) {
       _react2.default.createElement(_Avatar2.default, { position: '-1.5 1 -4' }),
       _react2.default.createElement('a-sphere', { id: 'avatar', position: '-1 1.25 -5', radius: '1.75', material: 'src: #blossoms', color: 'white' }),
       _react2.default.createElement('a-light', { color: 'red', angle: '45', position: '-1 1 0', type: 'spot', target: 'avatar' }),
-      _react2.default.createElement(
-        'a-sky',
-        {
-          id: 'sky',
-          src: '#stars' },
-        animate(skyColor, prevSkyColor)
-      )
+      _react2.default.createElement('a-sky', {
+        id: 'sky',
+        src: '#stars',
+        color: skyColor })
     )
   );
 };
@@ -18673,30 +18672,30 @@ function receiveSentiment() {
 
     // get personality trait ratings
     var primEmo = sortedEmotions[0][0]; //primary emotion
-    // let secEmo = sortedEmotions[1][0]   //secondary emotion
-    // let primInt = sortedEmotions[0][1]  //primary emotion's intensity
-    // let secInt = sortedEmotions[1][1]   //secondary emotion's intensity
-    // let extraversion = personality[0].extraversion || 0.001
-    // let openness = personality[0].agreeableness || 0.001
-    // let conscientiousness = personality[0].agreeableness || 0.001
-    // let agreeableness = personality[0].agreeableness || 0.001
-    // let sentScore = sentiment[0]        //sentiment score
+    var secEmo = sortedEmotions[1][0]; //secondary emotion
+    var primInt = sortedEmotions[0][1]; //primary emotion's intensity
+    var secInt = sortedEmotions[1][1]; //secondary emotion's intensity
+    var extraversion = personality[0].extraversion || 0.001;
+    var openness = personality[0].agreeableness || 0.001;
+    var conscientiousness = personality[0].agreeableness || 0.001;
+    var agreeableness = personality[0].agreeableness || 0.001;
+    var sentScore = sentiment[0]; //sentiment score
 
-    // console.log('extraversion is ', extraversion, 'agreeableness is ', agreeableness, 'openness is ', openness, 'conscientiousness is ', conscientiousness)
+    console.log('extraversion is ', extraversion, 'agreeableness is ', agreeableness, 'openness is ', openness, 'conscientiousness is ', conscientiousness);
 
     // update store with new emotion data
 
     _store2.default.dispatch((0, _sentimentReducer.primaryEmotion)(primEmo));
-    // store.dispatch(secondaryEmotion(secEmo))
-    // store.dispatch(primaryIntensity(primInt))
-    // store.dispatch(secondaryIntensity(secInt))
-    // store.dispatch(updateExtraversion(extraversion))
-    // store.dispatch(updateOpenness(openness))
-    // store.dispatch(updateConscientiousness(conscientiousness))
-    // store.dispatch(updateAgreeableness(agreeableness))
-    // store.dispatch(updateSentiment(sentScore))
+    _store2.default.dispatch((0, _sentimentReducer.secondaryEmotion)(secEmo));
+    _store2.default.dispatch((0, _sentimentReducer.primaryIntensity)(primInt));
+    _store2.default.dispatch((0, _sentimentReducer.secondaryIntensity)(secInt));
+    _store2.default.dispatch((0, _sentimentReducer.updateExtraversion)(extraversion));
+    _store2.default.dispatch((0, _sentimentReducer.updateOpenness)(openness));
+    _store2.default.dispatch((0, _sentimentReducer.updateConscientiousness)(conscientiousness));
+    _store2.default.dispatch((0, _sentimentReducer.updateAgreeableness)(agreeableness));
+    _store2.default.dispatch((0, _sentimentReducer.updateSentiment)(sentScore));
 
-    document.querySelector('#sky').emit('sentiment-change');
+    // document.querySelector('#sky').emit('sentiment-change')
   }
 
   /* ----- Example of output: ------
