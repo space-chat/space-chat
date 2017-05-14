@@ -10572,6 +10572,8 @@ function AssetLoader() {
 			{ timeout: "3000" },
 			_react2.default.createElement("img", { id: "blossoms", src: "/images/blossoms.jpg" }),
 			_react2.default.createElement("img", { id: "stars", src: "/images/sky-stars.png" }),
+			_react2.default.createElement("img", { id: "fractal", src: "/images/fractal.jpg" }),
+			_react2.default.createElement("img", { id: "tiedye", src: "/images/tiedye.jpg" }),
 			_react2.default.createElement("a-mixin", { id: "chair-part", geometry: "primitive: box", material: "color: #BFBFBF" })
 		)
 	);
@@ -40860,7 +40862,7 @@ var Lights = function Lights(props) {
 		surprise: '#CC0033', // pink
 		sadness: 'blue', // blue
 		fear: '#330000', // brown
-		joy: 'yellow' // yellow
+		joy: 'goldenrod' // yellow
 	};
 
 	var emotionColorsB = {
@@ -40921,10 +40923,10 @@ var Lights = function Lights(props) {
 				'a-assets',
 				null,
 				_react2.default.createElement('a-mixin', { id: 'lightA', geometry: 'primitive: sphere; radius: 1.5',
-					material: 'color: black; shader: flat',
-					light: 'color: blue; distance: 120; intensity: 2; type: point' }),
-				_react2.default.createElement('a-mixin', { id: 'lightB', geometry: 'primitive: sphere; radius: 1.5',
-					material: 'color: black; shader: flat',
+					material: 'color: white; shader: flat',
+					light: 'color: blue; distance: 120; intensity: 3; type: point' }),
+				_react2.default.createElement('a-mixin', { id: 'lightB', geometry: 'primitive: sphere; radius: 2',
+					material: 'color: white; shader: flat',
 					light: 'color: orange; distance: 120; intensity: 2; type: point' }),
 				_react2.default.createElement('a-mixin', { id: 'torus-knot', geometry: 'primitive: torusKnot',
 					material: 'color: red' })
@@ -40951,7 +40953,7 @@ var Lights = function Lights(props) {
 				{ position: '0 0 20' },
 				_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
 			),
-			_react2.default.createElement('a-sky', { id: 'sky', color: 'turquoise' }),
+			_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' }),
 			_react2.default.createElement(
 				'a-entity',
 				{ position: '0 0 0' },

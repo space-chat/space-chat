@@ -14,11 +14,11 @@ const Lights = (props) => {
 
 	// emotion controls light color
 	let emotionColorsA = {
-		  anger: 'red',     // red
+		anger: 'red',     // red
     	surprise: '#CC0033',  // pink
     	sadness: 'blue',   // blue
     	fear: '#330000',      // brown
-    	joy: 'yellow'        // yellow
+    	joy: 'goldenrod'        // yellow
 	}
 
 	let emotionColorsB = {
@@ -91,11 +91,11 @@ const createShapes = () => {
 				<AssetLoader />
 				<a-assets>
 	        <a-mixin id="lightA" geometry="primitive: sphere; radius: 1.5"
-	                 material="color: black; shader: flat"
-	                 light="color: blue; distance: 120; intensity: 2; type: point">
+	                 material="color: white; shader: flat"
+	                 light="color: blue; distance: 120; intensity: 3; type: point">
 	        </a-mixin>
-	        <a-mixin id="lightB" geometry="primitive: sphere; radius: 1.5"
-	                 material="color: black; shader: flat"
+	        <a-mixin id="lightB" geometry="primitive: sphere; radius: 2"
+	                 material="color: white; shader: flat"
 	                 light="color: orange; distance: 120; intensity: 2; type: point">
 	        </a-mixin>
 	        <a-mixin id="torus-knot" geometry="primitive: torusKnot"
@@ -141,7 +141,7 @@ const createShapes = () => {
 		              material="color: white"
 		              scale="-1 -1 -1">
 		    </a-entity>*/}
-		    <a-sky id="sky" color="turquoise"></a-sky>
+		    <a-sky id="sky" src="#tiedye"></a-sky>
 
 		    {/* Lights. */}
 			{/* x-axis rotation */}
