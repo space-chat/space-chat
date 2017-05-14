@@ -40836,75 +40836,10 @@ function toArray(list, index) {
 
 /***/ }),
 /* 367 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(6);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _AssetLoader = __webpack_require__(161);
-
-var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// const animate = (cubeColor, prevCubeColor) => {
-//   console.log('inside animation function')
-//   // Animate colors if sentiment changes
-//   if (cubeColor !== prevCubeColor) {
-//     return (
-//         <a-animation
-//           begin="sentiment-change"
-//           attribute="material.color"
-//           from={prevCubeColor}
-//           to={cubeColor}
-//           ease="ease-in-circ" />
-//     )
-//   }
-// }
-
-var Cubes = function Cubes(props) {
-
-  var emotionColors = {
-    anger: ['#FF3333', 3],
-    surprise: ['#ffcc99', 4],
-    sadness: ['#ff8533', 1],
-    fear: ['#99CC00', 2],
-    joy: [null, 1]
-  };
-
-  var cubeColor = emotionColors[props.currEmotion];
-  var prevCubeColor = emotionColors[props.prevEmotion];
-
-  console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor);
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'a-scene',
-      null,
-      _react2.default.createElement(_AssetLoader2.default, null),
-      _react2.default.createElement('a-box', { id: 'avatar', position: '-1 1.25 -5', rotation: '45 76 100', depth: '3', height: '3', width: '3', material: 'src: #gh', 'normal-texture-repeat': '50', color: 'white' }),
-      _react2.default.createElement('a-box', { id: 'avatar', position: '4 3.25 -10', rotation: '45 76 100', depth: '1.5', height: '1.5', width: '1.5', material: 'src: #cliff', color: 'white' }),
-      _react2.default.createElement('a-box', { id: 'avatar', position: '8 1.25 -6', rotation: '45 100 68', depth: '2', height: '2', width: '2', material: 'src: #deer', 'normal-texture-repeat': '50', color: 'white' }),
-      _react2.default.createElement('a-box', { id: 'avatar', position: '-10 5 -8', rotation: '12 128 50', depth: '2', height: '2', width: '2', material: 'src: #blossoms', 'normal-texture-repeat': '50', color: 'white' }),
-      _react2.default.createElement('a-light', { id: 'animate', type: 'ambient', color: cubeColor[0], intensity: cubeColor[1], distance: '60', decay: '12' }),
-      _react2.default.createElement('a-sky', {
-        id: 'sky',
-        src: '#fractal' })
-    )
-  );
-};
-
-exports.default = Cubes;
+throw new Error("Module build failed: SyntaxError: Unexpected token (1:13)\n\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 1 | \u001b[39m\u001b[36mimport\u001b[39m \u001b[33mReact\u001b[39m {\u001b[33mComponent\u001b[39m} from \u001b[32m'react'\u001b[39m\n \u001b[90m   | \u001b[39m             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 2 | \u001b[39m\u001b[36mimport\u001b[39m \u001b[33mAssetLoader\u001b[39m from \u001b[32m'./AssetLoader'\u001b[39m\n \u001b[90m 3 | \u001b[39m\n \u001b[90m 4 | \u001b[39m\u001b[36mimport\u001b[39m { initScene\u001b[33m,\u001b[39m makeCubes\u001b[33m,\u001b[39m animate\u001b[33m,\u001b[39m addCubes\u001b[33m,\u001b[39m destroyCubes\u001b[33m,\u001b[39m sizeOrColor\u001b[33m,\u001b[39m updateSpeed\u001b[33m,\u001b[39m updatePath\u001b[33m,\u001b[39m updateAltitude } from \u001b[32m'./cubes.js'\u001b[39m\u001b[0m\n");
 
 /***/ })
 /******/ ]);
