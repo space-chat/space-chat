@@ -33,7 +33,7 @@ app.get('/', (req, res, next) => {
 let languages = []
 
 // when a socket connects, listen for messages
-io.on('connection', (socket) => {
+io.on('connection', socket => {
   console.log('new socket ', socket.id, ' connected')
 
   // when a socket joins room, store selected language of that socket
@@ -42,6 +42,7 @@ io.on('connection', (socket) => {
     // check that language choice is not empty, and not already stored
     if (language && languages.indexOf(language) === -1)
       languages.push(language)
+    console.log(`currently connected: ${Object.keys(io.sockets.sockets)}`)
     console.log('all languages on server state are: ', languages)
   })
 
