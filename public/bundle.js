@@ -18121,7 +18121,7 @@ var Cubes = function (_Component) {
     _this.state = {
       numCubes: 350,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
-      color: 'blue', // will update based on primary emotion
+      color: '#99CC00', // will update based on primary emotion
       speed: 0, // will update based on sentiment analysis
       direction: 'forward' // will update based on sentiment analysis
     };
@@ -18135,14 +18135,14 @@ var Cubes = function (_Component) {
   _createClass(Cubes, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      (0, _cubes.setLight)();
+      (0, _cubes.setLight)('white');
       (0, _cubes.makeCubes)(this.state.numCubes, this.state.cubeImages);
       (0, _cubes.animate)();
     }
   }, {
     key: 'handleColor',
     value: function handleColor() {
-      (0, _cubes.updateColor)(this.state.color);
+      (0, _cubes.setLight)(this.state.color);
     }
 
     // Default speed is 0.0005
@@ -18161,19 +18161,20 @@ var Cubes = function (_Component) {
       (0, _cubes.updateDirection)(this.state.direction);
     }
 
-    /* ---------------
-    Logic for translating sentiment analysis:
-     // let emotionColors = {
+    //Logic for translating sentiment analysis:
+
+    // let emotionColors = {
     //   anger: ['#FF3333', 3],
     //   surprise: ['#ffcc99', 4],
     //   sadness: ['#ff8533', 1],
     //   fear: ['#99CC00', 2],
     //   joy: [null, 1],
     // }
-     // let cubeColor = emotionColors[props.currEmotion]
-    // let prevCubeColor = emotionColors[props.prevEmotion]
-     // console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
-    ------------------ */
+
+    // let cubeColor = emotionColors[props.currEmotion][0]
+    // let prevCubeColor = emotionColors[props.prevEmotion][0]
+
+    //console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
 
   }, {
     key: 'render',
@@ -18328,11 +18329,14 @@ var tickSpeed = 0.00005;
 var movementPath = 'clockwise';
 
 // Set up ambient light. Color will respond to emotion updates
-var setLight = function setLight() {
+var setLight = function setLight(color) {
+	var prevLight = document.querySelector('a-light');
+	prevLight ? document.querySelector('a-scene').removeChild(prevLight) : null;
+
 	var light = document.createElement('a-light');
 	light.setAttribute('id', 'animate');
 	light.setAttribute('type', 'ambient');
-	light.setAttribute('color', 'white');
+	light.setAttribute('color', '' + color);
 	light.setAttribute('intensity', 1);
 	light.setAttribute('distance', 60);
 	light.setAttribute('decay', 12);
@@ -18341,7 +18345,9 @@ var setLight = function setLight() {
 
 // Create a single cube with specified material, scale and altitude
 var createCube = function createCube(images) {
+	var cubeWrapper = document.createElement('a-entity');
 	var cube = document.createElement('a-box');
+	var animation = document.createElement('a-animation');
 
 	// set cube position
 	var x = Math.random() * 401 - 200;
@@ -18355,7 +18361,6 @@ var createCube = function createCube(images) {
 
 	// set cube size
 	var j = Math.floor(Math.random() * (15 - 2) + 2);
-	console.log('j is', j);
 	cube.setAttribute('depth', j);
 	cube.setAttribute('height', j);
 	cube.setAttribute('width', j);
@@ -18366,15 +18371,27 @@ var createCube = function createCube(images) {
 	var zR = Math.random() * 180;
 	cube.setAttribute('rotation', { x: xR, y: 0, z: zR });
 
-	// set environment map
-	//cube.setAttribute('sphericalEnvMap: #sky')
+	cube.setAttribute('pivot', '0 0 0');
 
 	// set cube id
-	cubes.push(cube);
-	cube.setAttribute('id', cubes.length);
+	//cubes.push(cube)
+	//cube.setAttribute('id', cubes.length)
 
-	// add cube to scene
-	document.querySelector('a-scene').appendChild(cube);
+	// define animations
+	animation.setAttribute('attribute', 'rotation');
+	animation.setAttribute('dur', 10000);
+	animation.setAttribute('to', xR - 0.001 + ' ' + yR + ' ' + zR);
+	animation.setAttribute('direction', 'alternate');
+	animation.setAttribute('repeat', 'indefinite');
+	animation.setAttribute('fill', 'both');
+	animation.setAttribute('ease', 'ease-in-out-circ');
+
+	// add cube and animation to cubeWrapper
+	cubeWrapper.appendChild(cube);
+	cubeWrapper.appendChild(animation);
+
+	// add cubeWrapper to scene
+	document.querySelector('a-scene').appendChild(cubeWrapper);
 };
 
 // Create any number of cubes with any material

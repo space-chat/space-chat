@@ -27,7 +27,7 @@ export default class Cubes extends Component {
     this.state = {
       numCubes: 350,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
-      color: 'blue', // will update based on primary emotion
+      color: '#99CC00', // will update based on primary emotion
       speed: 0, // will update based on sentiment analysis
       direction: 'forward' // will update based on sentiment analysis
     }
@@ -38,13 +38,13 @@ export default class Cubes extends Component {
   }
 
   componentDidMount() {
-    setLight()
+    setLight('white')
     makeCubes(this.state.numCubes, this.state.cubeImages)
     animate()
   }
 
   handleColor() {
-    updateColor(this.state.color)
+    setLight(this.state.color)
   }
 
   // Default speed is 0.0005
@@ -57,8 +57,7 @@ export default class Cubes extends Component {
     updateDirection(this.state.direction)
   }
 
-  /* ---------------
-  Logic for translating sentiment analysis:
+  //Logic for translating sentiment analysis:
 
   // let emotionColors = {
   //   anger: ['#FF3333', 3],
@@ -68,11 +67,10 @@ export default class Cubes extends Component {
   //   joy: [null, 1],
   // }
 
-  // let cubeColor = emotionColors[props.currEmotion]
-  // let prevCubeColor = emotionColors[props.prevEmotion]
+  // let cubeColor = emotionColors[props.currEmotion][0]
+  // let prevCubeColor = emotionColors[props.prevEmotion][0]
 
-  // console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
-  ------------------ */
+  //console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
 
   render() {
     return (

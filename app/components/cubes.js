@@ -14,11 +14,16 @@ let tickSpeed = 0.00005
 let movementPath = 'clockwise'
 
 // Set up ambient light. Color will respond to emotion updates
-const setLight = () => {
+const setLight = (color) => {
+	let prevLight = document.querySelector('a-light')
+	prevLight ? 
+		document.querySelector('a-scene').removeChild(prevLight) : 
+		null
+
 	let light = document.createElement('a-light')
 	light.setAttribute('id', 'animate')
 	light.setAttribute('type', 'ambient')
-	light.setAttribute('color', 'white')
+	light.setAttribute('color', `${color}`)
 	light.setAttribute('intensity', 1)
 	light.setAttribute('distance', 60) 
 	light.setAttribute('decay', 12)
@@ -27,7 +32,9 @@ const setLight = () => {
 
 // Create a single cube with specified material, scale and altitude
 const createCube = (images) => {
+	let cubeWrapper = document.createElement('a-entity')
 	let cube = document.createElement('a-box')
+	let animation = document.createElement('a-animation')
 
 	// set cube position
 	let x = (Math.random() * 401) - 200
@@ -41,7 +48,6 @@ const createCube = (images) => {
 
 	// set cube size
 	let j = Math.floor((Math.random() * (15 - 2)) + 2)
-	console.log('j is', j)
 	cube.setAttribute('depth', j)
 	cube.setAttribute('height', j)
 	cube.setAttribute('width', j)
@@ -52,15 +58,29 @@ const createCube = (images) => {
 	let zR = Math.random() * 180
 	cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
 
-	// set environment map
-	//cube.setAttribute('sphericalEnvMap: #sky')
+	cube.setAttribute('pivot', '0 0 0')
 
 	// set cube id
-	cubes.push(cube)
-	cube.setAttribute('id', cubes.length)
+	//cubes.push(cube)
+	//cube.setAttribute('id', cubes.length)
 
-	// add cube to scene
-	document.querySelector('a-scene').appendChild(cube)
+	// define animations
+	animation.setAttribute('attribute', 'rotation')
+	animation.setAttribute('dur', 10000)
+	animation.setAttribute('to', `${xR - 0.001} ${yR} ${zR}`)
+	animation.setAttribute('direction', 'alternate')
+	animation.setAttribute('repeat', 'indefinite')
+	animation.setAttribute('fill', 'both')
+	animation.setAttribute('ease', 'ease-in-out-circ')
+
+
+
+	// add cube and animation to cubeWrapper
+	cubeWrapper.appendChild(cube)
+	cubeWrapper.appendChild(animation)
+
+	// add cubeWrapper to scene
+	document.querySelector('a-scene').appendChild(cubeWrapper)
 }
 
 // Create any number of cubes with any material
