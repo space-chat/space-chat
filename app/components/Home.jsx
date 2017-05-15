@@ -40,6 +40,7 @@ class Home extends Component {
           <label className="control-label">Select your language:</label>
         </div>
         <div>
+          {/* need to pass language as prop to Room */}
           <select className="form-control" id="select"onChange={this.handleLanguageChange}>
             <option value='en'>English</option>
             <option value='es'>Spanish</option>
