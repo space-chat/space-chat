@@ -62,7 +62,7 @@ class Room extends Component {
 
   componentWillUnmount() {
     // disconnect socket, also leaves channels, unsets listeners
-    closeSocket()
+    closeSocket(this.state.language)
   }
 
   componentDidMount() {
