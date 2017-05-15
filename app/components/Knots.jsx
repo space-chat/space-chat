@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 
-import { initScene, makeKnots, animate, updateColor, updateRate } from './knots.js'
+import { initScene, makeKnots, setTargetedLights, animate, updateColor, updateLightRotationRate } from './knots.js'
 
 /* -------------
 props - prevEmotion, currEmotion, prevIntensity, currIntensity
@@ -18,7 +18,7 @@ export default class Knots extends Component {
 			numKnots: 100,
 			colorA: 'blue',
 			colorB: 'green',
-			rate: 4000
+			rate: 0.00005
 		}
 
 		this.handleColor = this.handleColor.bind(this)
@@ -26,10 +26,9 @@ export default class Knots extends Component {
 	}
 
 	componentDidMount() {
-		//setLights(1200)
-		//createKnot()
-		//initScene()
+		initScene()
 		makeKnots(this.state.numKnots)
+		setTargetedLights(this.state.colorA, this.state.colorB)
 		animate()
 	}
 
@@ -69,6 +68,8 @@ export default class Knots extends Component {
 		let nextRate = (intensity - 1) * -4000 
 
 		let rate = prevRate !== nextRate ? nextRate : prevRate
+
+		this.setState({ colorA: colorA, colorB: colorB, rate: rate })
 	}
 
 	handleColor() {
@@ -76,7 +77,7 @@ export default class Knots extends Component {
 	}
 
 	handleRate() {
-		//updateLightsRate(this.state.rate)
+		updateLightRotationRate(this.state.rate)
 	}
 
 	render() {
@@ -93,11 +94,11 @@ export default class Knots extends Component {
 					<AssetLoader />
 
 					{/* Camera */}
-			    <a-entity position="0 0 20">
+			    <a-entity id="camera" position="0 0 20" look-controls mouse-cursor="">
 			      <a-camera fov="45" user-height="0" />
 			    </a-entity>
 
-					<a-assets>
+{/*					<a-assets>
 		        <a-mixin id="lightA" geometry="primitive: sphere; radius: 1.5"
 		                 material="color: white; shader: flat; opacity: 0.01"
 		                 light="color: blue; distance: 120; intensity: 3; type: point">
@@ -109,7 +110,7 @@ export default class Knots extends Component {
 		        <a-mixin id="torus-knot" geometry="primitive: torusKnot"
 		                 material="color: red">
 		        </a-mixin>
-		      </a-assets>
+		      </a-assets>*/}
 
 		      {/* Avatar + Targeted Lights */}
 		      <a-entity id="avatar"
