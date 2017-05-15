@@ -12,13 +12,14 @@ export function openSocket() {
   socket = io()
 }
 
-export function closeSocket() {
-  socket.close()
+export function closeSocket(language) {
+  // disconnecting socket handled server-side
+  socket.emit('close me', language)
 }
 
 export function joinRoom(language) {
   // subscribing to language channel handled server-side
-  socket.emit('join', language)
+  socket.emit('join request', language)
   voices = synth.getVoices()
 }
 

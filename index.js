@@ -36,8 +36,19 @@ let languages = []
 io.on('connection', socket => {
   console.log('new socket ', socket.id, ' connected')
 
+  socket.on('close me', language => {
+    console.log('disconnecting socket with language ', language)
+    // if this is the only socket left in a language channel
+    if (io.sockets.adapter.rooms[language].length === 1)
+      // remove that language from state
+      languages = languages.filter(lang => lang !== language)
+    console.log('all languages on server state are: ', languages)
+    // close socket
+    socket.disconnect()
+  })
+
   // when a socket joins room
-  socket.on('join', language => {
+  socket.on('join request', language => {
     console.log('socket ', socket.id, ' joined room! lang: ', language)
     // check that language choice is not empty, and not already stored
       // ^ the first part of this check may no longer be necessary, due to the lang default bug fix
