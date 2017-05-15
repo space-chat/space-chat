@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 
-import { setLights, createKnot, animate, updateColor, makeKnots } from './knots.js'
+import { initScene, makeKnots, animate, updateColor, updateRate } from './knots.js'
 
 /* -------------
 props - prevEmotion, currEmotion, prevIntensity, currIntensity
@@ -18,7 +18,7 @@ export default class Knots extends Component {
 			numKnots: 100,
 			colorA: 'blue',
 			colorB: 'green',
-			rotationRate: 4000
+			rate: 4000
 		}
 
 		this.handleColor = this.handleColor.bind(this)
@@ -28,7 +28,47 @@ export default class Knots extends Component {
 	componentDidMount() {
 		//setLights(1200)
 		//createKnot()
+		//initScene()
 		makeKnots(this.state.numKnots)
+		animate()
+	}
+
+	componentWillReceiveProps() {
+		let emotionColorsA = {
+			anger: 'red',     // red
+	    	surprise: '#CC0033',  // pink
+	    	sadness: 'blue',   // blue
+	    	fear: '#330000',      // brown
+	    	joy: 'orange'        // yellow
+		}
+
+		let emotionColorsB = {
+		anger: '#FF6600', // orange    
+		surprise: '#FF66FF', // pink
+		sadness: 'green', // green
+		fear: '#006600', // dark green
+		joy: '#993300' // burnt orange
+		}
+
+		let rate = {
+			// data / intensity
+		}
+
+		let emotion = this.props.currEmotion
+		let intensity = this.props.intensity // not final language
+
+		let prevColorA = this.state.colorA
+		let prevColorB = this.state.colorB
+		let nextColorA = emotionColorsA[emotion]
+		let nextColorB = emotionColorsB[emotion]
+
+		let prevRate = this.props.rate
+		let nextRate = (intensity - 1) * -4000 
+
+		let colorA = prevColorA !== nextColorA ? nextColorA : prevColorA
+		let colorB = prevColorB !== nextColorB ? nextColorB : prevColorB
+
+		let rate = prevRate !== nextRate ? nextRate : prevRate
 	}
 
 	handleColor() {
@@ -36,38 +76,8 @@ export default class Knots extends Component {
 	}
 
 	handleRate() {
-		//setLights(this.state.rotationRate)
+		//updateLightsRate(this.state.rate)
 	}
-/* ----------------
-	Logic for sentiment data
-
-	// emotion controls light color
-	let emotionColorsA = {
-		anger: 'red',     // red
-    	surprise: '#CC0033',  // pink
-    	sadness: 'blue',   // blue
-    	fear: '#330000',      // brown
-    	joy: 'orange'        // yellow
-	}
-
-	let emotionColorsB = {
-		anger: '#FF6600', // orange    
-		surprise: '#FF66FF', // pink
-		sadness: 'green', // green
-		fear: '#006600', // dark green
-		joy: '#993300' // burnt orange
-	}
-
-  let colorA = emotionColorsA[props.currEmotion]
-  let colorB = emotionColorsB[props.currEmotion]
-
-  console.log('colorA', colorA, 'colorB', colorB)
-
-// intensity controls rate of lights spinning
-let rate = (props.currIntensity - 1) * -4000
-console.log('rate is', rate)
-
----------------- */
 
 	render() {
 		return (
@@ -126,14 +136,14 @@ console.log('rate is', rate)
 				{/* x-axis rotation */}
 			    <a-entity position="0 0 0">
 			      <a-animation attribute="rotation" to="0 360 0"
-			                   repeat="indefinite" easing="linear" dur={this.state.rorationRate}>
+			                   repeat="indefinite" easing="linear" dur={this.state.rate}>
 			      </a-animation>
 			      <a-entity mixin="lightA" position="30 0 0"></a-entity>
 			    </a-entity>
 	        {/* y-axis rotation */}
 		      <a-entity position="0 0 0">
 		        <a-animation attribute="rotation" to="360 0 0"
-		                     repeat="indefinite" easing="linear" dur={this.state.rotationRate}>
+		                     repeat="indefinite" easing="linear" dur={this.state.rate}>
 		        </a-animation>
 		        <a-entity mixin="lightB" position="0 0 40"></a-entity>
 		      </a-entity>

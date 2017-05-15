@@ -83,8 +83,8 @@ class Room extends Component {
   render() {
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
-    let prevIntensity = this.props.sentiment.intensity[1] || 0.5
-    let currIntensity = this.props.sentiment.intensity[0] || 0.5
+    let sentimentScore = this.props.sentiment.sentimentScore[0] || 0
+    let primaryPersonality = this.props.sentiment.primaryPersonality[0] || "default"
     return (
       <Knots prevEmotion={prevEmotion} currEmotion={currEmotion} prevIntensity={prevIntensity} currIntensity={currIntensity} />
     )
