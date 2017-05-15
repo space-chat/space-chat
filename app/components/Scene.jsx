@@ -2,20 +2,6 @@ import React, { Component } from 'react'
 import Avatar from './Avatar'
 import AssetLoader from './AssetLoader'
 
-
-/*const animate = (skyColor, prevSkyColor) => {
-  if (skyColor !== prevSkyColor) {
-    return (
-     <a-animation
-        begin="sentiment-change"
-        attribute="material.color"
-        from={prevSkyColor}
-        to={skyColor}
-        ease="ease-in-circ" />
-    )
-  }
-}*/
-
 const Scene = (props) => {
 
   // get primary emotion from props, convert it to color for sky animation
@@ -34,8 +20,7 @@ const Scene = (props) => {
 
   console.log('PROPS IN SCENE', props)
   return (
-    <div>
-      <a-scene>
+      <a-scene vr-mode-ui="enabled: true">
         <AssetLoader />
         <Avatar position="-1.5 1 -4" />
         <a-sphere id="avatar" position="-1 1.25 -5" radius="1.75" material="src: #blossoms" color="white" />
@@ -47,7 +32,6 @@ const Scene = (props) => {
           color={skyColor} />
 
       </a-scene>
-    </div>
   )
 }
 

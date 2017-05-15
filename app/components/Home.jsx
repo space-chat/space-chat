@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { setLanguage } from '../reducers/languageReducer.jsx'
+import { openSocket } from '../sockets.js'
 
 class Home extends Component {
   constructor() {
@@ -11,6 +12,11 @@ class Home extends Component {
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleLanguageChange = this.handleLanguageChange.bind(this)
+  }
+
+  componentWillMount() {
+    // establish new socket connection
+    openSocket()
   }
 
   handleClick(e) {
@@ -34,6 +40,7 @@ class Home extends Component {
           <label className="control-label">Select your language:</label>
         </div>
         <div>
+          {/* need to pass language as prop to Room */}
           <select className="form-control" id="select"onChange={this.handleLanguageChange}>
             <option value='en'>English</option>
             <option value='es'>Spanish</option>

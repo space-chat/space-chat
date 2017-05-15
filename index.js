@@ -7,7 +7,7 @@ var bodyParser = require('body-parser')
 
 // import and authenticate with Indico Text APIs
 var indico = require('indico.io')
-indico.apiKey = 'b895b4cf93b2701d2b26c5e918f141e2'
+indico.apiKey = 'e5feeac8e479a303fab000f4b7e0287c'
 
 // import the Google Cloud Translate API
 const Translate = require('@google-cloud/translate')
@@ -33,7 +33,7 @@ app.get('/', (req, res, next) => {
 let languages = []
 
 // when a socket connects, listen for messages
-io.on('connection', (socket) => {
+io.on('connection', socket => {
   console.log('new socket ', socket.id, ' connected')
 
   // when a socket joins room, store selected language of that socket
@@ -42,6 +42,7 @@ io.on('connection', (socket) => {
     // check that language choice is not empty, and not already stored
     if (language && languages.indexOf(language) === -1)
       languages.push(language)
+    console.log(`currently connected: ${Object.keys(io.sockets.sockets)}`)
     console.log('all languages on server state are: ', languages)
   })
 
@@ -88,3 +89,4 @@ io.on('connection', (socket) => {
 server.listen(process.env.PORT || 3002, () => {
   console.log('listening on 3002 hey girrrlll')
 })
+

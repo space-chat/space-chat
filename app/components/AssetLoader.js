@@ -12,6 +12,8 @@ export default function AssetLoader() {
 			{/* Sky assets */}
 			<img id="blossoms" src="/images/blossoms.jpg" />
 			<img id="stars" src="/images/sky-stars.png" />
+			<img id="fractal" src="/images/fractal.jpg" />
+			<img id="tiedye" src="/images/tiedye.jpg" />
 
 
 		{/* Mixin example from Transcend. Mixins are reusable assets. In this case the 'chair-part' was used to compose chairs in the Chair component. */}
