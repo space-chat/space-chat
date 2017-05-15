@@ -16,8 +16,8 @@ export default class Knots extends Component {
 
 		this.state = {
 			numKnots: 60,
-			colorA: 'blue',
-			colorB: 'green',
+			colorA: 'red',
+			colorB: '#FF6600',
 			rate: 0.00005
 		}
 
@@ -38,7 +38,7 @@ export default class Knots extends Component {
 	componentWillReceiveProps() {
 		// hashes for translating emotion to color values
 		let emotionColorsA = {
-			anger: 'red',     // red
+				anger: 'red',     // red
 	    	surprise: '#CC0033',  // pink
 	    	sadness: 'blue',   // blue
 	    	fear: '#330000',      // brown

@@ -4,7 +4,7 @@
 let knots = []
 let lightX
 let lightY
-let colorA = 'blue'
+let colorA = 'white'
 let colorB = 'green'
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
