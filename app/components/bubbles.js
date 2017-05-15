@@ -94,7 +94,6 @@ function updateSpeed(n) {
 //Use to change the pattern of the bubbles: 
 function updatePath(pathName) {
 	movementPath = pathName
-	animate()
 }
 
 //Use to change the altitude: normal, or high. (low altitude seems to be at eye level which is annoying)

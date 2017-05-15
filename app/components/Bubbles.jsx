@@ -62,12 +62,24 @@ export default class Bubbles extends Component {
 
         //Set metalness ( sentiment ), color (emotion), and scale (personality)
         this.setState({ color: color, scale: scale, pattern: pattern }, () => {
-            // this.handleSizeOrColor()
-            updatePath(this.state.pattern)
+            this.handleSizeOrColor()
+            // updatePath(this.state.pattern)
+
+            switch (this.state.color) {
+                case "red":
+                    updateSpeed(0.015)
+                    break;
+                case "gray":
+                    updateSpeed(0)
+                    break;
+                default:
+                    updateSpeed(0.0005)
+            }
+            // updatePath(this.state.pattern)
             console.log("STATE", this.state)
         })
 
-        
+
         // updatePath(this.state.pattern)
 
         //     switch (this.state.color) {
@@ -90,32 +102,19 @@ export default class Bubbles extends Component {
         sizeOrColor(this.state.scale, this.state.sky, this.state.color)
     }
 
-    //Default speed is 0.0005
-    // handleSpeed(n) {
-    //     updateSpeed(n)
-    // }
-
-    //Default path (bubble pattern) is "trig"
-    // handlePath(name) {
-    //     updatePath(name)
-    // }
-
-    // this.handleSizeOrColor()
-    //         this.handlePath(this.state.pattern)
-
-    //         switch (this.state.color) {
-    //             case "red": 
-    //                 this.handleSpeed(0.015)
-    //                 break; 
-    //             case "gray": 
-    //                 this.handleSpeed(0)
-    //                 break; 
-    //             default: 
-    //                 this.handleSpeed(0.0005)
-    //         }
-
     render() {
         // updatePath(this.state.pattern)
+
+        // switch (this.state.color) {
+        //         case "red": 
+        //             updateSpeed(0.015)
+        //             break; 
+        //         case "gray": 
+        //             updateSpeed(0)
+        //             break; 
+        //         default: 
+        //             updateSpeed(0.0005)
+        //     }
         return (
             <div>
                 {/*<div>
