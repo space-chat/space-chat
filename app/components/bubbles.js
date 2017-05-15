@@ -1,5 +1,5 @@
 //This component controls sphere rendering and animations of Bubbles.jsx. 
-//Much of this code is based on Three.js' example here:  https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html
+//*Some* of this code is based on Three.js' example here:  https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html
 
 var spheres = [];
 var windowHalfX = window.innerWidth / 2;
@@ -61,18 +61,6 @@ function addBubbles(numBubbles, img, color) {
 	makeBubbles(numBubbles, img, color)
 }
 
-//Remove bubbles
-// function destroyBubbles(numBubbles) {
-// 	var i = 0; 
-// 	while (i < numBubbles) {
-// 		var sphere = spheres.shift()
-// 		// console.log(sphere)
-// 		 sphere = document.getElementById(sphere)
-// 			document.querySelector('a-scene').removeChild(sphere)
-// 		i++
-// 	}
-// }
-
 //Make some bubbles increase or decrease in size, or change color
 function sizeOrColor(scaleNum, img, color, int) {
 	var n = spheres.length / int  //for example, every 3rd, or every 4th bubble
@@ -97,14 +85,6 @@ function updatePath(pathName) {
 	movementPath = pathName
 }
 
-//Use to change the altitude: normal, or high. (low altitude seems to be at eye level which is annoying)
-// function updateAltitude(alt, img, color) {
-// 	altitude = alt
-// 	var len = spheres.length;
-// 	destroyBubbles(len)
-// 	makeBubbles(len, img, color)
-// }
-
 function animate() {
 	requestAnimationFrame(animate);
 	render();
@@ -125,14 +105,7 @@ function render() {
 			sphere.setAttribute('position', { y: 5 * Math.sin(timer + i * 1.1) })
 		}
 	}
-	// else if (movementPath === "circleY") {
-	// 	for (var i = 0, il = spheres.length; i < il; i++) {
-	// 		var sphere = spheres[i];
-	// 		sphere.setAttribute('position', { x: 15 * Math.sin(timer + i + (2 * Math.PI)) })
-	// 		sphere.setAttribute('position', { y: 7 * Math.cos(timer + i + 2 * (2 * Math.PI)) })
-	// 	}
-//} 
-else if (movementPath === "circleZ") {
+	else if (movementPath === "circleZ") {
 		for (var i = 0, il = spheres.length; i < il; i++) {
 			var sphere = spheres[i];
 			sphere.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })

@@ -15,7 +15,6 @@ export default class Bubbles extends Component {
             pattern: 'trig'
         }
 
-        // this.handleAdd = this.handleAdd.bind(this)
         this.handleSizeOrColor = this.handleSizeOrColor.bind(this)
     }
 
@@ -46,7 +45,6 @@ export default class Bubbles extends Component {
         let currentColor = this.state.color
         let currentPers = this.state.personality
         let emotion = this.props.currEmotion
-        // let metalness = 1 - this.props.sentimentScore
         let personality = this.props.primaryPersonality
         let color;
         let domPersonality;
@@ -82,10 +80,6 @@ export default class Bubbles extends Component {
         else updateSpeed(0.0007)
     }
 
-    // handleAdd() {
-    //     addBubbles(50, this.state.sky, this.state.color)
-    // }
-
     //Handles changing for all emotions except surprise
     handleSizeOrColor() {
         sizeOrColor(this.state.scale, this.state.sky, this.state.color, 3)
@@ -109,7 +103,6 @@ export default class Bubbles extends Component {
     }
 }
 
-//Sentiment: Increases or decreases metalness (the inverse of the score)
 //Emotions: Change bubble color
         //Anger: Bubbles turn red + increase speed
         //Joy:   Bubbles turn yellow  
