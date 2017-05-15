@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment } from './reducers/sentimentReducer.jsx'
+import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment } from './reducers/sentimentReducer.jsx'
 
 const socket = io()
 
@@ -49,7 +49,19 @@ export function receiveSentiment() {
         if (emotions[e] === intensity) return [e, intensity]
       }
     })
-    console.log('top two emotions are', sortedEmotions.slice(0, 2))
+
+    let personalityTraits = personality[0]
+    let keys2 = Object.keys(personalityTraits)
+    console.log("KEYS2", keys2)
+    var primPersonality = "openness"
+
+     console.log("AGREE", personalityTraits)
+
+     for (var trait in personalityTraits) {
+       if (personalityTraits[trait] > personalityTraits[primPersonality]) {
+         primPersonality = trait
+       }
+     }
 
     // get personality trait ratings
     let primEmo = sortedEmotions[0][0]  //primary emotion
@@ -62,41 +74,18 @@ export function receiveSentiment() {
     let agreeableness = personality[0].agreeableness || 0.001
     let sentScore = sentiment[0]        //sentiment score
 
-    console.log('extraversion is ', extraversion, 'agreeableness is ', agreeableness, 'openness is ', openness, 'conscientiousness is ', conscientiousness)
     
-    // update store with new emotion data
-
+    // update store with new indico data
     store.dispatch(primaryEmotion(primEmo))
     store.dispatch(secondaryEmotion(secEmo))
     store.dispatch(primaryIntensity(primInt))
     store.dispatch(secondaryIntensity(secInt))
+    store.dispatch(primaryPersonality(primPersonality))
     store.dispatch(updateExtraversion(extraversion))
     store.dispatch(updateOpenness(openness))
     store.dispatch(updateConscientiousness(conscientiousness))
     store.dispatch(updateAgreeableness(agreeableness))
     store.dispatch(updateSentiment(sentScore))
-
-    // document.querySelector('#sky').emit('sentiment-change')
   }
-
-    /* ----- Example of output: ------
-  
-     emotion:
-     [ { anger: 0.11315701900000001,
-         surprise: 0.085946694,
-         sadness: 0.5705037713000001,
-         fear: 0.15985926990000002,
-         joy: 0.0705333054 } ],
-  
-    sentiment: [ 0.0125864741 ],
-  
-    personality:
-     [ { openness: 0.3719486252,
-         extraversion: 0.6793065118,
-         agreeableness: 0.7661266693000001,
-         conscientiousness: 0.47509849260000003 } ] 
-  
-    -------------------------------- */
-
   )
 }

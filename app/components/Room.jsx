@@ -20,6 +20,7 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
+import Bubbles from './Bubbles.jsx'
 import { joinRoom, sendMessage, receiveMessage, receiveSentiment } from '../sockets.js'
 
 const propTypes = {
@@ -82,9 +83,12 @@ class Room extends Component {
   render() {
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
-    console.log('emotions in Room are', prevEmotion, currEmotion)
+    let sentimentScore = this.props.sentiment.sentimentScore[0] || 0
+    let primaryPersonality = this.props.sentiment.primaryPersonality[0] || "default"
+    
     return (
-      <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
+      // <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
+      <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality}/>
     )
   }
 }

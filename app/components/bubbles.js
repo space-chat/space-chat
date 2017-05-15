@@ -6,7 +6,6 @@ var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 var width = window.innerWidth || 2;
 var height = window.innerHeight || 2;
-var directionalLight, pointLight;
 var mouseX = 0;
 var mouseY = 0;
 var currentScale = 0.2
@@ -32,16 +31,16 @@ function initScene() {
 function createBubble(scaleNum, img, color) {
 	var sphere = document.createElement('a-sphere')
 	let x = Math.random() * 10;
-	var y; 
+	var y;
 	if (altitude === "high") {
-		y = Math.floor(Math.random()*(10-6+1)+6)
+		y = Math.floor(Math.random() * (10 - 6 + 1) + 6)
 	} else {
 		y = Math.random() * 10
 	}
 	let z = Math.random() * 10;
 	sphere.setAttribute('material', `src:${img}; roughness: 0.01; color: ${color}`)
 	sphere.setAttribute('position', { x: x, y: y, z: z })
-	let scale = Math.random() * 0.5 + scaleNum   //default is 0.2
+	let scale = Math.random() * 0.4 + scaleNum   //default scaleNum is 0.2
 	sphere.setAttribute('scale', { x: scale, y: scale, z: scale })
 	spheres.push(sphere);
 	sphere.setAttribute('id', spheres.length)
@@ -62,21 +61,28 @@ function addBubbles(numBubbles, img, color) {
 	makeBubbles(numBubbles, img, color)
 }
 
-//Remove bubbles from the scene
-function destroyBubbles(numBubbles) {
-	for (var i = 0; i < numBubbles; i++) {
-		var sphere = spheres.pop()
-		document.querySelector('a-scene').removeChild(sphere)
-	}
-}
+// function destroyBubbles(numBubbles) {
+// 	var i = 0; 
+// 	while (i < numBubbles) {
+// 		var sphere = spheres.shift()
+// 		// console.log(sphere)
+// 		 sphere = document.getElementById(sphere)
+// 			document.querySelector('a-scene').removeChild(sphere)
+// 		i++
+// 	}
+// }
 
 //Make some bubbles increase or decrease in size, or change color
-function sizeOrColor(scale, img, color) {
-	var n = spheres.length / 5
-	destroyBubbles(n)
+function sizeOrColor(scaleNum, img, color) {
+	var n = spheres.length / 3
+	var i = 0;
 
-	for (var i = 0; i < n; i++) {
-		createBubble(scale, img, color)
+	while (i < n) {
+		var sphere = spheres[i];
+		sphere.setAttribute('material', `src:${img}; roughness: 0.01; color: ${color}`)
+		let scale = Math.random() * 0.5 + scaleNum   //default is 0.2
+		sphere.setAttribute('scale', { x: scale, y: scale, z: scale })
+		i++; 
 	}
 }
 
@@ -88,15 +94,16 @@ function updateSpeed(n) {
 //Use to change the pattern of the bubbles: 
 function updatePath(pathName) {
 	movementPath = pathName
+	animate()
 }
 
 //Use to change the altitude: normal, or high. (low altitude seems to be at eye level which is annoying)
-function updateAltitude(alt, img, color) {
-	altitude = alt
-	var len = spheres.length; 
-	destroyBubbles(len)
-	makeBubbles(len, img, color)
-}
+// function updateAltitude(alt, img, color) {
+// 	altitude = alt
+// 	var len = spheres.length;
+// 	destroyBubbles(len)
+// 	makeBubbles(len, img, color)
+// }
 
 function animate() {
 	requestAnimationFrame(animate);
@@ -106,7 +113,7 @@ function animate() {
 function render() {
 	var camera = document.getElementById('bubbleCamera')
 	var timer = tickSpeed * Date.now(); //Change the number for bubble speed
-	let curr = camera.getAttribute("position")
+	let curr = camera.getAttribute("position") || { x: 1, y: 1 }
 	let addx = curr.x + ((mouseX - curr.x) * .05)
 	let addy = curr.y + ((- mouseY - curr.y) * .05)
 	camera.setAttribute('position', { x: addx, y: addy, z: 5 })
@@ -114,7 +121,7 @@ function render() {
 	if (movementPath === "trig") {
 		for (var i = 0, il = spheres.length; i < il; i++) {
 			var sphere = spheres[i];
-			sphere.setAttribute('position', { x: 7 * Math.cos(timer + i) }) //Change for bubble distance
+			sphere.setAttribute('position', { x: 7 * Math.cos(timer + i) })
 			sphere.setAttribute('position', { y: 7 * Math.sin(timer + i * 1.1) })
 		}
 	} else if (movementPath === "circleY") {
@@ -130,7 +137,7 @@ function render() {
 			sphere.setAttribute('position', { z: 7 * Math.cos(timer + i + (2 * Math.PI)) })
 		}
 	}
-	 else if (movementPath === "coolness") {
+	else if (movementPath === "coolness") {
 		for (var i = 0, il = spheres.length; i < il; i++) {
 			var sphere = spheres[i];
 			sphere.setAttribute('position', { x: 7 * Math.sin(timer + i * 1.1 + (2 * Math.PI)) })
@@ -158,4 +165,4 @@ function onDocumentMouseMove(event) {
 }
 
 
-module.exports = { initScene, makeBubbles, animate, addBubbles, destroyBubbles, sizeOrColor, updateSpeed, updatePath, updateAltitude }
+module.exports = { initScene, makeBubbles, animate, addBubbles, sizeOrColor, updateSpeed, updatePath }
