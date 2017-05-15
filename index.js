@@ -40,7 +40,7 @@ io.on('connection', socket => {
   socket.on('join', language => {
     console.log('socket ', socket.id, ' joined room! lang: ', language)
     // check that language choice is not empty, and not already stored
-      // ^ the first part of check may no longer be necessary, due to the lang default bug fix
+      // ^ the first part of this check may no longer be necessary, due to the lang default bug fix
     if (language && languages.indexOf(language) === -1)
       // 1) store selected language of that socket
       languages.push(language)
