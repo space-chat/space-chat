@@ -42,7 +42,7 @@ io.on('connection', socket => {
     // check that language choice is not empty, and not already stored
       // ^ the first part of this check may no longer be necessary, due to the lang default bug fix
     if (language && languages.indexOf(language) === -1)
-      // 1) store selected language of that socket
+      // 1) store socket's selected language server-side
       languages.push(language)
     console.log(`currently connected: ${Object.keys(io.sockets.sockets)}`)
     console.log('all languages on server state are: ', languages)
