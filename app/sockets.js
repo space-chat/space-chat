@@ -17,6 +17,7 @@ export function closeSocket() {
 }
 
 export function joinRoom(language) {
+  // subscribing to language channel handled server-side
   socket.emit('join', language)
   voices = synth.getVoices()
 }
@@ -27,17 +28,15 @@ export function sendMessage(messageText, lang) {
 }
 
 export function receiveMessage(clientLang) {
+  // when client receives message from language channel
   socket.on('got message', ({ translatedBool, messageText, lang }) => {
     console.log('incoming message ', messageText, ' in language ', lang)
-    // if lang in 'got message' payload matches socket user's language
-    if (clientLang === lang && translatedBool) {
-      // find correct voice, speak text from 'got message' payload
-      var utterance = new SpeechSynthesisUtterance(messageText)
-      utterance.voice = voices.filter(voice => 
-        voice.lang.substr(0,2) === clientLang
-      )[0]
-      synth.speak(utterance)
-    }
+    // find correct voice, speak text from 'got message' payload
+    var utterance = new SpeechSynthesisUtterance(messageText)
+    utterance.voice = voices.filter(voice => 
+      voice.lang.substr(0,2) === clientLang
+    )[0]
+    synth.speak(utterance)
   })
 }
 

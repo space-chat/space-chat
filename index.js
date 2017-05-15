@@ -40,7 +40,7 @@ io.on('connection', socket => {
   socket.on('join', language => {
     console.log('socket ', socket.id, ' joined room! lang: ', language)
     // check that language choice is not empty, and not already stored
-      // the first part of check may no longer be necessary, due to the lang default bug fix
+      // ^ the first part of check may no longer be necessary, due to the lang default bug fix
     if (language && languages.indexOf(language) === -1)
       // 1) store selected language of that socket
       languages.push(language)
@@ -57,8 +57,8 @@ io.on('connection', socket => {
     console.log('new spoken message! server emitting original text: ', messageText)
     let translatedBool = false
       
-    // 1) immediately send message exactly as received to all OTHER sockets
-    socket.broadcast.emit('got message', { translatedBool, messageText, lang })
+    // 1) immediately send message exactly as received to all OTHER sockets in original language channel
+    socket.to(lang).emit('got message', { translatedBool, messageText, lang })
 
     // 2) send text to API for translation
     languages.forEach(targetLang => {
@@ -67,11 +67,11 @@ io.on('connection', socket => {
         console.log('server translating message into ', targetLang)
         translate.translate(messageText, targetLang)
           .then(results => {
-            // 3a) emit each translation to all other sockets
+            // 3a) emit each translation to each language channel
             let translation = results[0]
             console.log('translation successful: ', translation)
-            // broadcast.emit sends to OTHER sockets, NOT original sender
-            socket.broadcast.emit('got message', { 
+            // server sends to all sockets in language channel
+            io.in(targetLang).emit('got message', { 
               translatedBool: true, 
               messageText: translation, 
               lang: targetLang })
