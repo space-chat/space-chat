@@ -34,6 +34,7 @@ export default class Knots extends Component {
 	}
 
 	componentWillReceiveProps() {
+		// hashes for translating emotion to color values
 		let emotionColorsA = {
 			anger: 'red',     // red
 	    	surprise: '#CC0033',  // pink
@@ -43,30 +44,29 @@ export default class Knots extends Component {
 		}
 
 		let emotionColorsB = {
-		anger: '#FF6600', // orange    
-		surprise: '#FF66FF', // pink
-		sadness: 'green', // green
-		fear: '#006600', // dark green
-		joy: '#993300' // burnt orange
+			anger: '#FF6600', // orange    
+			surprise: '#FF66FF', // pink
+			sadness: 'green', // green
+			fear: '#006600', // dark green
+			joy: '#993300' // burnt orange
 		}
 
-		let rate = {
-			// data / intensity
-		}
-
+		// translate emotion to color and set color on state
 		let emotion = this.props.currEmotion
-		let intensity = this.props.intensity // not final language
 
-		let prevColorA = this.state.colorA
-		let prevColorB = this.state.colorB
 		let nextColorA = emotionColorsA[emotion]
 		let nextColorB = emotionColorsB[emotion]
-
-		let prevRate = this.props.rate
-		let nextRate = (intensity - 1) * -4000 
+		let prevColorA = this.state.colorA
+		let prevColorB = this.state.colorB
 
 		let colorA = prevColorA !== nextColorA ? nextColorA : prevColorA
 		let colorB = prevColorB !== nextColorB ? nextColorB : prevColorB
+
+		// translate emotional intensity to rotation rate and set rate on state
+		let intensity = this.props.primaryIntensity 
+
+		let prevRate = this.state.rate
+		let nextRate = (intensity - 1) * -4000 
 
 		let rate = prevRate !== nextRate ? nextRate : prevRate
 	}
