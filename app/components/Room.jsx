@@ -22,6 +22,7 @@ import PropTypes from 'prop-types'
 
 import Scene from './Scene.jsx'
 import Bubbles from './Bubbles.jsx'
+import Knots from './Knots.jsx'
 import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket } from '../sockets.js'
 
 const propTypes = {
@@ -106,7 +107,8 @@ class Room extends Component {
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
       // <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
-      <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality}/>
+      // <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality}/>
+      <Knots currEmotion={currEmotion} primaryIntensity={primaryIntensity} />
     )
   }
 }

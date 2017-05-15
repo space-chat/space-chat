@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 
-import { initScene, makeKnots, setTargetedLights, animate, updateColor, updateLightRotationRate } from './knots.js'
+import { initScene, makeKnots, setTargetLightA, setTargetLightB,  makeRotatingLightX, makeRotatingLightY, animate, updateLightRotationRate } from './knots.js'
 
 /* -------------
 props - prevEmotion, currEmotion, prevIntensity, currIntensity
@@ -22,13 +22,16 @@ export default class Knots extends Component {
 		}
 
 		this.handleColor = this.handleColor.bind(this)
-    	this.handleRate = this.handleRate.bind(this)
+    this.handleRate = this.handleRate.bind(this)
 	}
 
 	componentDidMount() {
 		initScene()
 		makeKnots(this.state.numKnots)
-		setTargetedLights(this.state.colorA, this.state.colorB)
+		setTargetLightA(this.state.colorA)
+		setTargetLightB(this.state.colorB)
+		makeRotatingLightX()
+		makeRotatingLightY()
 		animate()
 	}
 
@@ -113,7 +116,7 @@ export default class Knots extends Component {
 		      </a-assets>*/}
 
 		      {/* Avatar + Targeted Lights */}
-		      <a-entity id="avatar"
+		      {/*<a-entity id="avatar"
 		      geometry="primitive: torusKnot; radius: 3"
 		      	position="-1 1.25 -5"
 		      	material="color: white"
@@ -131,23 +134,23 @@ export default class Knots extends Component {
 		      	metalness=".9"
 		      	roughness="-2" />
 	        <a-light id="fixedLightA" color={this.state.colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar2" />
-	        <a-light id="fixedLightB" color={this.state.colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar2" />
+	        <a-light id="fixedLightB" color={this.state.colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar2" />*/}
 
 			    {/* Lights. */}
 				{/* x-axis rotation */}
-			    <a-entity position="0 0 0">
+			    {/*<a-entity position="0 0 0">
 			      <a-animation attribute="rotation" to="0 360 0"
 			                   repeat="indefinite" easing="linear" dur={this.state.rate}>
 			      </a-animation>
 			      <a-entity mixin="lightA" position="30 0 0"></a-entity>
-			    </a-entity>
+			    </a-entity> */}
 	        {/* y-axis rotation */}
-		      <a-entity position="0 0 0">
+		     {/*} <a-entity position="0 0 0">
 		        <a-animation attribute="rotation" to="360 0 0"
 		                     repeat="indefinite" easing="linear" dur={this.state.rate}>
 		        </a-animation>
 		        <a-entity mixin="lightB" position="0 0 40"></a-entity>
-		      </a-entity>
+		      </a-entity>*/}
 
 		       {/* Skysphere */}
 			    <a-sky id="sky" src="#tiedye"></a-sky>

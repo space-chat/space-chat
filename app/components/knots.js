@@ -4,6 +4,8 @@
 let knots = []
 let lightX
 let lightY
+let colorA = 'blue'
+let colorB = 'green'
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 let width = window.innerWidth || 2;
@@ -68,33 +70,43 @@ const makeKnots = (numKnots) => {
   }
 }
 
-// create one point light 
-const createTargetedLight = () => {
-  let lightA = document.createElement('a-light')
 
-  lightA.setAttribute('position', '0 0 0')
-  lightA.setAttribute('angle', '90')
-  lightA.setAttribute('radius', '60')
-  lightA.setAttribute('position', '-3 -4 1')
-  lightA.setAttribute('type', 'point')
-  lightA.setAttribute('intensity', '2')
-}
-
-// set two targeted lights to each knot, with colors based on emotion
-const setTargetedLights = (colorA, colorB) => {
+// set target lights A + B for each knot, colors based on emotion
+const setTargetLightA = (colorA) => {
 
   for (let i = 0; i < knots.length; i++) {
+    let lightA = document.createElement('a-light')
 
-    let lightA = createTargetedLight()
-    let lightB = createTargetedLight()
-
+    lightA.setAttribute('position', '0 0 0')
+    lightA.setAttribute('angle', '90')
+    lightA.setAttribute('radius', '60')
+    lightA.setAttribute('position', '-3 -4 1')
+    lightA.setAttribute('type', 'point')
+    lightA.setAttribute('intensity', '2')
     lightA.setAttribute('target', `knot-${i}`)
     lightA.setAttribute('color', `${colorA}`)
 
+    document.querySelector('a-scene').appendChild(lightA)
+  }
+}
+
+
+const setTargetLightB = (colorB) => {
+
+  for (let i = 0; i < knots.length; i++) {
+    let lightB = document.createElement('a-light')
+
+    lightB.setAttribute('position', '0 0 0')
+    lightB.setAttribute('angle', '90')
+    lightB.setAttribute('radius', '60')
+    lightB.setAttribute('position', '-3 -4 1')
+    lightB.setAttribute('type', 'point')
+    lightB.setAttribute('intensity', '2')
     lightB.setAttribute('target', `knot-${i}`)
     lightB.setAttribute('color', `${colorB}`)
-  }
 
+    document.querySelector('a-scene').appendChild(lightB)
+  }
 }
 
 const makeRotatingLightX = () => {
@@ -151,4 +163,4 @@ const onDocumentMouseMove = (event) => {
   mouseY = (event.clientY - windowHalfY) / 100
 }
 
-module.exports = { initScene, animate, makeKnots, setTargetedLights, updateLightRotationRate }
+module.exports = { initScene, animate, makeKnots, setTargetLightA, setTargetLightB, makeRotatingLightX, makeRotatingLightY, updateLightRotationRate }
