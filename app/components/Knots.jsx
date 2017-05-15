@@ -15,7 +15,7 @@ export default class Knots extends Component {
 		super()
 
 		this.state = {
-			numKnots: 100,
+			numKnots: 60,
 			colorA: 'blue',
 			colorB: 'green',
 			rate: 0.00005
@@ -76,7 +76,7 @@ export default class Knots extends Component {
 	}
 
 	handleColor() {
-		updateColor(this.state.colorA, this.state.colorB)
+		// updateColor(this.state.colorA, this.state.colorB)
 	}
 
 	handleRate() {
@@ -97,7 +97,7 @@ export default class Knots extends Component {
 					<AssetLoader />
 
 					{/* Camera */}
-			    <a-entity id="camera" position="0 0 20" look-controls mouse-cursor="">
+			    <a-entity id="camera" position="0 0 20" mouse-cursor="">
 			      <a-camera fov="45" user-height="0" />
 			    </a-entity>
 

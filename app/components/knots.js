@@ -40,7 +40,7 @@ const createKnot = () => {
   let knot = document.createElement('a-torus-knot')
 
   knot.setAttribute('radius', `${Math.random() * 10}`)
-  knot.setAttribute('radiusTubular', `${Math.random()}`)
+  knot.setAttribute('radiusTubular', `${Math.random() * 2}`)
   knot.setAttribute('p', `${Math.round(Math.random() * 10)}`)
   knot.setAttribute('q', `${Math.round(Math.random() * 10)}`)
 
@@ -84,6 +84,7 @@ const setTargetLightA = (colorA) => {
     lightA.setAttribute('type', 'point')
     lightA.setAttribute('intensity', '2')
     lightA.setAttribute('target', `knot-${i}`)
+    lightA.setAttribute('opacity', '0.5')
     lightA.setAttribute('color', `${colorA}`)
 
     document.querySelector('a-scene').appendChild(lightA)
@@ -103,6 +104,7 @@ const setTargetLightB = (colorB) => {
     lightB.setAttribute('type', 'point')
     lightB.setAttribute('intensity', '2')
     lightB.setAttribute('target', `knot-${i}`)
+    lightB.setAttribute('opacity', '0.5')
     lightB.setAttribute('color', `${colorB}`)
 
     document.querySelector('a-scene').appendChild(lightB)
