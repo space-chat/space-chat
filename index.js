@@ -26,7 +26,7 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res, next) => {
-  res.send("hi hi hi")
+  res.send('hi hi hi')
 })
 
 // store languages of connected sockets ("state")
@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
   socket.on('message', ({ messageText, lang }) => {
     console.log('new spoken message! server emitting original text: ', messageText)
     let translatedBool = false
-      
+
     // 1) immediately send message exactly as received to all OTHER sockets
     socket.broadcast.emit('got message', { translatedBool, messageText, lang })
 
@@ -64,9 +64,9 @@ io.on('connection', (socket) => {
             let translation = results[0]
             console.log('translation successful: ', translation)
             // broadcast.emit sends to OTHER sockets, NOT original sender
-            socket.broadcast.emit('got message', { 
-              translatedBool: true, 
-              messageText: translation, 
+            socket.broadcast.emit('got message', {
+              translatedBool: true,
+              messageText: translation,
               lang: targetLang })
           })
           .catch(console.error)
@@ -74,9 +74,9 @@ io.on('connection', (socket) => {
     })
 
     // 3) send text to indico for analysis
-    indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
+    indico.analyzeText([messageText], { apis: ['personality', 'sentiment', 'emotion'] })
       .then(data => {
-        console.log("DATA", data)
+        console.log('DATA', data)
         // io.sockets.emit sends to ALL sockets, INCL original sender
         io.sockets.emit('got sentiment', data)
       })
@@ -86,5 +86,5 @@ io.on('connection', (socket) => {
 })
 
 server.listen(process.env.PORT || 3002, () => {
-  console.log("listening on 3002 hey girrrlll")
+  console.log('listening on 3002 hey girrrlll')
 })

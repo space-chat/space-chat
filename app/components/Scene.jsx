@@ -18,7 +18,7 @@ import AssetLoader from './AssetLoader'
 
 const Scene = (props) => {
 
-  // get primary emotion from props, convert it to color for sky animation 
+  // get primary emotion from props, convert it to color for sky animation
   let emotionColors = {
     anger: '#FF0000',     // red
     surprise: '#FF8300',  // orange
@@ -32,7 +32,7 @@ const Scene = (props) => {
 
   console.log('skyColor is', skyColor, 'prevSkyColor is', prevSkyColor)
 
-  console.log("PROPS IN SCENE", props)
+  console.log('PROPS IN SCENE', props)
   return (
     <div>
       <a-scene>
@@ -44,8 +44,7 @@ const Scene = (props) => {
         <a-sky
           id="sky"
           src="#stars"
-          color={skyColor} >
-        </a-sky>
+          color={skyColor} />
 
       </a-scene>
     </div>

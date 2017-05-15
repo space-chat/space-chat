@@ -12,15 +12,16 @@ const initialState = {
 }
 
 /* ------------------    ACTIONS    ------------------ */
-export const UPDATE_PRIMARY_EMO = "UPDATE_PRIMARY_EMO"
-export const UPDATE_SECONDARY_EMO = "UPDATE_SECONDARY_EMO"
-export const UPDATE_PRIMARY_INTENSITY = "UPDATE_PRIMARY_INTENSITY"
-export const UPDATE_SECONDARY_INTENSITY = "UPDATE_SECONDARY_INTENSITY"
-export const UPDATE_EXTRAVERSION = "UPDATE_EXTRAVERSION"
-export const UPDATE_OPENNESS = "UPDATE_OPENNESS"
-export const UPDATE_CONSCIENTIOUSNESS = "UPDATE_CONSCIENTIOUSNESS"
-export const UPDATE_AGREEABLENESS = "UPDATE_AGREEABLENESS"
-export const UPDATE_SENTIMENT_SCORE = "UPDATE_SENTIMENT_SCORE"
+
+export const UPDATE_PRIMARY_EMO = 'UPDATE_PRIMARY_EMO'
+export const UPDATE_SECONDARY_EMO = 'UPDATE_SECONDARY_EMO'
+export const UPDATE_PRIMARY_INTENSITY = 'UPDATE_PRIMARY_INTENSITY'
+export const UPDATE_SECONDARY_INTENSITY = 'UPDATE_SECONDARY_INTENSITY'
+export const UPDATE_EXTRAVERSION = 'UPDATE_EXTRAVERSION'
+export const UPDATE_OPENNESS = 'UPDATE_OPENNESS'
+export const UPDATE_CONSCIENTIOUSNESS = 'UPDATE_CONSCIENTIOUSNESS'
+export const UPDATE_AGREEABLENESS = 'UPDATE_AGREEABLENESS'
+export const UPDATE_SENTIMENT_SCORE = 'UPDATE_SENTIMENT_SCORE'
 
 
 /* ------------------    ACTION CREATORS    ------------------ */
@@ -93,6 +94,8 @@ export const updateSentiment = (score) => {
 
 
 /* ------------------    REDUCER    ------------------ */
+
+// 'sentimentReducer has a complexity of 10' --- should we break up into emotionReducer (for primary+secondary emotions and respective intensities), personalityReducer, and sentimentReducer (for sentiment score only)?
 
 export default function sentimentReducer(state = initialState, action) {
 
