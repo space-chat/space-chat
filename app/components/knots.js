@@ -4,7 +4,14 @@
 let knots = []
 let tickSpeed = 0.00005
 
-const setLights = () => {
+const setLights = (rate) => {
+  let wrapperX = document.createElement('a-entity')
+  wrapperX.setAttribute('position', '0 0 0')
+  wrapperX.setAttribute('id', 'wrapperX')
+
+  let wrapperY = document.createElement('a-entity')
+  wrapperY.setAttribute('position', '0 0 0')
+  wrapperY.setAttribute('id', 'wrapperY')
 
   // light X: x-axis rotating
   let lightX = document.createElement('a-light')
@@ -18,14 +25,35 @@ const setLights = () => {
   lightY.setAttribute('material', 'color: white; shader: flat')
   lightY.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point')
 
-  // set lights in scene
+  // create animations
+  let animationX = document.createElement('a-animation')
+  animationX.setAttribute('attribute', 'rotation')
+  animationX.setAttribute('to', '0 360 0')
+  animationX.setAttribute('repeat', 'indefinite')
+  animationX.setAttribute('easing', 'linear')
+  animationX.setAttribute('dur', `${rate}`)
+
+  let animationY = document.createElement('a-animation')
+  animationX.setAttribute('attribute', 'rotation')
+  animationX.setAttribute('to', '360 0 0')
+  animationX.setAttribute('repeat', 'indefinite')
+  animationX.setAttribute('easing', 'linear')
+  animationX.setAttribute('dur', `${rate}`)
+
+  // set lights and animations to wrappers -- needs to be fixed
+  // break animation out into second function
+  // document.getElementById('wrapperX').appendChild('lightX').appendChild('animationX')
+
+  // document.getElementById('wrapperX').appendChild('lightY').appendChild('animationY')
+
+  // set wrappers to scene
   document.querySelector('a-scene').appendChild(lightX)
   document.querySelector('a-scene').appendChild(lightY)
 
 }
 
 
-const createKnot = (colorA, colorB) => {
+const createKnot = () => {
 
   // helper funcs to generate random color and coords
   const getRandColor = () => {
@@ -63,9 +91,16 @@ const createKnot = (colorA, colorB) => {
   // set random knot into scene
   document.querySelector('a-scene').appendChild(knot)
 
-  }
+}
 
-module.exports = { setLights, createKnot }
+const makeKnots = (numKnots) => {
+  while (numKnots >= 0) {
+    createKnot()
+    numKnots--
+  }
+}
+
+module.exports = { setLights, createKnot, makeKnots }
 
 
 // functions for producing knot shapes in scene. not working.

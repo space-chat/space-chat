@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 
-import { setLights, createKnot, animate, updateColor, updateRate } from './knots.js'
+import { setLights, createKnot, animate, updateColor, makeKnots } from './knots.js'
 
 /* -------------
 props - prevEmotion, currEmotion, prevIntensity, currIntensity
@@ -15,20 +15,20 @@ export default class Knots extends Component {
 		super()
 
 		this.state = {
-			numKnots: 60,
+			numKnots: 100,
 			colorA: 'red',
 			colorB: 'orange',
-			rotationRate: '2000'
+			rotationRate: '800'
 		}
 
 		this.handleColor = this.handleColor.bind(this)
-    this.handleRate = this.handleRate.bind(this)
+    	this.handleRate = this.handleRate.bind(this)
 	}
 
 	componentDidMount() {
-		setLights()
-		createKnot()
-		//makeKnots(this.state.numKnots, this.state.color)
+		setLights(1200)
+		//createKnot()
+		makeKnots(this.state.numKnots)
 	}
 
 	handleColor() {
@@ -36,7 +36,7 @@ export default class Knots extends Component {
 	}
 
 	handleRate() {
-		updateRate(this.state.rotationRate)
+		setLights(this.state.rotationRate)
 	}
 /* ----------------
 	Logic for sentiment data
@@ -124,19 +124,19 @@ console.log('rate is', rate)
 
 			    {/* Lights. */}
 				{/* x-axis rotation */}
-			    <a-entity position="0 0 0">
+			    {/*<a-entity position="0 0 0">
 			      <a-animation attribute="rotation" to="0 360 0"
 			                   repeat="indefinite" easing="linear" dur={this.state.rate}>
 			      </a-animation>
 			      <a-entity mixin="lightA" position="30 0 0"></a-entity>
-			    </a-entity>
+			    </a-entity>*/}
 	        {/* y-axis rotation */}
-		      <a-entity position="0 0 0">
+		      {/*<a-entity position="0 0 0">
 		        <a-animation attribute="rotation" to="360 0 0"
 		                     repeat="indefinite" easing="linear" dur={this.state.rate}>
 		        </a-animation>
 		        <a-entity mixin="lightB" position="0 0 40"></a-entity>
-		      </a-entity>
+		      </a-entity>*/}
 
 		       {/* Skysphere */}
 			    <a-sky id="sky" src="#tiedye"></a-sky>
