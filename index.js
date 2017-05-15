@@ -33,8 +33,14 @@ app.get('/', (req, res, next) => {
 let languages = []
 
 // when a socket connects, listen for messages
-io.on('connection', (socket) => {
+io.on('connection', socket => {
+  console.log('i am server, with clients: ', Object.keys(io.sockets.sockets))
   console.log('new socket ', socket.id, ' connected')
+
+  socket.on('disconnect', () => {
+      console.log(`socket disconnected`)
+      console.log(`currently connected: ${Object.keys(io.sockets.sockets)}`)
+    })
 
   // when a socket joins room, store selected language of that socket
   socket.on('join', language => {
@@ -43,21 +49,13 @@ io.on('connection', (socket) => {
     if (language && languages.indexOf(language) === -1)
       languages.push(language)
     console.log('all languages on server state are: ', languages)
+    console.log(`currently connected: ${Object.keys(io.sockets.sockets)}`)
   })
 
   // when a socket sends a spoken message as text
   socket.on('message', ({ messageText, lang }) => {
     console.log('new spoken message! server emitting original text: ', messageText)
     let translatedBool = false
-    socket.emit('got message', { translatedBool, messageText, lang })
-    //see indicoroutes.js for more info about the apis...
-    indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
-      .then(data => {
-        console.log('DATA', data)
-        //io.emit sends to all users
-        io.emit('got sentiment', data)
-      })
-      .catch(console.error)
       
     // 1) immediately send message exactly as received to all OTHER sockets
     socket.broadcast.emit('got message', { translatedBool, messageText, lang })

@@ -2,11 +2,21 @@ import io from 'socket.io-client'
 import store from './store.jsx'
 import { updateEmotion } from './reducers/sentimentReducer.jsx'
 
-const socket = io()
-
 // enable text-to-speech in browser
 const synth = window.speechSynthesis
 let voices
+
+let socket
+
+export function openSocket() {
+  socket = io()
+  console.log(`socket connected!`)
+}
+
+export function closeSocket() {
+  const closed = socket.close()
+  console.log(`socket disconnected`)
+}
 
 export function joinRoom(language) {
   socket.emit('join', language)

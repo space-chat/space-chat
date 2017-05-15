@@ -4,10 +4,11 @@ When Room loads, it:
 (1) Starts recording and transcribing audio input (thanks to SpeechRecognition API)
 (2) Sets user's chosen language on state
 (3) Emits a 'join' message to server through socket (via joinRoom())
-(4) When speech transcription is finalized (happens when user pauses), emits 'message' msg to server through socket (via sendMesssage())
+(4) Sets listeners for 'got sentiment' and 'got message' from server via receiveSentiment() and receiveMessage()
+(4) When speech transcription is finalized (/when user pauses), emits 'message' msg to server through socket via sendMesssage()
    - server then processes transcription:
-      - analyzes sentiment, emits 'got sentiment' with sentiment data
-      - translates into target language, emits 'got message' with translated text
+      -- analyzes sentiment, emits 'got sentiment' with sentiment data
+      -- translates into target language, emits 'got message' with translated text
 (5) Receives sentiment data from server via receiveSentiment()
 (6) Receives translated text from server via receiveMessage()
 ------------------------------------------------ */
@@ -20,7 +21,7 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
-import { joinRoom, sendMessage, receiveMessage, receiveSentiment } from '../sockets.js'
+import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket } from '../sockets.js'
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -56,6 +57,11 @@ class Room extends Component {
         ru: 'ru-RU'
       }})
     if (!this.props.browserSupportsSpeechRecognition) return null
+  }
+
+  componentWillUnmount() {
+    // disconnect socket, also leaves channels, unsets listeners
+    closeSocket()
   }
 
   componentDidMount() {
