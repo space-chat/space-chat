@@ -15,10 +15,10 @@ export default class Knots extends Component {
 		super()
 
 		this.state = {
-			numKnots: 50,
+			numKnots: 100,
 			colorA: 'blue',
 			colorB: 'green',
-			rotationRate: 1200
+			rotationRate: 4000
 		}
 
 		this.handleColor = this.handleColor.bind(this)
@@ -126,14 +126,14 @@ console.log('rate is', rate)
 				{/* x-axis rotation */}
 			    <a-entity position="0 0 0">
 			      <a-animation attribute="rotation" to="0 360 0"
-			                   repeat="indefinite" easing="linear" dur={this.state.rate}>
+			                   repeat="indefinite" easing="linear" dur={this.state.rorationRate}>
 			      </a-animation>
 			      <a-entity mixin="lightA" position="30 0 0"></a-entity>
 			    </a-entity>
 	        {/* y-axis rotation */}
 		      <a-entity position="0 0 0">
 		        <a-animation attribute="rotation" to="360 0 0"
-		                     repeat="indefinite" easing="linear" dur={this.state.rate}>
+		                     repeat="indefinite" easing="linear" dur={this.state.rotationRate}>
 		        </a-animation>
 		        <a-entity mixin="lightB" position="0 0 40"></a-entity>
 		      </a-entity>

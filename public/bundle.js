@@ -18093,10 +18093,10 @@ var Knots = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (Knots.__proto__ || Object.getPrototypeOf(Knots)).call(this));
 
 		_this.state = {
-			numKnots: 50,
+			numKnots: 100,
 			colorA: 'blue',
 			colorB: 'green',
-			rotationRate: 1200
+			rotationRate: 4000
 		};
 
 		_this.handleColor = _this.handleColor.bind(_this);
@@ -18224,14 +18224,14 @@ var Knots = function (_Component) {
 							'a-entity',
 							{ position: '0 0 0' },
 							_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
-								repeat: 'indefinite', easing: 'linear', dur: this.state.rate }),
+								repeat: 'indefinite', easing: 'linear', dur: this.state.rorationRate }),
 							_react2.default.createElement('a-entity', { mixin: 'lightA', position: '30 0 0' })
 						),
 						_react2.default.createElement(
 							'a-entity',
 							{ position: '0 0 0' },
 							_react2.default.createElement('a-animation', { attribute: 'rotation', to: '360 0 0',
-								repeat: 'indefinite', easing: 'linear', dur: this.state.rate }),
+								repeat: 'indefinite', easing: 'linear', dur: this.state.rotationRate }),
 							_react2.default.createElement('a-entity', { mixin: 'lightB', position: '0 0 40' })
 						),
 						_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' })
