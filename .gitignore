@@ -6,4 +6,4 @@ indicokey.js
 reference
 app/a-frame
 public/bundle.js
-public/bundle.js.min
+public/bundle.js.map
