@@ -39,7 +39,7 @@ io.on('connection', socket => {
   socket.on('close me', language => {
     console.log('disconnecting socket with language ', language)
     // if this is the only socket left in a language channel
-    if (io.sockets.adapter.rooms[language].length === 1)
+    if (io.sockets.adapter.rooms[language] && io.sockets.adapter.rooms[language].length === 1)
       // remove that language from state
       languages = languages.filter(lang => lang !== language)
     console.log('all languages on server state are: ', languages)
