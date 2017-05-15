@@ -13,7 +13,7 @@ export function openSocket() {
 }
 
 export function closeSocket() {
-  const closed = socket.close()
+  socket.close()
 }
 
 export function joinRoom(language) {
