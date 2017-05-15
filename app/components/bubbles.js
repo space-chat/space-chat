@@ -123,30 +123,32 @@ function render() {
 			sphere.setAttribute('position', { x: 7 * Math.cos(timer + i) })
 			sphere.setAttribute('position', { y: 7 * Math.sin(timer + i * 1.1) })
 		}
-	} else if (movementPath === "circleY") {
+	}
+	// else if (movementPath === "circleY") {
+	// 	for (var i = 0, il = spheres.length; i < il; i++) {
+	// 		var sphere = spheres[i];
+	// 		sphere.setAttribute('position', { x: 15 * Math.sin(timer + i + (2 * Math.PI)) })
+	// 		sphere.setAttribute('position', { y: 7 * Math.cos(timer + i + 2 * (2 * Math.PI)) })
+	// 	}
+//} 
+else if (movementPath === "circleZ") {
 		for (var i = 0, il = spheres.length; i < il; i++) {
 			var sphere = spheres[i];
-			sphere.setAttribute('position', { x: 7 * Math.sin(timer + i + (2 * Math.PI)) })
-			sphere.setAttribute('position', { y: 7 * Math.cos(timer + i + (2 * Math.PI)) })
-		}
-	} else if (movementPath === "circleZ") {
-		for (var i = 0, il = spheres.length; i < il; i++) {
-			var sphere = spheres[i];
-			sphere.setAttribute('position', { x: 7 * Math.sin(timer + i + (2 * Math.PI)) })
-			sphere.setAttribute('position', { z: 7 * Math.cos(timer + i + (2 * Math.PI)) })
+			sphere.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
+			sphere.setAttribute('position', { z: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
 		}
 	}
 	else if (movementPath === "coolness") {
 		for (var i = 0, il = spheres.length; i < il; i++) {
 			var sphere = spheres[i];
-			sphere.setAttribute('position', { x: 7 * Math.sin(timer + i * 1.1 + (2 * Math.PI)) })
-			sphere.setAttribute('position', { z: 7 * Math.cos(timer + i + (2 * Math.PI)) })
+			sphere.setAttribute('position', { x: 8 * Math.sin(timer + i * 1.1 + (2 * Math.PI)) })
+			sphere.setAttribute('position', { z: 8 * Math.cos(timer + i + (2 * Math.PI)) })
 		}
 	} else if (movementPath === "pendulum") {
 		for (var i = 0, il = spheres.length; i < il; i++) {
 			var sphere = spheres[i];
-			sphere.setAttribute('position', { x: 7 * Math.sin(timer + i + (2 * Math.PI)) })
-			sphere.setAttribute('position', { z: 7 * Math.cos(timer + i * 2 + (2 * Math.PI)) })
+			sphere.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
+			sphere.setAttribute('position', { z: 8 * Math.cos(timer + i * 2 + (2 * Math.PI)) })
 		}
 	}
 }

@@ -37,7 +37,7 @@ export default class Bubbles extends Component {
         }
 
         let movement = {
-            extraversion: "circleY",
+            extraversion: "trig",
             conscientiousness: "coolness",
             openness: "circleZ",
             agreeableness: "pendulum"
@@ -60,40 +60,21 @@ export default class Bubbles extends Component {
         console.log("PATTER", pattern)
         scale = domPersonality === "extraversion" ? 0.7 : 0.4
 
-        //Set metalness ( sentiment ), color (emotion), and scale (personality)
+        //Set color (emotion), and scale (personality), and speed (emotion)
         this.setState({ color: color, scale: scale, pattern: pattern }, () => {
             this.handleSizeOrColor()
-            // updatePath(this.state.pattern)
+            updatePath(this.state.pattern)
 
-            switch (this.state.color) {
-                case "red":
-                    updateSpeed(0.015)
-                    break;
-                case "gray":
-                    updateSpeed(0)
-                    break;
-                default:
-                    updateSpeed(0.0005)
-            }
-            // updatePath(this.state.pattern)
             console.log("STATE", this.state)
         })
-
-
-        // updatePath(this.state.pattern)
-
-        //     switch (this.state.color) {
-        //         case "red":
-        //             updateSpeed(0.001)
-        //             break;
-        //         case "gray":
-        //             updateSpeed(0)
-        //             break;
-        //         default:
-        //             updateSpeed(0.0003)
-        //     }
     }
 
+    componentWillUpdate() {
+         if(this.state.color === "red") updateSpeed(0.015)
+         else if(this.state.color === "gray") updateSpeed(0)
+         else updateSpeed(0.0005)
+    }
+            
     handleAdd() {
         addBubbles(100, this.state.sky, this.state.color)
     }
@@ -103,27 +84,23 @@ export default class Bubbles extends Component {
     }
 
     render() {
-        // updatePath(this.state.pattern)
-
-        // switch (this.state.color) {
-        //         case "red": 
-        //             updateSpeed(0.015)
-        //             break; 
-        //         case "gray": 
-        //             updateSpeed(0)
-        //             break; 
-        //         default: 
-        //             updateSpeed(0.0005)
-        //     }
         return (
             <div>
-                {/*<div>
+                {/*  uncomment to test... <div>
                     <button onClick={this.handleAdd}>Add bubbles</button>
                     <button onClick={this.handleSubtract}>Remove bubbles</button>
                     <button onClick={() => this.handleSizeOrColor()}>Size bubbles</button>
                     <button onClick={() => this.handleSpeed(0.001)}>Change bubble speed</button>
                     <button onClick={() => this.handlePath("circleY")}>Change to circleZ</button>
                     <button onClick={() => this.handleAltitude("high")}>Make bubbles higher</button>
+                </div>*/}
+                {
+                    /*<div>
+                <button onClick={() => this.handlePath("circleY")}>Change to circleY</button>
+                <button onClick={() => this.handlePath("circleZ")}>Change to circleZ</button>
+                <button onClick={() => this.handlePath("coolness")}>Change to coolness</button>
+                 <button onClick={() => this.handlePath("trig")}>Change to trig</button>
+                 <button onClick={() => this.handlePath("pendulum")}>Change to pendulum</button>
                 </div>*/}
                 <div>
                     <a-scene vr-mode-ui="enabled: true">
