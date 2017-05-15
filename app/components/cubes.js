@@ -13,7 +13,7 @@ let cubes = []
 let tickSpeed = 0.00005
 let movementPath = 'clockwise'
 
-// Set up ambient light. Color will respond to emotion updates
+// Set light updates color based on emotion
 const setLight = (color) => {
 	let prevLight = document.querySelector('a-light')
 	prevLight ? 
@@ -92,11 +92,6 @@ const makeCubes = (numCubes, images) => {
 	console.log('making cubes')
 }
 
-// update color based on emotion
-const updateColor = (color) => {
-	// update ambient light color based on emotion
-}
-
 // updated speed based on intensity or a personality trait
 const updateSpeed = (n) => {
 	tickSpeed = n
@@ -135,5 +130,5 @@ const animate = () => {
 // 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
 // }
 
-module.exports = { setLight, makeCubes, animate, updateColor, updateSpeed, updateDirection}
+module.exports = { setLight, makeCubes, animate, updateSpeed, updateDirection}
 

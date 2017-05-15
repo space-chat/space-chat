@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AssetLoader from './AssetLoader'
 
-import { setLight, makeCubes, animate, updateColor, updateSpeed, updateDirection } from './cubes.js'
+import { setLight, makeCubes, animate, updateSpeed, updateDirection } from './cubes.js'
 
 
 // const animate = (cubeColor, prevCubeColor) => {

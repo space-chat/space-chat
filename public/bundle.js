@@ -18328,7 +18328,7 @@ var cubes = [];
 var tickSpeed = 0.00005;
 var movementPath = 'clockwise';
 
-// Set up ambient light. Color will respond to emotion updates
+// Set light updates color based on emotion
 var setLight = function setLight(color) {
 	var prevLight = document.querySelector('a-light');
 	prevLight ? document.querySelector('a-scene').removeChild(prevLight) : null;
@@ -18403,13 +18403,8 @@ var makeCubes = function makeCubes(numCubes, images) {
 	console.log('making cubes');
 };
 
-// update color based on emotion
-var updateColor = function updateColor(color) {}
-// update ambient light color based on emotion
-
-
 // updated speed based on intensity or a personality trait
-;var updateSpeed = function updateSpeed(n) {
+var updateSpeed = function updateSpeed(n) {
 	tickSpeed = n;
 };
 
@@ -18446,7 +18441,7 @@ var animate = function animate() {
 // 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
 // }
 
-module.exports = { setLight: setLight, makeCubes: makeCubes, animate: animate, updateColor: updateColor, updateSpeed: updateSpeed, updateDirection: updateDirection };
+module.exports = { setLight: setLight, makeCubes: makeCubes, animate: animate, updateSpeed: updateSpeed, updateDirection: updateDirection };
 
 /***/ }),
 /* 166 */
