@@ -4,6 +4,7 @@ const initialState = {
   secondaryEmotion: [],
   primaryIntensity: [],
   secondaryIntensity: [],
+  primaryPersonality: [],
   extraversion: [],
   openness: [],
   conscientiousness: [],
@@ -16,6 +17,7 @@ export const UPDATE_PRIMARY_EMO = "UPDATE_PRIMARY_EMO"
 export const UPDATE_SECONDARY_EMO = "UPDATE_SECONDARY_EMO"
 export const UPDATE_PRIMARY_INTENSITY = "UPDATE_PRIMARY_INTENSITY"
 export const UPDATE_SECONDARY_INTENSITY = "UPDATE_SECONDARY_INTENSITY"
+export const UPDATE_PRIMARY_PERSONALITY = "UPDATE_PRIMARY_PERSONALITY"
 export const UPDATE_EXTRAVERSION = "UPDATE_EXTRAVERSION"
 export const UPDATE_OPENNESS = "UPDATE_OPENNESS"
 export const UPDATE_CONSCIENTIOUSNESS = "UPDATE_CONSCIENTIOUSNESS"
@@ -54,6 +56,13 @@ export const secondaryIntensity = (value) => {
   }
 }
 
+export const primaryPersonality = (personality) => {
+  return {
+    type: UPDATE_PRIMARY_PERSONALITY, 
+    payload: personality
+  }
+}
+
 export const updateExtraversion = (score) => {
   return {
     type: UPDATE_EXTRAVERSION,
@@ -89,9 +98,6 @@ export const updateSentiment = (score) => {
   }
 }
 
-
-
-
 /* ------------------    REDUCER    ------------------ */
 
 export default function sentimentReducer(state = initialState, action) {
@@ -113,6 +119,10 @@ export default function sentimentReducer(state = initialState, action) {
 
     case UPDATE_SECONDARY_INTENSITY:
       newState.secondaryIntensity = [action.payload, ...newState.secondaryIntensity]
+      break
+
+    case UPDATE_PRIMARY_PERSONALITY:
+      newState.primaryPersonality = [action.payload, ...newState.primaryPersonality]
       break
 
     case UPDATE_EXTRAVERSION:
