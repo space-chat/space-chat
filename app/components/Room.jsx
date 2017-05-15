@@ -20,7 +20,7 @@ import {connect} from 'react-redux'
 import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
-import Scene from './Scene.jsx'
+import SpaceScene from './SpaceScene.jsx'
 import Bubbles from './Bubbles.jsx'
 import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket } from '../sockets.js'
 
@@ -105,7 +105,7 @@ class Room extends Component {
 
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
-      <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
+      <SpaceScene prevEmotion={prevEmotion} currEmotion={currEmotion} />
       // <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality}/>
     )
   }

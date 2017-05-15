@@ -7,6 +7,21 @@ import THREELib from "three-js"
 
 var THREE = THREELib()
 
+//Set up orbital camera, mouse listener, and window resize listener
+function initScene() {
+    var camera = document.getElementById('spaceCamera')
+	camera.setAttribute('fov', 60) //field of view
+	camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
+	camera.setAttribute('near', 0.01) //near
+	camera.setAttribute('far', 1000) //far
+	camera.setAttribute('position', { z: 3 })
+	camera.setAttribute('focalLength', 3)
+
+    window.addEventListener('resize', onWindowResize, false)
+	document.addEventListener('mousemove', onDocumentMouseMove, false)
+}
+
+
 // create a glowing 3D moon
 function createMoon() {
     var sphereGeo = new THREE.SphereGeometry(100, 32, 16)
@@ -35,6 +50,10 @@ function createMoon() {
 // create a glowing 3D star
 function createStar() { /* code */}
 
+function render() {
+
+}
+
 
 // AFRAME.registerComponent('star', {
 //   // schema object defines and describes properties of the component
@@ -47,4 +66,4 @@ function createStar() { /* code */}
 //   }
 // });
 
-module.exports = { createMoon, createStar }
+module.exports = { initScene, createMoon, createStar, render }

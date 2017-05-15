@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Avatar from './Avatar'
 import AssetLoader from './AssetLoader'
-import { createMoon, createStar } from '../aframe/stars.js'
+import { initScene, createMoon, createStar, render } from '../aframe/stars.js'
 
 /*const animate = (skyColor, prevSkyColor) => {
   if (skyColor !== prevSkyColor) {
@@ -28,7 +28,9 @@ export default class SpaceScene extends Component {
   }
 
   componentDidMount() {
+    initScene()
     createMoon()
+    render()
   }
 
   // get primary emotion from props, convert it to color for sky animation
@@ -56,26 +58,28 @@ export default class SpaceScene extends Component {
     let skyColor = emotionColors[this.props.currEmotion]
 
     return (
-      <div>
-        <a-scene>
+        <a-scene vr-mode-ui="enabled: true">
           <AssetLoader />
 
+          <a-entity id="spaceCamera" camera="userHeight: 1.6" look-controls
+                             orbit-controls="autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;" mouse-cursor="" />
+
           {/* ------ Placeholder Avatar ------- */}
-          <a-sphere
+          {/*<a-sphere
             id="avatar"
             position="0 3 -8"
             rotation="0 -90 -10"
             radius="1.75"
             material="src: #spaceman"
-            color="white" />
+            color="white" />*/}
 
           {/* ----- Light shining on avatar ----- */}
-          <a-light
+          {/*<a-light
             color="red"
             angle="45"
             position="-1 1 0"
             type="spot"
-            target="avatar" />
+            target="avatar" />*/}
 
           {/* ------ Stars ------- */}
 
@@ -123,7 +127,6 @@ export default class SpaceScene extends Component {
             color={skyColor} />
 
         </a-scene>
-      </div>
     )
   }
 }
