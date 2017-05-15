@@ -13,6 +13,7 @@ export function openSocket() {
 }
 
 export function closeSocket(language) {
+  // disconnecting socket handled server-side
   socket.emit('close me', language)
 }
 
