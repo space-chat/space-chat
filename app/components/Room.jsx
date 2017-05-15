@@ -81,24 +81,20 @@ class Room extends Component {
 
   // when the scene renders, API will start recording 
   render() {
-    // render emotion data
+    // emotion data
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
+    let primaryIntensity = this.props.sentiment.primaryIntensity[0] || 0.5
+    let secondaryIntensity = this.props.sentiment.secondaryIntensity[0] || 0.5
 
-    let prevPrimaryIntensity = this.props.sentiment.primaryIntensity[1] || 0.5
-    let currPrimaryIntensity = this.props.sentiment.primaryIntensity[0] || 0.5
-
-    let prevSecondaryIntensity = this.props.sentiment.secondaryIntensity[1] || 0.5
-    let currSecondaryIntensity = this.props.sentiment.secondaryIntensity[0] || 0.5
-
-    // render personality data
+    // personality data
     let primaryPersonality = this.props.sentiment.primaryPersonality[0] || 'default'
     let extraversion = this.props.sentiment.extraversion[0] || 0.5
     let openness = this.props.sentiment.openness[0] || 0.5
     let conscientiousness = this.props.sentiment.conscientiousness || 0.5
     let agreeableness = this.props.sentiment.agreeableness || 0.5
 
-    // render sentiment score
+    // sentiment score
     let sentimentScore = this.props.sentiment.sentimentScore[0] || 0.5
     
 
