@@ -15,6 +15,7 @@ class Home extends Component {
   }
 
   componentWillMount() {
+    // establish new socket connection
     openSocket()
   }
 

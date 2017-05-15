@@ -10,12 +10,10 @@ let socket
 
 export function openSocket() {
   socket = io()
-  console.log(`socket connected!`)
 }
 
 export function closeSocket() {
   const closed = socket.close()
-  console.log(`socket disconnected`)
 }
 
 export function joinRoom(language) {

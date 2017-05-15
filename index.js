@@ -34,13 +34,13 @@ let languages = []
 
 // when a socket connects, listen for messages
 io.on('connection', socket => {
-  console.log('i am server, with clients: ', Object.keys(io.sockets.sockets))
   console.log('new socket ', socket.id, ' connected')
+  console.log('i am server, with clients: ', Object.keys(io.sockets.sockets))
 
   socket.on('disconnect', () => {
-      console.log(`socket disconnected`)
-      console.log(`currently connected: ${Object.keys(io.sockets.sockets)}`)
-    })
+    console.log(`socket disconnected`)
+    console.log(`currently connected: ${Object.keys(io.sockets.sockets)}`)
+  })
 
   // when a socket joins room, store selected language of that socket
   socket.on('join', language => {
