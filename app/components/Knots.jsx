@@ -15,10 +15,10 @@ export default class Knots extends Component {
 		super()
 
 		this.state = {
-			numKnots: 100,
-			colorA: 'red',
-			colorB: 'orange',
-			rotationRate: '800'
+			numKnots: 50,
+			colorA: 'blue',
+			colorB: 'green',
+			rotationRate: 1200
 		}
 
 		this.handleColor = this.handleColor.bind(this)
@@ -26,7 +26,7 @@ export default class Knots extends Component {
 	}
 
 	componentDidMount() {
-		setLights(1200)
+		//setLights(1200)
 		//createKnot()
 		makeKnots(this.state.numKnots)
 	}
@@ -36,7 +36,7 @@ export default class Knots extends Component {
 	}
 
 	handleRate() {
-		setLights(this.state.rotationRate)
+		//setLights(this.state.rotationRate)
 	}
 /* ----------------
 	Logic for sentiment data
@@ -124,19 +124,19 @@ console.log('rate is', rate)
 
 			    {/* Lights. */}
 				{/* x-axis rotation */}
-			    {/*<a-entity position="0 0 0">
+			    <a-entity position="0 0 0">
 			      <a-animation attribute="rotation" to="0 360 0"
 			                   repeat="indefinite" easing="linear" dur={this.state.rate}>
 			      </a-animation>
 			      <a-entity mixin="lightA" position="30 0 0"></a-entity>
-			    </a-entity>*/}
+			    </a-entity>
 	        {/* y-axis rotation */}
-		      {/*<a-entity position="0 0 0">
+		      <a-entity position="0 0 0">
 		        <a-animation attribute="rotation" to="360 0 0"
 		                     repeat="indefinite" easing="linear" dur={this.state.rate}>
 		        </a-animation>
 		        <a-entity mixin="lightB" position="0 0 40"></a-entity>
-		      </a-entity>*/}
+		      </a-entity>
 
 		       {/* Skysphere */}
 			    <a-sky id="sky" src="#tiedye"></a-sky>

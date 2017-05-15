@@ -4,6 +4,8 @@
 let knots = []
 let tickSpeed = 0.00005
 
+/* -------------
+
 const setLights = (rate) => {
   let wrapperX = document.createElement('a-entity')
   wrapperX.setAttribute('position', '0 0 0')
@@ -52,6 +54,8 @@ const setLights = (rate) => {
 
 }
 
+------------ */
+
 
 const createKnot = () => {
 
@@ -74,7 +78,7 @@ const createKnot = () => {
   let knot = document.createElement('a-torus-knot')
 
   knot.setAttribute('radius', `${Math.random() * 10}`)
-  knot.setAttribute('radiusTubular', `${Math.random() * 0.75}`)
+  knot.setAttribute('radiusTubular', `${Math.random() * 0.85}`)
   knot.setAttribute('p', `${Math.round(Math.random() * 10)}`)
   knot.setAttribute('q', `${Math.round(Math.random() * 10)}`)
 
@@ -100,7 +104,7 @@ const makeKnots = (numKnots) => {
   }
 }
 
-module.exports = { setLights, createKnot, makeKnots }
+module.exports = { createKnot, makeKnots }
 
 
 // functions for producing knot shapes in scene. not working.

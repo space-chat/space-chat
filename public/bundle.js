@@ -18093,10 +18093,10 @@ var Knots = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (Knots.__proto__ || Object.getPrototypeOf(Knots)).call(this));
 
 		_this.state = {
-			numKnots: 100,
-			colorA: 'red',
-			colorB: 'orange',
-			rotationRate: '800'
+			numKnots: 50,
+			colorA: 'blue',
+			colorB: 'green',
+			rotationRate: 1200
 		};
 
 		_this.handleColor = _this.handleColor.bind(_this);
@@ -18107,7 +18107,7 @@ var Knots = function (_Component) {
 	_createClass(Knots, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			(0, _knots.setLights)(1200);
+			//setLights(1200)
 			//createKnot()
 			(0, _knots.makeKnots)(this.state.numKnots);
 		}
@@ -18118,9 +18118,9 @@ var Knots = function (_Component) {
 		}
 	}, {
 		key: 'handleRate',
-		value: function handleRate() {
-			(0, _knots.setLights)(this.state.rotationRate);
-		}
+		value: function handleRate() {}
+		//setLights(this.state.rotationRate)
+
 		/* ----------------
   	Logic for sentiment data
   
@@ -18220,6 +18220,20 @@ var Knots = function (_Component) {
 							roughness: '-2' }),
 						_react2.default.createElement('a-light', { id: 'fixedLightA', color: this.state.colorA, angle: '90', radius: '60', position: '-3 -4 1', type: 'point', distance: '0', intensity: '3', target: 'avatar2' }),
 						_react2.default.createElement('a-light', { id: 'fixedLightB', color: this.state.colorB, angle: '-90', radius: '60', position: '2 4 1', type: 'point', distance: '0', intensity: '2', target: 'avatar2' }),
+						_react2.default.createElement(
+							'a-entity',
+							{ position: '0 0 0' },
+							_react2.default.createElement('a-animation', { attribute: 'rotation', to: '0 360 0',
+								repeat: 'indefinite', easing: 'linear', dur: this.state.rate }),
+							_react2.default.createElement('a-entity', { mixin: 'lightA', position: '30 0 0' })
+						),
+						_react2.default.createElement(
+							'a-entity',
+							{ position: '0 0 0' },
+							_react2.default.createElement('a-animation', { attribute: 'rotation', to: '360 0 0',
+								repeat: 'indefinite', easing: 'linear', dur: this.state.rate }),
+							_react2.default.createElement('a-entity', { mixin: 'lightB', position: '0 0 40' })
+						),
 						_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' })
 					)
 				)
@@ -18322,41 +18336,43 @@ exports.default = Scene;
 var knots = [];
 var tickSpeed = 0.00005;
 
-var setLights = function setLights(rate) {
-  var wrapperX = document.createElement('a-entity');
-  wrapperX.setAttribute('position', '0 0 0');
-  wrapperX.setAttribute('id', 'wrapperX');
+/* -------------
 
-  var wrapperY = document.createElement('a-entity');
-  wrapperY.setAttribute('position', '0 0 0');
-  wrapperY.setAttribute('id', 'wrapperY');
+const setLights = (rate) => {
+  let wrapperX = document.createElement('a-entity')
+  wrapperX.setAttribute('position', '0 0 0')
+  wrapperX.setAttribute('id', 'wrapperX')
+
+  let wrapperY = document.createElement('a-entity')
+  wrapperY.setAttribute('position', '0 0 0')
+  wrapperY.setAttribute('id', 'wrapperY')
 
   // light X: x-axis rotating
-  var lightX = document.createElement('a-light');
-  lightX.setAttribute('geometry', 'primitive: sphere; radius: 1.5');
-  lightX.setAttribute('material', 'color: white; shader: flat');
-  lightX.setAttribute('light', 'color: blue; distance: 120; intensity: 3; type: point');
+  let lightX = document.createElement('a-light')
+  lightX.setAttribute('geometry', 'primitive: sphere; radius: 1.5')
+  lightX.setAttribute('material', 'color: white; shader: flat')
+  lightX.setAttribute('light', 'color: blue; distance: 120; intensity: 3; type: point')
 
   // light Y: y-axis rotating
-  var lightY = document.createElement('a-light');
-  lightY.setAttribute('geometry', 'primitive: sphere; radius: 2');
-  lightY.setAttribute('material', 'color: white; shader: flat');
-  lightY.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point');
+  let lightY = document.createElement('a-light')
+  lightY.setAttribute('geometry', 'primitive: sphere; radius: 2')
+  lightY.setAttribute('material', 'color: white; shader: flat')
+  lightY.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point')
 
   // create animations
-  var animationX = document.createElement('a-animation');
-  animationX.setAttribute('attribute', 'rotation');
-  animationX.setAttribute('to', '0 360 0');
-  animationX.setAttribute('repeat', 'indefinite');
-  animationX.setAttribute('easing', 'linear');
-  animationX.setAttribute('dur', '' + rate);
+  let animationX = document.createElement('a-animation')
+  animationX.setAttribute('attribute', 'rotation')
+  animationX.setAttribute('to', '0 360 0')
+  animationX.setAttribute('repeat', 'indefinite')
+  animationX.setAttribute('easing', 'linear')
+  animationX.setAttribute('dur', `${rate}`)
 
-  var animationY = document.createElement('a-animation');
-  animationX.setAttribute('attribute', 'rotation');
-  animationX.setAttribute('to', '360 0 0');
-  animationX.setAttribute('repeat', 'indefinite');
-  animationX.setAttribute('easing', 'linear');
-  animationX.setAttribute('dur', '' + rate);
+  let animationY = document.createElement('a-animation')
+  animationX.setAttribute('attribute', 'rotation')
+  animationX.setAttribute('to', '360 0 0')
+  animationX.setAttribute('repeat', 'indefinite')
+  animationX.setAttribute('easing', 'linear')
+  animationX.setAttribute('dur', `${rate}`)
 
   // set lights and animations to wrappers -- needs to be fixed
   // break animation out into second function
@@ -18365,9 +18381,12 @@ var setLights = function setLights(rate) {
   // document.getElementById('wrapperX').appendChild('lightY').appendChild('animationY')
 
   // set wrappers to scene
-  document.querySelector('a-scene').appendChild(lightX);
-  document.querySelector('a-scene').appendChild(lightY);
-};
+  document.querySelector('a-scene').appendChild(lightX)
+  document.querySelector('a-scene').appendChild(lightY)
+
+}
+
+------------ */
 
 var createKnot = function createKnot() {
 
@@ -18390,7 +18409,7 @@ var createKnot = function createKnot() {
   var knot = document.createElement('a-torus-knot');
 
   knot.setAttribute('radius', '' + Math.random() * 10);
-  knot.setAttribute('radiusTubular', '' + Math.random() * 0.75);
+  knot.setAttribute('radiusTubular', '' + Math.random() * 0.85);
   knot.setAttribute('p', '' + Math.round(Math.random() * 10));
   knot.setAttribute('q', '' + Math.round(Math.random() * 10));
 
@@ -18415,7 +18434,7 @@ var makeKnots = function makeKnots(numKnots) {
   }
 };
 
-module.exports = { setLights: setLights, createKnot: createKnot, makeKnots: makeKnots };
+module.exports = { createKnot: createKnot, makeKnots: makeKnots };
 
 // functions for producing knot shapes in scene. not working.
 /*const createShapes = () => {
