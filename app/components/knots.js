@@ -12,8 +12,8 @@ let width = window.innerWidth || 2;
 let height = window.innerHeight || 2;
 let mouseX = 0;
 let mouseY = 0;
-let movementPath = 'spin' // need to write movement path
-let tickSpeed = 0.00005
+// let movementPath = 'spin' // need to write movement path
+let tickSpeed = 0.005
 
 const initScene = () => {
   let camera = document.getElementById('camera')
@@ -56,6 +56,7 @@ const createKnot = () => {
   // give each knot a unique id
   knots.push(knot)
   knot.setAttribute('id', `knot-${knots.length}`)
+  console.log('knot id is', knot, '-', knots.length)
 
   // set random knot into scene
   document.querySelector('a-scene').appendChild(knot)
@@ -68,11 +69,13 @@ const makeKnots = (numKnots) => {
     createKnot()
     numKnots--
   }
+  console.log('knots is', knots)
 }
 
 
 // set target lights A + B for each knot, colors based on emotion
 const setTargetLightA = (colorA) => {
+  console.log('light A being created')
 
   for (let i = 0; i < knots.length; i++) {
     let lightA = document.createElement('a-light')
@@ -86,6 +89,7 @@ const setTargetLightA = (colorA) => {
     lightA.setAttribute('target', `knot-${i}`)
     lightA.setAttribute('opacity', '0.5')
     lightA.setAttribute('color', `${colorA}`)
+    console.log('target is ', knots[i].id)
 
     document.querySelector('a-scene').appendChild(lightA)
   }
@@ -93,6 +97,7 @@ const setTargetLightA = (colorA) => {
 
 
 const setTargetLightB = (colorB) => {
+  console.log('light B being created')
 
   for (let i = 0; i < knots.length; i++) {
     let lightB = document.createElement('a-light')
@@ -132,12 +137,12 @@ const updateLightRotationRate = (n) => {
 }
 
 const render = () => {
-  let camera = document.getElementById('camera')
+  //let camera = document.getElementById('camera')
   let timer = tickSpeed * Date.now() // change tickSpeed for rotating light speed
-  let curr = camera.getAttribute('position') || { x: 1, y: 1 }
-  let addx = curr.x + ((mouseX - curr.x) * .05)
-  let addy = curr.y + ((- mouseY - curr.y) * .05)
-  camera.setAttribute('position', { x: addx, y: addy, z: 5 })
+  //let curr = camera.getAttribute('position') || { x: 1, y: 1 }
+  //let addx = curr.x + ((mouseX - curr.x) * .05)
+  //let addy = curr.y + ((- mouseY - curr.y) * .05)
+  //camera.setAttribute('position', { x: addx, y: addy, z: 5 })
 
   // circleZ animation path for lightX
   lightX.setAttribute('position', { x: 8 * Math.sin(timer + (2 * Math.PI)) })
