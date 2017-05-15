@@ -20,7 +20,7 @@ function initScene() {
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
 	camera.setAttribute('near', 0.01) //near
 	camera.setAttribute('far', 1000) //far
-	camera.setAttribute('position', { z: 5 })
+	camera.setAttribute('position', { z: 3 })
 	camera.setAttribute('focalLength', 3)
 
 	window.addEventListener('resize', onWindowResize, false);
@@ -61,6 +61,7 @@ function addBubbles(numBubbles, img, color) {
 	makeBubbles(numBubbles, img, color)
 }
 
+//Remove bubbles
 // function destroyBubbles(numBubbles) {
 // 	var i = 0; 
 // 	while (i < numBubbles) {
@@ -73,8 +74,8 @@ function addBubbles(numBubbles, img, color) {
 // }
 
 //Make some bubbles increase or decrease in size, or change color
-function sizeOrColor(scaleNum, img, color) {
-	var n = spheres.length / 3
+function sizeOrColor(scaleNum, img, color, int) {
+	var n = spheres.length / int  //for example, every 3rd, or every 4th bubble
 	var i = 0;
 
 	while (i < n) {
@@ -120,8 +121,8 @@ function render() {
 	if (movementPath === "trig") {
 		for (var i = 0, il = spheres.length; i < il; i++) {
 			var sphere = spheres[i];
-			sphere.setAttribute('position', { x: 7 * Math.cos(timer + i) })
-			sphere.setAttribute('position', { y: 7 * Math.sin(timer + i * 1.1) })
+			sphere.setAttribute('position', { x: 5 * Math.cos(timer + i) })
+			sphere.setAttribute('position', { y: 5 * Math.sin(timer + i * 1.1) })
 		}
 	}
 	// else if (movementPath === "circleY") {

@@ -50,12 +50,10 @@ export function receiveSentiment() {
       }
     })
 
+    //Get the dominant personality
     let personalityTraits = personality[0]
     let keys2 = Object.keys(personalityTraits)
-    console.log("KEYS2", keys2)
     var primPersonality = "openness"
-
-     console.log("AGREE", personalityTraits)
 
      for (var trait in personalityTraits) {
        if (personalityTraits[trait] > personalityTraits[primPersonality]) {
@@ -63,7 +61,7 @@ export function receiveSentiment() {
        }
      }
 
-    // get personality trait ratings
+    // Get other indico info
     let primEmo = sortedEmotions[0][0]  //primary emotion
     let secEmo = sortedEmotions[1][0]   //secondary emotion
     let primInt = sortedEmotions[0][1]  //primary emotion's intensity
