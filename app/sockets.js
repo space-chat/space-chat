@@ -2,11 +2,19 @@ import io from 'socket.io-client'
 import store from './store.jsx'
 import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment } from './reducers/sentimentReducer.jsx'
 
-const socket = io()
-
 // enable text-to-speech in browser
 const synth = window.speechSynthesis
 let voices
+
+let socket
+
+export function openSocket() {
+  socket = io()
+}
+
+export function closeSocket() {
+  socket.close()
+}
 
 export function joinRoom(language) {
   socket.emit('join', language)
