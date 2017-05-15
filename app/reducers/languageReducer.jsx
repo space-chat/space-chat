@@ -14,7 +14,6 @@ export const setLanguage = (lang) => {
 
 // REDUCER
 const languageReducer = (state = [], action) => {
-  console.log(action)
   switch (action.type) {
     case LANGUAGE_SET:
       return action.payload

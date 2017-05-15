@@ -3,7 +3,7 @@ import Avatar from './Avatar'
 import AssetLoader from './AssetLoader'
 
 
-const animate = (skyColor, prevSkyColor) => {
+/*const animate = (skyColor, prevSkyColor) => {
   if (skyColor !== prevSkyColor) {
     return (
      <a-animation
@@ -14,7 +14,7 @@ const animate = (skyColor, prevSkyColor) => {
         ease="ease-in-circ" />
     )
   }
-}
+}*/
 
 const Scene = (props) => {
 
@@ -31,6 +31,8 @@ const Scene = (props) => {
   let prevSkyColor = emotionColors[props.prevEmotion]
 
   console.log('skyColor is', skyColor, 'prevSkyColor is', prevSkyColor)
+
+  console.log("PROPS IN SCENE", props)
   return (
     <div>
       <a-scene>
@@ -41,16 +43,8 @@ const Scene = (props) => {
 
         <a-sky
           id="sky"
-          src="#stars" >
-        {/*<a-animation
-            begin="sentiment-change"
-            attribute="material.color"
-            from={prevSkyColor}
-            to="#000000"
-            ease="ease" />*/}
-
-            {animate(skyColor, prevSkyColor)}
-      
+          src="#stars"
+          color={skyColor} >
         </a-sky>
 
       </a-scene>
@@ -60,5 +54,3 @@ const Scene = (props) => {
 
 export default Scene
 
-// fill="forward"
-// begin="sentiment-change"

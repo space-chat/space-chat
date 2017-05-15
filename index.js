@@ -7,7 +7,7 @@ var bodyParser = require('body-parser')
 
 // import and authenticate with Indico Text APIs
 var indico = require('indico.io')
-indico.apiKey = process.env.INDICO_API_KEY
+indico.apiKey = 'b895b4cf93b2701d2b26c5e918f141e2'
 
 // import the Google Cloud Translate API
 const Translate = require('@google-cloud/translate')
@@ -15,7 +15,7 @@ const Translate = require('@google-cloud/translate')
 const projectId = 'space-chat-166520'
 const translate = Translate({
   projectId: projectId,
-  keyFilename: process.env.GOOGLE_API_KEY_FILE
+  keyFilename: './servicekey.json'
 }) 
 
 // set up body parsing middleware

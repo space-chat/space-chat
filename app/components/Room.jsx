@@ -88,6 +88,7 @@ class Room extends Component {
   render() {
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
+    console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
       <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
     )
