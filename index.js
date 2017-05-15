@@ -49,7 +49,7 @@ io.on('connection', socket => {
     // 2) subscribe socket to language channel
     socket.join(language)
     console.log(`clients subscribed to ${language} channel are:
-      ${Object.keys(io.sockets.adapter.rooms[language])}`)
+      ${Object.keys(io.sockets.adapter.rooms[language].sockets)}`)
   })
 
   // when a socket sends a spoken message as text

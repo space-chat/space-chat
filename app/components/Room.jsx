@@ -94,7 +94,7 @@ class Room extends Component {
     let secondaryIntensity = this.props.sentiment.secondaryIntensity[0] || 0.5
 
     // personality data
-    let primaryPersonality = this.props.sentiment.primaryPersonality[0] || 'default'
+    // let primaryPersonality = this.props.sentiment.primaryPersonality[0] || 'default'
     let extraversion = this.props.sentiment.extraversion[0] || 0.5
     let openness = this.props.sentiment.openness[0] || 0.5
     let conscientiousness = this.props.sentiment.conscientiousness || 0.5
