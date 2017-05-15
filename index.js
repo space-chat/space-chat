@@ -36,14 +36,20 @@ let languages = []
 io.on('connection', socket => {
   console.log('new socket ', socket.id, ' connected')
 
-  // when a socket joins room, store selected language of that socket
+  // when a socket joins room
   socket.on('join', language => {
     console.log('socket ', socket.id, ' joined room! lang: ', language)
     // check that language choice is not empty, and not already stored
+      // the first part of check may no longer be necessary, due to the lang default bug fix
     if (language && languages.indexOf(language) === -1)
+      // 1) store selected language of that socket
       languages.push(language)
     console.log(`currently connected: ${Object.keys(io.sockets.sockets)}`)
     console.log('all languages on server state are: ', languages)
+    // 2) subscribe socket to language channel
+    socket.join(language)
+    console.log(`clients subscribed to ${language} channel are:
+      ${Object.keys(io.sockets.adapter.rooms[language])}`)
   })
 
   // when a socket sends a spoken message as text
