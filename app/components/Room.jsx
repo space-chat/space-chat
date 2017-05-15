@@ -20,7 +20,7 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
-import Knots from './Knots.jsx'
+
 import { joinRoom, sendMessage, receiveMessage, receiveSentiment } from '../sockets.js'
 
 const propTypes = {
@@ -83,10 +83,10 @@ class Room extends Component {
   render() {
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
-    let sentimentScore = this.props.sentiment.sentimentScore[0] || 0
-    let primaryPersonality = this.props.sentiment.primaryPersonality[0] || "default"
+
+    console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
-      <Knots prevEmotion={prevEmotion} currEmotion={currEmotion} prevIntensity={prevIntensity} currIntensity={currIntensity} />
+      <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
     )
   }
 }
