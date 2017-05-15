@@ -41,8 +41,6 @@ class Home extends Component {
         </div>
         <div>
           {/* need to pass language as prop to Room */}
-          <Link to="/room" className="btn">Enter Space Chat</Link>
-          <Link to="/bubbles" className="btn">Bubbles!</Link>
           <select className="form-control" id="select"onChange={this.handleLanguageChange}>
             <option value='en'>English</option>
             <option value='es'>Spanish</option>

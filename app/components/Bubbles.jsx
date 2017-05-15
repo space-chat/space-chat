@@ -15,7 +15,7 @@ export default class Bubbles extends Component {
             pattern: 'trig'
         }
 
-        this.handleAdd = this.handleAdd.bind(this)
+        // this.handleAdd = this.handleAdd.bind(this)
         this.handleSizeOrColor = this.handleSizeOrColor.bind(this)
     }
 
@@ -94,23 +94,6 @@ export default class Bubbles extends Component {
     render() {
         return (
             <div>
-                {/*  uncomment to test... <div>
-                    <button onClick={this.handleAdd}>Add bubbles</button>
-                    <button onClick={this.handleSubtract}>Remove bubbles</button>
-                    <button onClick={() => this.handleSizeOrColor()}>Size bubbles</button>
-                    <button onClick={() => this.handleSpeed(0.001)}>Change bubble speed</button>
-                    <button onClick={() => this.handlePath("circleY")}>Change to circleZ</button>
-                    <button onClick={() => this.handleAltitude("high")}>Make bubbles higher</button>
-                </div>*/}
-                {
-                    /*<div>
-                <button onClick={() => this.handlePath("circleY")}>Change to circleY</button>
-                <button onClick={() => this.handlePath("circleZ")}>Change to circleZ</button>
-                <button onClick={() => this.handlePath("coolness")}>Change to coolness</button>
-                 <button onClick={() => this.handlePath("trig")}>Change to trig</button>
-                 <button onClick={() => this.handlePath("pendulum")}>Change to pendulum</button>
-                </div>*/}
-                <div>
                     <a-scene vr-mode-ui="enabled: true">
                         <a-entity id="bubbleCamera" camera="userHeight: 1.6" look-controls
                              orbit-controls="autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;" mouse-cursor="">
@@ -122,7 +105,6 @@ export default class Bubbles extends Component {
                         <a-sky src="#flowerSky"></a-sky>
                     </a-scene>
                 </div>
-            </div>
         )
     }
 }

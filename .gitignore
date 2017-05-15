@@ -5,10 +5,5 @@ google-cloud-sdk
 indicokey.js
 reference
 app/a-frame
-<<<<<<< HEAD
-bundle.js
-bundle.js.map
-=======
 public/bundle.js
 public/bundle.js.map
->>>>>>> master

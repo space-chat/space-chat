@@ -21,13 +21,8 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
-<<<<<<< HEAD
 import Bubbles from './Bubbles.jsx'
-import { joinRoom, sendMessage, receiveMessage, receiveSentiment } from '../sockets.js'
-=======
-
 import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket } from '../sockets.js'
->>>>>>> master
 
 const propTypes = {
   // props injected by SpeechRecognition
