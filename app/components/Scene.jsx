@@ -20,7 +20,6 @@ const Scene = (props) => {
 
   console.log("PROPS IN SCENE", props)
   return (
-    <div>
       <a-scene vr-mode-ui="enabled: true">
         <AssetLoader />
         <Avatar position="-1.5 1 -4" />
@@ -34,7 +33,6 @@ const Scene = (props) => {
         </a-sky>
 
       </a-scene>
-    </div>
   )
 }
 

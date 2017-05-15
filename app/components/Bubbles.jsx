@@ -87,7 +87,6 @@ export default class Bubbles extends Component {
 
     render() {
         return (
-            <div>
                     <a-scene vr-mode-ui="enabled: true">
                         <a-entity id="bubbleCamera" camera="userHeight: 1.6" look-controls
                              orbit-controls="autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;" mouse-cursor="">
@@ -98,7 +97,6 @@ export default class Bubbles extends Component {
                         <a-sphere position="-1 1.25 -5" radius="0.001" color="#EF2D5E" id="pink"></a-sphere>
                         <a-sky src="#flowerSky"></a-sky>
                     </a-scene>
-                </div>
         )
     }
 }
