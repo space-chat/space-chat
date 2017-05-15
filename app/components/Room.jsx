@@ -21,6 +21,7 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
+
 import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket } from '../sockets.js'
 
 const propTypes = {
@@ -86,8 +87,23 @@ class Room extends Component {
 
   // when the scene renders, API will start recording 
   render() {
+    // emotion data
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
+    let primaryIntensity = this.props.sentiment.primaryIntensity[0] || 0.5
+    let secondaryIntensity = this.props.sentiment.secondaryIntensity[0] || 0.5
+
+    // personality data
+    let primaryPersonality = this.props.sentiment.primaryPersonality[0] || 'default'
+    let extraversion = this.props.sentiment.extraversion[0] || 0.5
+    let openness = this.props.sentiment.openness[0] || 0.5
+    let conscientiousness = this.props.sentiment.conscientiousness || 0.5
+    let agreeableness = this.props.sentiment.agreeableness || 0.5
+
+    // sentiment score
+    let sentimentScore = this.props.sentiment.sentimentScore[0] || 0.5
+    
+
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
       <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
