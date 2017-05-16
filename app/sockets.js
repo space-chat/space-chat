@@ -8,8 +8,10 @@ let voices
 
 let socket
 
-export function openSocket() {
-  socket = io()
+export function openSocket(scene) {
+  // open socket, connect to 'namespace' associated with scene
+  console.log('connecting to namespace ', scene)
+  socket = io(`/${scene}`)
 }
 
 export function closeSocket(language) {

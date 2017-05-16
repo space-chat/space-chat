@@ -44,7 +44,7 @@ class Room extends Component {
 
   componentWillMount() {
     //establish new socket connection
-    openSocket()
+    openSocket(this.props.scene)
 
     this.setState({ 
       language: this.props.language,
