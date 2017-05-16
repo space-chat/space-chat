@@ -9,7 +9,8 @@ const initialState = {
   openness: [],
   conscientiousness: [],
   agreeableness: [],
-  sentimentScore: []
+  sentimentScore: [],
+  speaker: ''
 }
 
 /* ------------------    ACTIONS    ------------------ */
@@ -23,7 +24,7 @@ export const UPDATE_OPENNESS = "UPDATE_OPENNESS"
 export const UPDATE_CONSCIENTIOUSNESS = "UPDATE_CONSCIENTIOUSNESS"
 export const UPDATE_AGREEABLENESS = "UPDATE_AGREEABLENESS"
 export const UPDATE_SENTIMENT_SCORE = "UPDATE_SENTIMENT_SCORE"
-
+export const UPDATE_SPEAKER = "UPDATE_SPEAKER"
 
 /* ------------------    ACTION CREATORS    ------------------ */
 // Take sentiment analysis data sent back from server upon calling receiveSentiment()
@@ -98,6 +99,13 @@ export const updateSentiment = (score) => {
   }
 }
 
+export const updateSpeaker = (speakerId) => {
+  return {
+    type: UPDATE_SPEAKER,
+    payload: speakerId
+  }
+}
+
 /* ------------------    REDUCER    ------------------ */
 
 export default function sentimentReducer(state = initialState, action) {
@@ -143,6 +151,10 @@ export default function sentimentReducer(state = initialState, action) {
 
     case UPDATE_SENTIMENT_SCORE:
       newState.sentimentScore = [action.payload, ...newState.sentimentScore]
+      break
+
+    case UPDATE_SPEAKER:
+      newState.speaker = [action.payload, ...newState.speaker]
       break
 
     default:
