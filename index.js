@@ -64,6 +64,7 @@ function setUpNamespace (namespace) {
       console.log('all languages on server state are: ', languages)
       // 2) subscribe socket to language channel
       socket.join(language)
+      io.of(namespace).emit('roster', Object.keys(nsp.connected))
     })
 
     // when a socket sends a spoken message as text
