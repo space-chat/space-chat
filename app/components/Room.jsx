@@ -13,12 +13,12 @@ When Room loads, it:
 (6) Receives translated text from server via receiveMessage()
 ------------------------------------------------ */
 
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 // higher order component that allows Room to transcribe speech
 import SpeechRecognition from 'react-speech-recognition'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 
 import Scene from './Scene.jsx'
 import Bubbles from './Bubbles.jsx'
@@ -36,13 +36,16 @@ class Room extends Component {
     super(props)
     this.state = {
       language: '',
-      langDict: {}, 
+      langDict: {},
       sky: '#blossoms'
     }
   }
 
   componentWillMount() {
-    this.setState({ 
+    //choose a random sky
+    const skies = ["#blossoms", "#colors", "#krabi"]
+
+    this.setState({
       language: this.props.language,
       langDict: {
         en: 'en-US',
@@ -57,11 +60,9 @@ class Room extends Component {
         ja: 'ja-JP',
         ko: 'ko-KR',
         ru: 'ru-RU'
-      }})
-
-      //choose a random sky
-      const skies = ["#blossoms", "#colors", "#krabi"]
-      this.setState({sky: skies[Math.floor(Math.random() * 3)]})
+      },
+      sky: skies[Math.floor(Math.random() * 3)]
+    })
 
     if (!this.props.browserSupportsSpeechRecognition) return null
   }
@@ -80,7 +81,7 @@ class Room extends Component {
   }
 
   // NB: web speech API waits to finalize text until after a short pause
-  componentWillReceiveProps({transcript, finalTranscript, resetTranscript, recognition}) {
+  componentWillReceiveProps({ transcript, finalTranscript, resetTranscript, recognition }) {
     // set language for speech recognition input
     recognition.lang = this.state.langDict[this.state.language]
     // when transcript finalized/ regular transcript and final transcript are the same
@@ -112,7 +113,7 @@ class Room extends Component {
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
       // <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
-      <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} sky={this.state.sky}/>
+      <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} sky={this.state.sky} />
     )
   }
 }
@@ -120,7 +121,7 @@ class Room extends Component {
 Room.propTypes = propTypes
 const EnhancedRoom = SpeechRecognition(Room)
 
-const mapState = ({language, sentiment}) => ({language, sentiment})
+const mapState = ({ language, sentiment }) => ({ language, sentiment })
 
 export default connect(mapState, null)(EnhancedRoom)
 
