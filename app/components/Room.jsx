@@ -107,28 +107,28 @@ class Room extends Component {
 
     // scene
     let scene = this.props.scene
-    let renderScene
+    let sceneComponent
+
     switch (scene) {
       case 'bubbles':
-        renderScene = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        sceneComponent = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
       case 'knots':
-        renderScene = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
       case 'space':
-        renderScene = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        sceneComponent = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
       case 'cubes':
-        renderScene = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        sceneComponent = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
-      default:
-        renderScene = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
     }
 
     console.log('emotions in Room are', prevEmotion, currEmotion)
+
     return (
       <div>
-        {renderScene}
+        {sceneComponent}
       </div>
     )
   }
@@ -137,7 +137,7 @@ class Room extends Component {
 Room.propTypes = propTypes
 const EnhancedRoom = SpeechRecognition(Room)
 
-const mapState = ({language, sentiment}) => ({language, sentiment})
+const mapState = ({language, sentiment, scene}) => ({language, sentiment, scene})
 
 export default connect(mapState, null)(EnhancedRoom)
 

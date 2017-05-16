@@ -17753,7 +17753,8 @@ var Home = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
 
     _this.state = {
-      language: ''
+      language: '',
+      scene: ''
     };
     _this.handleClick = _this.handleClick.bind(_this);
     _this.handleLanguageChange = _this.handleLanguageChange.bind(_this);
@@ -17769,7 +17770,6 @@ var Home = function (_Component) {
   }, {
     key: 'handleClick',
     value: function handleClick(e) {
-      console.log('target name', e.target.name);
       e.preventDefault();
       // dispatch action with language from state
       this.props.setLanguage(this.state.language || 'en');
@@ -17885,37 +17885,37 @@ var Home = function (_Component) {
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'button',
-          { className: 'btn btn-default', name: 'bubbles', onClick: this.handleClick },
+          { className: 'btn btn-default', onClick: this.handleClick },
           _react2.default.createElement(
             _reactRouter.Link,
-            { to: '/room' },
+            { to: '/room', name: 'bubbles' },
             'ENTER BUBBLESPACE'
           )
         ),
         _react2.default.createElement(
           'button',
-          { className: 'btn btn-default', name: 'knots', onClick: this.handleClick },
+          { className: 'btn btn-default', onClick: this.handleClick },
           _react2.default.createElement(
             _reactRouter.Link,
-            { to: '/room' },
+            { to: '/room', name: 'knots' },
             'ENTER KNOTSPACE'
           )
         ),
         _react2.default.createElement(
           'button',
-          { className: 'btn btn-default', name: 'space', onClick: this.handleClick },
+          { className: 'btn btn-default', onClick: this.handleClick },
           _react2.default.createElement(
             _reactRouter.Link,
-            { to: '/room' },
+            { to: '/room', name: 'space' },
             'ENTER SPACESPACE'
           )
         ),
         _react2.default.createElement(
           'button',
-          { className: 'btn btn-default', name: 'cubes', onClick: this.handleClick },
+          { className: 'btn btn-default', onClick: this.handleClick },
           _react2.default.createElement(
             _reactRouter.Link,
-            { to: '/room' },
+            { to: '/room', name: 'cubes' },
             'ENTER CUBESPACE'
           )
         )
@@ -18167,29 +18167,29 @@ var Room = function (_Component) {
 
       // scene
       var scene = this.props.scene;
-      var renderScene = void 0;
+      var sceneComponent = void 0;
+
       switch (scene) {
         case 'bubbles':
-          renderScene = _react2.default.createElement(_Bubbles2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
+          sceneComponent = _react2.default.createElement(_Bubbles2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
           break;
         case 'knots':
-          renderScene = _react2.default.createElement(_Knots2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
+          sceneComponent = _react2.default.createElement(_Knots2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
           break;
         case 'space':
-          renderScene = _react2.default.createElement(_Scene2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
+          sceneComponent = _react2.default.createElement(_Scene2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
           break;
         case 'cubes':
-          renderScene = _react2.default.createElement(_Cubes2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
+          sceneComponent = _react2.default.createElement(_Cubes2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
           break;
-        default:
-          renderScene = _react2.default.createElement(_Scene2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
       }
 
       console.log('emotions in Room are', prevEmotion, currEmotion);
+
       return _react2.default.createElement(
         'div',
         null,
-        renderScene
+        sceneComponent
       );
     }
   }]);
@@ -18202,8 +18202,9 @@ var EnhancedRoom = (0, _reactSpeechRecognition2.default)(Room);
 
 var mapState = function mapState(_ref2) {
   var language = _ref2.language,
-      sentiment = _ref2.sentiment;
-  return { language: language, sentiment: sentiment };
+      sentiment = _ref2.sentiment,
+      scene = _ref2.scene;
+  return { language: language, sentiment: sentiment, scene: scene };
 };
 
 exports.default = (0, _reactRedux.connect)(mapState, null)(EnhancedRoom);
@@ -18805,7 +18806,8 @@ var _redux = __webpack_require__(51);
 
 var rootReducer = (0, _redux.combineReducers)({
   language: __webpack_require__(88).default,
-  sentiment: __webpack_require__(89).default
+  sentiment: __webpack_require__(89).default,
+  scene: __webpack_require__(171).default
 });
 
 exports.default = rootReducer;

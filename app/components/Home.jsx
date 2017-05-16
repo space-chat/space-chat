@@ -9,7 +9,8 @@ class Home extends Component {
   constructor() {
     super()
     this.state = {
-      language: ''
+      language: '',
+      scene: ''
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleLanguageChange = this.handleLanguageChange.bind(this)
@@ -21,7 +22,6 @@ class Home extends Component {
   }
 
   handleClick(e) {
-    console.log('target name', e.target.name)
     e.preventDefault()
     // dispatch action with language from state
     this.props.setLanguage(this.state.language || 'en')
@@ -64,10 +64,10 @@ class Home extends Component {
         <br />
         <br />
         <br />
-        <button className="btn btn-default" name="bubbles" onClick={this.handleClick}><Link to="/room">ENTER BUBBLESPACE</Link></button>
-        <button className="btn btn-default" name="knots" onClick={this.handleClick}><Link to="/room">ENTER KNOTSPACE</Link></button>
-        <button className="btn btn-default" name="space" onClick={this.handleClick}><Link  to="/room">ENTER SPACESPACE</Link></button>
-        <button className="btn btn-default" name="cubes" onClick={this.handleClick} ><Link to="/room">ENTER CUBESPACE</Link></button>
+        <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="bubbles">ENTER BUBBLESPACE</Link></button>
+        <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="knots" >ENTER KNOTSPACE</Link></button>
+        <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="space">ENTER SPACESPACE</Link></button>
+        <button className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER CUBESPACE</Link></button>
       </div>
 		)
 	}
