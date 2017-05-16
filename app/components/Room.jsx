@@ -36,7 +36,8 @@ class Room extends Component {
     super(props)
     this.state = {
       language: '',
-      langDict: {}
+      langDict: {}, 
+      sky: '#blossoms'
     }
   }
 
@@ -57,6 +58,11 @@ class Room extends Component {
         ko: 'ko-KR',
         ru: 'ru-RU'
       }})
+
+      //choose a random sky
+      const skies = ["#blossoms", "#colors", "#krabi"]
+      this.setState({sky: skies[Math.floor(Math.random() * 3)]})
+
     if (!this.props.browserSupportsSpeechRecognition) return null
   }
 
@@ -106,7 +112,7 @@ class Room extends Component {
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
       // <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
-      <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality}/>
+      <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} sky={this.state.sky}/>
     )
   }
 }

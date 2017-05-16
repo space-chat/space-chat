@@ -10698,6 +10698,10 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _AssetLoader = __webpack_require__(165);
+
+var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
+
 var _bubbles = __webpack_require__(168);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -10717,7 +10721,6 @@ var Bubbles = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Bubbles.__proto__ || Object.getPrototypeOf(Bubbles)).call(this));
 
         _this.state = {
-            sky: '#flowerSky',
             color: 'white',
             scale: 0.7,
             personality: 'default',
@@ -10732,7 +10735,7 @@ var Bubbles = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             (0, _bubbles.initScene)();
-            (0, _bubbles.makeBubbles)(200, this.state.sky, this.state.color);
+            (0, _bubbles.makeBubbles)(200, this.props.sky, this.state.color);
             (0, _bubbles.animate)();
         }
     }, {
@@ -10778,10 +10781,11 @@ var Bubbles = function (_Component) {
                 if (_this2.state.color !== '#FF8300') {
                     _this2.handleSizeOrColor();
                 } else {
-                    (0, _bubbles.sizeOrColor)(0.4, _this2.state.sky, "#FF8300", 3); //orange
-                    (0, _bubbles.sizeOrColor)(0.4, _this2.state.sky, "#0FB235", 4); //green
-                    (0, _bubbles.sizeOrColor)(0.4, _this2.state.sky, "#5227B2", 5); //purple
-                    (0, _bubbles.sizeOrColor)(0.4, _this2.state.sky, "#FFD437", 7); //yellow
+                    //for surprise 
+                    (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#FF8300", 3); //orange
+                    (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#0FB235", 4); //green
+                    (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#5227B2", 5); //purple
+                    (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#FFD437", 7); //yellow
                 }
 
                 (0, _bubbles.updatePath)(_this2.state.pattern);
@@ -10801,7 +10805,7 @@ var Bubbles = function (_Component) {
     }, {
         key: 'handleSizeOrColor',
         value: function handleSizeOrColor() {
-            (0, _bubbles.sizeOrColor)(this.state.scale, this.state.sky, this.state.color, 3);
+            (0, _bubbles.sizeOrColor)(this.state.scale, this.props.sky, this.state.color, 3);
         }
     }, {
         key: 'render',
@@ -10809,22 +10813,17 @@ var Bubbles = function (_Component) {
             return _react2.default.createElement(
                 'a-scene',
                 { 'vr-mode-ui': 'enabled: true' },
+                _react2.default.createElement(_AssetLoader2.default, null),
                 _react2.default.createElement('a-entity', { id: 'bubbleCamera', camera: 'userHeight: 1.6', 'look-controls': true,
                     'mouse-cursor': '' }),
-                _react2.default.createElement(
-                    'a-assets',
-                    null,
-                    _react2.default.createElement('img', { id: 'flowerSky', src: 'images/blossoms.jpg' })
-                ),
-                _react2.default.createElement('a-sphere', { position: '-1 1.25 -5', radius: '0.001', color: '#EF2D5E', id: 'pink' }),
-                _react2.default.createElement('a-sky', { src: '#flowerSky' })
+                _react2.default.createElement('a-sky', { src: this.props.sky })
             );
         }
     }]);
 
     return Bubbles;
 }(_react.Component);
-
+//src={this.state.sky}
 //Emotions: Change bubble color
 //Anger: Bubbles turn red + increase speed
 //Joy:   Bubbles turn yellow  
@@ -18519,7 +18518,8 @@ var Room = function (_Component) {
 
     _this.state = {
       language: '',
-      langDict: {}
+      langDict: {},
+      sky: '#blossoms'
     };
     return _this;
   }
@@ -18543,6 +18543,11 @@ var Room = function (_Component) {
           ko: 'ko-KR',
           ru: 'ru-RU'
         } });
+
+      //choose a random sky
+      var skies = ["#blossoms", "#colors", "#krabi"];
+      this.setState({ sky: skies[Math.floor(Math.random() * 3)] });
+
       if (!this.props.browserSupportsSpeechRecognition) return null;
     }
   }, {
@@ -18605,7 +18610,7 @@ var Room = function (_Component) {
       console.log('emotions in Room are', prevEmotion, currEmotion);
       return (
         // <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
-        _react2.default.createElement(_Bubbles2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality })
+        _react2.default.createElement(_Bubbles2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality, sky: this.state.sky })
       );
     }
   }]);
@@ -18742,10 +18747,19 @@ function AssetLoader() {
 			_react2.default.createElement("img", { id: "stars", src: "/images/sky-stars.png" }),
 			_react2.default.createElement("img", { id: "fractal", src: "/images/fractal.jpg" }),
 			_react2.default.createElement("img", { id: "tiedye", src: "/images/tiedye.jpg" }),
+			_react2.default.createElement("img", { id: "colors", src: "/images/colors.jpg" }),
+			_react2.default.createElement("img", { id: "krabi", src: "/images/krabi.jpg" }),
 			_react2.default.createElement("a-mixin", { id: "chair-part", geometry: "primitive: box", material: "color: #BFBFBF" })
 		)
 	);
-} // This component loads assets and mixins, so that they can be called by other components without needing to continually re-render and interrupting the scene.
+}
+
+//credit for #colors: 
+// photo credit: Rantz <a href="http://www.flickr.com/photos/99804259@N00/33003256230">Susan's World</a> via <a href="http://photopin.com">photopin</a> <a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">(license)</a>
+
+//credit for #krabi
+//photo credit: Sitoo <a href="http://www.flickr.com/photos/7470842@N04/32252838043">A window to Krabi (made of limestone)</a> via <a href="http://photopin.com">photopin</a> <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">(license)</a>
+// This component loads assets and mixins, so that they can be called by other components without needing to continually re-render and interrupting the scene.
 
 /***/ }),
 /* 166 */
