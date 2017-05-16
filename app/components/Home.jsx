@@ -40,7 +40,6 @@ class Home extends Component {
           <label className="control-label">Select your language:</label>
         </div>
         <div>
-          {/* need to pass language as prop to Room */}
           <select className="form-control" id="select"onChange={this.handleLanguageChange}>
             <option value='en'>English</option>
             <option value='es'>Spanish</option>
@@ -59,7 +58,10 @@ class Home extends Component {
         <br />
         <br />
         <br />
-        <Link className="btn btn-default" role="button" to="/room" onClick={this.handleClick}>ENTER SPACECHAT</Link>
+        <Link className="btn btn-default" role="button" to="/room/bubbles" onClick={this.handleClick}>ENTER BUBBLESPACE</Link>
+        <Link className="btn btn-default" role="button" to="/room/knots" onClick={this.handleClick}>ENTER KNOTSPACE</Link>
+        <Link className="btn btn-default" role="button" to="/room/space" onClick={this.handleClick}>ENTER SPACESPACE</Link>
+        <Link className="btn btn-default" role="button" to="/room/cubes" onClick={this.handleClick}>ENTER CUBESPACE</Link>
   		</div>
 		)
 	}

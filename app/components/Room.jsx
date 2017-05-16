@@ -22,6 +22,9 @@ import PropTypes from 'prop-types'
 
 import Scene from './Scene.jsx'
 import Bubbles from './Bubbles.jsx'
+import Knots from './Knots.jsx'
+import Space from './Space.jsx'
+import Cubes from './Cubes.jsx'
 import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket } from '../sockets.js'
 
 const propTypes = {
@@ -38,6 +41,8 @@ class Room extends Component {
       language: '',
       langDict: {}
     }
+
+    this.getScene = this.getScene.bind(this)
   }
 
   componentWillMount() {
@@ -103,10 +108,27 @@ class Room extends Component {
     // sentiment score
     let sentimentScore = this.props.sentiment.sentimentScore[0] || 0.5
 
+    // scene
+    let scene = this.props.scene
+
+    switch (scene) {
+      case 'bubbles':
+        scene = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        break
+      case 'knots':
+        scene = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        break
+      case 'space':
+        scene = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        break
+      case 'cubes':
+        scene = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        break
+    }
+
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
-      // <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
-      <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality}/>
+      {scene}
     )
   }
 }
