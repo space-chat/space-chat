@@ -25,8 +25,8 @@ app.use(bodyParser.json())
 // serve up static files
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', (req, res, next) => {
-  res.send("hi hi hi")
+app.get('/*', (req, res, next) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 // store languages of connected sockets ("state")
