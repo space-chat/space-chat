@@ -45,7 +45,7 @@ function setUpNamespace (namespace) {
     socket.on('close me', language => {
       console.log('disconnecting socket with language ', language)
       // if this is the only socket left in a language channel
-      if (nsp.sockets.adapter.rooms[language] && nsp.sockets.adapter.rooms[language].length === 1)
+      if (nsp.adapter.rooms[language].sockets && nsp.adapter.rooms[language].length === 1)
         // remove that language from state
         languages = languages.filter(lang => lang !== language)
       console.log('all languages on server state are: ', languages)
@@ -61,17 +61,18 @@ function setUpNamespace (namespace) {
       if (language && languages.indexOf(language) === -1)
         // 1) store socket's selected language server-side
         languages.push(language)
-      console.log(`currently connected: ${Object.keys(nsp.connected)}`)
-      console.log('all languages on server state are: ', languages)
+      //console.log(`currently connected: ${Object.keys(nsp.connected)}`)
+      //console.log('all languages on server state are: ', languages)
       // 2) subscribe socket to language channel
       socket.join(language)
-      // console.log(`clients subscribed to ${language} channel are:
-      //   ${Object.keys(nsp.sockets.adapter.rooms[language].sockets)}`)
+      //let keys = Object.keys(nsp)
+    //keys.forEach(key => console.log(nsp[key]))
     })
 
     // when a socket sends a spoken message as text
     socket.on('message', ({ messageText, lang }) => {
-      console.log('new spoken message! server emitting original text: ', messageText)
+      console.log('namespace adapter rooms lang', nsp.adapter.rooms[lang].sockets)
+      //console.log('new spoken message! server emitting original text: ', messageText)
       let translatedBool = false
         
       // 1) immediately send message exactly as received to all OTHER sockets in original language channel
@@ -79,14 +80,14 @@ function setUpNamespace (namespace) {
 
       // 2) send text to API for translation
       languages.forEach(targetLang => {
-        console.log('target lang in server state array: ', targetLang, 'orig lang: ', lang)
+        // console.log('target lang in server state array: ', targetLang, 'orig lang: ', lang)
         if (targetLang !== lang ) {
-          console.log('server translating message into ', targetLang)
+          // console.log('server translating message into ', targetLang)
           translate.translate(messageText, targetLang)
             .then(results => {
               // 3a) emit each translation to each language channel
               let translation = results[0]
-              console.log('translation successful: ', translation)
+              // console.log('translation successful: ', translation)
               // server sends to all sockets in language channel
               nsp.in(targetLang).emit('got message', { 
                 translatedBool: true, 
@@ -102,7 +103,7 @@ function setUpNamespace (namespace) {
         .then(data => {
           // add socket id to data payload
           data.speaker = socket.id
-          console.log("DATA", data)
+          // console.log("DATA", data)
           // io.sockets.emit sends to ALL sockets, INCL original sender
           io.of(namespace).emit('got sentiment', data)
         })
