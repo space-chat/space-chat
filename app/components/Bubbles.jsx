@@ -98,7 +98,6 @@ export default class Bubbles extends Component {
         )
     }
 }
-//src={this.state.sky}
 //Emotions: Change bubble color
         //Anger: Bubbles turn red + increase speed
         //Joy:   Bubbles turn yellow  
