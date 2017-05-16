@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { setLanguage } from '../reducers/languageReducer.jsx'
+import { setScene } from '../reducers/sceneReducer.jsx'
 import { openSocket } from '../sockets.js'
 
 class Home extends Component {
@@ -20,11 +21,12 @@ class Home extends Component {
   }
 
   handleClick(e) {
+    console.log('target name', e.target.name)
     e.preventDefault()
     // dispatch action with language from state
     this.props.setLanguage(this.state.language || 'en')
     // send scene selection on props
-    this.props.setScene(e.target.value)
+    this.props.setScene(e.target.name)
   }
 
 
@@ -62,13 +64,13 @@ class Home extends Component {
         <br />
         <br />
         <br />
-        <Link className="btn btn-default" role="button" to="/room/bubbles" value="bubbles" onClick={this.handleClick}>ENTER BUBBLESPACE</Link>
-        <Link className="btn btn-default" role="button" to="/room/knots" value="knots" onClick={this.handleClick}>ENTER KNOTSPACE</Link>
-        <Link className="btn btn-default" role="button" to="/room/space" value="space" onClick={this.handleClick}>ENTER SPACESPACE</Link>
-        <Link className="btn btn-default" role="button" to="/room/cubes" value="cubes" onClick={this.handleClick}>ENTER CUBESPACE</Link>
-  		</div>
+        {/* <Link className="btn btn-default" role="button" to="/room" name="bubbles" onClick={this.handleClick}>ENTER BUBBLESPACE</Link> */}
+        {/* <Link className="btn btn-default" role="button" to="/room" name="knots" onClick={this.handleClick}>ENTER KNOTSPACE</Link> */}
+        <Link className="btn btn-default" role="button" to="/room" name="space" onClick={this.handleClick}>ENTER SPACESPACE</Link>
+        {/* <Link className="btn btn-default" role="button" to="/room" name="cubes" onClick={this.handleClick}>ENTER CUBESPACE</Link> */}
+      </div>
 		)
 	}
 }
 
-export default connect(null, {setLanguage})(Home)
+export default connect(null, { setLanguage, setScene })(Home)

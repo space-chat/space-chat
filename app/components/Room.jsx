@@ -20,10 +20,9 @@ import {connect} from 'react-redux'
 import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
-import Scene from './Scene.jsx'
+import Scene from './Scene.jsx' // space scene
 import Bubbles from './Bubbles.jsx'
 import Knots from './Knots.jsx'
-import Space from './Space.jsx'
 import Cubes from './Cubes.jsx'
 import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket } from '../sockets.js'
 
@@ -111,24 +110,25 @@ class Room extends Component {
     // scene
     let scene = this.props.scene
 
+    let renderScene
     switch (scene) {
       case 'bubbles':
-        scene = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        renderScene = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
       case 'knots':
-        scene = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        renderScene = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
       case 'space':
-        scene = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        renderScene = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
       case 'cubes':
-        scene = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        renderScene = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
     }
 
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
-      {scene}
+      {renderScene}
     )
   }
 }
