@@ -24,7 +24,7 @@ import Scene from './Scene.jsx' // space scene
 import Bubbles from './Bubbles.jsx'
 import Knots from './Knots.jsx'
 import Cubes from './Cubes.jsx'
-import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket } from '../sockets.js'
+import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket, openSocket } from '../sockets.js'
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -43,6 +43,9 @@ class Room extends Component {
   }
 
   componentWillMount() {
+    //establish new socket connection
+    openSocket()
+
     this.setState({ 
       language: this.props.language,
       langDict: {

@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { setLanguage } from '../reducers/languageReducer.jsx'
 import { setScene } from '../reducers/sceneReducer.jsx'
-import { openSocket } from '../sockets.js'
 
 class Home extends Component {
   constructor() {
@@ -16,10 +15,6 @@ class Home extends Component {
     this.handleLanguageChange = this.handleLanguageChange.bind(this)
   }
 
-  componentWillMount() {
-    // establish new socket connection
-    openSocket()
-  }
 
   handleClick(e) {
     e.preventDefault()
