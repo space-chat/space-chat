@@ -61,12 +61,9 @@ function setUpNamespace (namespace) {
       if (language && languages.indexOf(language) === -1)
         // 1) store socket's selected language server-side
         languages.push(language)
-      //console.log(`currently connected: ${Object.keys(nsp.connected)}`)
-      //console.log('all languages on server state are: ', languages)
+      console.log('all languages on server state are: ', languages)
       // 2) subscribe socket to language channel
       socket.join(language)
-      //let keys = Object.keys(nsp)
-    //keys.forEach(key => console.log(nsp[key]))
     })
 
     // when a socket sends a spoken message as text
@@ -80,14 +77,14 @@ function setUpNamespace (namespace) {
 
       // 2) send text to API for translation
       languages.forEach(targetLang => {
-        // console.log('target lang in server state array: ', targetLang, 'orig lang: ', lang)
+        console.log('target lang in server state array: ', targetLang, 'orig lang: ', lang)
         if (targetLang !== lang ) {
-          // console.log('server translating message into ', targetLang)
+          console.log('server translating message into ', targetLang)
           translate.translate(messageText, targetLang)
             .then(results => {
               // 3a) emit each translation to each language channel
               let translation = results[0]
-              // console.log('translation successful: ', translation)
+              console.log('translation successful: ', translation)
               // server sends to all sockets in language channel
               nsp.in(targetLang).emit('got message', { 
                 translatedBool: true, 
@@ -103,8 +100,8 @@ function setUpNamespace (namespace) {
         .then(data => {
           // add socket id to data payload
           data.speaker = socket.id
-          // console.log("DATA", data)
-          // io.sockets.emit sends to ALL sockets, INCL original sender
+           console.log("DATA", data)
+          // io.of(namespce).emit sends to ALL sockets in namespace, INCL original sender
           io.of(namespace).emit('got sentiment', data)
         })
         .catch(console.error)
