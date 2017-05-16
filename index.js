@@ -39,7 +39,7 @@ io.on('connection', socket => {
   socket.on('close me', language => {
     console.log('disconnecting socket with language ', language)
     // if this is the only socket left in a language channel
-    if (io.sockets.adapter.rooms[language].length === 1)
+    if (io.sockets.adapter.rooms[language] && io.sockets.adapter.rooms[language].length === 1)
       // remove that language from state
       languages = languages.filter(lang => lang !== language)
     console.log('all languages on server state are: ', languages)
@@ -94,6 +94,8 @@ io.on('connection', socket => {
     // 3) send text to indico for analysis
     indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
       .then(data => {
+        // add socket id to data payload
+        data.speaker = socket.id
         console.log("DATA", data)
         // io.sockets.emit sends to ALL sockets, INCL original sender
         io.sockets.emit('got sentiment', data)
