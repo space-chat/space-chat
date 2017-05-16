@@ -17885,11 +17885,38 @@ var Home = function (_Component) {
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'button',
+          { className: 'btn btn-default', name: 'bubbles', onClick: this.handleClick },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/room' },
+            'ENTER BUBBLESPACE'
+          )
+        ),
+        _react2.default.createElement(
+          'button',
+          { className: 'btn btn-default', name: 'knots', onClick: this.handleClick },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/room' },
+            'ENTER KNOTSPACE'
+          )
+        ),
+        _react2.default.createElement(
+          'button',
           { className: 'btn btn-default', name: 'space', onClick: this.handleClick },
           _react2.default.createElement(
             _reactRouter.Link,
             { to: '/room' },
             'ENTER SPACESPACE'
+          )
+        ),
+        _react2.default.createElement(
+          'button',
+          { className: 'btn btn-default', name: 'cubes', onClick: this.handleClick },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/room' },
+            'ENTER CUBESPACE'
           )
         )
       );
