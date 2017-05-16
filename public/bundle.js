@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 167);
+/******/ 	return __webpack_require__(__webpack_require__.s = 174);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -537,6 +537,16 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+module.exports = __webpack_require__(35);
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -551,8 +561,8 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 var _prodInvariant = __webpack_require__(3);
 
-var DOMProperty = __webpack_require__(20);
-var ReactDOMComponentFlags = __webpack_require__(114);
+var DOMProperty = __webpack_require__(21);
+var ReactDOMComponentFlags = __webpack_require__(120);
 
 var invariant = __webpack_require__(1);
 
@@ -734,16 +744,6 @@ module.exports = ReactDOMComponentTree;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(34);
-
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -839,7 +839,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _defineDecoratedPropertyDescriptor(target, key, descriptors) { var _descriptor = descriptors[key]; if (!_descriptor) return; var descriptor = {}; for (var _key in _descriptor) descriptor[_key] = _descriptor[_key]; descriptor.value = descriptor.initializer ? descriptor.initializer.call(target) : undefined; Object.defineProperty(target, key, descriptor); }
 
-var _lazyInitialize = __webpack_require__(94);
+var _lazyInitialize = __webpack_require__(97);
 
 var _lazyInitialize2 = _interopRequireDefault(_lazyInitialize);
 
@@ -1043,11 +1043,11 @@ if (process.env.NODE_ENV !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(109)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(115)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(237)();
+  module.exports = __webpack_require__(250)();
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -1070,7 +1070,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 
 
-var _prodInvariant = __webpack_require__(25);
+var _prodInvariant = __webpack_require__(26);
 
 var ReactCurrentOwner = __webpack_require__(16);
 
@@ -1459,7 +1459,7 @@ module.exports = emptyFunction;
 var debugTool = null;
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactDebugTool = __webpack_require__(266);
+  var ReactDebugTool = __webpack_require__(279);
   debugTool = ReactDebugTool;
 }
 
@@ -1486,11 +1486,11 @@ module.exports = { debugTool: debugTool };
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var CallbackQueue = __webpack_require__(112);
-var PooledClass = __webpack_require__(23);
-var ReactFeatureFlags = __webpack_require__(117);
-var ReactReconciler = __webpack_require__(31);
-var Transaction = __webpack_require__(47);
+var CallbackQueue = __webpack_require__(118);
+var PooledClass = __webpack_require__(24);
+var ReactFeatureFlags = __webpack_require__(123);
+var ReactReconciler = __webpack_require__(32);
+var Transaction = __webpack_require__(48);
 
 var invariant = __webpack_require__(1);
 
@@ -1776,8 +1776,8 @@ module.exports = ReactCurrentOwner;
 
 
 
-var React = __webpack_require__(6);
-var factory = __webpack_require__(191);
+var React = __webpack_require__(5);
+var factory = __webpack_require__(198);
 
 // Hack to grab NoopUpdateQueue from isomorphic React
 var ReactNoopUpdateQueue = new React.Component().updater;
@@ -1791,6 +1791,82 @@ module.exports = factory(
 
 /***/ }),
 /* 18 */
+/***/ (function(module, exports) {
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+
+/**
+ * @class Common utilities
+ * @name glMatrix
+ */
+var glMatrix = {};
+
+// Configuration Constants
+glMatrix.EPSILON = 0.000001;
+glMatrix.ARRAY_TYPE = (typeof Float32Array !== 'undefined') ? Float32Array : Array;
+glMatrix.RANDOM = Math.random;
+glMatrix.ENABLE_SIMD = false;
+
+// Capability detection
+glMatrix.SIMD_AVAILABLE = (glMatrix.ARRAY_TYPE === Float32Array) && ('SIMD' in this);
+glMatrix.USE_SIMD = glMatrix.ENABLE_SIMD && glMatrix.SIMD_AVAILABLE;
+
+/**
+ * Sets the type of array used when creating new vectors and matrices
+ *
+ * @param {Type} type Array type, such as Float32Array or Array
+ */
+glMatrix.setMatrixArrayType = function(type) {
+    glMatrix.ARRAY_TYPE = type;
+}
+
+var degree = Math.PI / 180;
+
+/**
+* Convert Degree To Radian
+*
+* @param {Number} Angle in Degrees
+*/
+glMatrix.toRadian = function(a){
+     return a * degree;
+}
+
+/**
+ * Tests whether or not the arguments have approximately the same value, within an absolute
+ * or relative tolerance of glMatrix.EPSILON (an absolute tolerance is used for values less 
+ * than or equal to 1.0, and a relative tolerance is used for larger values)
+ * 
+ * @param {Number} a The first number to test.
+ * @param {Number} b The second number to test.
+ * @returns {Boolean} True if the numbers are approximately equal, false otherwise.
+ */
+glMatrix.equals = function(a, b) {
+	return Math.abs(a - b) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a), Math.abs(b));
+}
+
+module.exports = glMatrix;
+
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1808,7 +1884,7 @@ module.exports = factory(
 
 var _assign = __webpack_require__(4);
 
-var PooledClass = __webpack_require__(23);
+var PooledClass = __webpack_require__(24);
 
 var emptyFunction = __webpack_require__(13);
 var warning = __webpack_require__(2);
@@ -2064,7 +2140,7 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2073,7 +2149,7 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
 exports.__esModule = true;
 exports.createPath = exports.parsePath = exports.getQueryStringValueFromPath = exports.stripQueryStringValueFromPath = exports.addQueryStringValueToPath = undefined;
 
-var _warning = __webpack_require__(22);
+var _warning = __webpack_require__(23);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -2167,7 +2243,7 @@ var createPath = exports.createPath = function createPath(location) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2383,7 +2459,7 @@ module.exports = DOMProperty;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2391,7 +2467,7 @@ module.exports = DOMProperty;
 /* harmony export (immutable) */ __webpack_exports__["c"] = createRouteFromReactElement;
 /* unused harmony export createRoutesFromReactChildren */
 /* harmony export (immutable) */ __webpack_exports__["a"] = createRoutes;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -2475,7 +2551,7 @@ function createRoutes(routes) {
 }
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2543,7 +2619,7 @@ module.exports = warning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2661,7 +2737,7 @@ module.exports = PooledClass;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2682,10 +2758,10 @@ var _assign = __webpack_require__(4);
 var ReactCurrentOwner = __webpack_require__(16);
 
 var warning = __webpack_require__(2);
-var canDefineProperty = __webpack_require__(50);
+var canDefineProperty = __webpack_require__(51);
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-var REACT_ELEMENT_TYPE = __webpack_require__(144);
+var REACT_ELEMENT_TYPE = __webpack_require__(150);
 
 var RESERVED_PROPS = {
   key: true,
@@ -3008,7 +3084,7 @@ module.exports = ReactElement;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3052,7 +3128,7 @@ function reactProdInvariant(code) {
 module.exports = reactProdInvariant;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -3221,22 +3297,22 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var keys = __webpack_require__(202);
-var hasBinary = __webpack_require__(100);
-var sliceBuffer = __webpack_require__(163);
-var after = __webpack_require__(162);
-var utf8 = __webpack_require__(203);
+var keys = __webpack_require__(209);
+var hasBinary = __webpack_require__(106);
+var sliceBuffer = __webpack_require__(171);
+var after = __webpack_require__(170);
+var utf8 = __webpack_require__(210);
 
 var base64encoder;
 if (global && global.ArrayBuffer) {
-  base64encoder = __webpack_require__(172);
+  base64encoder = __webpack_require__(179);
 }
 
 /**
@@ -3294,7 +3370,7 @@ var err = { type: 'error', data: 'parser error' };
  * Create a blob api even for blob builder when vendor prefixes exist
  */
 
-var Blob = __webpack_require__(173);
+var Blob = __webpack_require__(180);
 
 /**
  * Encodes a packet.
@@ -3834,7 +3910,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3860,7 +3936,7 @@ module.exports = emptyObject;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3877,13 +3953,13 @@ var _invariant = __webpack_require__(10);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _warning = __webpack_require__(22);
+var _warning = __webpack_require__(23);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _PathUtils = __webpack_require__(19);
+var _PathUtils = __webpack_require__(20);
 
-var _Actions = __webpack_require__(42);
+var _Actions = __webpack_require__(43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3959,7 +4035,7 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3975,11 +4051,11 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
 
 
 
-var DOMNamespaces = __webpack_require__(66);
-var setInnerHTML = __webpack_require__(49);
+var DOMNamespaces = __webpack_require__(67);
+var setInnerHTML = __webpack_require__(50);
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(73);
-var setTextContent = __webpack_require__(130);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(74);
+var setTextContent = __webpack_require__(136);
 
 var ELEMENT_NODE_TYPE = 1;
 var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
@@ -4082,7 +4158,7 @@ DOMLazyTree.queueText = queueText;
 module.exports = DOMLazyTree;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4098,7 +4174,7 @@ module.exports = DOMLazyTree;
 
 
 
-var ReactRef = __webpack_require__(280);
+var ReactRef = __webpack_require__(293);
 var ReactInstrumentation = __webpack_require__(14);
 
 var warning = __webpack_require__(2);
@@ -4256,7 +4332,7 @@ module.exports = ReactReconciler;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4501,13 +4577,13 @@ function formatPattern(pattern, params) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = routerWarning;
 /* unused harmony export _resetWarned */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 
 
@@ -4537,7 +4613,7 @@ function _resetWarned() {
 }
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4555,16 +4631,16 @@ function _resetWarned() {
 
 var _assign = __webpack_require__(4);
 
-var ReactChildren = __webpack_require__(337);
-var ReactComponent = __webpack_require__(85);
-var ReactPureComponent = __webpack_require__(342);
-var ReactClass = __webpack_require__(338);
-var ReactDOMFactories = __webpack_require__(339);
-var ReactElement = __webpack_require__(24);
-var ReactPropTypes = __webpack_require__(340);
-var ReactVersion = __webpack_require__(343);
+var ReactChildren = __webpack_require__(350);
+var ReactComponent = __webpack_require__(86);
+var ReactPureComponent = __webpack_require__(355);
+var ReactClass = __webpack_require__(351);
+var ReactDOMFactories = __webpack_require__(352);
+var ReactElement = __webpack_require__(25);
+var ReactPropTypes = __webpack_require__(353);
+var ReactVersion = __webpack_require__(356);
 
-var onlyChild = __webpack_require__(346);
+var onlyChild = __webpack_require__(359);
 var warning = __webpack_require__(2);
 
 var createElement = ReactElement.createElement;
@@ -4572,8 +4648,8 @@ var createFactory = ReactElement.createFactory;
 var cloneElement = ReactElement.cloneElement;
 
 if (process.env.NODE_ENV !== 'production') {
-  var canDefineProperty = __webpack_require__(50);
-  var ReactElementValidator = __webpack_require__(145);
+  var canDefineProperty = __webpack_require__(51);
+  var ReactElementValidator = __webpack_require__(151);
   var didWarnPropTypesDeprecated = false;
   createElement = ReactElementValidator.createElement;
   createFactory = ReactElementValidator.createFactory;
@@ -4647,7 +4723,7 @@ module.exports = React;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4665,12 +4741,12 @@ module.exports = React;
 
 var _prodInvariant = __webpack_require__(3);
 
-var EventPluginRegistry = __webpack_require__(44);
-var EventPluginUtils = __webpack_require__(67);
-var ReactErrorUtils = __webpack_require__(71);
+var EventPluginRegistry = __webpack_require__(45);
+var EventPluginUtils = __webpack_require__(68);
+var ReactErrorUtils = __webpack_require__(72);
 
-var accumulateInto = __webpack_require__(124);
-var forEachAccumulated = __webpack_require__(125);
+var accumulateInto = __webpack_require__(130);
+var forEachAccumulated = __webpack_require__(131);
 var invariant = __webpack_require__(1);
 
 /**
@@ -4931,7 +5007,7 @@ module.exports = EventPluginHub;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4947,11 +5023,11 @@ module.exports = EventPluginHub;
 
 
 
-var EventPluginHub = __webpack_require__(35);
-var EventPluginUtils = __webpack_require__(67);
+var EventPluginHub = __webpack_require__(36);
+var EventPluginUtils = __webpack_require__(68);
 
-var accumulateInto = __webpack_require__(124);
-var forEachAccumulated = __webpack_require__(125);
+var accumulateInto = __webpack_require__(130);
+var forEachAccumulated = __webpack_require__(131);
 var warning = __webpack_require__(2);
 
 var getListener = EventPluginHub.getListener;
@@ -5071,7 +5147,7 @@ module.exports = EventPropagators;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5124,7 +5200,7 @@ var ReactInstanceMap = {
 module.exports = ReactInstanceMap;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5140,9 +5216,9 @@ module.exports = ReactInstanceMap;
 
 
 
-var SyntheticEvent = __webpack_require__(18);
+var SyntheticEvent = __webpack_require__(19);
 
-var getEventTarget = __webpack_require__(76);
+var getEventTarget = __webpack_require__(77);
 
 /**
  * @interface UIEvent
@@ -5188,7 +5264,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 module.exports = SyntheticUIEvent;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5221,7 +5297,7 @@ var route = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_prop_types__["oneO
 var routes = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_prop_types__["oneOfType"])([route, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_prop_types__["arrayOf"])(route)]);
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 
@@ -5233,7 +5309,7 @@ module.exports = function(a, b){
 };
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -5242,7 +5318,7 @@ module.exports = function(a, b){
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(201);
+exports = module.exports = __webpack_require__(208);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -5425,7 +5501,7 @@ function localstorage() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5453,7 +5529,7 @@ var REPLACE = exports.REPLACE = 'REPLACE';
 var POP = exports.POP = 'POP';
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5508,7 +5584,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 };
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5769,7 +5845,7 @@ module.exports = EventPluginRegistry;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5787,12 +5863,12 @@ module.exports = EventPluginRegistry;
 
 var _assign = __webpack_require__(4);
 
-var EventPluginRegistry = __webpack_require__(44);
-var ReactEventEmitterMixin = __webpack_require__(270);
-var ViewportMetrics = __webpack_require__(123);
+var EventPluginRegistry = __webpack_require__(45);
+var ReactEventEmitterMixin = __webpack_require__(283);
+var ViewportMetrics = __webpack_require__(129);
 
-var getVendorPrefixedEventName = __webpack_require__(305);
-var isEventSupported = __webpack_require__(77);
+var getVendorPrefixedEventName = __webpack_require__(318);
+var isEventSupported = __webpack_require__(78);
 
 /**
  * Summary of `ReactBrowserEventEmitter` event handling:
@@ -6102,7 +6178,7 @@ var ReactBrowserEventEmitter = _assign({}, ReactEventEmitterMixin, {
 module.exports = ReactBrowserEventEmitter;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6118,10 +6194,10 @@ module.exports = ReactBrowserEventEmitter;
 
 
 
-var SyntheticUIEvent = __webpack_require__(38);
-var ViewportMetrics = __webpack_require__(123);
+var SyntheticUIEvent = __webpack_require__(39);
+var ViewportMetrics = __webpack_require__(129);
 
-var getEventModifierState = __webpack_require__(75);
+var getEventModifierState = __webpack_require__(76);
 
 /**
  * @interface MouseEvent
@@ -6179,7 +6255,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 module.exports = SyntheticMouseEvent;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6410,7 +6486,7 @@ module.exports = TransactionImpl;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6538,7 +6614,7 @@ function escapeTextContentForBrowser(text) {
 module.exports = escapeTextContentForBrowser;
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6555,12 +6631,12 @@ module.exports = escapeTextContentForBrowser;
 
 
 var ExecutionEnvironment = __webpack_require__(7);
-var DOMNamespaces = __webpack_require__(66);
+var DOMNamespaces = __webpack_require__(67);
 
 var WHITESPACE_TEST = /^[ \r\n\t\f]/;
 var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(73);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(74);
 
 // SVG temp container for IE lacking innerHTML
 var reusableSVGContainer;
@@ -6641,7 +6717,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = setInnerHTML;
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6673,17 +6749,17 @@ module.exports = canDefineProperty;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__combineReducers__ = __webpack_require__(356);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__ = __webpack_require__(355);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__ = __webpack_require__(354);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compose__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_warning__ = __webpack_require__(151);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__combineReducers__ = __webpack_require__(369);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__ = __webpack_require__(368);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__ = __webpack_require__(367);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compose__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_warning__ = __webpack_require__(157);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createStore", function() { return __WEBPACK_IMPORTED_MODULE_0__createStore__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "combineReducers", function() { return __WEBPACK_IMPORTED_MODULE_1__combineReducers__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "bindActionCreators", function() { return __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__["a"]; });
@@ -6710,7 +6786,7 @@ if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -6719,7 +6795,7 @@ if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' 
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(359);
+exports = module.exports = __webpack_require__(372);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -6902,14 +6978,14 @@ function localstorage() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Provider__ = __webpack_require__(308);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_connectAdvanced__ = __webpack_require__(132);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__connect_connect__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Provider__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_connectAdvanced__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__connect_connect__ = __webpack_require__(322);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Provider", function() { return __WEBPACK_IMPORTED_MODULE_0__components_Provider__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "connectAdvanced", function() { return __WEBPACK_IMPORTED_MODULE_1__components_connectAdvanced__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "connect", function() { return __WEBPACK_IMPORTED_MODULE_2__connect_connect__["a"]; });
@@ -6920,47 +6996,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Router__ = __webpack_require__(321);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Router__ = __webpack_require__(334);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_0__Router__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Link__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Link__ = __webpack_require__(142);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return __WEBPACK_IMPORTED_MODULE_1__Link__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__IndexLink__ = __webpack_require__(317);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__IndexLink__ = __webpack_require__(330);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "IndexLink", function() { return __WEBPACK_IMPORTED_MODULE_2__IndexLink__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__withRouter__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__withRouter__ = __webpack_require__(345);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return __WEBPACK_IMPORTED_MODULE_3__withRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__IndexRedirect__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__IndexRedirect__ = __webpack_require__(331);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "IndexRedirect", function() { return __WEBPACK_IMPORTED_MODULE_4__IndexRedirect__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__IndexRoute__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__IndexRoute__ = __webpack_require__(332);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "IndexRoute", function() { return __WEBPACK_IMPORTED_MODULE_5__IndexRoute__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(144);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_6__Redirect__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(333);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__RouteUtils__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__RouteUtils__ = __webpack_require__(22);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createRoutes", function() { return __WEBPACK_IMPORTED_MODULE_8__RouteUtils__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RouterContext__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RouterContext__ = __webpack_require__(85);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "RouterContext", function() { return __WEBPACK_IMPORTED_MODULE_9__RouterContext__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__PropTypes__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__PropTypes__ = __webpack_require__(84);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "locationShape", function() { return __WEBPACK_IMPORTED_MODULE_10__PropTypes__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "routerShape", function() { return __WEBPACK_IMPORTED_MODULE_10__PropTypes__["b"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__match__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__match__ = __webpack_require__(343);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "match", function() { return __WEBPACK_IMPORTED_MODULE_11__match__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__useRouterHistory__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__useRouterHistory__ = __webpack_require__(149);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "useRouterHistory", function() { return __WEBPACK_IMPORTED_MODULE_12__useRouterHistory__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__PatternUtils__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__PatternUtils__ = __webpack_require__(33);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "formatPattern", function() { return __WEBPACK_IMPORTED_MODULE_13__PatternUtils__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__applyRouterMiddleware__ = __webpack_require__(323);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__applyRouterMiddleware__ = __webpack_require__(336);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "applyRouterMiddleware", function() { return __WEBPACK_IMPORTED_MODULE_14__applyRouterMiddleware__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__browserHistory__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__browserHistory__ = __webpack_require__(337);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "browserHistory", function() { return __WEBPACK_IMPORTED_MODULE_15__browserHistory__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__hashHistory__ = __webpack_require__(328);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__hashHistory__ = __webpack_require__(341);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "hashHistory", function() { return __WEBPACK_IMPORTED_MODULE_16__hashHistory__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__createMemoryHistory__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__createMemoryHistory__ = __webpack_require__(146);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createMemoryHistory", function() { return __WEBPACK_IMPORTED_MODULE_17__createMemoryHistory__["a"]; });
 /* components */
 
@@ -7009,15 +7085,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var parser = __webpack_require__(27);
-var Emitter = __webpack_require__(26);
+var parser = __webpack_require__(28);
+var Emitter = __webpack_require__(27);
 
 /**
  * Module exports.
@@ -7172,12 +7248,12 @@ Transport.prototype.onClose = function () {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 
-var hasCORS = __webpack_require__(219);
+var hasCORS = __webpack_require__(232);
 
 module.exports = function (opts) {
   var xdomain = opts.xdomain;
@@ -7216,7 +7292,7 @@ module.exports = function (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7289,7 +7365,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7298,15 +7374,15 @@ module.exports = shallowEqual;
 exports.__esModule = true;
 exports.go = exports.replaceLocation = exports.pushLocation = exports.startListener = exports.getUserConfirmation = exports.getCurrentLocation = undefined;
 
-var _LocationUtils = __webpack_require__(29);
+var _LocationUtils = __webpack_require__(30);
 
-var _DOMUtils = __webpack_require__(43);
+var _DOMUtils = __webpack_require__(44);
 
-var _DOMStateStorage = __webpack_require__(101);
+var _DOMStateStorage = __webpack_require__(107);
 
-var _PathUtils = __webpack_require__(19);
+var _PathUtils = __webpack_require__(20);
 
-var _ExecutionEnvironment = __webpack_require__(59);
+var _ExecutionEnvironment = __webpack_require__(60);
 
 var PopStateEvent = 'popstate';
 var HashChangeEvent = 'hashchange';
@@ -7394,7 +7470,7 @@ var go = exports.go = function go(n) {
 };
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7404,7 +7480,7 @@ exports.__esModule = true;
 var canUseDOM = exports.canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7412,17 +7488,17 @@ var canUseDOM = exports.canUseDOM = !!(typeof window !== 'undefined' && window.d
 
 exports.__esModule = true;
 
-var _AsyncUtils = __webpack_require__(220);
+var _AsyncUtils = __webpack_require__(233);
 
-var _PathUtils = __webpack_require__(19);
+var _PathUtils = __webpack_require__(20);
 
-var _runTransitionHook = __webpack_require__(61);
+var _runTransitionHook = __webpack_require__(62);
 
 var _runTransitionHook2 = _interopRequireDefault(_runTransitionHook);
 
-var _Actions = __webpack_require__(42);
+var _Actions = __webpack_require__(43);
 
-var _LocationUtils = __webpack_require__(29);
+var _LocationUtils = __webpack_require__(30);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7586,7 +7662,7 @@ var createHistory = function createHistory() {
 exports.default = createHistory;
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7594,7 +7670,7 @@ exports.default = createHistory;
 
 exports.__esModule = true;
 
-var _warning = __webpack_require__(22);
+var _warning = __webpack_require__(23);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -7616,13 +7692,13 @@ exports.default = runTransitionHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(227);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getPrototype_js__ = __webpack_require__(229);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getPrototype_js__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__ = __webpack_require__(247);
 
 
 
@@ -7688,7 +7764,7 @@ function isPlainObject(value) {
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports) {
 
 /**
@@ -7843,7 +7919,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports) {
 
 /**
@@ -7886,7 +7962,7 @@ exports.decode = function(qs){
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7902,14 +7978,14 @@ exports.decode = function(qs){
 
 
 
-var DOMLazyTree = __webpack_require__(30);
-var Danger = __webpack_require__(243);
-var ReactDOMComponentTree = __webpack_require__(5);
+var DOMLazyTree = __webpack_require__(31);
+var Danger = __webpack_require__(256);
+var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInstrumentation = __webpack_require__(14);
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(73);
-var setInnerHTML = __webpack_require__(49);
-var setTextContent = __webpack_require__(130);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(74);
+var setInnerHTML = __webpack_require__(50);
+var setTextContent = __webpack_require__(136);
 
 function getNodeAfter(parentNode, node) {
   // Special case for text components, which return [open, close] comments
@@ -8117,7 +8193,7 @@ module.exports = DOMChildrenOperations;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8142,7 +8218,7 @@ var DOMNamespaces = {
 module.exports = DOMNamespaces;
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8160,7 +8236,7 @@ module.exports = DOMNamespaces;
 
 var _prodInvariant = __webpack_require__(3);
 
-var ReactErrorUtils = __webpack_require__(71);
+var ReactErrorUtils = __webpack_require__(72);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -8374,7 +8450,7 @@ module.exports = EventPluginUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8438,7 +8514,7 @@ var KeyEscapeUtils = {
 module.exports = KeyEscapeUtils;
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8456,10 +8532,10 @@ module.exports = KeyEscapeUtils;
 
 var _prodInvariant = __webpack_require__(3);
 
-var ReactPropTypesSecret = __webpack_require__(122);
-var propTypesFactory = __webpack_require__(108);
+var ReactPropTypesSecret = __webpack_require__(128);
+var propTypesFactory = __webpack_require__(114);
 
-var React = __webpack_require__(34);
+var React = __webpack_require__(35);
 var PropTypes = propTypesFactory(React.isValidElement);
 
 var invariant = __webpack_require__(1);
@@ -8582,7 +8658,7 @@ module.exports = LinkedValueUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8634,7 +8710,7 @@ module.exports = ReactComponentEnvironment;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8716,7 +8792,7 @@ module.exports = ReactErrorUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8735,7 +8811,7 @@ module.exports = ReactErrorUtils;
 var _prodInvariant = __webpack_require__(3);
 
 var ReactCurrentOwner = __webpack_require__(16);
-var ReactInstanceMap = __webpack_require__(37);
+var ReactInstanceMap = __webpack_require__(38);
 var ReactInstrumentation = __webpack_require__(14);
 var ReactUpdates = __webpack_require__(15);
 
@@ -8958,7 +9034,7 @@ module.exports = ReactUpdateQueue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8995,7 +9071,7 @@ var createMicrosoftUnsafeLocalFunction = function (func) {
 module.exports = createMicrosoftUnsafeLocalFunction;
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9050,7 +9126,7 @@ function getEventCharCode(nativeEvent) {
 module.exports = getEventCharCode;
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9098,7 +9174,7 @@ function getEventModifierState(nativeEvent) {
 module.exports = getEventModifierState;
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9138,7 +9214,7 @@ function getEventTarget(nativeEvent) {
 module.exports = getEventTarget;
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9203,7 +9279,7 @@ function isEventSupported(eventNameSuffix, capture) {
 module.exports = isEventSupported;
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9250,7 +9326,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 module.exports = shouldUpdateReactComponent;
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9633,7 +9709,7 @@ module.exports = validateDOMNesting;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9661,7 +9737,7 @@ function warning(message) {
 }
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9752,7 +9828,7 @@ function mapAsync(array, work, callback) {
 }
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9877,7 +9953,7 @@ function ContextSubscriber(name) {
 }
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9906,21 +9982,21 @@ var locationShape = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_prop_types
 });
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_create_react_class__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getRouteParams__ = __webpack_require__(327);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ContextUtils__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__RouteUtils__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getRouteParams__ = __webpack_require__(340);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ContextUtils__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__RouteUtils__ = __webpack_require__(22);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -10036,7 +10112,7 @@ var RouterContext = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default()({
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10052,12 +10128,12 @@ var RouterContext = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default()({
 
 
 
-var _prodInvariant = __webpack_require__(25);
+var _prodInvariant = __webpack_require__(26);
 
-var ReactNoopUpdateQueue = __webpack_require__(86);
+var ReactNoopUpdateQueue = __webpack_require__(87);
 
-var canDefineProperty = __webpack_require__(50);
-var emptyObject = __webpack_require__(28);
+var canDefineProperty = __webpack_require__(51);
+var emptyObject = __webpack_require__(29);
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 
@@ -10160,7 +10236,7 @@ module.exports = ReactComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10262,7 +10338,7 @@ module.exports = ReactNoopUpdateQueue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -10270,11 +10346,11 @@ module.exports = ReactNoopUpdateQueue;
  * Module dependencies.
  */
 
-var debug = __webpack_require__(192)('socket.io-parser');
-var Emitter = __webpack_require__(26);
-var hasBin = __webpack_require__(100);
-var binary = __webpack_require__(360);
-var isBuf = __webpack_require__(155);
+var debug = __webpack_require__(199)('socket.io-parser');
+var Emitter = __webpack_require__(27);
+var hasBin = __webpack_require__(106);
+var binary = __webpack_require__(373);
+var isBuf = __webpack_require__(161);
 
 /**
  * Protocol version.
@@ -10668,7 +10744,7 @@ function error() {
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10680,11 +10756,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _bubbles = __webpack_require__(169);
+var _bubbles = __webpack_require__(176);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10796,7 +10872,7 @@ var Bubbles = function (_Component) {
                 'a-scene',
                 { 'vr-mode-ui': 'enabled: true' },
                 _react2.default.createElement('a-entity', { id: 'bubbleCamera', camera: 'userHeight: 1.6', 'look-controls': true,
-                    'orbit-controls': 'autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;', 'mouse-cursor': '' }),
+                    'mouse-cursor': '' }),
                 _react2.default.createElement(
                     'a-assets',
                     null,
@@ -10827,7 +10903,7 @@ var Bubbles = function (_Component) {
 exports.default = Bubbles;
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10837,17 +10913,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _redux = __webpack_require__(51);
+var _redux = __webpack_require__(52);
 
-var _reduxDevtoolsExtension = __webpack_require__(348);
+var _reduxDevtoolsExtension = __webpack_require__(361);
 
-var _reduxLogger = __webpack_require__(352);
+var _reduxLogger = __webpack_require__(365);
 
-var _reduxThunk = __webpack_require__(353);
+var _reduxThunk = __webpack_require__(366);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _index = __webpack_require__(168);
+var _index = __webpack_require__(175);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -10859,7 +10935,75 @@ var store = (0, _redux.createStore)(_index2.default, (0, _reduxDevtoolsExtension
 exports.default = store;
 
 /***/ }),
-/* 90 */
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = AssetLoader;
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function AssetLoader() {
+	return (
+		//Set timeout for scene to run even if all assets are not fully loaded. Default time is 3 seconds. 
+
+		//Linter is showing error on timeout, but syntax is copied from Transcend
+		_react2.default.createElement(
+			"a-assets",
+			{ timeout: "3000" },
+			_react2.default.createElement("img", { id: "blossoms", src: "/images/blossoms.jpg" }),
+			_react2.default.createElement("img", { id: "stars", src: "/images/sky-stars.png" }),
+			_react2.default.createElement("img", { id: "fractal", src: "/images/fractal.jpg" }),
+			_react2.default.createElement("img", { id: "tiedye", src: "/images/tiedye.jpg" }),
+			_react2.default.createElement("a-mixin", { id: "chair-part", geometry: "primitive: box", material: "color: #BFBFBF" })
+		)
+	);
+} // This component loads assets and mixins, so that they can be called by other components without needing to continually re-render and interrupting the scene.
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// props passed from Room (or 'Scene') component
+
+// I am thinking the avatars are orbs with dedicated lights, the light is what changes based on sentiment: glowing orbs. If time, with WebRTC of people on them :D
+
+var Avatar = function Avatar() {
+	return _react2.default.createElement(
+		"div",
+		null,
+		_react2.default.createElement("a-sphere", {
+			radius: "1.25",
+			color: "yellow" })
+	);
+};
+
+exports.default = Avatar;
+
+/***/ }),
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10898,7 +11042,7 @@ var languageReducer = function languageReducer() {
 exports.default = languageReducer;
 
 /***/ }),
-/* 91 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11070,7 +11214,7 @@ function sentimentReducer() {
 }
 
 /***/ }),
-/* 92 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11079,22 +11223,21 @@ function sentimentReducer() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.openSocket = openSocket;
 exports.closeSocket = closeSocket;
 exports.joinRoom = joinRoom;
 exports.sendMessage = sendMessage;
 exports.receiveMessage = receiveMessage;
 exports.receiveSentiment = receiveSentiment;
 
-var _socket = __webpack_require__(357);
+var _socket = __webpack_require__(370);
 
 var _socket2 = _interopRequireDefault(_socket);
 
-var _store = __webpack_require__(89);
+var _store = __webpack_require__(90);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _sentimentReducer = __webpack_require__(91);
+var _sentimentReducer = __webpack_require__(94);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11102,18 +11245,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var synth = window.speechSynthesis;
 var voices = void 0;
 
-var socket = void 0;
+var socket = (0, _socket2.default)();
 
-function openSocket() {
-  socket = (0, _socket2.default)();
-}
-
-function closeSocket() {
-  socket.close();
+function closeSocket(language) {
+  // disconnecting socket handled server-side
+  socket.emit('close me', language);
 }
 
 function joinRoom(language) {
-  socket.emit('join', language);
+  // subscribing to language channel handled server-side
+  socket.emit('join request', language);
   voices = synth.getVoices();
 }
 
@@ -11123,21 +11264,19 @@ function sendMessage(messageText, lang) {
 }
 
 function receiveMessage(clientLang) {
+  // when client receives message from language channel
   socket.on('got message', function (_ref) {
     var translatedBool = _ref.translatedBool,
         messageText = _ref.messageText,
         lang = _ref.lang;
 
     console.log('incoming message ', messageText, ' in language ', lang);
-    // if lang in 'got message' payload matches socket user's language
-    if (clientLang === lang && translatedBool) {
-      // find correct voice, speak text from 'got message' payload
-      var utterance = new SpeechSynthesisUtterance(messageText);
-      utterance.voice = voices.filter(function (voice) {
-        return voice.lang.substr(0, 2) === clientLang;
-      })[0];
-      synth.speak(utterance);
-    }
+    // find correct voice, speak text from 'got message' payload
+    var utterance = new SpeechSynthesisUtterance(messageText);
+    utterance.voice = voices.filter(function (voice) {
+      return voice.lang.substr(0, 2) === clientLang;
+    })[0];
+    synth.speak(utterance);
   });
 }
 
@@ -11201,7 +11340,7 @@ function receiveSentiment() {
 }
 
 /***/ }),
-/* 93 */
+/* 96 */
 /***/ (function(module, exports) {
 
 /**
@@ -11230,7 +11369,7 @@ module.exports = function(obj, fn){
 
 
 /***/ }),
-/* 94 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11289,17 +11428,17 @@ function lazyInitialize() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 95 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies
  */
 
-var XMLHttpRequest = __webpack_require__(56);
-var XHR = __webpack_require__(199);
-var JSONP = __webpack_require__(198);
-var websocket = __webpack_require__(200);
+var XMLHttpRequest = __webpack_require__(57);
+var XHR = __webpack_require__(206);
+var JSONP = __webpack_require__(205);
+var websocket = __webpack_require__(207);
 
 /**
  * Export transports.
@@ -11349,19 +11488,19 @@ function polling (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 96 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(55);
-var parseqs = __webpack_require__(64);
-var parser = __webpack_require__(27);
-var inherit = __webpack_require__(40);
-var yeast = __webpack_require__(157);
-var debug = __webpack_require__(41)('engine.io-client:polling');
+var Transport = __webpack_require__(56);
+var parseqs = __webpack_require__(65);
+var parser = __webpack_require__(28);
+var inherit = __webpack_require__(41);
+var yeast = __webpack_require__(163);
+var debug = __webpack_require__(42)('engine.io-client:polling');
 
 /**
  * Module exports.
@@ -11374,7 +11513,7 @@ module.exports = Polling;
  */
 
 var hasXHR2 = (function () {
-  var XMLHttpRequest = __webpack_require__(56);
+  var XMLHttpRequest = __webpack_require__(57);
   var xhr = new XMLHttpRequest({ xdomain: false });
   return null != xhr.responseType;
 })();
@@ -11600,7 +11739,7 @@ Polling.prototype.uri = function () {
 
 
 /***/ }),
-/* 97 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11690,7 +11829,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 98 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11722,7 +11861,7 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 99 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11766,7 +11905,2157 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 100 */
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+
+var glMatrix = __webpack_require__(18);
+
+/**
+ * @class 3x3 Matrix
+ * @name mat3
+ */
+var mat3 = {};
+
+/**
+ * Creates a new identity mat3
+ *
+ * @returns {mat3} a new 3x3 matrix
+ */
+mat3.create = function() {
+    var out = new glMatrix.ARRAY_TYPE(9);
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 1;
+    out[5] = 0;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 1;
+    return out;
+};
+
+/**
+ * Copies the upper-left 3x3 values into the given mat3.
+ *
+ * @param {mat3} out the receiving 3x3 matrix
+ * @param {mat4} a   the source 4x4 matrix
+ * @returns {mat3} out
+ */
+mat3.fromMat4 = function(out, a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[4];
+    out[4] = a[5];
+    out[5] = a[6];
+    out[6] = a[8];
+    out[7] = a[9];
+    out[8] = a[10];
+    return out;
+};
+
+/**
+ * Creates a new mat3 initialized with values from an existing matrix
+ *
+ * @param {mat3} a matrix to clone
+ * @returns {mat3} a new 3x3 matrix
+ */
+mat3.clone = function(a) {
+    var out = new glMatrix.ARRAY_TYPE(9);
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    out[4] = a[4];
+    out[5] = a[5];
+    out[6] = a[6];
+    out[7] = a[7];
+    out[8] = a[8];
+    return out;
+};
+
+/**
+ * Copy the values from one mat3 to another
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the source matrix
+ * @returns {mat3} out
+ */
+mat3.copy = function(out, a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    out[4] = a[4];
+    out[5] = a[5];
+    out[6] = a[6];
+    out[7] = a[7];
+    out[8] = a[8];
+    return out;
+};
+
+/**
+ * Create a new mat3 with the given values
+ *
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m02 Component in column 0, row 2 position (index 2)
+ * @param {Number} m10 Component in column 1, row 0 position (index 3)
+ * @param {Number} m11 Component in column 1, row 1 position (index 4)
+ * @param {Number} m12 Component in column 1, row 2 position (index 5)
+ * @param {Number} m20 Component in column 2, row 0 position (index 6)
+ * @param {Number} m21 Component in column 2, row 1 position (index 7)
+ * @param {Number} m22 Component in column 2, row 2 position (index 8)
+ * @returns {mat3} A new mat3
+ */
+mat3.fromValues = function(m00, m01, m02, m10, m11, m12, m20, m21, m22) {
+    var out = new glMatrix.ARRAY_TYPE(9);
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m02;
+    out[3] = m10;
+    out[4] = m11;
+    out[5] = m12;
+    out[6] = m20;
+    out[7] = m21;
+    out[8] = m22;
+    return out;
+};
+
+/**
+ * Set the components of a mat3 to the given values
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m02 Component in column 0, row 2 position (index 2)
+ * @param {Number} m10 Component in column 1, row 0 position (index 3)
+ * @param {Number} m11 Component in column 1, row 1 position (index 4)
+ * @param {Number} m12 Component in column 1, row 2 position (index 5)
+ * @param {Number} m20 Component in column 2, row 0 position (index 6)
+ * @param {Number} m21 Component in column 2, row 1 position (index 7)
+ * @param {Number} m22 Component in column 2, row 2 position (index 8)
+ * @returns {mat3} out
+ */
+mat3.set = function(out, m00, m01, m02, m10, m11, m12, m20, m21, m22) {
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m02;
+    out[3] = m10;
+    out[4] = m11;
+    out[5] = m12;
+    out[6] = m20;
+    out[7] = m21;
+    out[8] = m22;
+    return out;
+};
+
+/**
+ * Set a mat3 to the identity matrix
+ *
+ * @param {mat3} out the receiving matrix
+ * @returns {mat3} out
+ */
+mat3.identity = function(out) {
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 1;
+    out[5] = 0;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 1;
+    return out;
+};
+
+/**
+ * Transpose the values of a mat3
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the source matrix
+ * @returns {mat3} out
+ */
+mat3.transpose = function(out, a) {
+    // If we are transposing ourselves we can skip a few steps but have to cache some values
+    if (out === a) {
+        var a01 = a[1], a02 = a[2], a12 = a[5];
+        out[1] = a[3];
+        out[2] = a[6];
+        out[3] = a01;
+        out[5] = a[7];
+        out[6] = a02;
+        out[7] = a12;
+    } else {
+        out[0] = a[0];
+        out[1] = a[3];
+        out[2] = a[6];
+        out[3] = a[1];
+        out[4] = a[4];
+        out[5] = a[7];
+        out[6] = a[2];
+        out[7] = a[5];
+        out[8] = a[8];
+    }
+    
+    return out;
+};
+
+/**
+ * Inverts a mat3
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the source matrix
+ * @returns {mat3} out
+ */
+mat3.invert = function(out, a) {
+    var a00 = a[0], a01 = a[1], a02 = a[2],
+        a10 = a[3], a11 = a[4], a12 = a[5],
+        a20 = a[6], a21 = a[7], a22 = a[8],
+
+        b01 = a22 * a11 - a12 * a21,
+        b11 = -a22 * a10 + a12 * a20,
+        b21 = a21 * a10 - a11 * a20,
+
+        // Calculate the determinant
+        det = a00 * b01 + a01 * b11 + a02 * b21;
+
+    if (!det) { 
+        return null; 
+    }
+    det = 1.0 / det;
+
+    out[0] = b01 * det;
+    out[1] = (-a22 * a01 + a02 * a21) * det;
+    out[2] = (a12 * a01 - a02 * a11) * det;
+    out[3] = b11 * det;
+    out[4] = (a22 * a00 - a02 * a20) * det;
+    out[5] = (-a12 * a00 + a02 * a10) * det;
+    out[6] = b21 * det;
+    out[7] = (-a21 * a00 + a01 * a20) * det;
+    out[8] = (a11 * a00 - a01 * a10) * det;
+    return out;
+};
+
+/**
+ * Calculates the adjugate of a mat3
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the source matrix
+ * @returns {mat3} out
+ */
+mat3.adjoint = function(out, a) {
+    var a00 = a[0], a01 = a[1], a02 = a[2],
+        a10 = a[3], a11 = a[4], a12 = a[5],
+        a20 = a[6], a21 = a[7], a22 = a[8];
+
+    out[0] = (a11 * a22 - a12 * a21);
+    out[1] = (a02 * a21 - a01 * a22);
+    out[2] = (a01 * a12 - a02 * a11);
+    out[3] = (a12 * a20 - a10 * a22);
+    out[4] = (a00 * a22 - a02 * a20);
+    out[5] = (a02 * a10 - a00 * a12);
+    out[6] = (a10 * a21 - a11 * a20);
+    out[7] = (a01 * a20 - a00 * a21);
+    out[8] = (a00 * a11 - a01 * a10);
+    return out;
+};
+
+/**
+ * Calculates the determinant of a mat3
+ *
+ * @param {mat3} a the source matrix
+ * @returns {Number} determinant of a
+ */
+mat3.determinant = function (a) {
+    var a00 = a[0], a01 = a[1], a02 = a[2],
+        a10 = a[3], a11 = a[4], a12 = a[5],
+        a20 = a[6], a21 = a[7], a22 = a[8];
+
+    return a00 * (a22 * a11 - a12 * a21) + a01 * (-a22 * a10 + a12 * a20) + a02 * (a21 * a10 - a11 * a20);
+};
+
+/**
+ * Multiplies two mat3's
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the first operand
+ * @param {mat3} b the second operand
+ * @returns {mat3} out
+ */
+mat3.multiply = function (out, a, b) {
+    var a00 = a[0], a01 = a[1], a02 = a[2],
+        a10 = a[3], a11 = a[4], a12 = a[5],
+        a20 = a[6], a21 = a[7], a22 = a[8],
+
+        b00 = b[0], b01 = b[1], b02 = b[2],
+        b10 = b[3], b11 = b[4], b12 = b[5],
+        b20 = b[6], b21 = b[7], b22 = b[8];
+
+    out[0] = b00 * a00 + b01 * a10 + b02 * a20;
+    out[1] = b00 * a01 + b01 * a11 + b02 * a21;
+    out[2] = b00 * a02 + b01 * a12 + b02 * a22;
+
+    out[3] = b10 * a00 + b11 * a10 + b12 * a20;
+    out[4] = b10 * a01 + b11 * a11 + b12 * a21;
+    out[5] = b10 * a02 + b11 * a12 + b12 * a22;
+
+    out[6] = b20 * a00 + b21 * a10 + b22 * a20;
+    out[7] = b20 * a01 + b21 * a11 + b22 * a21;
+    out[8] = b20 * a02 + b21 * a12 + b22 * a22;
+    return out;
+};
+
+/**
+ * Alias for {@link mat3.multiply}
+ * @function
+ */
+mat3.mul = mat3.multiply;
+
+/**
+ * Translate a mat3 by the given vector
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the matrix to translate
+ * @param {vec2} v vector to translate by
+ * @returns {mat3} out
+ */
+mat3.translate = function(out, a, v) {
+    var a00 = a[0], a01 = a[1], a02 = a[2],
+        a10 = a[3], a11 = a[4], a12 = a[5],
+        a20 = a[6], a21 = a[7], a22 = a[8],
+        x = v[0], y = v[1];
+
+    out[0] = a00;
+    out[1] = a01;
+    out[2] = a02;
+
+    out[3] = a10;
+    out[4] = a11;
+    out[5] = a12;
+
+    out[6] = x * a00 + y * a10 + a20;
+    out[7] = x * a01 + y * a11 + a21;
+    out[8] = x * a02 + y * a12 + a22;
+    return out;
+};
+
+/**
+ * Rotates a mat3 by the given angle
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat3} out
+ */
+mat3.rotate = function (out, a, rad) {
+    var a00 = a[0], a01 = a[1], a02 = a[2],
+        a10 = a[3], a11 = a[4], a12 = a[5],
+        a20 = a[6], a21 = a[7], a22 = a[8],
+
+        s = Math.sin(rad),
+        c = Math.cos(rad);
+
+    out[0] = c * a00 + s * a10;
+    out[1] = c * a01 + s * a11;
+    out[2] = c * a02 + s * a12;
+
+    out[3] = c * a10 - s * a00;
+    out[4] = c * a11 - s * a01;
+    out[5] = c * a12 - s * a02;
+
+    out[6] = a20;
+    out[7] = a21;
+    out[8] = a22;
+    return out;
+};
+
+/**
+ * Scales the mat3 by the dimensions in the given vec2
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the matrix to rotate
+ * @param {vec2} v the vec2 to scale the matrix by
+ * @returns {mat3} out
+ **/
+mat3.scale = function(out, a, v) {
+    var x = v[0], y = v[1];
+
+    out[0] = x * a[0];
+    out[1] = x * a[1];
+    out[2] = x * a[2];
+
+    out[3] = y * a[3];
+    out[4] = y * a[4];
+    out[5] = y * a[5];
+
+    out[6] = a[6];
+    out[7] = a[7];
+    out[8] = a[8];
+    return out;
+};
+
+/**
+ * Creates a matrix from a vector translation
+ * This is equivalent to (but much faster than):
+ *
+ *     mat3.identity(dest);
+ *     mat3.translate(dest, dest, vec);
+ *
+ * @param {mat3} out mat3 receiving operation result
+ * @param {vec2} v Translation vector
+ * @returns {mat3} out
+ */
+mat3.fromTranslation = function(out, v) {
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 1;
+    out[5] = 0;
+    out[6] = v[0];
+    out[7] = v[1];
+    out[8] = 1;
+    return out;
+}
+
+/**
+ * Creates a matrix from a given angle
+ * This is equivalent to (but much faster than):
+ *
+ *     mat3.identity(dest);
+ *     mat3.rotate(dest, dest, rad);
+ *
+ * @param {mat3} out mat3 receiving operation result
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat3} out
+ */
+mat3.fromRotation = function(out, rad) {
+    var s = Math.sin(rad), c = Math.cos(rad);
+
+    out[0] = c;
+    out[1] = s;
+    out[2] = 0;
+
+    out[3] = -s;
+    out[4] = c;
+    out[5] = 0;
+
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 1;
+    return out;
+}
+
+/**
+ * Creates a matrix from a vector scaling
+ * This is equivalent to (but much faster than):
+ *
+ *     mat3.identity(dest);
+ *     mat3.scale(dest, dest, vec);
+ *
+ * @param {mat3} out mat3 receiving operation result
+ * @param {vec2} v Scaling vector
+ * @returns {mat3} out
+ */
+mat3.fromScaling = function(out, v) {
+    out[0] = v[0];
+    out[1] = 0;
+    out[2] = 0;
+
+    out[3] = 0;
+    out[4] = v[1];
+    out[5] = 0;
+
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 1;
+    return out;
+}
+
+/**
+ * Copies the values from a mat2d into a mat3
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat2d} a the matrix to copy
+ * @returns {mat3} out
+ **/
+mat3.fromMat2d = function(out, a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = 0;
+
+    out[3] = a[2];
+    out[4] = a[3];
+    out[5] = 0;
+
+    out[6] = a[4];
+    out[7] = a[5];
+    out[8] = 1;
+    return out;
+};
+
+/**
+* Calculates a 3x3 matrix from the given quaternion
+*
+* @param {mat3} out mat3 receiving operation result
+* @param {quat} q Quaternion to create matrix from
+*
+* @returns {mat3} out
+*/
+mat3.fromQuat = function (out, q) {
+    var x = q[0], y = q[1], z = q[2], w = q[3],
+        x2 = x + x,
+        y2 = y + y,
+        z2 = z + z,
+
+        xx = x * x2,
+        yx = y * x2,
+        yy = y * y2,
+        zx = z * x2,
+        zy = z * y2,
+        zz = z * z2,
+        wx = w * x2,
+        wy = w * y2,
+        wz = w * z2;
+
+    out[0] = 1 - yy - zz;
+    out[3] = yx - wz;
+    out[6] = zx + wy;
+
+    out[1] = yx + wz;
+    out[4] = 1 - xx - zz;
+    out[7] = zy - wx;
+
+    out[2] = zx - wy;
+    out[5] = zy + wx;
+    out[8] = 1 - xx - yy;
+
+    return out;
+};
+
+/**
+* Calculates a 3x3 normal matrix (transpose inverse) from the 4x4 matrix
+*
+* @param {mat3} out mat3 receiving operation result
+* @param {mat4} a Mat4 to derive the normal matrix from
+*
+* @returns {mat3} out
+*/
+mat3.normalFromMat4 = function (out, a) {
+    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
+        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
+        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
+        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
+
+        b00 = a00 * a11 - a01 * a10,
+        b01 = a00 * a12 - a02 * a10,
+        b02 = a00 * a13 - a03 * a10,
+        b03 = a01 * a12 - a02 * a11,
+        b04 = a01 * a13 - a03 * a11,
+        b05 = a02 * a13 - a03 * a12,
+        b06 = a20 * a31 - a21 * a30,
+        b07 = a20 * a32 - a22 * a30,
+        b08 = a20 * a33 - a23 * a30,
+        b09 = a21 * a32 - a22 * a31,
+        b10 = a21 * a33 - a23 * a31,
+        b11 = a22 * a33 - a23 * a32,
+
+        // Calculate the determinant
+        det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+
+    if (!det) { 
+        return null; 
+    }
+    det = 1.0 / det;
+
+    out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
+    out[1] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
+    out[2] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
+
+    out[3] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
+    out[4] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
+    out[5] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
+
+    out[6] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
+    out[7] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
+    out[8] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
+
+    return out;
+};
+
+/**
+ * Returns a string representation of a mat3
+ *
+ * @param {mat3} mat matrix to represent as a string
+ * @returns {String} string representation of the matrix
+ */
+mat3.str = function (a) {
+    return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
+                    a[3] + ', ' + a[4] + ', ' + a[5] + ', ' + 
+                    a[6] + ', ' + a[7] + ', ' + a[8] + ')';
+};
+
+/**
+ * Returns Frobenius norm of a mat3
+ *
+ * @param {mat3} a the matrix to calculate Frobenius norm of
+ * @returns {Number} Frobenius norm
+ */
+mat3.frob = function (a) {
+    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2)))
+};
+
+/**
+ * Adds two mat3's
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the first operand
+ * @param {mat3} b the second operand
+ * @returns {mat3} out
+ */
+mat3.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    out[3] = a[3] + b[3];
+    out[4] = a[4] + b[4];
+    out[5] = a[5] + b[5];
+    out[6] = a[6] + b[6];
+    out[7] = a[7] + b[7];
+    out[8] = a[8] + b[8];
+    return out;
+};
+
+/**
+ * Subtracts matrix b from matrix a
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the first operand
+ * @param {mat3} b the second operand
+ * @returns {mat3} out
+ */
+mat3.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    out[3] = a[3] - b[3];
+    out[4] = a[4] - b[4];
+    out[5] = a[5] - b[5];
+    out[6] = a[6] - b[6];
+    out[7] = a[7] - b[7];
+    out[8] = a[8] - b[8];
+    return out;
+};
+
+/**
+ * Alias for {@link mat3.subtract}
+ * @function
+ */
+mat3.sub = mat3.subtract;
+
+/**
+ * Multiply each element of the matrix by a scalar.
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the matrix to scale
+ * @param {Number} b amount to scale the matrix's elements by
+ * @returns {mat3} out
+ */
+mat3.multiplyScalar = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    out[3] = a[3] * b;
+    out[4] = a[4] * b;
+    out[5] = a[5] * b;
+    out[6] = a[6] * b;
+    out[7] = a[7] * b;
+    out[8] = a[8] * b;
+    return out;
+};
+
+/**
+ * Adds two mat3's after multiplying each element of the second operand by a scalar value.
+ *
+ * @param {mat3} out the receiving vector
+ * @param {mat3} a the first operand
+ * @param {mat3} b the second operand
+ * @param {Number} scale the amount to scale b's elements by before adding
+ * @returns {mat3} out
+ */
+mat3.multiplyScalarAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    out[3] = a[3] + (b[3] * scale);
+    out[4] = a[4] + (b[4] * scale);
+    out[5] = a[5] + (b[5] * scale);
+    out[6] = a[6] + (b[6] * scale);
+    out[7] = a[7] + (b[7] * scale);
+    out[8] = a[8] + (b[8] * scale);
+    return out;
+};
+
+/*
+ * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {mat3} a The first matrix.
+ * @param {mat3} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat3.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && 
+           a[3] === b[3] && a[4] === b[4] && a[5] === b[5] &&
+           a[6] === b[6] && a[7] === b[7] && a[8] === b[8];
+};
+
+/**
+ * Returns whether or not the matrices have approximately the same elements in the same position.
+ *
+ * @param {mat3} a The first matrix.
+ * @param {mat3} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat3.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5], a6 = a[6], a7 = a[7], a8 = a[8];
+    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = a[6], b7 = b[7], b8 = b[8];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+            Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
+            Math.abs(a4 - b4) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
+            Math.abs(a5 - b5) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a5), Math.abs(b5)) &&
+            Math.abs(a6 - b6) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a6), Math.abs(b6)) &&
+            Math.abs(a7 - b7) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a7), Math.abs(b7)) &&
+            Math.abs(a8 - b8) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a8), Math.abs(b8)));
+};
+
+
+module.exports = mat3;
+
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+
+var glMatrix = __webpack_require__(18);
+
+/**
+ * @class 3 Dimensional Vector
+ * @name vec3
+ */
+var vec3 = {};
+
+/**
+ * Creates a new, empty vec3
+ *
+ * @returns {vec3} a new 3D vector
+ */
+vec3.create = function() {
+    var out = new glMatrix.ARRAY_TYPE(3);
+    out[0] = 0;
+    out[1] = 0;
+    out[2] = 0;
+    return out;
+};
+
+/**
+ * Creates a new vec3 initialized with values from an existing vector
+ *
+ * @param {vec3} a vector to clone
+ * @returns {vec3} a new 3D vector
+ */
+vec3.clone = function(a) {
+    var out = new glMatrix.ARRAY_TYPE(3);
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    return out;
+};
+
+/**
+ * Creates a new vec3 initialized with the given values
+ *
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @returns {vec3} a new 3D vector
+ */
+vec3.fromValues = function(x, y, z) {
+    var out = new glMatrix.ARRAY_TYPE(3);
+    out[0] = x;
+    out[1] = y;
+    out[2] = z;
+    return out;
+};
+
+/**
+ * Copy the values from one vec3 to another
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the source vector
+ * @returns {vec3} out
+ */
+vec3.copy = function(out, a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    return out;
+};
+
+/**
+ * Set the components of a vec3 to the given values
+ *
+ * @param {vec3} out the receiving vector
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @returns {vec3} out
+ */
+vec3.set = function(out, x, y, z) {
+    out[0] = x;
+    out[1] = y;
+    out[2] = z;
+    return out;
+};
+
+/**
+ * Adds two vec3's
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+vec3.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    return out;
+};
+
+/**
+ * Subtracts vector b from vector a
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+vec3.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    return out;
+};
+
+/**
+ * Alias for {@link vec3.subtract}
+ * @function
+ */
+vec3.sub = vec3.subtract;
+
+/**
+ * Multiplies two vec3's
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+vec3.multiply = function(out, a, b) {
+    out[0] = a[0] * b[0];
+    out[1] = a[1] * b[1];
+    out[2] = a[2] * b[2];
+    return out;
+};
+
+/**
+ * Alias for {@link vec3.multiply}
+ * @function
+ */
+vec3.mul = vec3.multiply;
+
+/**
+ * Divides two vec3's
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+vec3.divide = function(out, a, b) {
+    out[0] = a[0] / b[0];
+    out[1] = a[1] / b[1];
+    out[2] = a[2] / b[2];
+    return out;
+};
+
+/**
+ * Alias for {@link vec3.divide}
+ * @function
+ */
+vec3.div = vec3.divide;
+
+/**
+ * Math.ceil the components of a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to ceil
+ * @returns {vec3} out
+ */
+vec3.ceil = function (out, a) {
+    out[0] = Math.ceil(a[0]);
+    out[1] = Math.ceil(a[1]);
+    out[2] = Math.ceil(a[2]);
+    return out;
+};
+
+/**
+ * Math.floor the components of a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to floor
+ * @returns {vec3} out
+ */
+vec3.floor = function (out, a) {
+    out[0] = Math.floor(a[0]);
+    out[1] = Math.floor(a[1]);
+    out[2] = Math.floor(a[2]);
+    return out;
+};
+
+/**
+ * Returns the minimum of two vec3's
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+vec3.min = function(out, a, b) {
+    out[0] = Math.min(a[0], b[0]);
+    out[1] = Math.min(a[1], b[1]);
+    out[2] = Math.min(a[2], b[2]);
+    return out;
+};
+
+/**
+ * Returns the maximum of two vec3's
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+vec3.max = function(out, a, b) {
+    out[0] = Math.max(a[0], b[0]);
+    out[1] = Math.max(a[1], b[1]);
+    out[2] = Math.max(a[2], b[2]);
+    return out;
+};
+
+/**
+ * Math.round the components of a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to round
+ * @returns {vec3} out
+ */
+vec3.round = function (out, a) {
+    out[0] = Math.round(a[0]);
+    out[1] = Math.round(a[1]);
+    out[2] = Math.round(a[2]);
+    return out;
+};
+
+/**
+ * Scales a vec3 by a scalar number
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the vector to scale
+ * @param {Number} b amount to scale the vector by
+ * @returns {vec3} out
+ */
+vec3.scale = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    return out;
+};
+
+/**
+ * Adds two vec3's after scaling the second operand by a scalar value
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @param {Number} scale the amount to scale b by before adding
+ * @returns {vec3} out
+ */
+vec3.scaleAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    return out;
+};
+
+/**
+ * Calculates the euclidian distance between two vec3's
+ *
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {Number} distance between a and b
+ */
+vec3.distance = function(a, b) {
+    var x = b[0] - a[0],
+        y = b[1] - a[1],
+        z = b[2] - a[2];
+    return Math.sqrt(x*x + y*y + z*z);
+};
+
+/**
+ * Alias for {@link vec3.distance}
+ * @function
+ */
+vec3.dist = vec3.distance;
+
+/**
+ * Calculates the squared euclidian distance between two vec3's
+ *
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {Number} squared distance between a and b
+ */
+vec3.squaredDistance = function(a, b) {
+    var x = b[0] - a[0],
+        y = b[1] - a[1],
+        z = b[2] - a[2];
+    return x*x + y*y + z*z;
+};
+
+/**
+ * Alias for {@link vec3.squaredDistance}
+ * @function
+ */
+vec3.sqrDist = vec3.squaredDistance;
+
+/**
+ * Calculates the length of a vec3
+ *
+ * @param {vec3} a vector to calculate length of
+ * @returns {Number} length of a
+ */
+vec3.length = function (a) {
+    var x = a[0],
+        y = a[1],
+        z = a[2];
+    return Math.sqrt(x*x + y*y + z*z);
+};
+
+/**
+ * Alias for {@link vec3.length}
+ * @function
+ */
+vec3.len = vec3.length;
+
+/**
+ * Calculates the squared length of a vec3
+ *
+ * @param {vec3} a vector to calculate squared length of
+ * @returns {Number} squared length of a
+ */
+vec3.squaredLength = function (a) {
+    var x = a[0],
+        y = a[1],
+        z = a[2];
+    return x*x + y*y + z*z;
+};
+
+/**
+ * Alias for {@link vec3.squaredLength}
+ * @function
+ */
+vec3.sqrLen = vec3.squaredLength;
+
+/**
+ * Negates the components of a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to negate
+ * @returns {vec3} out
+ */
+vec3.negate = function(out, a) {
+    out[0] = -a[0];
+    out[1] = -a[1];
+    out[2] = -a[2];
+    return out;
+};
+
+/**
+ * Returns the inverse of the components of a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to invert
+ * @returns {vec3} out
+ */
+vec3.inverse = function(out, a) {
+  out[0] = 1.0 / a[0];
+  out[1] = 1.0 / a[1];
+  out[2] = 1.0 / a[2];
+  return out;
+};
+
+/**
+ * Normalize a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to normalize
+ * @returns {vec3} out
+ */
+vec3.normalize = function(out, a) {
+    var x = a[0],
+        y = a[1],
+        z = a[2];
+    var len = x*x + y*y + z*z;
+    if (len > 0) {
+        //TODO: evaluate use of glm_invsqrt here?
+        len = 1 / Math.sqrt(len);
+        out[0] = a[0] * len;
+        out[1] = a[1] * len;
+        out[2] = a[2] * len;
+    }
+    return out;
+};
+
+/**
+ * Calculates the dot product of two vec3's
+ *
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {Number} dot product of a and b
+ */
+vec3.dot = function (a, b) {
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+};
+
+/**
+ * Computes the cross product of two vec3's
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+vec3.cross = function(out, a, b) {
+    var ax = a[0], ay = a[1], az = a[2],
+        bx = b[0], by = b[1], bz = b[2];
+
+    out[0] = ay * bz - az * by;
+    out[1] = az * bx - ax * bz;
+    out[2] = ax * by - ay * bx;
+    return out;
+};
+
+/**
+ * Performs a linear interpolation between two vec3's
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {vec3} out
+ */
+vec3.lerp = function (out, a, b, t) {
+    var ax = a[0],
+        ay = a[1],
+        az = a[2];
+    out[0] = ax + t * (b[0] - ax);
+    out[1] = ay + t * (b[1] - ay);
+    out[2] = az + t * (b[2] - az);
+    return out;
+};
+
+/**
+ * Performs a hermite interpolation with two control points
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @param {vec3} c the third operand
+ * @param {vec3} d the fourth operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {vec3} out
+ */
+vec3.hermite = function (out, a, b, c, d, t) {
+  var factorTimes2 = t * t,
+      factor1 = factorTimes2 * (2 * t - 3) + 1,
+      factor2 = factorTimes2 * (t - 2) + t,
+      factor3 = factorTimes2 * (t - 1),
+      factor4 = factorTimes2 * (3 - 2 * t);
+  
+  out[0] = a[0] * factor1 + b[0] * factor2 + c[0] * factor3 + d[0] * factor4;
+  out[1] = a[1] * factor1 + b[1] * factor2 + c[1] * factor3 + d[1] * factor4;
+  out[2] = a[2] * factor1 + b[2] * factor2 + c[2] * factor3 + d[2] * factor4;
+  
+  return out;
+};
+
+/**
+ * Performs a bezier interpolation with two control points
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @param {vec3} c the third operand
+ * @param {vec3} d the fourth operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {vec3} out
+ */
+vec3.bezier = function (out, a, b, c, d, t) {
+  var inverseFactor = 1 - t,
+      inverseFactorTimesTwo = inverseFactor * inverseFactor,
+      factorTimes2 = t * t,
+      factor1 = inverseFactorTimesTwo * inverseFactor,
+      factor2 = 3 * t * inverseFactorTimesTwo,
+      factor3 = 3 * factorTimes2 * inverseFactor,
+      factor4 = factorTimes2 * t;
+  
+  out[0] = a[0] * factor1 + b[0] * factor2 + c[0] * factor3 + d[0] * factor4;
+  out[1] = a[1] * factor1 + b[1] * factor2 + c[1] * factor3 + d[1] * factor4;
+  out[2] = a[2] * factor1 + b[2] * factor2 + c[2] * factor3 + d[2] * factor4;
+  
+  return out;
+};
+
+/**
+ * Generates a random vector with the given scale
+ *
+ * @param {vec3} out the receiving vector
+ * @param {Number} [scale] Length of the resulting vector. If ommitted, a unit vector will be returned
+ * @returns {vec3} out
+ */
+vec3.random = function (out, scale) {
+    scale = scale || 1.0;
+
+    var r = glMatrix.RANDOM() * 2.0 * Math.PI;
+    var z = (glMatrix.RANDOM() * 2.0) - 1.0;
+    var zScale = Math.sqrt(1.0-z*z) * scale;
+
+    out[0] = Math.cos(r) * zScale;
+    out[1] = Math.sin(r) * zScale;
+    out[2] = z * scale;
+    return out;
+};
+
+/**
+ * Transforms the vec3 with a mat4.
+ * 4th vector component is implicitly '1'
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the vector to transform
+ * @param {mat4} m matrix to transform with
+ * @returns {vec3} out
+ */
+vec3.transformMat4 = function(out, a, m) {
+    var x = a[0], y = a[1], z = a[2],
+        w = m[3] * x + m[7] * y + m[11] * z + m[15];
+    w = w || 1.0;
+    out[0] = (m[0] * x + m[4] * y + m[8] * z + m[12]) / w;
+    out[1] = (m[1] * x + m[5] * y + m[9] * z + m[13]) / w;
+    out[2] = (m[2] * x + m[6] * y + m[10] * z + m[14]) / w;
+    return out;
+};
+
+/**
+ * Transforms the vec3 with a mat3.
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the vector to transform
+ * @param {mat4} m the 3x3 matrix to transform with
+ * @returns {vec3} out
+ */
+vec3.transformMat3 = function(out, a, m) {
+    var x = a[0], y = a[1], z = a[2];
+    out[0] = x * m[0] + y * m[3] + z * m[6];
+    out[1] = x * m[1] + y * m[4] + z * m[7];
+    out[2] = x * m[2] + y * m[5] + z * m[8];
+    return out;
+};
+
+/**
+ * Transforms the vec3 with a quat
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the vector to transform
+ * @param {quat} q quaternion to transform with
+ * @returns {vec3} out
+ */
+vec3.transformQuat = function(out, a, q) {
+    // benchmarks: http://jsperf.com/quaternion-transform-vec3-implementations
+
+    var x = a[0], y = a[1], z = a[2],
+        qx = q[0], qy = q[1], qz = q[2], qw = q[3],
+
+        // calculate quat * vec
+        ix = qw * x + qy * z - qz * y,
+        iy = qw * y + qz * x - qx * z,
+        iz = qw * z + qx * y - qy * x,
+        iw = -qx * x - qy * y - qz * z;
+
+    // calculate result * inverse quat
+    out[0] = ix * qw + iw * -qx + iy * -qz - iz * -qy;
+    out[1] = iy * qw + iw * -qy + iz * -qx - ix * -qz;
+    out[2] = iz * qw + iw * -qz + ix * -qy - iy * -qx;
+    return out;
+};
+
+/**
+ * Rotate a 3D vector around the x-axis
+ * @param {vec3} out The receiving vec3
+ * @param {vec3} a The vec3 point to rotate
+ * @param {vec3} b The origin of the rotation
+ * @param {Number} c The angle of rotation
+ * @returns {vec3} out
+ */
+vec3.rotateX = function(out, a, b, c){
+   var p = [], r=[];
+	  //Translate point to the origin
+	  p[0] = a[0] - b[0];
+	  p[1] = a[1] - b[1];
+  	p[2] = a[2] - b[2];
+
+	  //perform rotation
+	  r[0] = p[0];
+	  r[1] = p[1]*Math.cos(c) - p[2]*Math.sin(c);
+	  r[2] = p[1]*Math.sin(c) + p[2]*Math.cos(c);
+
+	  //translate to correct position
+	  out[0] = r[0] + b[0];
+	  out[1] = r[1] + b[1];
+	  out[2] = r[2] + b[2];
+
+  	return out;
+};
+
+/**
+ * Rotate a 3D vector around the y-axis
+ * @param {vec3} out The receiving vec3
+ * @param {vec3} a The vec3 point to rotate
+ * @param {vec3} b The origin of the rotation
+ * @param {Number} c The angle of rotation
+ * @returns {vec3} out
+ */
+vec3.rotateY = function(out, a, b, c){
+  	var p = [], r=[];
+  	//Translate point to the origin
+  	p[0] = a[0] - b[0];
+  	p[1] = a[1] - b[1];
+  	p[2] = a[2] - b[2];
+  
+  	//perform rotation
+  	r[0] = p[2]*Math.sin(c) + p[0]*Math.cos(c);
+  	r[1] = p[1];
+  	r[2] = p[2]*Math.cos(c) - p[0]*Math.sin(c);
+  
+  	//translate to correct position
+  	out[0] = r[0] + b[0];
+  	out[1] = r[1] + b[1];
+  	out[2] = r[2] + b[2];
+  
+  	return out;
+};
+
+/**
+ * Rotate a 3D vector around the z-axis
+ * @param {vec3} out The receiving vec3
+ * @param {vec3} a The vec3 point to rotate
+ * @param {vec3} b The origin of the rotation
+ * @param {Number} c The angle of rotation
+ * @returns {vec3} out
+ */
+vec3.rotateZ = function(out, a, b, c){
+  	var p = [], r=[];
+  	//Translate point to the origin
+  	p[0] = a[0] - b[0];
+  	p[1] = a[1] - b[1];
+  	p[2] = a[2] - b[2];
+  
+  	//perform rotation
+  	r[0] = p[0]*Math.cos(c) - p[1]*Math.sin(c);
+  	r[1] = p[0]*Math.sin(c) + p[1]*Math.cos(c);
+  	r[2] = p[2];
+  
+  	//translate to correct position
+  	out[0] = r[0] + b[0];
+  	out[1] = r[1] + b[1];
+  	out[2] = r[2] + b[2];
+  
+  	return out;
+};
+
+/**
+ * Perform some operation over an array of vec3s.
+ *
+ * @param {Array} a the array of vectors to iterate over
+ * @param {Number} stride Number of elements between the start of each vec3. If 0 assumes tightly packed
+ * @param {Number} offset Number of elements to skip at the beginning of the array
+ * @param {Number} count Number of vec3s to iterate over. If 0 iterates over entire array
+ * @param {Function} fn Function to call for each vector in the array
+ * @param {Object} [arg] additional argument to pass to fn
+ * @returns {Array} a
+ * @function
+ */
+vec3.forEach = (function() {
+    var vec = vec3.create();
+
+    return function(a, stride, offset, count, fn, arg) {
+        var i, l;
+        if(!stride) {
+            stride = 3;
+        }
+
+        if(!offset) {
+            offset = 0;
+        }
+        
+        if(count) {
+            l = Math.min((count * stride) + offset, a.length);
+        } else {
+            l = a.length;
+        }
+
+        for(i = offset; i < l; i += stride) {
+            vec[0] = a[i]; vec[1] = a[i+1]; vec[2] = a[i+2];
+            fn(vec, vec, arg);
+            a[i] = vec[0]; a[i+1] = vec[1]; a[i+2] = vec[2];
+        }
+        
+        return a;
+    };
+})();
+
+/**
+ * Get the angle between two 3D vectors
+ * @param {vec3} a The first operand
+ * @param {vec3} b The second operand
+ * @returns {Number} The angle in radians
+ */
+vec3.angle = function(a, b) {
+   
+    var tempA = vec3.fromValues(a[0], a[1], a[2]);
+    var tempB = vec3.fromValues(b[0], b[1], b[2]);
+ 
+    vec3.normalize(tempA, tempA);
+    vec3.normalize(tempB, tempB);
+ 
+    var cosine = vec3.dot(tempA, tempB);
+
+    if(cosine > 1.0){
+        return 0;
+    } else {
+        return Math.acos(cosine);
+    }     
+};
+
+/**
+ * Returns a string representation of a vector
+ *
+ * @param {vec3} vec vector to represent as a string
+ * @returns {String} string representation of the vector
+ */
+vec3.str = function (a) {
+    return 'vec3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ')';
+};
+
+/**
+ * Returns whether or not the vectors have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {vec3} a The first vector.
+ * @param {vec3} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec3.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
+};
+
+/**
+ * Returns whether or not the vectors have approximately the same elements in the same position.
+ *
+ * @param {vec3} a The first vector.
+ * @param {vec3} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec3.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2];
+    var b0 = b[0], b1 = b[1], b2 = b[2];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)));
+};
+
+module.exports = vec3;
+
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+
+var glMatrix = __webpack_require__(18);
+
+/**
+ * @class 4 Dimensional Vector
+ * @name vec4
+ */
+var vec4 = {};
+
+/**
+ * Creates a new, empty vec4
+ *
+ * @returns {vec4} a new 4D vector
+ */
+vec4.create = function() {
+    var out = new glMatrix.ARRAY_TYPE(4);
+    out[0] = 0;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    return out;
+};
+
+/**
+ * Creates a new vec4 initialized with values from an existing vector
+ *
+ * @param {vec4} a vector to clone
+ * @returns {vec4} a new 4D vector
+ */
+vec4.clone = function(a) {
+    var out = new glMatrix.ARRAY_TYPE(4);
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    return out;
+};
+
+/**
+ * Creates a new vec4 initialized with the given values
+ *
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @param {Number} w W component
+ * @returns {vec4} a new 4D vector
+ */
+vec4.fromValues = function(x, y, z, w) {
+    var out = new glMatrix.ARRAY_TYPE(4);
+    out[0] = x;
+    out[1] = y;
+    out[2] = z;
+    out[3] = w;
+    return out;
+};
+
+/**
+ * Copy the values from one vec4 to another
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the source vector
+ * @returns {vec4} out
+ */
+vec4.copy = function(out, a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    return out;
+};
+
+/**
+ * Set the components of a vec4 to the given values
+ *
+ * @param {vec4} out the receiving vector
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @param {Number} w W component
+ * @returns {vec4} out
+ */
+vec4.set = function(out, x, y, z, w) {
+    out[0] = x;
+    out[1] = y;
+    out[2] = z;
+    out[3] = w;
+    return out;
+};
+
+/**
+ * Adds two vec4's
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @returns {vec4} out
+ */
+vec4.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    out[3] = a[3] + b[3];
+    return out;
+};
+
+/**
+ * Subtracts vector b from vector a
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @returns {vec4} out
+ */
+vec4.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    out[3] = a[3] - b[3];
+    return out;
+};
+
+/**
+ * Alias for {@link vec4.subtract}
+ * @function
+ */
+vec4.sub = vec4.subtract;
+
+/**
+ * Multiplies two vec4's
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @returns {vec4} out
+ */
+vec4.multiply = function(out, a, b) {
+    out[0] = a[0] * b[0];
+    out[1] = a[1] * b[1];
+    out[2] = a[2] * b[2];
+    out[3] = a[3] * b[3];
+    return out;
+};
+
+/**
+ * Alias for {@link vec4.multiply}
+ * @function
+ */
+vec4.mul = vec4.multiply;
+
+/**
+ * Divides two vec4's
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @returns {vec4} out
+ */
+vec4.divide = function(out, a, b) {
+    out[0] = a[0] / b[0];
+    out[1] = a[1] / b[1];
+    out[2] = a[2] / b[2];
+    out[3] = a[3] / b[3];
+    return out;
+};
+
+/**
+ * Alias for {@link vec4.divide}
+ * @function
+ */
+vec4.div = vec4.divide;
+
+/**
+ * Math.ceil the components of a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to ceil
+ * @returns {vec4} out
+ */
+vec4.ceil = function (out, a) {
+    out[0] = Math.ceil(a[0]);
+    out[1] = Math.ceil(a[1]);
+    out[2] = Math.ceil(a[2]);
+    out[3] = Math.ceil(a[3]);
+    return out;
+};
+
+/**
+ * Math.floor the components of a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to floor
+ * @returns {vec4} out
+ */
+vec4.floor = function (out, a) {
+    out[0] = Math.floor(a[0]);
+    out[1] = Math.floor(a[1]);
+    out[2] = Math.floor(a[2]);
+    out[3] = Math.floor(a[3]);
+    return out;
+};
+
+/**
+ * Returns the minimum of two vec4's
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @returns {vec4} out
+ */
+vec4.min = function(out, a, b) {
+    out[0] = Math.min(a[0], b[0]);
+    out[1] = Math.min(a[1], b[1]);
+    out[2] = Math.min(a[2], b[2]);
+    out[3] = Math.min(a[3], b[3]);
+    return out;
+};
+
+/**
+ * Returns the maximum of two vec4's
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @returns {vec4} out
+ */
+vec4.max = function(out, a, b) {
+    out[0] = Math.max(a[0], b[0]);
+    out[1] = Math.max(a[1], b[1]);
+    out[2] = Math.max(a[2], b[2]);
+    out[3] = Math.max(a[3], b[3]);
+    return out;
+};
+
+/**
+ * Math.round the components of a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to round
+ * @returns {vec4} out
+ */
+vec4.round = function (out, a) {
+    out[0] = Math.round(a[0]);
+    out[1] = Math.round(a[1]);
+    out[2] = Math.round(a[2]);
+    out[3] = Math.round(a[3]);
+    return out;
+};
+
+/**
+ * Scales a vec4 by a scalar number
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the vector to scale
+ * @param {Number} b amount to scale the vector by
+ * @returns {vec4} out
+ */
+vec4.scale = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    out[3] = a[3] * b;
+    return out;
+};
+
+/**
+ * Adds two vec4's after scaling the second operand by a scalar value
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @param {Number} scale the amount to scale b by before adding
+ * @returns {vec4} out
+ */
+vec4.scaleAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    out[3] = a[3] + (b[3] * scale);
+    return out;
+};
+
+/**
+ * Calculates the euclidian distance between two vec4's
+ *
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @returns {Number} distance between a and b
+ */
+vec4.distance = function(a, b) {
+    var x = b[0] - a[0],
+        y = b[1] - a[1],
+        z = b[2] - a[2],
+        w = b[3] - a[3];
+    return Math.sqrt(x*x + y*y + z*z + w*w);
+};
+
+/**
+ * Alias for {@link vec4.distance}
+ * @function
+ */
+vec4.dist = vec4.distance;
+
+/**
+ * Calculates the squared euclidian distance between two vec4's
+ *
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @returns {Number} squared distance between a and b
+ */
+vec4.squaredDistance = function(a, b) {
+    var x = b[0] - a[0],
+        y = b[1] - a[1],
+        z = b[2] - a[2],
+        w = b[3] - a[3];
+    return x*x + y*y + z*z + w*w;
+};
+
+/**
+ * Alias for {@link vec4.squaredDistance}
+ * @function
+ */
+vec4.sqrDist = vec4.squaredDistance;
+
+/**
+ * Calculates the length of a vec4
+ *
+ * @param {vec4} a vector to calculate length of
+ * @returns {Number} length of a
+ */
+vec4.length = function (a) {
+    var x = a[0],
+        y = a[1],
+        z = a[2],
+        w = a[3];
+    return Math.sqrt(x*x + y*y + z*z + w*w);
+};
+
+/**
+ * Alias for {@link vec4.length}
+ * @function
+ */
+vec4.len = vec4.length;
+
+/**
+ * Calculates the squared length of a vec4
+ *
+ * @param {vec4} a vector to calculate squared length of
+ * @returns {Number} squared length of a
+ */
+vec4.squaredLength = function (a) {
+    var x = a[0],
+        y = a[1],
+        z = a[2],
+        w = a[3];
+    return x*x + y*y + z*z + w*w;
+};
+
+/**
+ * Alias for {@link vec4.squaredLength}
+ * @function
+ */
+vec4.sqrLen = vec4.squaredLength;
+
+/**
+ * Negates the components of a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to negate
+ * @returns {vec4} out
+ */
+vec4.negate = function(out, a) {
+    out[0] = -a[0];
+    out[1] = -a[1];
+    out[2] = -a[2];
+    out[3] = -a[3];
+    return out;
+};
+
+/**
+ * Returns the inverse of the components of a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to invert
+ * @returns {vec4} out
+ */
+vec4.inverse = function(out, a) {
+  out[0] = 1.0 / a[0];
+  out[1] = 1.0 / a[1];
+  out[2] = 1.0 / a[2];
+  out[3] = 1.0 / a[3];
+  return out;
+};
+
+/**
+ * Normalize a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to normalize
+ * @returns {vec4} out
+ */
+vec4.normalize = function(out, a) {
+    var x = a[0],
+        y = a[1],
+        z = a[2],
+        w = a[3];
+    var len = x*x + y*y + z*z + w*w;
+    if (len > 0) {
+        len = 1 / Math.sqrt(len);
+        out[0] = x * len;
+        out[1] = y * len;
+        out[2] = z * len;
+        out[3] = w * len;
+    }
+    return out;
+};
+
+/**
+ * Calculates the dot product of two vec4's
+ *
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @returns {Number} dot product of a and b
+ */
+vec4.dot = function (a, b) {
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
+};
+
+/**
+ * Performs a linear interpolation between two vec4's
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {vec4} out
+ */
+vec4.lerp = function (out, a, b, t) {
+    var ax = a[0],
+        ay = a[1],
+        az = a[2],
+        aw = a[3];
+    out[0] = ax + t * (b[0] - ax);
+    out[1] = ay + t * (b[1] - ay);
+    out[2] = az + t * (b[2] - az);
+    out[3] = aw + t * (b[3] - aw);
+    return out;
+};
+
+/**
+ * Generates a random vector with the given scale
+ *
+ * @param {vec4} out the receiving vector
+ * @param {Number} [scale] Length of the resulting vector. If ommitted, a unit vector will be returned
+ * @returns {vec4} out
+ */
+vec4.random = function (out, scale) {
+    scale = scale || 1.0;
+
+    //TODO: This is a pretty awful way of doing this. Find something better.
+    out[0] = glMatrix.RANDOM();
+    out[1] = glMatrix.RANDOM();
+    out[2] = glMatrix.RANDOM();
+    out[3] = glMatrix.RANDOM();
+    vec4.normalize(out, out);
+    vec4.scale(out, out, scale);
+    return out;
+};
+
+/**
+ * Transforms the vec4 with a mat4.
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the vector to transform
+ * @param {mat4} m matrix to transform with
+ * @returns {vec4} out
+ */
+vec4.transformMat4 = function(out, a, m) {
+    var x = a[0], y = a[1], z = a[2], w = a[3];
+    out[0] = m[0] * x + m[4] * y + m[8] * z + m[12] * w;
+    out[1] = m[1] * x + m[5] * y + m[9] * z + m[13] * w;
+    out[2] = m[2] * x + m[6] * y + m[10] * z + m[14] * w;
+    out[3] = m[3] * x + m[7] * y + m[11] * z + m[15] * w;
+    return out;
+};
+
+/**
+ * Transforms the vec4 with a quat
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the vector to transform
+ * @param {quat} q quaternion to transform with
+ * @returns {vec4} out
+ */
+vec4.transformQuat = function(out, a, q) {
+    var x = a[0], y = a[1], z = a[2],
+        qx = q[0], qy = q[1], qz = q[2], qw = q[3],
+
+        // calculate quat * vec
+        ix = qw * x + qy * z - qz * y,
+        iy = qw * y + qz * x - qx * z,
+        iz = qw * z + qx * y - qy * x,
+        iw = -qx * x - qy * y - qz * z;
+
+    // calculate result * inverse quat
+    out[0] = ix * qw + iw * -qx + iy * -qz - iz * -qy;
+    out[1] = iy * qw + iw * -qy + iz * -qx - ix * -qz;
+    out[2] = iz * qw + iw * -qz + ix * -qy - iy * -qx;
+    out[3] = a[3];
+    return out;
+};
+
+/**
+ * Perform some operation over an array of vec4s.
+ *
+ * @param {Array} a the array of vectors to iterate over
+ * @param {Number} stride Number of elements between the start of each vec4. If 0 assumes tightly packed
+ * @param {Number} offset Number of elements to skip at the beginning of the array
+ * @param {Number} count Number of vec4s to iterate over. If 0 iterates over entire array
+ * @param {Function} fn Function to call for each vector in the array
+ * @param {Object} [arg] additional argument to pass to fn
+ * @returns {Array} a
+ * @function
+ */
+vec4.forEach = (function() {
+    var vec = vec4.create();
+
+    return function(a, stride, offset, count, fn, arg) {
+        var i, l;
+        if(!stride) {
+            stride = 4;
+        }
+
+        if(!offset) {
+            offset = 0;
+        }
+        
+        if(count) {
+            l = Math.min((count * stride) + offset, a.length);
+        } else {
+            l = a.length;
+        }
+
+        for(i = offset; i < l; i += stride) {
+            vec[0] = a[i]; vec[1] = a[i+1]; vec[2] = a[i+2]; vec[3] = a[i+3];
+            fn(vec, vec, arg);
+            a[i] = vec[0]; a[i+1] = vec[1]; a[i+2] = vec[2]; a[i+3] = vec[3];
+        }
+        
+        return a;
+    };
+})();
+
+/**
+ * Returns a string representation of a vector
+ *
+ * @param {vec4} vec vector to represent as a string
+ * @returns {String} string representation of the vector
+ */
+vec4.str = function (a) {
+    return 'vec4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
+};
+
+/**
+ * Returns whether or not the vectors have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {vec4} a The first vector.
+ * @param {vec4} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec4.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
+};
+
+/**
+ * Returns whether or not the vectors have approximately the same elements in the same position.
+ *
+ * @param {vec4} a The first vector.
+ * @param {vec4} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec4.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
+    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+            Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)));
+};
+
+module.exports = vec4;
+
+
+/***/ }),
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/* global Blob File */
@@ -11775,7 +14064,7 @@ module.exports = getActiveElement;
  * Module requirements.
  */
 
-var isArray = __webpack_require__(218);
+var isArray = __webpack_require__(231);
 
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -11835,7 +14124,7 @@ function hasBinary (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 101 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11844,7 +14133,7 @@ function hasBinary (obj) {
 exports.__esModule = true;
 exports.readState = exports.saveState = undefined;
 
-var _warning = __webpack_require__(22);
+var _warning = __webpack_require__(23);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -11927,7 +14216,7 @@ var readState = exports.readState = function readState(key) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 102 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11937,11 +14226,11 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _runTransitionHook = __webpack_require__(61);
+var _runTransitionHook = __webpack_require__(62);
 
 var _runTransitionHook2 = _interopRequireDefault(_runTransitionHook);
 
-var _PathUtils = __webpack_require__(19);
+var _PathUtils = __webpack_require__(20);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12042,7 +14331,7 @@ var useBasename = function useBasename(createHistory) {
 exports.default = useBasename;
 
 /***/ }),
-/* 103 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12052,15 +14341,15 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _queryString = __webpack_require__(226);
+var _queryString = __webpack_require__(239);
 
-var _runTransitionHook = __webpack_require__(61);
+var _runTransitionHook = __webpack_require__(62);
 
 var _runTransitionHook2 = _interopRequireDefault(_runTransitionHook);
 
-var _LocationUtils = __webpack_require__(29);
+var _LocationUtils = __webpack_require__(30);
 
-var _PathUtils = __webpack_require__(19);
+var _PathUtils = __webpack_require__(20);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12169,7 +14458,7 @@ var useQueries = function useQueries(createHistory) {
 exports.default = useQueries;
 
 /***/ }),
-/* 104 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12226,7 +14515,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 
 
 /***/ }),
-/* 105 */
+/* 111 */
 /***/ (function(module, exports) {
 
 
@@ -12241,11 +14530,11 @@ module.exports = function(arr, obj){
 };
 
 /***/ }),
-/* 106 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(246);
 
 
 /** Built-in value references. */
@@ -12255,7 +14544,7 @@ var Symbol = __WEBPACK_IMPORTED_MODULE_0__root_js__["a" /* default */].Symbol;
 
 
 /***/ }),
-/* 107 */
+/* 113 */
 /***/ (function(module, exports) {
 
 /**
@@ -12300,7 +14589,7 @@ module.exports = function parseuri(str) {
 
 
 /***/ }),
-/* 108 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12319,7 +14608,7 @@ module.exports = function parseuri(str) {
 // Therefore we re-export development-only version with all the PropTypes checks here.
 // However if one is migrating to the `prop-types` npm library, they will go through the
 // `index.js` entry point, and it will branch depending on the environment.
-var factory = __webpack_require__(109);
+var factory = __webpack_require__(115);
 module.exports = function(isValidElement) {
   // It is still allowed in 15.5.
   var throwOnDirectAccess = false;
@@ -12328,7 +14617,7 @@ module.exports = function(isValidElement) {
 
 
 /***/ }),
-/* 109 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12347,8 +14636,8 @@ var emptyFunction = __webpack_require__(13);
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 
-var ReactPropTypesSecret = __webpack_require__(110);
-var checkPropTypes = __webpack_require__(236);
+var ReactPropTypesSecret = __webpack_require__(116);
+var checkPropTypes = __webpack_require__(249);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -12848,7 +15137,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 110 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12869,7 +15158,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 111 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13022,7 +15311,7 @@ var CSSProperty = {
 module.exports = CSSProperty;
 
 /***/ }),
-/* 112 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13043,7 +15332,7 @@ var _prodInvariant = __webpack_require__(3);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var PooledClass = __webpack_require__(23);
+var PooledClass = __webpack_require__(24);
 
 var invariant = __webpack_require__(1);
 
@@ -13147,7 +15436,7 @@ module.exports = PooledClass.addPoolingTo(CallbackQueue);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 113 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13163,11 +15452,11 @@ module.exports = PooledClass.addPoolingTo(CallbackQueue);
 
 
 
-var DOMProperty = __webpack_require__(20);
-var ReactDOMComponentTree = __webpack_require__(5);
+var DOMProperty = __webpack_require__(21);
+var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInstrumentation = __webpack_require__(14);
 
-var quoteAttributeValueForBrowser = __webpack_require__(306);
+var quoteAttributeValueForBrowser = __webpack_require__(319);
 var warning = __webpack_require__(2);
 
 var VALID_ATTRIBUTE_NAME_REGEX = new RegExp('^[' + DOMProperty.ATTRIBUTE_NAME_START_CHAR + '][' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
@@ -13390,7 +15679,7 @@ module.exports = DOMPropertyOperations;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 114 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13413,7 +15702,7 @@ var ReactDOMComponentFlags = {
 module.exports = ReactDOMComponentFlags;
 
 /***/ }),
-/* 115 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13431,8 +15720,8 @@ module.exports = ReactDOMComponentFlags;
 
 var _assign = __webpack_require__(4);
 
-var LinkedValueUtils = __webpack_require__(69);
-var ReactDOMComponentTree = __webpack_require__(5);
+var LinkedValueUtils = __webpack_require__(70);
+var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(15);
 
 var warning = __webpack_require__(2);
@@ -13619,7 +15908,7 @@ module.exports = ReactDOMSelect;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 116 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13654,7 +15943,7 @@ ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 module.exports = ReactEmptyComponent;
 
 /***/ }),
-/* 117 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13681,7 +15970,7 @@ var ReactFeatureFlags = {
 module.exports = ReactFeatureFlags;
 
 /***/ }),
-/* 118 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13755,7 +16044,7 @@ module.exports = ReactHostComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 119 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13771,11 +16060,11 @@ module.exports = ReactHostComponent;
 
 
 
-var ReactDOMSelection = __webpack_require__(261);
+var ReactDOMSelection = __webpack_require__(274);
 
-var containsNode = __webpack_require__(206);
-var focusNode = __webpack_require__(98);
-var getActiveElement = __webpack_require__(99);
+var containsNode = __webpack_require__(213);
+var focusNode = __webpack_require__(101);
+var getActiveElement = __webpack_require__(102);
 
 function isInDocument(node) {
   return containsNode(document.documentElement, node);
@@ -13884,7 +16173,7 @@ var ReactInputSelection = {
 module.exports = ReactInputSelection;
 
 /***/ }),
-/* 120 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13902,27 +16191,27 @@ module.exports = ReactInputSelection;
 
 var _prodInvariant = __webpack_require__(3);
 
-var DOMLazyTree = __webpack_require__(30);
-var DOMProperty = __webpack_require__(20);
-var React = __webpack_require__(34);
-var ReactBrowserEventEmitter = __webpack_require__(45);
+var DOMLazyTree = __webpack_require__(31);
+var DOMProperty = __webpack_require__(21);
+var React = __webpack_require__(35);
+var ReactBrowserEventEmitter = __webpack_require__(46);
 var ReactCurrentOwner = __webpack_require__(16);
-var ReactDOMComponentTree = __webpack_require__(5);
-var ReactDOMContainerInfo = __webpack_require__(253);
-var ReactDOMFeatureFlags = __webpack_require__(255);
-var ReactFeatureFlags = __webpack_require__(117);
-var ReactInstanceMap = __webpack_require__(37);
+var ReactDOMComponentTree = __webpack_require__(6);
+var ReactDOMContainerInfo = __webpack_require__(266);
+var ReactDOMFeatureFlags = __webpack_require__(268);
+var ReactFeatureFlags = __webpack_require__(123);
+var ReactInstanceMap = __webpack_require__(38);
 var ReactInstrumentation = __webpack_require__(14);
-var ReactMarkupChecksum = __webpack_require__(275);
-var ReactReconciler = __webpack_require__(31);
-var ReactUpdateQueue = __webpack_require__(72);
+var ReactMarkupChecksum = __webpack_require__(288);
+var ReactReconciler = __webpack_require__(32);
+var ReactUpdateQueue = __webpack_require__(73);
 var ReactUpdates = __webpack_require__(15);
 
-var emptyObject = __webpack_require__(28);
-var instantiateReactComponent = __webpack_require__(128);
+var emptyObject = __webpack_require__(29);
+var instantiateReactComponent = __webpack_require__(134);
 var invariant = __webpack_require__(1);
-var setInnerHTML = __webpack_require__(49);
-var shouldUpdateReactComponent = __webpack_require__(78);
+var setInnerHTML = __webpack_require__(50);
+var shouldUpdateReactComponent = __webpack_require__(79);
 var warning = __webpack_require__(2);
 
 var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
@@ -14428,7 +16717,7 @@ module.exports = ReactMount;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 121 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14447,7 +16736,7 @@ module.exports = ReactMount;
 
 var _prodInvariant = __webpack_require__(3);
 
-var React = __webpack_require__(34);
+var React = __webpack_require__(35);
 
 var invariant = __webpack_require__(1);
 
@@ -14474,7 +16763,7 @@ module.exports = ReactNodeTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 122 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14496,7 +16785,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
-/* 123 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14528,7 +16817,7 @@ var ViewportMetrics = {
 module.exports = ViewportMetrics;
 
 /***/ }),
-/* 124 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14592,7 +16881,7 @@ module.exports = accumulateInto;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 125 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14628,7 +16917,7 @@ function forEachAccumulated(arr, cb, scope) {
 module.exports = forEachAccumulated;
 
 /***/ }),
-/* 126 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14644,7 +16933,7 @@ module.exports = forEachAccumulated;
 
 
 
-var ReactNodeTypes = __webpack_require__(121);
+var ReactNodeTypes = __webpack_require__(127);
 
 function getHostComponentFromComposite(inst) {
   var type;
@@ -14663,7 +16952,7 @@ function getHostComponentFromComposite(inst) {
 module.exports = getHostComponentFromComposite;
 
 /***/ }),
-/* 127 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14701,7 +16990,7 @@ function getTextContentAccessor() {
 module.exports = getTextContentAccessor;
 
 /***/ }),
-/* 128 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14720,11 +17009,11 @@ module.exports = getTextContentAccessor;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var ReactCompositeComponent = __webpack_require__(250);
-var ReactEmptyComponent = __webpack_require__(116);
-var ReactHostComponent = __webpack_require__(118);
+var ReactCompositeComponent = __webpack_require__(263);
+var ReactEmptyComponent = __webpack_require__(122);
+var ReactHostComponent = __webpack_require__(124);
 
-var getNextDebugID = __webpack_require__(345);
+var getNextDebugID = __webpack_require__(358);
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 
@@ -14836,7 +17125,7 @@ module.exports = instantiateReactComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 129 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14892,7 +17181,7 @@ function isTextInputElement(elem) {
 module.exports = isTextInputElement;
 
 /***/ }),
-/* 130 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14909,8 +17198,8 @@ module.exports = isTextInputElement;
 
 
 var ExecutionEnvironment = __webpack_require__(7);
-var escapeTextContentForBrowser = __webpack_require__(48);
-var setInnerHTML = __webpack_require__(49);
+var escapeTextContentForBrowser = __webpack_require__(49);
+var setInnerHTML = __webpack_require__(50);
 
 /**
  * Set the textContent property of a node, ensuring that whitespace is preserved
@@ -14949,7 +17238,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = setTextContent;
 
 /***/ }),
-/* 131 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14968,11 +17257,11 @@ module.exports = setTextContent;
 var _prodInvariant = __webpack_require__(3);
 
 var ReactCurrentOwner = __webpack_require__(16);
-var REACT_ELEMENT_TYPE = __webpack_require__(269);
+var REACT_ELEMENT_TYPE = __webpack_require__(282);
 
-var getIteratorFn = __webpack_require__(303);
+var getIteratorFn = __webpack_require__(316);
 var invariant = __webpack_require__(1);
-var KeyEscapeUtils = __webpack_require__(68);
+var KeyEscapeUtils = __webpack_require__(69);
 var warning = __webpack_require__(2);
 
 var SEPARATOR = '.';
@@ -15131,19 +17420,19 @@ module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 132 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (immutable) */ __webpack_exports__["a"] = connectAdvanced;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_hoist_non_react_statics__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_hoist_non_react_statics__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_hoist_non_react_statics__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_Subscription__ = __webpack_require__(315);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_PropTypes__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_Subscription__ = __webpack_require__(328);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_PropTypes__ = __webpack_require__(140);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -15419,14 +17708,14 @@ selectorFactory) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 133 */
+/* 139 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (immutable) */ __webpack_exports__["b"] = wrapMapToPropsConstant;
 /* unused harmony export getDependsOnOwnProps */
 /* harmony export (immutable) */ __webpack_exports__["a"] = wrapMapToPropsFunc;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__ = __webpack_require__(141);
 
 
 function wrapMapToPropsConstant(getConstant) {
@@ -15497,7 +17786,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 134 */
+/* 140 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15521,13 +17810,13 @@ var storeShape = __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.shape({
 });
 
 /***/ }),
-/* 135 */
+/* 141 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = verifyPlainObject;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__warning__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__warning__ = __webpack_require__(81);
 
 
 
@@ -15538,11 +17827,11 @@ function verifyPlainObject(value, displayName, methodName) {
 }
 
 /***/ }),
-/* 136 */
+/* 142 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(6);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_create_react_class__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_create_react_class__);
@@ -15550,8 +17839,8 @@ function verifyPlainObject(value, displayName, methodName) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PropTypes__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ContextUtils__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PropTypes__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ContextUtils__ = __webpack_require__(83);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -15684,7 +17973,7 @@ var Link = __WEBPACK_IMPORTED_MODULE_1_create_react_class___default()({
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 137 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15694,7 +17983,7 @@ function isPromise(obj) {
 }
 
 /***/ }),
-/* 138 */
+/* 144 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15704,9 +17993,9 @@ function isPromise(obj) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RouteUtils__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PatternUtils__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__InternalPropTypes__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RouteUtils__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PatternUtils__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__InternalPropTypes__ = __webpack_require__(40);
 
 
 
@@ -15793,7 +18082,7 @@ var Redirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default()({
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 139 */
+/* 145 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15823,16 +18112,16 @@ function assignRouterState(router, _ref) {
 }
 
 /***/ }),
-/* 140 */
+/* 146 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = createMemoryHistory;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_history_lib_createMemoryHistory__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_history_lib_createMemoryHistory__ = __webpack_require__(238);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_history_lib_createMemoryHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_history_lib_createMemoryHistory__);
 
 
@@ -15851,12 +18140,12 @@ function createMemoryHistory(options) {
 }
 
 /***/ }),
-/* 141 */
+/* 147 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = createRouterHistory;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__useRouterHistory__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__useRouterHistory__ = __webpack_require__(149);
 
 
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
@@ -15868,17 +18157,17 @@ function createRouterHistory(createHistory) {
 }
 
 /***/ }),
-/* 142 */
+/* 148 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (immutable) */ __webpack_exports__["a"] = createTransitionManager;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routerWarning__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__computeChangedRoutes__ = __webpack_require__(325);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TransitionUtils__ = __webpack_require__(322);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__isActive__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getComponents__ = __webpack_require__(326);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__matchRoutes__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routerWarning__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__computeChangedRoutes__ = __webpack_require__(338);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TransitionUtils__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__isActive__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getComponents__ = __webpack_require__(339);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__matchRoutes__ = __webpack_require__(344);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -16140,14 +18429,14 @@ function createTransitionManager(history, routes) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 143 */
+/* 149 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = useRouterHistory;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename__);
 
 
@@ -16160,7 +18449,7 @@ function useRouterHistory(createHistory) {
 }
 
 /***/ }),
-/* 144 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16185,7 +18474,7 @@ var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol
 module.exports = REACT_ELEMENT_TYPE;
 
 /***/ }),
-/* 145 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16210,12 +18499,12 @@ module.exports = REACT_ELEMENT_TYPE;
 
 var ReactCurrentOwner = __webpack_require__(16);
 var ReactComponentTreeHook = __webpack_require__(12);
-var ReactElement = __webpack_require__(24);
+var ReactElement = __webpack_require__(25);
 
-var checkReactTypeSpec = __webpack_require__(344);
+var checkReactTypeSpec = __webpack_require__(357);
 
-var canDefineProperty = __webpack_require__(50);
-var getIteratorFn = __webpack_require__(147);
+var canDefineProperty = __webpack_require__(51);
+var getIteratorFn = __webpack_require__(153);
 var warning = __webpack_require__(2);
 
 function getDeclarationErrorAddendum() {
@@ -16444,7 +18733,7 @@ module.exports = ReactElementValidator;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 146 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16475,7 +18764,7 @@ module.exports = ReactPropTypeLocationNames;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 147 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16521,7 +18810,7 @@ function getIteratorFn(maybeIterable) {
 module.exports = getIteratorFn;
 
 /***/ }),
-/* 148 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16546,7 +18835,7 @@ var formatTime = exports.formatTime = function formatTime(time) {
 var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ }),
-/* 149 */
+/* 155 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16587,14 +18876,14 @@ function compose() {
 }
 
 /***/ }),
-/* 150 */
+/* 156 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ActionTypes; });
 /* harmony export (immutable) */ __webpack_exports__["a"] = createStore;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable__ = __webpack_require__(363);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable__ = __webpack_require__(376);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_symbol_observable__);
 
 
@@ -16846,7 +19135,7 @@ function createStore(reducer, preloadedState, enhancer) {
 }
 
 /***/ }),
-/* 151 */
+/* 157 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16874,7 +19163,7 @@ function warning(message) {
 }
 
 /***/ }),
-/* 152 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -16882,15 +19171,15 @@ function warning(message) {
  * Module dependencies.
  */
 
-var eio = __webpack_require__(195);
-var Socket = __webpack_require__(154);
-var Emitter = __webpack_require__(26);
-var parser = __webpack_require__(87);
-var on = __webpack_require__(153);
-var bind = __webpack_require__(93);
-var debug = __webpack_require__(52)('socket.io-client:manager');
-var indexOf = __webpack_require__(105);
-var Backoff = __webpack_require__(171);
+var eio = __webpack_require__(202);
+var Socket = __webpack_require__(160);
+var Emitter = __webpack_require__(27);
+var parser = __webpack_require__(88);
+var on = __webpack_require__(159);
+var bind = __webpack_require__(96);
+var debug = __webpack_require__(53)('socket.io-client:manager');
+var indexOf = __webpack_require__(111);
+var Backoff = __webpack_require__(178);
 
 /**
  * IE6+ hasOwnProperty
@@ -17453,7 +19742,7 @@ Manager.prototype.onreconnect = function () {
 
 
 /***/ }),
-/* 153 */
+/* 159 */
 /***/ (function(module, exports) {
 
 
@@ -17483,7 +19772,7 @@ function on (obj, ev, fn) {
 
 
 /***/ }),
-/* 154 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -17491,12 +19780,12 @@ function on (obj, ev, fn) {
  * Module dependencies.
  */
 
-var parser = __webpack_require__(87);
-var Emitter = __webpack_require__(26);
-var toArray = __webpack_require__(366);
-var on = __webpack_require__(153);
-var bind = __webpack_require__(93);
-var debug = __webpack_require__(52)('socket.io-client:socket');
+var parser = __webpack_require__(88);
+var Emitter = __webpack_require__(27);
+var toArray = __webpack_require__(379);
+var on = __webpack_require__(159);
+var bind = __webpack_require__(96);
+var debug = __webpack_require__(53)('socket.io-client:socket');
 
 /**
  * Module exports.
@@ -17904,7 +20193,7 @@ Socket.prototype.compress = function (compress) {
 
 
 /***/ }),
-/* 155 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -17924,7 +20213,7 @@ function isBuf(obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 156 */
+/* 162 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -17952,7 +20241,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 157 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18027,7 +20316,7 @@ module.exports = yeast;
 
 
 /***/ }),
-/* 158 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18039,17 +20328,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouter = __webpack_require__(54);
+var _reactRouter = __webpack_require__(55);
 
-var _reactRedux = __webpack_require__(53);
+var _reactRedux = __webpack_require__(54);
 
-var _languageReducer = __webpack_require__(90);
+var _languageReducer = __webpack_require__(93);
 
-var _sockets = __webpack_require__(92);
+var _sockets = __webpack_require__(95);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18076,12 +20365,6 @@ var Home = function (_Component) {
   }
 
   _createClass(Home, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      // establish new socket connection
-      (0, _sockets.openSocket)();
-    }
-  }, {
     key: 'handleClick',
     value: function handleClick(e) {
       // dispatch action with language from state
@@ -18209,7 +20492,7 @@ var Home = function (_Component) {
 exports.default = (0, _reactRedux.connect)(null, { setLanguage: _languageReducer.setLanguage })(Home);
 
 /***/ }),
-/* 159 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18219,11 +20502,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouter = __webpack_require__(54);
+var _reactRouter = __webpack_require__(55);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18276,7 +20559,7 @@ var NotFound = function NotFound(props) {
 exports.default = NotFound;
 
 /***/ }),
-/* 160 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18288,13 +20571,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(53);
+var _reactRedux = __webpack_require__(54);
 
-var _reactSpeechRecognition = __webpack_require__(334);
+var _reactSpeechRecognition = __webpack_require__(347);
 
 var _reactSpeechRecognition2 = _interopRequireDefault(_reactSpeechRecognition);
 
@@ -18302,15 +20585,19 @@ var _propTypes = __webpack_require__(11);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _SpaceScene = __webpack_require__(166);
+var _Scene = __webpack_require__(172);
+
+var _Scene2 = _interopRequireDefault(_Scene);
+
+var _SpaceScene = __webpack_require__(173);
 
 var _SpaceScene2 = _interopRequireDefault(_SpaceScene);
 
-var _Bubbles = __webpack_require__(88);
+var _Bubbles = __webpack_require__(89);
 
 var _Bubbles2 = _interopRequireDefault(_Bubbles);
 
-var _sockets = __webpack_require__(92);
+var _sockets = __webpack_require__(95);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18383,7 +20670,7 @@ var Room = function (_Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       // disconnect socket, also leaves channels, unsets listeners
-      (0, _sockets.closeSocket)();
+      (0, _sockets.closeSocket)(this.state.language);
     }
   }, {
     key: 'componentDidMount',
@@ -18437,9 +20724,12 @@ var Room = function (_Component) {
       var sentimentScore = this.props.sentiment.sentimentScore[0] || 0.5;
 
       console.log('emotions in Room are', prevEmotion, currEmotion);
-      return _react2.default.createElement(_SpaceScene2.default, { prevEmotion: prevEmotion, currEmotion: currEmotion })
-      // <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality}/>
-      ;
+      return (
+        // <SpaceScene prevEmotion={prevEmotion} currEmotion={currEmotion} />
+        _react2.default.createElement(_Scene2.default, { prevEmotion: prevEmotion, currEmotion: currEmotion })
+        // <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality}/>
+
+      );
     }
   }]);
 
@@ -18467,17 +20757,3839 @@ exports.default = (0, _reactRedux.connect)(mapState, null)(EnhancedRoom);
 */
 
 /***/ }),
-/* 161 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = __webpack_require__(251);
+module.exports = __webpack_require__(264);
 
 
 /***/ }),
-/* 162 */
+/* 168 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Particles component for A-Frame.
+ *
+ * ShaderParticleEngine by Squarefeet (https://github.com/squarefeet).
+ */
+
+var SPE = __webpack_require__(169);
+
+if (typeof AFRAME === 'undefined') {
+  throw new Error('Component attempted to register before AFRAME was available.');
+}
+
+AFRAME.registerComponent('particle-system', {
+
+    schema: {
+        preset: {
+            type: 'string',
+            default: '',
+            oneOf: ['default', 'dust', 'snow', 'rain']
+        },
+        maxAge: {
+            type: 'number'
+        },
+        positionSpread: {
+            type: 'vec3'
+        },
+        type: {
+            type: 'number'
+        },
+        rotationAxis: {
+            type: 'string'
+        },
+        rotationAngle: {
+            type: 'number'
+        },
+        accelerationValue: {
+            type: 'vec3'
+        },
+        accelerationSpread: {
+            type: 'vec3'
+        },
+        velocityValue: {
+            type: 'vec3'
+        },
+        velocitySpread: {
+            type: 'vec3'
+        },
+        color: {
+            type: 'array'
+        },
+        size: {
+            type: 'number'
+        },
+        direction: {
+            type: 'number'
+        },
+        duration: {
+            type: 'number'
+        },
+        particleCount: {
+            type: 'number'
+        },
+        texture: {
+            type: 'asset'
+        },
+        randomize: {
+            type: 'boolean'
+        },
+        opacity: {
+          type: 'number',
+        },
+        maxParticleCount: {
+            type: 'number',
+            default: 250000
+        },
+        blending: {
+            type: 'number',
+            default: THREE.AdditiveBlending,
+            oneOf: [THREE.NoBlending,THREE.NormalBlending,THREE.AdditiveBlending,THREE.SubtractiveBlending,THREE.MultiplyBlending]
+        }
+    },
+
+
+    init: function() {
+
+        this.presets = [];
+
+        /* preset settings can be overwritten */
+
+        this.presets['default'] = {
+            maxAge: (this.data.maxAge!==0?this.data.maxAge:6),
+            positionSpread: (this.data.positionSpread.x!==0||this.data.positionSpread.y!==0||this.data.positionSpread.z!==0?this.data.positionSpread:{x:0,y:0,z:0}),
+            type: (this.data.type!==0?this.data.type:SPE.distributions.BOX), /* SPE.distributions.SPHERE, SPE.distributions.DISC */
+            rotationAxis: (this.data.rotationAxis!==''?this.data.rotationAxis:'x'),
+            rotationAngle: (this.data.rotationAngle!==0?this.data.rotationAngle:0),
+            accelerationValue: (this.data.accelerationValue.x!==0||this.data.accelerationValue.y!==0||this.data.accelerationValue.z!==0?this.data.accelerationValue:{x: 0, y: -10, z: 0}),
+            accelerationSpread: (this.data.accelerationSpread.x!==0||this.data.accelerationSpread.y!==0||this.data.accelerationSpread.z!==0?this.data.accelerationSpread:{x: 10, y: 0, z: 10}),
+            velocityValue: (this.data.velocityValue.x!==0||this.data.velocityValue.y!==0||this.data.velocityValue.z!==0?this.data.velocityValue:{x: 0, y: 25, z: 0}),
+            velocitySpread: (this.data.velocitySpread.x!==0||this.data.velocitySpread.y!==0||this.data.velocitySpread.z!==0?this.data.velocitySpread:{x: 10, y: 7.5, z: 10}),
+            color: (this.data.color.length?this.data.color:['#0000FF','#FF0000']),
+            size: (this.data.size!==0?this.data.size:1),
+            opacity: { value: (this.data.opacity!=0?this.data.opacity:1) },
+            direction: (this.data.direction!==0?this.data.direction:1),
+            duration: (this.data.duration!=0?this.data.duration:null),
+            particleCount: (this.data.particleCount!==0?this.data.particleCount:1000),
+            texture: (this.data.texture!==''?this.data.texture:'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/star2.png'),
+            randomize: false
+        };
+
+
+        this.presets['dust'] = {
+            maxAge: (this.data.maxAge!==0?this.data.maxAge:20),
+            positionSpread: (this.data.positionSpread.x!==0||this.data.positionSpread.y!==0||this.data.positionSpread.z!==0?this.data.positionSpread:{x:100,y:100,z:100}),
+            type: (this.data.type!==0?this.data.type:SPE.distributions.BOX), /* SPE.distributions.SPHERE, SPE.distributions.DISC */
+            rotationAxis: (this.data.rotationAxis!==''?this.data.rotationAxis:'x'),
+            rotationAngle: (this.data.rotationAngle!==0?this.data.rotationAngle:3.14),
+            accelerationValue: (this.data.accelerationValue.x!==0||this.data.accelerationValue.y!==0||this.data.accelerationValue.z!==0?this.data.accelerationValue:{x: 0, y: 0, z: 0}),
+            accelerationSpread: (this.data.accelerationSpread.x!==0||this.data.accelerationSpread.y!==0||this.data.accelerationSpread.z!==0?this.data.accelerationSpread:{x: 0, y: 0, z: 0}),
+            velocityValue: (this.data.velocityValue.x!==0||this.data.velocityValue.y!==0||this.data.velocityValue.z!==0?this.data.velocityValue:{x: 1, y: 0.3, z: 1}),
+            velocitySpread: (this.data.velocitySpread.x!==0||this.data.velocitySpread.y!==0||this.data.velocitySpread.z!==0?this.data.velocitySpread:{x: 0.5, y: 1, z: 0.5}),
+            color: (this.data.color.length?this.data.color:['#FFFFFF']),
+            size: (this.data.size!==0?this.data.size:1),
+            opacity: { value: (this.data.opacity!=0?this.data.opacity:1) },
+            direction: (this.data.direction!==0?this.data.direction:1),
+            duration: (this.data.duration!=0?this.data.duration:null),
+            particleCount: (this.data.particleCount!==0?this.data.particleCount:100),
+            texture: (this.data.texture!==''?this.data.texture:'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/smokeparticle.png'),
+            randomize: false
+        };
+
+
+        this.presets['snow'] = {
+            maxAge: (this.data.maxAge!==0?this.data.maxAge:20),
+            positionSpread: (this.data.positionSpread.x!==0||this.data.positionSpread.y!==0||this.data.positionSpread.z!==0?this.data.positionSpread:{x:100,y:100,z:100}),
+            type: (this.data.type!==0?this.data.type:SPE.distributions.BOX), /* SPE.distributions.SPHERE, SPE.distributions.DISC */
+            rotationAxis: (this.data.rotationAxis!==''?this.data.rotationAxis:'x'),
+            rotationAngle: (this.data.rotationAngle!==0?this.data.rotationAngle:3.14),
+            accelerationValue: (this.data.accelerationValue.x!==0||this.data.accelerationValue.y!==0||this.data.accelerationValue.z!==0?this.data.accelerationValue:{x: 0, y: 0, z: 0}),
+            accelerationSpread: (this.data.accelerationSpread.x!==0||this.data.accelerationSpread.y!==0||this.data.accelerationSpread.z!==0?this.data.accelerationSpread:{x: 0.2, y: 0, z: 0.2}),
+            velocityValue: (this.data.velocityValue.x!==0||this.data.velocityValue.y!==0||this.data.velocityValue.z!==0?this.data.velocityValue:{x: 0, y: 8, z: 0}),
+            velocitySpread: (this.data.velocitySpread.x!==0||this.data.velocitySpread.y!==0||this.data.velocitySpread.z!==0?this.data.velocitySpread:{x: 2, y: 0, z: 2}),
+            color: (this.data.color.length?this.data.color:['#FFFFFF']),
+            size: (this.data.size!==0?this.data.size:1),
+            opacity: { value: (this.data.opacity!=0?this.data.opacity:1) },
+            direction: (this.data.direction!==0?this.data.direction:1),
+            duration: (this.data.duration!=0?this.data.duration:null),
+            particleCount: (this.data.particleCount!==0?this.data.particleCount:200),
+            texture: (this.data.texture!==''?this.data.texture:'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/smokeparticle.png'),
+            randomize: false
+        };
+
+
+        this.presets['rain'] = {
+            maxAge: (this.data.maxAge!==0?this.data.maxAge:1),
+            positionSpread: (this.data.positionSpread.x!==0||this.data.positionSpread.y!==0||this.data.positionSpread.z!==0?this.data.positionSpread:{x:100,y:100,z:100}),
+            type: (this.data.type!==0?this.data.type:SPE.distributions.BOX), /* SPE.distributions.SPHERE, SPE.distributions.DISC */
+            rotationAxis: (this.data.rotationAxis!==''?this.data.rotationAxis:'x'),
+            rotationAngle: (this.data.rotationAngle!==0?this.data.rotationAngle:3.14),
+            accelerationValue: (this.data.accelerationValue.x!==0||this.data.accelerationValue.y!==0||this.data.accelerationValue.z!==0?this.data.accelerationValue:{x: 0, y: 3, z: 0}),
+            accelerationSpread: (this.data.accelerationSpread.x!==0||this.data.accelerationSpread.y!==0||this.data.accelerationSpread.z!==0?this.data.accelerationSpread:{x: 2, y: 1, z: 2}),
+            velocityValue: (this.data.velocityValue.x!==0||this.data.velocityValue.y!==0||this.data.velocityValue.z!==0?this.data.velocityValue:{x: 0, y: 75, z: 0}),
+            velocitySpread: (this.data.velocitySpread.x!==0||this.data.velocitySpread.y!==0||this.data.velocitySpread.z!==0?this.data.velocitySpread:{x: 10, y: 50, z: 10}),
+            color: (this.data.color.length?this.data.color:['#FFFFFF']),
+            size: (this.data.size!==0?this.data.size:0.4),
+            opacity: { value: (this.data.opacity!=0?this.data.opacity:1) },
+            direction: (this.data.direction!==0?this.data.direction:1),
+            duration: (this.data.duration!=0?this.data.duration:null),
+            particleCount: (this.data.particleCount!==0?this.data.particleCount:1000),
+            texture: (this.data.texture!==''?this.data.texture:'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/raindrop.png'),
+            randomize: false
+        };
+
+
+    },
+
+
+    update: function (oldData) {
+
+        // Remove old particle group.
+        if (this.particleGroup) {
+            this.el.removeObject3D('particle-system');
+        }
+
+        if (this.data.preset != '' && this.data.preset in this.presets) {
+
+            this.initParticleSystem(this.presets[this.data.preset]);
+
+        } else {
+
+            this.initParticleSystem(this.presets['default']);
+        }
+
+    },
+
+
+    tick: function(time, dt) {
+
+        this.particleGroup.tick(dt / 1000);
+    },
+
+
+    remove: function() {
+
+        // Remove particle system.
+        if (!this.particleGroup) { return; }
+        this.el.removeObject3D('particle-system');
+    },
+
+
+    initParticleSystem: function(settings) {
+
+        var loader = new THREE.TextureLoader();
+        var particle_texture = loader.load(
+            settings.texture,
+            function (texture) {
+                return texture;
+            },
+            function (xhr) {
+              console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            function (xhr) {
+              console.log('An error occurred');
+            }
+        );
+
+        this.particleGroup = new SPE.Group({
+            texture: {
+                value: particle_texture
+            },
+            maxParticleCount: this.data.maxParticleCount,
+            blending: this.data.blending
+        });
+
+        var emitter = new SPE.Emitter({
+            maxAge: {
+                value: settings.maxAge
+            },
+            type: {
+                value: settings.type
+            },
+            position: {
+                value: this.el.object3D.position,
+                spread: new THREE.Vector3(settings.positionSpread.x, settings.positionSpread.y, settings.positionSpread.z),
+                randomize: settings.randomize
+                //spreadClamp: new THREE.Vector3( 2, 2, 2 ),
+                //radius: 4
+            },
+            rotation: {
+                axis: (settings.rotationAxis=='x'?new THREE.Vector3(1, 0, 0):(settings.rotationAxis=='y'?new THREE.Vector3(0, 1, 0):(settings.rotationAxis=='z'?new THREE.Vector3(0, 0, 1):new THREE.Vector3(0, 1, 0)))),
+                angle: settings.rotationAngle,
+                static: true
+            },
+            acceleration: {
+                value: new THREE.Vector3(settings.accelerationValue.x, settings.accelerationValue.y, settings.accelerationValue.z),
+                spread: new THREE.Vector3(settings.accelerationSpread.x, settings.accelerationSpread.y, settings.accelerationSpread.z)
+            },
+            velocity: {
+                value: new THREE.Vector3(settings.velocityValue.x, settings.velocityValue.y, settings.velocityValue.z),
+                spread: new THREE.Vector3(settings.velocitySpread.x, settings.velocitySpread.y, settings.velocitySpread.z)
+            },
+            color: {
+                value: settings.color.map(function(c) { return new THREE.Color(c); })
+            },
+            size: {
+                value: settings.size
+            },
+            /*wiggle: { value: 4, spread: 2 }, //settings.wiggle,*/
+            /*drag: {
+                value: settings.drag
+            },*/
+            direction: {
+                value: settings.direction
+            },
+            duration: settings.duration,
+            opacity: settings.opacity,
+            particleCount: settings.particleCount
+        });
+
+        this.particleGroup.addEmitter(emitter);
+        this.particleGroup.mesh.frustumCulled = false;
+        this.el.setObject3D('particle-system', this.particleGroup.mesh);
+    }
+});
+
+
+/***/ }),
+/* 169 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* shader-particle-engine 1.0.5
+ * 
+ * (c) 2015 Luke Moody (http://www.github.com/squarefeet)
+ *     Originally based on Lee Stemkoski's original work (https://github.com/stemkoski/stemkoski.github.com/blob/master/Three.js/js/ParticleEngine.js).
+ *
+ * shader-particle-engine may be freely distributed under the MIT license (See LICENSE at root of this repository.)
+ */
+/**
+ * @typedef {Number} distribution
+ * @property {Number} SPE.distributions.BOX Values will be distributed within a box.
+ * @property {Number} SPE.distributions.SPHERE Values will be distributed within a sphere.
+ * @property {Number} SPE.distributions.DISC Values will be distributed within a 2D disc.
+ */
+
+/**
+ * Namespace for Shader Particle Engine.
+ *
+ * All SPE-related code sits under this namespace.
+ *
+ * @type {Object}
+ * @namespace
+ */
+var SPE = {
+
+    /**
+     * A map of supported distribution types used
+     * by SPE.Emitter instances.
+     *
+     * These distribution types can be applied to
+     * an emitter globally, which will affect the
+     * `position`, `velocity`, and `acceleration`
+     * value calculations for an emitter, or they
+     * can be applied on a per-property basis.
+     *
+     * @enum {Number}
+     */
+    distributions: {
+        /**
+         * Values will be distributed within a box.
+         * @type {Number}
+         */
+        BOX: 1,
+
+        /**
+         * Values will be distributed on a sphere.
+         * @type {Number}
+         */
+        SPHERE: 2,
+
+        /**
+         * Values will be distributed on a 2d-disc shape.
+         * @type {Number}
+         */
+        DISC: 3,
+    },
+
+
+    /**
+     * Set this value to however many 'steps' you
+     * want value-over-lifetime properties to have.
+     *
+     * It's adjustable to fix an interpolation problem:
+     *
+     * Assuming you specify an opacity value as [0, 1, 0]
+     *      and the `valueOverLifetimeLength` is 4, then the
+     *      opacity value array will be reinterpolated to
+     *      be [0, 0.66, 0.66, 0].
+     *   This isn't ideal, as particles would never reach
+     *   full opacity.
+     *
+     * NOTE:
+     *     This property affects the length of ALL
+     *       value-over-lifetime properties for ALL
+     *       emitters and ALL groups.
+     *
+     *     Only values >= 3 && <= 4 are allowed.
+     *
+     * @type {Number}
+     */
+    valueOverLifetimeLength: 4
+};
+
+// Module loader support:
+if ( true ) {
+    !(__WEBPACK_AMD_DEFINE_FACTORY__ = (SPE),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+}
+else if ( typeof exports !== 'undefined' && typeof module !== 'undefined' ) {
+    module.exports = SPE;
+}
+
+/**
+ * A helper class for TypedArrays.
+ *
+ * Allows for easy resizing, assignment of various component-based
+ * types (Vector2s, Vector3s, Vector4s, Mat3s, Mat4s),
+ * as well as Colors (where components are `r`, `g`, `b`),
+ * Numbers, and setting from other TypedArrays.
+ *
+ * @author Luke Moody
+ * @constructor
+ * @param {Function} TypedArrayConstructor The constructor to use (Float32Array, Uint8Array, etc.)
+ * @param {Number} size                 The size of the array to create
+ * @param {Number} componentSize        The number of components per-value (ie. 3 for a vec3, 9 for a Mat3, etc.)
+ * @param {Number} indexOffset          The index in the array from which to start assigning values. Default `0` if none provided
+ */
+SPE.TypedArrayHelper = function( TypedArrayConstructor, size, componentSize, indexOffset ) {
+    'use strict';
+
+    this.componentSize = componentSize || 1;
+    this.size = ( size || 1 );
+    this.TypedArrayConstructor = TypedArrayConstructor || Float32Array;
+    this.array = new TypedArrayConstructor( size * this.componentSize );
+    this.indexOffset = indexOffset || 0;
+};
+
+SPE.TypedArrayHelper.constructor = SPE.TypedArrayHelper;
+
+/**
+ * Sets the size of the internal array.
+ *
+ * Delegates to `this.shrink` or `this.grow` depending on size
+ * argument's relation to the current size of the internal array.
+ *
+ * Note that if the array is to be shrunk, data will be lost.
+ *
+ * @param {Number} size The new size of the array.
+ */
+SPE.TypedArrayHelper.prototype.setSize = function( size, noComponentMultiply ) {
+    'use strict';
+
+    var currentArraySize = this.array.length;
+
+    if ( !noComponentMultiply ) {
+        size = size * this.componentSize;
+    }
+
+    if ( size < currentArraySize ) {
+        return this.shrink( size );
+    }
+    else if ( size > currentArraySize ) {
+        return this.grow( size );
+    }
+    else {
+        console.info( 'TypedArray is already of size:', size + '.', 'Will not resize.' );
+    }
+};
+
+/**
+ * Shrinks the internal array.
+ *
+ * @param  {Number} size The new size of the typed array. Must be smaller than `this.array.length`.
+ * @return {SPE.TypedArrayHelper}      Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.shrink = function( size ) {
+    'use strict';
+
+    this.array = this.array.subarray( 0, size );
+    this.size = size;
+    return this;
+};
+
+/**
+ * Grows the internal array.
+ * @param  {Number} size The new size of the typed array. Must be larger than `this.array.length`.
+ * @return {SPE.TypedArrayHelper}      Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.grow = function( size ) {
+    'use strict';
+
+    var existingArray = this.array,
+        newArray = new this.TypedArrayConstructor( size );
+
+    newArray.set( existingArray );
+    this.array = newArray;
+    this.size = size;
+
+    return this;
+};
+
+
+/**
+ * Perform a splice operation on this array's buffer.
+ * @param  {Number} start The start index of the splice. Will be multiplied by the number of components for this attribute.
+ * @param  {Number} end The end index of the splice. Will be multiplied by the number of components for this attribute.
+ * @returns {Object} The SPE.TypedArrayHelper instance.
+ */
+SPE.TypedArrayHelper.prototype.splice = function( start, end ) {
+    'use strict';
+    start *= this.componentSize;
+    end *= this.componentSize;
+
+    var data = [],
+        array = this.array,
+        size = array.length;
+
+    for ( var i = 0; i < size; ++i ) {
+        if ( i < start || i >= end ) {
+            data.push( array[ i ] );
+        }
+        // array[ i ] = 0;
+    }
+
+    this.setFromArray( 0, data );
+
+    return this;
+};
+
+
+/**
+ * Copies from the given TypedArray into this one, using the index argument
+ * as the start position. Alias for `TypedArray.set`. Will automatically resize
+ * if the given source array is of a larger size than the internal array.
+ *
+ * @param {Number} index      The start position from which to copy into this array.
+ * @param {TypedArray} array The array from which to copy; the source array.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setFromArray = function( index, array ) {
+    'use strict';
+
+    var sourceArraySize = array.length,
+        newSize = index + sourceArraySize;
+
+    if ( newSize > this.array.length ) {
+        this.grow( newSize );
+    }
+    else if ( newSize < this.array.length ) {
+        this.shrink( newSize );
+    }
+
+    this.array.set( array, this.indexOffset + index );
+
+    return this;
+};
+
+/**
+ * Set a Vector2 value at `index`.
+ *
+ * @param {Number} index The index at which to set the vec2 values from.
+ * @param {Vector2} vec2  Any object that has `x` and `y` properties.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setVec2 = function( index, vec2 ) {
+    'use strict';
+
+    return this.setVec2Components( index, vec2.x, vec2.y );
+};
+
+/**
+ * Set a Vector2 value using raw components.
+ *
+ * @param {Number} index The index at which to set the vec2 values from.
+ * @param {Number} x     The Vec2's `x` component.
+ * @param {Number} y     The Vec2's `y` component.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setVec2Components = function( index, x, y ) {
+    'use strict';
+
+    var array = this.array,
+        i = this.indexOffset + ( index * this.componentSize );
+
+    array[ i ] = x;
+    array[ i + 1 ] = y;
+    return this;
+};
+
+/**
+ * Set a Vector3 value at `index`.
+ *
+ * @param {Number} index The index at which to set the vec3 values from.
+ * @param {Vector3} vec2  Any object that has `x`, `y`, and `z` properties.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setVec3 = function( index, vec3 ) {
+    'use strict';
+
+    return this.setVec3Components( index, vec3.x, vec3.y, vec3.z );
+};
+
+/**
+ * Set a Vector3 value using raw components.
+ *
+ * @param {Number} index The index at which to set the vec3 values from.
+ * @param {Number} x     The Vec3's `x` component.
+ * @param {Number} y     The Vec3's `y` component.
+ * @param {Number} z     The Vec3's `z` component.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setVec3Components = function( index, x, y, z ) {
+    'use strict';
+
+    var array = this.array,
+        i = this.indexOffset + ( index * this.componentSize );
+
+    array[ i ] = x;
+    array[ i + 1 ] = y;
+    array[ i + 2 ] = z;
+    return this;
+};
+
+/**
+ * Set a Vector4 value at `index`.
+ *
+ * @param {Number} index The index at which to set the vec4 values from.
+ * @param {Vector4} vec2  Any object that has `x`, `y`, `z`, and `w` properties.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setVec4 = function( index, vec4 ) {
+    'use strict';
+
+    return this.setVec4Components( index, vec4.x, vec4.y, vec4.z, vec4.w );
+};
+
+/**
+ * Set a Vector4 value using raw components.
+ *
+ * @param {Number} index The index at which to set the vec4 values from.
+ * @param {Number} x     The Vec4's `x` component.
+ * @param {Number} y     The Vec4's `y` component.
+ * @param {Number} z     The Vec4's `z` component.
+ * @param {Number} w     The Vec4's `w` component.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setVec4Components = function( index, x, y, z, w ) {
+    'use strict';
+
+    var array = this.array,
+        i = this.indexOffset + ( index * this.componentSize );
+
+    array[ i ] = x;
+    array[ i + 1 ] = y;
+    array[ i + 2 ] = z;
+    array[ i + 3 ] = w;
+    return this;
+};
+
+/**
+ * Set a Matrix3 value at `index`.
+ *
+ * @param {Number} index The index at which to set the matrix values from.
+ * @param {Matrix3} mat3 The 3x3 matrix to set from. Must have a TypedArray property named `elements` to copy from.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setMat3 = function( index, mat3 ) {
+    'use strict';
+
+    return this.setFromArray( this.indexOffset + ( index * this.componentSize ), mat3.elements );
+};
+
+/**
+ * Set a Matrix4 value at `index`.
+ *
+ * @param {Number} index The index at which to set the matrix values from.
+ * @param {Matrix4} mat3 The 4x4 matrix to set from. Must have a TypedArray property named `elements` to copy from.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setMat4 = function( index, mat4 ) {
+    'use strict';
+
+    return this.setFromArray( this.indexOffset + ( index * this.componentSize ), mat4.elements );
+};
+
+/**
+ * Set a Color value at `index`.
+ *
+ * @param {Number} index The index at which to set the vec3 values from.
+ * @param {Color} color  Any object that has `r`, `g`, and `b` properties.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setColor = function( index, color ) {
+    'use strict';
+
+    return this.setVec3Components( index, color.r, color.g, color.b );
+};
+
+/**
+ * Set a Number value at `index`.
+ *
+ * @param {Number} index The index at which to set the vec3 values from.
+ * @param {Number} numericValue  The number to assign to this index in the array.
+ * @return {SPE.TypedArrayHelper} Instance of this class.
+ */
+SPE.TypedArrayHelper.prototype.setNumber = function( index, numericValue ) {
+    'use strict';
+
+    this.array[ this.indexOffset + ( index * this.componentSize ) ] = numericValue;
+    return this;
+};
+
+/**
+ * Returns the value of the array at the given index, taking into account
+ * the `indexOffset` property of this class.
+ *
+ * Note that this function ignores the component size and will just return a
+ * single value.
+ *
+ * @param  {Number} index The index in the array to fetch.
+ * @return {Number}       The value at the given index.
+ */
+SPE.TypedArrayHelper.prototype.getValueAtIndex = function( index ) {
+    'use strict';
+
+    return this.array[ this.indexOffset + index ];
+};
+
+/**
+ * Returns the component value of the array at the given index, taking into account
+ * the `indexOffset` property of this class.
+ *
+ * If the componentSize is set to 3, then it will return a new TypedArray
+ * of length 3.
+ *
+ * @param  {Number} index The index in the array to fetch.
+ * @return {TypedArray}       The component value at the given index.
+ */
+SPE.TypedArrayHelper.prototype.getComponentValueAtIndex = function( index ) {
+    'use strict';
+
+    return this.array.subarray( this.indexOffset + ( index * this.componentSize ) );
+};
+
+/**
+ * A helper to handle creating and updating a THREE.BufferAttribute instance.
+ *
+ * @author  Luke Moody
+ * @constructor
+ * @param {String} type          The buffer attribute type. See SPE.ShaderAttribute.typeSizeMap for valid values.
+ * @param {Boolean=} dynamicBuffer Whether this buffer attribute should be marked as dynamic or not.
+ * @param {Function=} arrayType     A reference to a TypedArray constructor. Defaults to Float32Array if none provided.
+ */
+SPE.ShaderAttribute = function( type, dynamicBuffer, arrayType ) {
+    'use strict';
+
+    var typeMap = SPE.ShaderAttribute.typeSizeMap;
+
+    this.type = typeof type === 'string' && typeMap.hasOwnProperty( type ) ? type : 'f';
+    this.componentSize = typeMap[ this.type ];
+    this.arrayType = arrayType || Float32Array;
+    this.typedArray = null;
+    this.bufferAttribute = null;
+    this.dynamicBuffer = !!dynamicBuffer;
+
+    this.updateMin = 0;
+    this.updateMax = 0;
+};
+
+SPE.ShaderAttribute.constructor = SPE.ShaderAttribute;
+
+/**
+ * A map of uniform types to their component size.
+ * @enum {Number}
+ */
+SPE.ShaderAttribute.typeSizeMap = {
+    /**
+     * Float
+     * @type {Number}
+     */
+    f: 1,
+
+    /**
+     * Vec2
+     * @type {Number}
+     */
+    v2: 2,
+
+    /**
+     * Vec3
+     * @type {Number}
+     */
+    v3: 3,
+
+    /**
+     * Vec4
+     * @type {Number}
+     */
+    v4: 4,
+
+    /**
+     * Color
+     * @type {Number}
+     */
+    c: 3,
+
+    /**
+     * Mat3
+     * @type {Number}
+     */
+    m3: 9,
+
+    /**
+     * Mat4
+     * @type {Number}
+     */
+    m4: 16
+};
+
+/**
+ * Calculate the minimum and maximum update range for this buffer attribute using
+ * component size independant min and max values.
+ *
+ * @param {Number} min The start of the range to mark as needing an update.
+ * @param {Number} max The end of the range to mark as needing an update.
+ */
+SPE.ShaderAttribute.prototype.setUpdateRange = function( min, max ) {
+    'use strict';
+
+    this.updateMin = Math.min( min * this.componentSize, this.updateMin * this.componentSize );
+    this.updateMax = Math.max( max * this.componentSize, this.updateMax * this.componentSize );
+};
+
+/**
+ * Calculate the number of indices that this attribute should mark as needing
+ * updating. Also marks the attribute as needing an update.
+ */
+SPE.ShaderAttribute.prototype.flagUpdate = function() {
+    'use strict';
+
+    var attr = this.bufferAttribute,
+        range = attr.updateRange;
+
+    range.offset = this.updateMin;
+    range.count = Math.min( ( this.updateMax - this.updateMin ) + this.componentSize, this.typedArray.array.length );
+    // console.log( range.offset, range.count, this.typedArray.array.length );
+    // console.log( 'flagUpdate:', range.offset, range.count );
+    attr.needsUpdate = true;
+};
+
+
+
+/**
+ * Reset the index update counts for this attribute
+ */
+SPE.ShaderAttribute.prototype.resetUpdateRange = function() {
+    'use strict';
+
+    this.updateMin = 0;
+    this.updateMax = 0;
+};
+
+SPE.ShaderAttribute.prototype.resetDynamic = function() {
+    'use strict';
+    this.bufferAttribute.dynamic = this.dynamicBuffer;
+};
+
+/**
+ * Perform a splice operation on this attribute's buffer.
+ * @param  {Number} start The start index of the splice. Will be multiplied by the number of components for this attribute.
+ * @param  {Number} end The end index of the splice. Will be multiplied by the number of components for this attribute.
+ */
+SPE.ShaderAttribute.prototype.splice = function( start, end ) {
+    'use strict';
+
+    this.typedArray.splice( start, end );
+
+    // Reset the reference to the attribute's typed array
+    // since it has probably changed.
+    this.forceUpdateAll();
+};
+
+SPE.ShaderAttribute.prototype.forceUpdateAll = function() {
+    'use strict';
+
+    this.bufferAttribute.array = this.typedArray.array;
+    this.bufferAttribute.updateRange.offset = 0;
+    this.bufferAttribute.updateRange.count = -1;
+    this.bufferAttribute.dynamic = false;
+    this.bufferAttribute.needsUpdate = true;
+};
+
+/**
+ * Make sure this attribute has a typed array associated with it.
+ *
+ * If it does, then it will ensure the typed array is of the correct size.
+ *
+ * If not, a new SPE.TypedArrayHelper instance will be created.
+ *
+ * @param  {Number} size The size of the typed array to create or update to.
+ */
+SPE.ShaderAttribute.prototype._ensureTypedArray = function( size ) {
+    'use strict';
+
+    // Condition that's most likely to be true at the top: no change.
+    if ( this.typedArray !== null && this.typedArray.size === size * this.componentSize ) {
+        return;
+    }
+
+    // Resize the array if we need to, telling the TypedArrayHelper to
+    // ignore it's component size when evaluating size.
+    else if ( this.typedArray !== null && this.typedArray.size !== size ) {
+        this.typedArray.setSize( size );
+    }
+
+    // This condition should only occur once in an attribute's lifecycle.
+    else if ( this.typedArray === null ) {
+        this.typedArray = new SPE.TypedArrayHelper( this.arrayType, size, this.componentSize );
+    }
+};
+
+
+/**
+ * Creates a THREE.BufferAttribute instance if one doesn't exist already.
+ *
+ * Ensures a typed array is present by calling _ensureTypedArray() first.
+ *
+ * If a buffer attribute exists already, then it will be marked as needing an update.
+ *
+ * @param  {Number} size The size of the typed array to create if one doesn't exist, or resize existing array to.
+ */
+SPE.ShaderAttribute.prototype._createBufferAttribute = function( size ) {
+    'use strict';
+
+    // Make sure the typedArray is present and correct.
+    this._ensureTypedArray( size );
+
+    // Don't create it if it already exists, but do
+    // flag that it needs updating on the next render
+    // cycle.
+    if ( this.bufferAttribute !== null ) {
+        this.bufferAttribute.array = this.typedArray.array;
+        this.bufferAttribute.needsUpdate = true;
+        return;
+    }
+
+    this.bufferAttribute = new THREE.BufferAttribute( this.typedArray.array, this.componentSize );
+    this.bufferAttribute.dynamic = this.dynamicBuffer;
+};
+
+/**
+ * Returns the length of the typed array associated with this attribute.
+ * @return {Number} The length of the typed array. Will be 0 if no typed array has been created yet.
+ */
+SPE.ShaderAttribute.prototype.getLength = function() {
+    'use strict';
+
+    if ( this.typedArray === null ) {
+        return 0;
+    }
+
+    return this.typedArray.array.length;
+};
+
+SPE.shaderChunks = {
+    // Register color-packing define statements.
+    defines: [
+        '#define PACKED_COLOR_SIZE 256.0',
+        '#define PACKED_COLOR_DIVISOR 255.0'
+    ].join( '\n' ),
+
+    // All uniforms used by vertex / fragment shaders
+    uniforms: [
+        'uniform float deltaTime;',
+        'uniform float runTime;',
+        'uniform sampler2D texture;',
+        'uniform vec4 textureAnimation;',
+        'uniform float scale;',
+    ].join( '\n' ),
+
+    // All attributes used by the vertex shader.
+    //
+    // Note that some attributes are squashed into other ones:
+    //
+    // * Drag is acceleration.w
+    attributes: [
+        'attribute vec4 acceleration;',
+        'attribute vec3 velocity;',
+        'attribute vec4 rotation;',
+        'attribute vec3 rotationCenter;',
+        'attribute vec4 params;',
+        'attribute vec4 size;',
+        'attribute vec4 angle;',
+        'attribute vec4 color;',
+        'attribute vec4 opacity;'
+    ].join( '\n' ),
+
+    //
+    varyings: [
+        'varying vec4 vColor;',
+        '#ifdef SHOULD_ROTATE_TEXTURE',
+        '    varying float vAngle;',
+        '#endif',
+
+        '#ifdef SHOULD_CALCULATE_SPRITE',
+        '    varying vec4 vSpriteSheet;',
+        '#endif'
+    ].join( '\n' ),
+
+
+    // Branch-avoiding comparison fns
+    // - http://theorangeduck.com/page/avoiding-shader-conditionals
+    branchAvoidanceFunctions: [
+        'float when_gt(float x, float y) {',
+        '    return max(sign(x - y), 0.0);',
+        '}',
+
+        'float when_lt(float x, float y) {',
+        '    return min( max(1.0 - sign(x - y), 0.0), 1.0 );',
+        '}',
+
+        'float when_eq( float x, float y ) {',
+        '    return 1.0 - abs( sign( x - y ) );',
+        '}',
+
+        'float when_ge(float x, float y) {',
+        '  return 1.0 - when_lt(x, y);',
+        '}',
+
+        'float when_le(float x, float y) {',
+        '  return 1.0 - when_gt(x, y);',
+        '}',
+
+        // Branch-avoiding logical operators
+        // (to be used with above comparison fns)
+        'float and(float a, float b) {',
+        '    return a * b;',
+        '}',
+
+        'float or(float a, float b) {',
+        '    return min(a + b, 1.0);',
+        '}',
+    ].join( '\n' ),
+
+
+    // From:
+    // - http://stackoverflow.com/a/12553149
+    // - https://stackoverflow.com/questions/22895237/hexadecimal-to-rgb-values-in-webgl-shader
+    unpackColor: [
+        'vec3 unpackColor( in float hex ) {',
+        '   vec3 c = vec3( 0.0 );',
+
+        '   float r = mod( (hex / PACKED_COLOR_SIZE / PACKED_COLOR_SIZE), PACKED_COLOR_SIZE );',
+        '   float g = mod( (hex / PACKED_COLOR_SIZE), PACKED_COLOR_SIZE );',
+        '   float b = mod( hex, PACKED_COLOR_SIZE );',
+
+        '   c.r = r / PACKED_COLOR_DIVISOR;',
+        '   c.g = g / PACKED_COLOR_DIVISOR;',
+        '   c.b = b / PACKED_COLOR_DIVISOR;',
+
+        '   return c;',
+        '}',
+    ].join( '\n' ),
+
+    unpackRotationAxis: [
+        'vec3 unpackRotationAxis( in float hex ) {',
+        '   vec3 c = vec3( 0.0 );',
+
+        '   float r = mod( (hex / PACKED_COLOR_SIZE / PACKED_COLOR_SIZE), PACKED_COLOR_SIZE );',
+        '   float g = mod( (hex / PACKED_COLOR_SIZE), PACKED_COLOR_SIZE );',
+        '   float b = mod( hex, PACKED_COLOR_SIZE );',
+
+        '   c.r = r / PACKED_COLOR_DIVISOR;',
+        '   c.g = g / PACKED_COLOR_DIVISOR;',
+        '   c.b = b / PACKED_COLOR_DIVISOR;',
+
+        '   c *= vec3( 2.0 );',
+        '   c -= vec3( 1.0 );',
+
+        '   return c;',
+        '}',
+    ].join( '\n' ),
+
+    floatOverLifetime: [
+        'float getFloatOverLifetime( in float positionInTime, in vec4 attr ) {',
+        '    highp float value = 0.0;',
+        '    float deltaAge = positionInTime * float( VALUE_OVER_LIFETIME_LENGTH - 1 );',
+        '    float fIndex = 0.0;',
+        '    float shouldApplyValue = 0.0;',
+
+        // This might look a little odd, but it's faster in the testing I've done than using branches.
+        // Uses basic maths to avoid branching.
+        //
+        // Take a look at the branch-avoidance functions defined above,
+        // and be sure to check out The Orange Duck site where I got this
+        // from (link above).
+
+        // Fix for static emitters (age is always zero).
+        '    value += attr[ 0 ] * when_eq( deltaAge, 0.0 );',
+        '',
+        '    for( int i = 0; i < VALUE_OVER_LIFETIME_LENGTH - 1; ++i ) {',
+        '       fIndex = float( i );',
+        '       shouldApplyValue = and( when_gt( deltaAge, fIndex ), when_le( deltaAge, fIndex + 1.0 ) );',
+        '       value += shouldApplyValue * mix( attr[ i ], attr[ i + 1 ], deltaAge - fIndex );',
+        '    }',
+        '',
+        '    return value;',
+        '}',
+    ].join( '\n' ),
+
+    colorOverLifetime: [
+        'vec3 getColorOverLifetime( in float positionInTime, in vec3 color1, in vec3 color2, in vec3 color3, in vec3 color4 ) {',
+        '    vec3 value = vec3( 0.0 );',
+        '    value.x = getFloatOverLifetime( positionInTime, vec4( color1.x, color2.x, color3.x, color4.x ) );',
+        '    value.y = getFloatOverLifetime( positionInTime, vec4( color1.y, color2.y, color3.y, color4.y ) );',
+        '    value.z = getFloatOverLifetime( positionInTime, vec4( color1.z, color2.z, color3.z, color4.z ) );',
+        '    return value;',
+        '}',
+    ].join( '\n' ),
+
+    paramFetchingFunctions: [
+        'float getAlive() {',
+        '   return params.x;',
+        '}',
+
+        'float getAge() {',
+        '   return params.y;',
+        '}',
+
+        'float getMaxAge() {',
+        '   return params.z;',
+        '}',
+
+        'float getWiggle() {',
+        '   return params.w;',
+        '}',
+    ].join( '\n' ),
+
+    forceFetchingFunctions: [
+        'vec4 getPosition( in float age ) {',
+        '   return modelViewMatrix * vec4( position, 1.0 );',
+        '}',
+
+        'vec3 getVelocity( in float age ) {',
+        '   return velocity * age;',
+        '}',
+
+        'vec3 getAcceleration( in float age ) {',
+        '   return acceleration.xyz * age;',
+        '}',
+    ].join( '\n' ),
+
+
+    rotationFunctions: [
+        // Huge thanks to:
+        // - http://www.neilmendoza.com/glsl-rotation-about-an-arbitrary-axis/
+        '#ifdef SHOULD_ROTATE_PARTICLES',
+        '   mat4 getRotationMatrix( in vec3 axis, in float angle) {',
+        '       axis = normalize(axis);',
+        '       float s = sin(angle);',
+        '       float c = cos(angle);',
+        '       float oc = 1.0 - c;',
+        '',
+        '       return mat4(oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,  0.0,',
+        '                   oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,  0.0,',
+        '                   oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c,           0.0,',
+        '                   0.0,                                0.0,                                0.0,                                1.0);',
+        '   }',
+        '',
+        '   vec3 getRotation( in vec3 pos, in float positionInTime ) {',
+        '      if( rotation.y == 0.0 ) {',
+        '           return pos;',
+        '      }',
+        '',
+        '      vec3 axis = unpackRotationAxis( rotation.x );',
+        '      vec3 center = rotationCenter;',
+        '      vec3 translated;',
+        '      mat4 rotationMatrix;',
+
+        '      float angle = 0.0;',
+        '      angle += when_eq( rotation.z, 0.0 ) * rotation.y;',
+        '      angle += when_gt( rotation.z, 0.0 ) * mix( 0.0, rotation.y, positionInTime );',
+        '      translated = rotationCenter - pos;',
+        '      rotationMatrix = getRotationMatrix( axis, angle );',
+        '      return center - vec3( rotationMatrix * vec4( translated, 0.0 ) );',
+        '   }',
+        '#endif'
+    ].join( '\n' ),
+
+
+    // Fragment chunks
+    rotateTexture: [
+        '    vec2 vUv = vec2( gl_PointCoord.x, 1.0 - gl_PointCoord.y );',
+        '',
+        '    #ifdef SHOULD_ROTATE_TEXTURE',
+        '       float x = gl_PointCoord.x - 0.5;',
+        '       float y = 1.0 - gl_PointCoord.y - 0.5;',
+        '       float c = cos( -vAngle );',
+        '       float s = sin( -vAngle );',
+
+        '       vUv = vec2( c * x + s * y + 0.5, c * y - s * x + 0.5 );',
+        '    #endif',
+        '',
+
+        // Spritesheets overwrite angle calculations.
+        '    #ifdef SHOULD_CALCULATE_SPRITE',
+        '        float framesX = vSpriteSheet.x;',
+        '        float framesY = vSpriteSheet.y;',
+        '        float columnNorm = vSpriteSheet.z;',
+        '        float rowNorm = vSpriteSheet.w;',
+
+        '        vUv.x = gl_PointCoord.x * framesX + columnNorm;',
+        '        vUv.y = 1.0 - (gl_PointCoord.y * framesY + rowNorm);',
+        '    #endif',
+
+        '',
+        '    vec4 rotatedTexture = texture2D( texture, vUv );',
+    ].join( '\n' )
+};
+
+SPE.shaders = {
+    vertex: [
+        SPE.shaderChunks.defines,
+        SPE.shaderChunks.uniforms,
+        SPE.shaderChunks.attributes,
+        SPE.shaderChunks.varyings,
+
+        THREE.ShaderChunk.common,
+        THREE.ShaderChunk.logdepthbuf_pars_vertex,
+
+        SPE.shaderChunks.branchAvoidanceFunctions,
+        SPE.shaderChunks.unpackColor,
+        SPE.shaderChunks.unpackRotationAxis,
+        SPE.shaderChunks.floatOverLifetime,
+        SPE.shaderChunks.colorOverLifetime,
+        SPE.shaderChunks.paramFetchingFunctions,
+        SPE.shaderChunks.forceFetchingFunctions,
+        SPE.shaderChunks.rotationFunctions,
+
+
+        'void main() {',
+
+
+        //
+        // Setup...
+        //
+        '    highp float age = getAge();',
+        '    highp float alive = getAlive();',
+        '    highp float maxAge = getMaxAge();',
+        '    highp float positionInTime = (age / maxAge);',
+        '    highp float isAlive = when_gt( alive, 0.0 );',
+
+        '    #ifdef SHOULD_WIGGLE_PARTICLES',
+        '        float wiggleAmount = positionInTime * getWiggle();',
+        '        float wiggleSin = isAlive * sin( wiggleAmount );',
+        '        float wiggleCos = isAlive * cos( wiggleAmount );',
+        '    #endif',
+
+        //
+        // Forces
+        //
+
+        // Get forces & position
+        '    vec3 vel = getVelocity( age );',
+        '    vec3 accel = getAcceleration( age );',
+        '    vec3 force = vec3( 0.0 );',
+        '    vec3 pos = vec3( position );',
+
+        // Calculate the required drag to apply to the forces.
+        '    float drag = 1.0 - (positionInTime * 0.5) * acceleration.w;',
+
+        // Integrate forces...
+        '    force += vel;',
+        '    force *= drag;',
+        '    force += accel * age;',
+        '    pos += force;',
+
+
+        // Wiggly wiggly wiggle!
+        '    #ifdef SHOULD_WIGGLE_PARTICLES',
+        '        pos.x += wiggleSin;',
+        '        pos.y += wiggleCos;',
+        '        pos.z += wiggleSin;',
+        '    #endif',
+
+
+        // Rotate the emitter around it's central point
+        '    #ifdef SHOULD_ROTATE_PARTICLES',
+        '        pos = getRotation( pos, positionInTime );',
+        '    #endif',
+
+        // Convert pos to a world-space value
+        '    vec4 mvPos = modelViewMatrix * vec4( pos, 1.0 );',
+
+        // Determine point size.
+        '    highp float pointSize = getFloatOverLifetime( positionInTime, size ) * isAlive;',
+
+        // Determine perspective
+        '    #ifdef HAS_PERSPECTIVE',
+        '        float perspective = scale / length( mvPos.xyz );',
+        '    #else',
+        '        float perspective = 1.0;',
+        '    #endif',
+
+        // Apply perpective to pointSize value
+        '    float pointSizePerspective = pointSize * perspective;',
+
+
+        //
+        // Appearance
+        //
+
+        // Determine color and opacity for this particle
+        '    #ifdef COLORIZE',
+        '       vec3 c = isAlive * getColorOverLifetime(',
+        '           positionInTime,',
+        '           unpackColor( color.x ),',
+        '           unpackColor( color.y ),',
+        '           unpackColor( color.z ),',
+        '           unpackColor( color.w )',
+        '       );',
+        '    #else',
+        '       vec3 c = vec3(1.0);',
+        '    #endif',
+
+        '    float o = isAlive * getFloatOverLifetime( positionInTime, opacity );',
+
+        // Assign color to vColor varying.
+        '    vColor = vec4( c, o );',
+
+        // Determine angle
+        '    #ifdef SHOULD_ROTATE_TEXTURE',
+        '        vAngle = isAlive * getFloatOverLifetime( positionInTime, angle );',
+        '    #endif',
+
+        // If this particle is using a sprite-sheet as a texture, we'll have to figure out
+        // what frame of the texture the particle is using at it's current position in time.
+        '    #ifdef SHOULD_CALCULATE_SPRITE',
+        '        float framesX = textureAnimation.x;',
+        '        float framesY = textureAnimation.y;',
+        '        float loopCount = textureAnimation.w;',
+        '        float totalFrames = textureAnimation.z;',
+        '        float frameNumber = mod( (positionInTime * loopCount) * totalFrames, totalFrames );',
+
+        '        float column = floor(mod( frameNumber, framesX ));',
+        '        float row = floor( (frameNumber - column) / framesX );',
+
+        '        float columnNorm = column / framesX;',
+        '        float rowNorm = row / framesY;',
+
+        '        vSpriteSheet.x = 1.0 / framesX;',
+        '        vSpriteSheet.y = 1.0 / framesY;',
+        '        vSpriteSheet.z = columnNorm;',
+        '        vSpriteSheet.w = rowNorm;',
+        '    #endif',
+
+        //
+        // Write values
+        //
+
+        // Set PointSize according to size at current point in time.
+        '    gl_PointSize = pointSizePerspective;',
+        '    gl_Position = projectionMatrix * mvPos;',
+
+        THREE.ShaderChunk.logdepthbuf_vertex,
+
+        '}'
+    ].join( '\n' ),
+
+    fragment: [
+        SPE.shaderChunks.uniforms,
+
+        THREE.ShaderChunk.common,
+        THREE.ShaderChunk.fog_pars_fragment,
+        THREE.ShaderChunk.logdepthbuf_pars_fragment,
+
+        SPE.shaderChunks.varyings,
+
+        SPE.shaderChunks.branchAvoidanceFunctions,
+
+        'void main() {',
+        '    vec3 outgoingLight = vColor.xyz;',
+        '    ',
+        '    #ifdef ALPHATEST',
+        '       if ( vColor.w < float(ALPHATEST) ) discard;',
+        '    #endif',
+
+        SPE.shaderChunks.rotateTexture,
+
+        THREE.ShaderChunk.logdepthbuf_fragment,
+
+        '    outgoingLight = vColor.xyz * rotatedTexture.xyz;',
+
+        THREE.ShaderChunk.fog_fragment,
+
+        '    gl_FragColor = vec4( outgoingLight.xyz, rotatedTexture.w * vColor.w );',
+        '}'
+    ].join( '\n' )
+};
+
+/**
+ * A bunch of utility functions used throughout the library.
+ * @namespace
+ * @type {Object}
+ */
+SPE.utils = {
+    /**
+     * A map of types used by `SPE.utils.ensureTypedArg` and
+     * `SPE.utils.ensureArrayTypedArg` to compare types against.
+     *
+     * @enum {String}
+     */
+    types: {
+        /**
+         * Boolean type.
+         * @type {String}
+         */
+        BOOLEAN: 'boolean',
+
+        /**
+         * String type.
+         * @type {String}
+         */
+        STRING: 'string',
+
+        /**
+         * Number type.
+         * @type {String}
+         */
+        NUMBER: 'number',
+
+        /**
+         * Object type.
+         * @type {String}
+         */
+        OBJECT: 'object'
+    },
+
+    /**
+     * Given a value, a type, and a default value to fallback to,
+     * ensure the given argument adheres to the type requesting,
+     * returning the default value if type check is false.
+     *
+     * @param  {(boolean|string|number|object)} arg          The value to perform a type-check on.
+     * @param  {String} type         The type the `arg` argument should adhere to.
+     * @param  {(boolean|string|number|object)} defaultValue A default value to fallback on if the type check fails.
+     * @return {(boolean|string|number|object)}              The given value if type check passes, or the default value if it fails.
+     */
+    ensureTypedArg: function( arg, type, defaultValue ) {
+        'use strict';
+
+        if ( typeof arg === type ) {
+            return arg;
+        }
+        else {
+            return defaultValue;
+        }
+    },
+
+    /**
+     * Given an array of values, a type, and a default value,
+     * ensure the given array's contents ALL adhere to the provided type,
+     * returning the default value if type check fails.
+     *
+     * If the given value to check isn't an Array, delegates to SPE.utils.ensureTypedArg.
+     *
+     * @param  {Array|boolean|string|number|object} arg          The array of values to check type of.
+     * @param  {String} type         The type that should be adhered to.
+     * @param  {(boolean|string|number|object)} defaultValue A default fallback value.
+     * @return {(boolean|string|number|object)}              The given value if type check passes, or the default value if it fails.
+     */
+    ensureArrayTypedArg: function( arg, type, defaultValue ) {
+        'use strict';
+
+        // If the argument being checked is an array, loop through
+        // it and ensure all the values are of the correct type,
+        // falling back to the defaultValue if any aren't.
+        if ( Array.isArray( arg ) ) {
+            for ( var i = arg.length - 1; i >= 0; --i ) {
+                if ( typeof arg[ i ] !== type ) {
+                    return defaultValue;
+                }
+            }
+
+            return arg;
+        }
+
+        // If the arg isn't an array then just fallback to
+        // checking the type.
+        return this.ensureTypedArg( arg, type, defaultValue );
+    },
+
+    /**
+     * Ensures the given value is an instance of a constructor function.
+     *
+     * @param  {Object} arg          The value to check instance of.
+     * @param  {Function} instance     The constructor of the instance to check against.
+     * @param  {Object} defaultValue A default fallback value if instance check fails
+     * @return {Object}              The given value if type check passes, or the default value if it fails.
+     */
+    ensureInstanceOf: function( arg, instance, defaultValue ) {
+        'use strict';
+
+        if ( instance !== undefined && arg instanceof instance ) {
+            return arg;
+        }
+        else {
+            return defaultValue;
+        }
+    },
+
+    /**
+     * Given an array of values, ensure the instances of all items in the array
+     * matches the given instance constructor falling back to a default value if
+     * the check fails.
+     *
+     * If given value isn't an Array, delegates to `SPE.utils.ensureInstanceOf`.
+     *
+     * @param  {Array|Object} arg          The value to perform the instanceof check on.
+     * @param  {Function} instance     The constructor of the instance to check against.
+     * @param  {Object} defaultValue A default fallback value if instance check fails
+     * @return {Object}              The given value if type check passes, or the default value if it fails.
+     */
+    ensureArrayInstanceOf: function( arg, instance, defaultValue ) {
+        'use strict';
+
+        // If the argument being checked is an array, loop through
+        // it and ensure all the values are of the correct type,
+        // falling back to the defaultValue if any aren't.
+        if ( Array.isArray( arg ) ) {
+            for ( var i = arg.length - 1; i >= 0; --i ) {
+                if ( instance !== undefined && arg[ i ] instanceof instance === false ) {
+                    return defaultValue;
+                }
+            }
+
+            return arg;
+        }
+
+        // If the arg isn't an array then just fallback to
+        // checking the type.
+        return this.ensureInstanceOf( arg, instance, defaultValue );
+    },
+
+    /**
+     * Ensures that any "value-over-lifetime" properties of an emitter are
+     * of the correct length (as dictated by `SPE.valueOverLifetimeLength`).
+     *
+     * Delegates to `SPE.utils.interpolateArray` for array resizing.
+     *
+     * If properties aren't arrays, then property values are put into one.
+     *
+     * @param  {Object} property  The property of an SPE.Emitter instance to check compliance of.
+     * @param  {Number} minLength The minimum length of the array to create.
+     * @param  {Number} maxLength The maximum length of the array to create.
+     */
+    ensureValueOverLifetimeCompliance: function( property, minLength, maxLength ) {
+        'use strict';
+
+        minLength = minLength || 3;
+        maxLength = maxLength || 3;
+
+        // First, ensure both properties are arrays.
+        if ( Array.isArray( property._value ) === false ) {
+            property._value = [ property._value ];
+        }
+
+        if ( Array.isArray( property._spread ) === false ) {
+            property._spread = [ property._spread ];
+        }
+
+        var valueLength = this.clamp( property._value.length, minLength, maxLength ),
+            spreadLength = this.clamp( property._spread.length, minLength, maxLength ),
+            desiredLength = Math.max( valueLength, spreadLength );
+
+        if ( property._value.length !== desiredLength ) {
+            property._value = this.interpolateArray( property._value, desiredLength );
+        }
+
+        if ( property._spread.length !== desiredLength ) {
+            property._spread = this.interpolateArray( property._spread, desiredLength );
+        }
+    },
+
+    /**
+     * Performs linear interpolation (lerp) on an array.
+     *
+     * For example, lerping [1, 10], with a `newLength` of 10 will produce [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].
+     *
+     * Delegates to `SPE.utils.lerpTypeAgnostic` to perform the actual
+     * interpolation.
+     *
+     * @param  {Array} srcArray  The array to lerp.
+     * @param  {Number} newLength The length the array should be interpolated to.
+     * @return {Array}           The interpolated array.
+     */
+    interpolateArray: function( srcArray, newLength ) {
+        'use strict';
+
+        var sourceLength = srcArray.length,
+            newArray = [ typeof srcArray[ 0 ].clone === 'function' ? srcArray[ 0 ].clone() : srcArray[ 0 ] ],
+            factor = ( sourceLength - 1 ) / ( newLength - 1 );
+
+
+        for ( var i = 1; i < newLength - 1; ++i ) {
+            var f = i * factor,
+                before = Math.floor( f ),
+                after = Math.ceil( f ),
+                delta = f - before;
+
+            newArray[ i ] = this.lerpTypeAgnostic( srcArray[ before ], srcArray[ after ], delta );
+        }
+
+        newArray.push(
+            typeof srcArray[ sourceLength - 1 ].clone === 'function' ?
+            srcArray[ sourceLength - 1 ].clone() :
+            srcArray[ sourceLength - 1 ]
+        );
+
+        return newArray;
+    },
+
+    /**
+     * Clamp a number to between the given min and max values.
+     * @param  {Number} value The number to clamp.
+     * @param  {Number} min   The minimum value.
+     * @param  {Number} max   The maximum value.
+     * @return {Number}       The clamped number.
+     */
+    clamp: function( value, min, max ) {
+        'use strict';
+
+        return Math.max( min, Math.min( value, max ) );
+    },
+
+    /**
+     * If the given value is less than the epsilon value, then return
+     * a randomised epsilon value if specified, or just the epsilon value if not.
+     * Works for negative numbers as well as positive.
+     *
+     * @param  {Number} value     The value to perform the operation on.
+     * @param  {Boolean} randomise Whether the value should be randomised.
+     * @return {Number}           The result of the operation.
+     */
+    zeroToEpsilon: function( value, randomise ) {
+        'use strict';
+
+        var epsilon = 0.00001,
+            result = value;
+
+        result = randomise ? Math.random() * epsilon * 10 : epsilon;
+
+        if ( value < 0 && value > -epsilon ) {
+            result = -result;
+        }
+
+        // if ( value === 0 ) {
+        //     result = randomise ? Math.random() * epsilon * 10 : epsilon;
+        // }
+        // else if ( value > 0 && value < epsilon ) {
+        //     result = randomise ? Math.random() * epsilon * 10 : epsilon;
+        // }
+        // else if ( value < 0 && value > -epsilon ) {
+        //     result = -( randomise ? Math.random() * epsilon * 10 : epsilon );
+        // }
+
+        return result;
+    },
+
+    /**
+     * Linearly interpolates two values of various types. The given values
+     * must be of the same type for the interpolation to work.
+     * @param  {(number|Object)} start The start value of the lerp.
+     * @param  {(number|object)} end   The end value of the lerp.
+     * @param  {Number} delta The delta posiiton of the lerp operation. Ideally between 0 and 1 (inclusive).
+     * @return {(number|object|undefined)}       The result of the operation. Result will be undefined if
+     *                                               the start and end arguments aren't a supported type, or
+     *                                               if their types do not match.
+     */
+    lerpTypeAgnostic: function( start, end, delta ) {
+        'use strict';
+
+        var types = this.types,
+            out;
+
+        if ( typeof start === types.NUMBER && typeof end === types.NUMBER ) {
+            return start + ( ( end - start ) * delta );
+        }
+        else if ( start instanceof THREE.Vector2 && end instanceof THREE.Vector2 ) {
+            out = start.clone();
+            out.x = this.lerp( start.x, end.x, delta );
+            out.y = this.lerp( start.y, end.y, delta );
+            return out;
+        }
+        else if ( start instanceof THREE.Vector3 && end instanceof THREE.Vector3 ) {
+            out = start.clone();
+            out.x = this.lerp( start.x, end.x, delta );
+            out.y = this.lerp( start.y, end.y, delta );
+            out.z = this.lerp( start.z, end.z, delta );
+            return out;
+        }
+        else if ( start instanceof THREE.Vector4 && end instanceof THREE.Vector4 ) {
+            out = start.clone();
+            out.x = this.lerp( start.x, end.x, delta );
+            out.y = this.lerp( start.y, end.y, delta );
+            out.z = this.lerp( start.z, end.z, delta );
+            out.w = this.lerp( start.w, end.w, delta );
+            return out;
+        }
+        else if ( start instanceof THREE.Color && end instanceof THREE.Color ) {
+            out = start.clone();
+            out.r = this.lerp( start.r, end.r, delta );
+            out.g = this.lerp( start.g, end.g, delta );
+            out.b = this.lerp( start.b, end.b, delta );
+            return out;
+        }
+        else {
+            console.warn( 'Invalid argument types, or argument types do not match:', start, end );
+        }
+    },
+
+    /**
+     * Perform a linear interpolation operation on two numbers.
+     * @param  {Number} start The start value.
+     * @param  {Number} end   The end value.
+     * @param  {Number} delta The position to interpolate to.
+     * @return {Number}       The result of the lerp operation.
+     */
+    lerp: function( start, end, delta ) {
+        'use strict';
+        return start + ( ( end - start ) * delta );
+    },
+
+    /**
+     * Rounds a number to a nearest multiple.
+     *
+     * @param  {Number} n        The number to round.
+     * @param  {Number} multiple The multiple to round to.
+     * @return {Number}          The result of the round operation.
+     */
+    roundToNearestMultiple: function( n, multiple ) {
+        'use strict';
+
+        var remainder = 0;
+
+        if ( multiple === 0 ) {
+            return n;
+        }
+
+        remainder = Math.abs( n ) % multiple;
+
+        if ( remainder === 0 ) {
+            return n;
+        }
+
+        if ( n < 0 ) {
+            return -( Math.abs( n ) - remainder );
+        }
+
+        return n + multiple - remainder;
+    },
+
+    /**
+     * Check if all items in an array are equal. Uses strict equality.
+     *
+     * @param  {Array} array The array of values to check equality of.
+     * @return {Boolean}       Whether the array's values are all equal or not.
+     */
+    arrayValuesAreEqual: function( array ) {
+        'use strict';
+
+        for ( var i = 0; i < array.length - 1; ++i ) {
+            if ( array[ i ] !== array[ i + 1 ] ) {
+                return false;
+            }
+        }
+
+        return true;
+    },
+
+    // colorsAreEqual: function() {
+    //     var colors = Array.prototype.slice.call( arguments ),
+    //         numColors = colors.length;
+
+    //     for ( var i = 0, color1, color2; i < numColors - 1; ++i ) {
+    //         color1 = colors[ i ];
+    //         color2 = colors[ i + 1 ];
+
+    //         if (
+    //             color1.r !== color2.r ||
+    //             color1.g !== color2.g ||
+    //             color1.b !== color2.b
+    //         ) {
+    //             return false
+    //         }
+    //     }
+
+    //     return true;
+    // },
+
+
+    /**
+     * Given a start value and a spread value, create and return a random
+     * number.
+     * @param  {Number} base   The start value.
+     * @param  {Number} spread The size of the random variance to apply.
+     * @return {Number}        A randomised number.
+     */
+    randomFloat: function( base, spread ) {
+        'use strict';
+        return base + spread * ( Math.random() - 0.5 );
+    },
+
+
+
+    /**
+     * Given an SPE.ShaderAttribute instance, and various other settings,
+     * assign values to the attribute's array in a `vec3` format.
+     *
+     * @param  {Object} attribute   The instance of SPE.ShaderAttribute to save the result to.
+     * @param  {Number} index       The offset in the attribute's TypedArray to save the result from.
+     * @param  {Object} base        THREE.Vector3 instance describing the start value.
+     * @param  {Object} spread      THREE.Vector3 instance describing the random variance to apply to the start value.
+     * @param  {Object} spreadClamp THREE.Vector3 instance describing the multiples to clamp the randomness to.
+     */
+    randomVector3: function( attribute, index, base, spread, spreadClamp ) {
+        'use strict';
+
+        var x = base.x + ( Math.random() * spread.x - ( spread.x * 0.5 ) ),
+            y = base.y + ( Math.random() * spread.y - ( spread.y * 0.5 ) ),
+            z = base.z + ( Math.random() * spread.z - ( spread.z * 0.5 ) );
+
+        // var x = this.randomFloat( base.x, spread.x ),
+        // y = this.randomFloat( base.y, spread.y ),
+        // z = this.randomFloat( base.z, spread.z );
+
+        if ( spreadClamp ) {
+            x = -spreadClamp.x * 0.5 + this.roundToNearestMultiple( x, spreadClamp.x );
+            y = -spreadClamp.y * 0.5 + this.roundToNearestMultiple( y, spreadClamp.y );
+            z = -spreadClamp.z * 0.5 + this.roundToNearestMultiple( z, spreadClamp.z );
+        }
+
+        attribute.typedArray.setVec3Components( index, x, y, z );
+    },
+
+    /**
+     * Given an SPE.Shader attribute instance, and various other settings,
+     * assign Color values to the attribute.
+     * @param  {Object} attribute The instance of SPE.ShaderAttribute to save the result to.
+     * @param  {Number} index     The offset in the attribute's TypedArray to save the result from.
+     * @param  {Object} base      THREE.Color instance describing the start color.
+     * @param  {Object} spread    THREE.Vector3 instance describing the random variance to apply to the start color.
+     */
+    randomColor: function( attribute, index, base, spread ) {
+        'use strict';
+
+        var r = base.r + ( Math.random() * spread.x ),
+            g = base.g + ( Math.random() * spread.y ),
+            b = base.b + ( Math.random() * spread.z );
+
+        r = this.clamp( r, 0, 1 );
+        g = this.clamp( g, 0, 1 );
+        b = this.clamp( b, 0, 1 );
+
+
+        attribute.typedArray.setVec3Components( index, r, g, b );
+    },
+
+
+    randomColorAsHex: ( function() {
+        'use strict';
+
+        var workingColor = new THREE.Color();
+
+        /**
+         * Assigns a random color value, encoded as a hex value in decimal
+         * format, to a SPE.ShaderAttribute instance.
+         * @param  {Object} attribute The instance of SPE.ShaderAttribute to save the result to.
+         * @param  {Number} index     The offset in the attribute's TypedArray to save the result from.
+         * @param  {Object} base      THREE.Color instance describing the start color.
+         * @param  {Object} spread    THREE.Vector3 instance describing the random variance to apply to the start color.
+         */
+        return function( attribute, index, base, spread ) {
+            var numItems = base.length,
+                colors = [];
+
+            for ( var i = 0; i < numItems; ++i ) {
+                var spreadVector = spread[ i ];
+
+                workingColor.copy( base[ i ] );
+
+                workingColor.r += ( Math.random() * spreadVector.x ) - ( spreadVector.x * 0.5 );
+                workingColor.g += ( Math.random() * spreadVector.y ) - ( spreadVector.y * 0.5 );
+                workingColor.b += ( Math.random() * spreadVector.z ) - ( spreadVector.z * 0.5 );
+
+                workingColor.r = this.clamp( workingColor.r, 0, 1 );
+                workingColor.g = this.clamp( workingColor.g, 0, 1 );
+                workingColor.b = this.clamp( workingColor.b, 0, 1 );
+
+                colors.push( workingColor.getHex() );
+            }
+
+            attribute.typedArray.setVec4Components( index, colors[ 0 ], colors[ 1 ], colors[ 2 ], colors[ 3 ] );
+        };
+    }() ),
+
+    /**
+     * Assigns a random vector 3 value to an SPE.ShaderAttribute instance, projecting the
+     * given values onto a sphere.
+     *
+     * @param  {Object} attribute The instance of SPE.ShaderAttribute to save the result to.
+     * @param  {Number} index     The offset in the attribute's TypedArray to save the result from.
+     * @param  {Object} base              THREE.Vector3 instance describing the origin of the transform.
+     * @param  {Number} radius            The radius of the sphere to project onto.
+     * @param  {Number} radiusSpread      The amount of randomness to apply to the projection result
+     * @param  {Object} radiusScale       THREE.Vector3 instance describing the scale of each axis of the sphere.
+     * @param  {Number} radiusSpreadClamp What numeric multiple the projected value should be clamped to.
+     */
+    randomVector3OnSphere: function(
+        attribute, index, base, radius, radiusSpread, radiusScale, radiusSpreadClamp, distributionClamp
+    ) {
+        'use strict';
+
+        var depth = 2 * Math.random() - 1,
+            t = 6.2832 * Math.random(),
+            r = Math.sqrt( 1 - depth * depth ),
+            rand = this.randomFloat( radius, radiusSpread ),
+            x = 0,
+            y = 0,
+            z = 0;
+
+
+        if ( radiusSpreadClamp ) {
+            rand = Math.round( rand / radiusSpreadClamp ) * radiusSpreadClamp;
+        }
+
+
+
+        // Set position on sphere
+        x = r * Math.cos( t ) * rand;
+        y = r * Math.sin( t ) * rand;
+        z = depth * rand;
+
+        // Apply radius scale to this position
+        x *= radiusScale.x;
+        y *= radiusScale.y;
+        z *= radiusScale.z;
+
+        // Translate to the base position.
+        x += base.x;
+        y += base.y;
+        z += base.z;
+
+        // Set the values in the typed array.
+        attribute.typedArray.setVec3Components( index, x, y, z );
+    },
+
+    seededRandom: function( seed ) {
+        var x = Math.sin( seed ) * 10000;
+        return x - ( x | 0 );
+    },
+
+
+
+    /**
+     * Assigns a random vector 3 value to an SPE.ShaderAttribute instance, projecting the
+     * given values onto a 2d-disc.
+     *
+     * @param  {Object} attribute The instance of SPE.ShaderAttribute to save the result to.
+     * @param  {Number} index     The offset in the attribute's TypedArray to save the result from.
+     * @param  {Object} base              THREE.Vector3 instance describing the origin of the transform.
+     * @param  {Number} radius            The radius of the sphere to project onto.
+     * @param  {Number} radiusSpread      The amount of randomness to apply to the projection result
+     * @param  {Object} radiusScale       THREE.Vector3 instance describing the scale of each axis of the disc. The z-component is ignored.
+     * @param  {Number} radiusSpreadClamp What numeric multiple the projected value should be clamped to.
+     */
+    randomVector3OnDisc: function( attribute, index, base, radius, radiusSpread, radiusScale, radiusSpreadClamp ) {
+        'use strict';
+
+        var t = 6.2832 * Math.random(),
+            rand = Math.abs( this.randomFloat( radius, radiusSpread ) ),
+            x = 0,
+            y = 0,
+            z = 0;
+
+        if ( radiusSpreadClamp ) {
+            rand = Math.round( rand / radiusSpreadClamp ) * radiusSpreadClamp;
+        }
+
+        // Set position on sphere
+        x = Math.cos( t ) * rand;
+        y = Math.sin( t ) * rand;
+
+        // Apply radius scale to this position
+        x *= radiusScale.x;
+        y *= radiusScale.y;
+
+        // Translate to the base position.
+        x += base.x;
+        y += base.y;
+        z += base.z;
+
+        // Set the values in the typed array.
+        attribute.typedArray.setVec3Components( index, x, y, z );
+    },
+
+    randomDirectionVector3OnSphere: ( function() {
+        'use strict';
+
+        var v = new THREE.Vector3();
+
+        /**
+         * Given an SPE.ShaderAttribute instance, create a direction vector from the given
+         * position, using `speed` as the magnitude. Values are saved to the attribute.
+         *
+         * @param  {Object} attribute       The instance of SPE.ShaderAttribute to save the result to.
+         * @param  {Number} index           The offset in the attribute's TypedArray to save the result from.
+         * @param  {Number} posX            The particle's x coordinate.
+         * @param  {Number} posY            The particle's y coordinate.
+         * @param  {Number} posZ            The particle's z coordinate.
+         * @param  {Object} emitterPosition THREE.Vector3 instance describing the emitter's base position.
+         * @param  {Number} speed           The magnitude to apply to the vector.
+         * @param  {Number} speedSpread     The amount of randomness to apply to the magnitude.
+         */
+        return function( attribute, index, posX, posY, posZ, emitterPosition, speed, speedSpread ) {
+            v.copy( emitterPosition );
+
+            v.x -= posX;
+            v.y -= posY;
+            v.z -= posZ;
+
+            v.normalize().multiplyScalar( -this.randomFloat( speed, speedSpread ) );
+
+            attribute.typedArray.setVec3Components( index, v.x, v.y, v.z );
+        };
+    }() ),
+
+
+    randomDirectionVector3OnDisc: ( function() {
+        'use strict';
+
+        var v = new THREE.Vector3();
+
+        /**
+         * Given an SPE.ShaderAttribute instance, create a direction vector from the given
+         * position, using `speed` as the magnitude. Values are saved to the attribute.
+         *
+         * @param  {Object} attribute       The instance of SPE.ShaderAttribute to save the result to.
+         * @param  {Number} index           The offset in the attribute's TypedArray to save the result from.
+         * @param  {Number} posX            The particle's x coordinate.
+         * @param  {Number} posY            The particle's y coordinate.
+         * @param  {Number} posZ            The particle's z coordinate.
+         * @param  {Object} emitterPosition THREE.Vector3 instance describing the emitter's base position.
+         * @param  {Number} speed           The magnitude to apply to the vector.
+         * @param  {Number} speedSpread     The amount of randomness to apply to the magnitude.
+         */
+        return function( attribute, index, posX, posY, posZ, emitterPosition, speed, speedSpread ) {
+            v.copy( emitterPosition );
+
+            v.x -= posX;
+            v.y -= posY;
+            v.z -= posZ;
+
+            v.normalize().multiplyScalar( -this.randomFloat( speed, speedSpread ) );
+
+            attribute.typedArray.setVec3Components( index, v.x, v.y, 0 );
+        };
+    }() ),
+
+    getPackedRotationAxis: ( function() {
+        'use strict';
+
+        var v = new THREE.Vector3(),
+            vSpread = new THREE.Vector3(),
+            c = new THREE.Color(),
+            addOne = new THREE.Vector3( 1, 1, 1 );
+
+        /**
+         * Given a rotation axis, and a rotation axis spread vector,
+         * calculate a randomised rotation axis, and pack it into
+         * a hexadecimal value represented in decimal form.
+         * @param  {Object} axis       THREE.Vector3 instance describing the rotation axis.
+         * @param  {Object} axisSpread THREE.Vector3 instance describing the amount of randomness to apply to the rotation axis.
+         * @return {Number}            The packed rotation axis, with randomness.
+         */
+        return function( axis, axisSpread ) {
+            v.copy( axis ).normalize();
+            vSpread.copy( axisSpread ).normalize();
+
+            v.x += ( -axisSpread.x * 0.5 ) + ( Math.random() * axisSpread.x );
+            v.y += ( -axisSpread.y * 0.5 ) + ( Math.random() * axisSpread.y );
+            v.z += ( -axisSpread.z * 0.5 ) + ( Math.random() * axisSpread.z );
+
+            // v.x = Math.abs( v.x );
+            // v.y = Math.abs( v.y );
+            // v.z = Math.abs( v.z );
+
+            v.normalize().add( addOne ).multiplyScalar( 0.5 );
+
+            c.setRGB( v.x, v.y, v.z );
+
+            return c.getHex();
+        };
+    }() )
+};
+
+/**
+ * An SPE.Group instance.
+ * @typedef {Object} Group
+ * @see SPE.Group
+ */
+
+/**
+ * A map of options to configure an SPE.Group instance.
+ * @typedef {Object} GroupOptions
+ *
+ * @property {Object} texture An object describing the texture used by the group.
+ *
+ * @property {Object} texture.value An instance of THREE.Texture.
+ *
+ * @property {Object=} texture.frames A THREE.Vector2 instance describing the number
+ *                                    of frames on the x- and y-axis of the given texture.
+ *                                    If not provided, the texture will NOT be treated as
+ *                                    a sprite-sheet and as such will NOT be animated.
+ *
+ * @property {Number} [texture.frameCount=texture.frames.x * texture.frames.y] The total number of frames in the sprite-sheet.
+ *                                                                   Allows for sprite-sheets that don't fill the entire
+ *                                                                   texture.
+ *
+ * @property {Number} texture.loop The number of loops through the sprite-sheet that should
+ *                                 be performed over the course of a single particle's lifetime.
+ *
+ * @property {Number} fixedTimeStep If no `dt` (or `deltaTime`) value is passed to this group's
+ *                                  `tick()` function, this number will be used to move the particle
+ *                                  simulation forward. Value in SECONDS.
+ *
+ * @property {Boolean} hasPerspective Whether the distance a particle is from the camera should affect
+ *                                    the particle's size.
+ *
+ * @property {Boolean} colorize Whether the particles in this group should be rendered with color, or
+ *                              whether the only color of particles will come from the provided texture.
+ *
+ * @property {Number} blending One of Three.js's blending modes to apply to this group's `ShaderMaterial`.
+ *
+ * @property {Boolean} transparent Whether these particle's should be rendered with transparency.
+ *
+ * @property {Number} alphaTest Sets the alpha value to be used when running an alpha test on the `texture.value` property. Value between 0 and 1.
+ *
+ * @property {Boolean} depthWrite Whether rendering the group has any effect on the depth buffer.
+ *
+ * @property {Boolean} depthTest Whether to have depth test enabled when rendering this group.
+ *
+ * @property {Boolean} fog Whether this group's particles should be affected by their scene's fog.
+ *
+ * @property {Number} scale The scale factor to apply to this group's particle sizes. Useful for
+ *                          setting particle sizes to be relative to renderer size.
+ */
+
+
+/**
+ * The SPE.Group class. Creates a new group, containing a material, geometry, and mesh.
+ *
+ * @constructor
+ * @param {GroupOptions} options A map of options to configure the group instance.
+ */
+SPE.Group = function( options ) {
+    'use strict';
+
+    var utils = SPE.utils,
+        types = utils.types;
+
+    // Ensure we have a map of options to play with
+    options = utils.ensureTypedArg( options, types.OBJECT, {} );
+    options.texture = utils.ensureTypedArg( options.texture, types.OBJECT, {} );
+
+    // Assign a UUID to this instance
+    this.uuid = THREE.Math.generateUUID();
+
+    // If no `deltaTime` value is passed to the `SPE.Group.tick` function,
+    // the value of this property will be used to advance the simulation.
+    this.fixedTimeStep = utils.ensureTypedArg( options.fixedTimeStep, types.NUMBER, 0.016 );
+
+    // Set properties used in the uniforms map, starting with the
+    // texture stuff.
+    this.texture = utils.ensureInstanceOf( options.texture.value, THREE.Texture, null );
+    this.textureFrames = utils.ensureInstanceOf( options.texture.frames, THREE.Vector2, new THREE.Vector2( 1, 1 ) );
+    this.textureFrameCount = utils.ensureTypedArg( options.texture.frameCount, types.NUMBER, this.textureFrames.x * this.textureFrames.y );
+    this.textureLoop = utils.ensureTypedArg( options.texture.loop, types.NUMBER, 1 );
+    this.textureFrames.max( new THREE.Vector2( 1, 1 ) );
+
+    this.hasPerspective = utils.ensureTypedArg( options.hasPerspective, types.BOOLEAN, true );
+    this.colorize = utils.ensureTypedArg( options.colorize, types.BOOLEAN, true );
+
+    this.maxParticleCount = utils.ensureTypedArg( options.maxParticleCount, types.NUMBER, null );
+
+
+    // Set properties used to define the ShaderMaterial's appearance.
+    this.blending = utils.ensureTypedArg( options.blending, types.NUMBER, THREE.AdditiveBlending );
+    this.transparent = utils.ensureTypedArg( options.transparent, types.BOOLEAN, true );
+    this.alphaTest = parseFloat( utils.ensureTypedArg( options.alphaTest, types.NUMBER, 0.0 ) );
+    this.depthWrite = utils.ensureTypedArg( options.depthWrite, types.BOOLEAN, false );
+    this.depthTest = utils.ensureTypedArg( options.depthTest, types.BOOLEAN, true );
+    this.fog = utils.ensureTypedArg( options.fog, types.BOOLEAN, true );
+    this.scale = utils.ensureTypedArg( options.scale, types.NUMBER, 300 );
+
+    // Where emitter's go to curl up in a warm blanket and live
+    // out their days.
+    this.emitters = [];
+    this.emitterIDs = [];
+
+    // Create properties for use by the emitter pooling functions.
+    this._pool = [];
+    this._poolCreationSettings = null;
+    this._createNewWhenPoolEmpty = 0;
+
+    // Whether all attributes should be forced to updated
+    // their entire buffer contents on the next tick.
+    //
+    // Used when an emitter is removed.
+    this._attributesNeedRefresh = false;
+    this._attributesNeedDynamicReset = false;
+
+    this.particleCount = 0;
+
+
+    // Map of uniforms to be applied to the ShaderMaterial instance.
+    this.uniforms = {
+        texture: {
+            type: 't',
+            value: this.texture
+        },
+        textureAnimation: {
+            type: 'v4',
+            value: new THREE.Vector4(
+                this.textureFrames.x,
+                this.textureFrames.y,
+                this.textureFrameCount,
+                Math.max( Math.abs( this.textureLoop ), 1.0 )
+            )
+        },
+        fogColor: {
+            type: 'c',
+            value: null
+        },
+        fogNear: {
+            type: 'f',
+            value: 10
+        },
+        fogFar: {
+            type: 'f',
+            value: 200
+        },
+        fogDensity: {
+            type: 'f',
+            value: 0.5
+        },
+        deltaTime: {
+            type: 'f',
+            value: 0
+        },
+        runTime: {
+            type: 'f',
+            value: 0
+        },
+        scale: {
+            type: 'f',
+            value: this.scale
+        }
+    };
+
+    // Add some defines into the mix...
+    this.defines = {
+        HAS_PERSPECTIVE: this.hasPerspective,
+        COLORIZE: this.colorize,
+        VALUE_OVER_LIFETIME_LENGTH: SPE.valueOverLifetimeLength,
+
+        SHOULD_ROTATE_TEXTURE: false,
+        SHOULD_ROTATE_PARTICLES: false,
+        SHOULD_WIGGLE_PARTICLES: false,
+
+        SHOULD_CALCULATE_SPRITE: this.textureFrames.x > 1 || this.textureFrames.y > 1
+    };
+
+    // Map of all attributes to be applied to the particles.
+    //
+    // See SPE.ShaderAttribute for a bit more info on this bit.
+    this.attributes = {
+        position: new SPE.ShaderAttribute( 'v3', true ),
+        acceleration: new SPE.ShaderAttribute( 'v4', true ), // w component is drag
+        velocity: new SPE.ShaderAttribute( 'v3', true ),
+        rotation: new SPE.ShaderAttribute( 'v4', true ),
+        rotationCenter: new SPE.ShaderAttribute( 'v3', true ),
+        params: new SPE.ShaderAttribute( 'v4', true ), // Holds (alive, age, delay, wiggle)
+        size: new SPE.ShaderAttribute( 'v4', true ),
+        angle: new SPE.ShaderAttribute( 'v4', true ),
+        color: new SPE.ShaderAttribute( 'v4', true ),
+        opacity: new SPE.ShaderAttribute( 'v4', true )
+    };
+
+    this.attributeKeys = Object.keys( this.attributes );
+    this.attributeCount = this.attributeKeys.length;
+
+    // Create the ShaderMaterial instance that'll help render the
+    // particles.
+    this.material = new THREE.ShaderMaterial( {
+        uniforms: this.uniforms,
+        vertexShader: SPE.shaders.vertex,
+        fragmentShader: SPE.shaders.fragment,
+        blending: this.blending,
+        transparent: this.transparent,
+        alphaTest: this.alphaTest,
+        depthWrite: this.depthWrite,
+        depthTest: this.depthTest,
+        defines: this.defines,
+        fog: this.fog
+    } );
+
+    // Create the BufferGeometry and Points instances, ensuring
+    // the geometry and material are given to the latter.
+    this.geometry = new THREE.BufferGeometry();
+    this.mesh = new THREE.Points( this.geometry, this.material );
+
+    if ( this.maxParticleCount === null ) {
+        console.warn( 'SPE.Group: No maxParticleCount specified. Adding emitters after rendering will probably cause errors.' );
+    }
+};
+
+SPE.Group.constructor = SPE.Group;
+
+
+SPE.Group.prototype._updateDefines = function() {
+    'use strict';
+
+    var emitters = this.emitters,
+        i = emitters.length - 1,
+        emitter,
+        defines = this.defines;
+
+    for ( i; i >= 0; --i ) {
+        emitter = emitters[ i ];
+
+        // Only do angle calculation if there's no spritesheet defined.
+        //
+        // Saves calculations being done and then overwritten in the shaders.
+        if ( !defines.SHOULD_CALCULATE_SPRITE ) {
+            defines.SHOULD_ROTATE_TEXTURE = defines.SHOULD_ROTATE_TEXTURE || !!Math.max(
+                Math.max.apply( null, emitter.angle.value ),
+                Math.max.apply( null, emitter.angle.spread )
+            );
+        }
+
+        defines.SHOULD_ROTATE_PARTICLES = defines.SHOULD_ROTATE_PARTICLES || !!Math.max(
+            emitter.rotation.angle,
+            emitter.rotation.angleSpread
+        );
+
+        defines.SHOULD_WIGGLE_PARTICLES = defines.SHOULD_WIGGLE_PARTICLES || !!Math.max(
+            emitter.wiggle.value,
+            emitter.wiggle.spread
+        );
+    }
+
+    this.material.needsUpdate = true;
+};
+
+SPE.Group.prototype._applyAttributesToGeometry = function() {
+    'use strict';
+
+    var attributes = this.attributes,
+        geometry = this.geometry,
+        geometryAttributes = geometry.attributes,
+        attribute,
+        geometryAttribute;
+
+    // Loop through all the shader attributes and assign (or re-assign)
+    // typed array buffers to each one.
+    for ( var attr in attributes ) {
+        if ( attributes.hasOwnProperty( attr ) ) {
+            attribute = attributes[ attr ];
+            geometryAttribute = geometryAttributes[ attr ];
+
+            // Update the array if this attribute exists on the geometry.
+            //
+            // This needs to be done because the attribute's typed array might have
+            // been resized and reinstantiated, and might now be looking at a
+            // different ArrayBuffer, so reference needs updating.
+            if ( geometryAttribute ) {
+                geometryAttribute.array = attribute.typedArray.array;
+            }
+
+            // // Add the attribute to the geometry if it doesn't already exist.
+            else {
+                geometry.addAttribute( attr, attribute.bufferAttribute );
+            }
+
+            // Mark the attribute as needing an update the next time a frame is rendered.
+            attribute.bufferAttribute.needsUpdate = true;
+        }
+    }
+
+    // Mark the draw range on the geometry. This will ensure
+    // only the values in the attribute buffers that are
+    // associated with a particle will be used in THREE's
+    // render cycle.
+    this.geometry.setDrawRange( 0, this.particleCount );
+};
+
+/**
+ * Adds an SPE.Emitter instance to this group, creating particle values and
+ * assigning them to this group's shader attributes.
+ *
+ * @param {Emitter} emitter The emitter to add to this group.
+ */
+SPE.Group.prototype.addEmitter = function( emitter ) {
+    'use strict';
+
+    // Ensure an actual emitter instance is passed here.
+    //
+    // Decided not to throw here, just in case a scene's
+    // rendering would be paused. Logging an error instead
+    // of stopping execution if exceptions aren't caught.
+    if ( emitter instanceof SPE.Emitter === false ) {
+        console.error( '`emitter` argument must be instance of SPE.Emitter. Was provided with:', emitter );
+        return;
+    }
+
+    // If the emitter already exists as a member of this group, then
+    // stop here, we don't want to add it again.
+    else if ( this.emitterIDs.indexOf( emitter.uuid ) > -1 ) {
+        console.error( 'Emitter already exists in this group. Will not add again.' );
+        return;
+    }
+
+    // And finally, if the emitter is a member of another group,
+    // don't add it to this group.
+    else if ( emitter.group !== null ) {
+        console.error( 'Emitter already belongs to another group. Will not add to requested group.' );
+        return;
+    }
+
+    var attributes = this.attributes,
+        start = this.particleCount,
+        end = start + emitter.particleCount;
+
+    // Update this group's particle count.
+    this.particleCount = end;
+
+    // Emit a warning if the emitter being added will exceed the buffer sizes specified.
+    if ( this.maxParticleCount !== null && this.particleCount > this.maxParticleCount ) {
+        console.warn( 'SPE.Group: maxParticleCount exceeded. Requesting', this.particleCount, 'particles, can support only', this.maxParticleCount );
+    }
+
+
+    // Set the `particlesPerSecond` value (PPS) on the emitter.
+    // It's used to determine how many particles to release
+    // on a per-frame basis.
+    emitter._calculatePPSValue( emitter.maxAge._value + emitter.maxAge._spread );
+    emitter._setBufferUpdateRanges( this.attributeKeys );
+
+    // Store the offset value in the TypedArray attributes for this emitter.
+    emitter._setAttributeOffset( start );
+
+    // Save a reference to this group on the emitter so it knows
+    // where it belongs.
+    emitter.group = this;
+
+    // Store reference to the attributes on the emitter for
+    // easier access during the emitter's tick function.
+    emitter.attributes = this.attributes;
+
+
+
+    // Ensure the attributes and their BufferAttributes exist, and their
+    // TypedArrays are of the correct size.
+    for ( var attr in attributes ) {
+        if ( attributes.hasOwnProperty( attr ) ) {
+            // When creating a buffer, pass through the maxParticle count
+            // if one is specified.
+            attributes[ attr ]._createBufferAttribute(
+                this.maxParticleCount !== null ?
+                this.maxParticleCount :
+                this.particleCount
+            );
+        }
+    }
+
+    // Loop through each particle this emitter wants to have, and create the attributes values,
+    // storing them in the TypedArrays that each attribute holds.
+    for ( var i = start; i < end; ++i ) {
+        emitter._assignPositionValue( i );
+        emitter._assignForceValue( i, 'velocity' );
+        emitter._assignForceValue( i, 'acceleration' );
+        emitter._assignAbsLifetimeValue( i, 'opacity' );
+        emitter._assignAbsLifetimeValue( i, 'size' );
+        emitter._assignAngleValue( i );
+        emitter._assignRotationValue( i );
+        emitter._assignParamsValue( i );
+        emitter._assignColorValue( i );
+    }
+
+    // Update the geometry and make sure the attributes are referencing
+    // the typed arrays properly.
+    this._applyAttributesToGeometry();
+
+    // Store this emitter in this group's emitter's store.
+    this.emitters.push( emitter );
+    this.emitterIDs.push( emitter.uuid );
+
+    // Update certain flags to enable shader calculations only if they're necessary.
+    this._updateDefines( emitter );
+
+    // Update the material since defines might have changed
+    this.material.needsUpdate = true;
+    this.geometry.needsUpdate = true;
+    this._attributesNeedRefresh = true;
+
+    // Return the group to enable chaining.
+    return this;
+};
+
+/**
+ * Removes an SPE.Emitter instance from this group. When called,
+ * all particle's belonging to the given emitter will be instantly
+ * removed from the scene.
+ *
+ * @param {Emitter} emitter The emitter to add to this group.
+ */
+SPE.Group.prototype.removeEmitter = function( emitter ) {
+    'use strict';
+
+    var emitterIndex = this.emitterIDs.indexOf( emitter.uuid );
+
+    // Ensure an actual emitter instance is passed here.
+    //
+    // Decided not to throw here, just in case a scene's
+    // rendering would be paused. Logging an error instead
+    // of stopping execution if exceptions aren't caught.
+    if ( emitter instanceof SPE.Emitter === false ) {
+        console.error( '`emitter` argument must be instance of SPE.Emitter. Was provided with:', emitter );
+        return;
+    }
+
+    // Issue an error if the emitter isn't a member of this group.
+    else if ( emitterIndex === -1 ) {
+        console.error( 'Emitter does not exist in this group. Will not remove.' );
+        return;
+    }
+
+    // Kill all particles by marking them as dead
+    // and their age as 0.
+    var start = emitter.attributeOffset,
+        end = start + emitter.particleCount,
+        params = this.attributes.params.typedArray;
+
+    // Set alive and age to zero.
+    for ( var i = start; i < end; ++i ) {
+        params.array[ i * 4 ] = 0.0;
+        params.array[ i * 4 + 1 ] = 0.0;
+    }
+
+    // Remove the emitter from this group's "store".
+    this.emitters.splice( emitterIndex, 1 );
+    this.emitterIDs.splice( emitterIndex, 1 );
+
+    // Remove this emitter's attribute values from all shader attributes.
+    // The `.splice()` call here also marks each attribute's buffer
+    // as needing to update it's entire contents.
+    for ( var attr in this.attributes ) {
+        if ( this.attributes.hasOwnProperty( attr ) ) {
+            this.attributes[ attr ].splice( start, end );
+        }
+    }
+
+    // Ensure this group's particle count is correct.
+    this.particleCount -= emitter.particleCount;
+
+    // Call the emitter's remove method.
+    emitter._onRemove();
+
+    // Set a flag to indicate that the attribute buffers should
+    // be updated in their entirety on the next frame.
+    this._attributesNeedRefresh = true;
+};
+
+
+/**
+ * Fetch a single emitter instance from the pool.
+ * If there are no objects in the pool, a new emitter will be
+ * created if specified.
+ *
+ * @return {Emitter|null}
+ */
+SPE.Group.prototype.getFromPool = function() {
+    'use strict';
+
+    var pool = this._pool,
+        createNew = this._createNewWhenPoolEmpty;
+
+    if ( pool.length ) {
+        return pool.pop();
+    }
+    else if ( createNew ) {
+        return new SPE.Emitter( this._poolCreationSettings );
+    }
+
+    return null;
+};
+
+
+/**
+ * Release an emitter into the pool.
+ *
+ * @param  {ShaderParticleEmitter} emitter
+ * @return {Group} This group instance.
+ */
+SPE.Group.prototype.releaseIntoPool = function( emitter ) {
+    'use strict';
+
+    if ( emitter instanceof SPE.Emitter === false ) {
+        console.error( 'Argument is not instanceof SPE.Emitter:', emitter );
+        return;
+    }
+
+    emitter.reset();
+    this._pool.unshift( emitter );
+
+    return this;
+};
+
+
+/**
+ * Get the pool array
+ *
+ * @return {Array}
+ */
+SPE.Group.prototype.getPool = function() {
+    'use strict';
+    return this._pool;
+};
+
+
+/**
+ * Add a pool of emitters to this particle group
+ *
+ * @param {Number} numEmitters      The number of emitters to add to the pool.
+ * @param {EmitterOptions|Array} emitterOptions  An object, or array of objects, describing the options to pass to each emitter.
+ * @param {Boolean} createNew       Should a new emitter be created if the pool runs out?
+ * @return {Group} This group instance.
+ */
+SPE.Group.prototype.addPool = function( numEmitters, emitterOptions, createNew ) {
+    'use strict';
+
+    var emitter;
+
+    // Save relevant settings and flags.
+    this._poolCreationSettings = emitterOptions;
+    this._createNewWhenPoolEmpty = !!createNew;
+
+    // Create the emitters, add them to this group and the pool.
+    for ( var i = 0; i < numEmitters; ++i ) {
+        if ( Array.isArray( emitterOptions ) ) {
+            emitter = new SPE.Emitter( emitterOptions[ i ] );
+        }
+        else {
+            emitter = new SPE.Emitter( emitterOptions );
+        }
+        this.addEmitter( emitter );
+        this.releaseIntoPool( emitter );
+    }
+
+    return this;
+};
+
+
+
+SPE.Group.prototype._triggerSingleEmitter = function( pos ) {
+    'use strict';
+
+    var emitter = this.getFromPool(),
+        self = this;
+
+    if ( emitter === null ) {
+        console.log( 'SPE.Group pool ran out.' );
+        return;
+    }
+
+    // TODO:
+    // - Make sure buffers are update with thus new position.
+    if ( pos instanceof THREE.Vector3 ) {
+        emitter.position.value.copy( pos );
+
+        // Trigger the setter for this property to force an
+        // update to the emitter's position attribute.
+        emitter.position.value = emitter.position.value;
+    }
+
+    emitter.enable();
+
+    setTimeout( function() {
+        emitter.disable();
+        self.releaseIntoPool( emitter );
+    }, ( Math.max( emitter.duration, ( emitter.maxAge.value + emitter.maxAge.spread ) ) ) * 1000 );
+
+    return this;
+};
+
+
+/**
+ * Set a given number of emitters as alive, with an optional position
+ * vector3 to move them to.
+ *
+ * @param  {Number} numEmitters The number of emitters to activate
+ * @param  {Object} [position=undefined] A THREE.Vector3 instance describing the position to activate the emitter(s) at.
+ * @return {Group} This group instance.
+ */
+SPE.Group.prototype.triggerPoolEmitter = function( numEmitters, position ) {
+    'use strict';
+
+    if ( typeof numEmitters === 'number' && numEmitters > 1 ) {
+        for ( var i = 0; i < numEmitters; ++i ) {
+            this._triggerSingleEmitter( position );
+        }
+    }
+    else {
+        this._triggerSingleEmitter( position );
+    }
+
+    return this;
+};
+
+
+
+SPE.Group.prototype._updateUniforms = function( dt ) {
+    'use strict';
+
+    this.uniforms.runTime.value += dt;
+    this.uniforms.deltaTime.value = dt;
+};
+
+SPE.Group.prototype._resetBufferRanges = function() {
+    'use strict';
+
+    var keys = this.attributeKeys,
+        i = this.attributeCount - 1,
+        attrs = this.attributes;
+
+    for ( i; i >= 0; --i ) {
+        attrs[ keys[ i ] ].resetUpdateRange();
+    }
+};
+
+
+SPE.Group.prototype._updateBuffers = function( emitter ) {
+    'use strict';
+
+    var keys = this.attributeKeys,
+        i = this.attributeCount - 1,
+        attrs = this.attributes,
+        emitterRanges = emitter.bufferUpdateRanges,
+        key,
+        emitterAttr,
+        attr;
+
+    for ( i; i >= 0; --i ) {
+        key = keys[ i ];
+        emitterAttr = emitterRanges[ key ];
+        attr = attrs[ key ];
+        attr.setUpdateRange( emitterAttr.min, emitterAttr.max );
+        attr.flagUpdate();
+    }
+};
+
+
+/**
+ * Simulate all the emitter's belonging to this group, updating
+ * attribute values along the way.
+ * @param  {Number} [dt=Group's `fixedTimeStep` value] The number of seconds to simulate the group's emitters for (deltaTime)
+ */
+SPE.Group.prototype.tick = function( dt ) {
+    'use strict';
+
+    var emitters = this.emitters,
+        numEmitters = emitters.length,
+        deltaTime = dt || this.fixedTimeStep,
+        keys = this.attributeKeys,
+        i,
+        attrs = this.attributes;
+
+    // Update uniform values.
+    this._updateUniforms( deltaTime );
+
+    // Reset buffer update ranges on the shader attributes.
+    this._resetBufferRanges();
+
+
+    // If nothing needs updating, then stop here.
+    if (
+        numEmitters === 0 &&
+        this._attributesNeedRefresh === false &&
+        this._attributesNeedDynamicReset === false
+    ) {
+        return;
+    }
+
+    // Loop through each emitter in this group and
+    // simulate it, then update the shader attribute
+    // buffers.
+    for ( var i = 0, emitter; i < numEmitters; ++i ) {
+        emitter = emitters[ i ];
+        emitter.tick( deltaTime );
+        this._updateBuffers( emitter );
+    }
+
+    // If the shader attributes have been refreshed,
+    // then the dynamic properties of each buffer
+    // attribute will need to be reset back to
+    // what they should be.
+    if ( this._attributesNeedDynamicReset === true ) {
+        i = this.attributeCount - 1;
+
+        for ( i; i >= 0; --i ) {
+            attrs[ keys[ i ] ].resetDynamic();
+        }
+
+        this._attributesNeedDynamicReset = false;
+    }
+
+    // If this group's shader attributes need a full refresh
+    // then mark each attribute's buffer attribute as
+    // needing so.
+    if ( this._attributesNeedRefresh === true ) {
+        i = this.attributeCount - 1;
+
+        for ( i; i >= 0; --i ) {
+            attrs[ keys[ i ] ].forceUpdateAll();
+        }
+
+        this._attributesNeedRefresh = false;
+        this._attributesNeedDynamicReset = true;
+    }
+};
+
+
+/**
+ * Dipose the geometry and material for the group.
+ *
+ * @return {Group} Group instance.
+ */
+SPE.Group.prototype.dispose = function() {
+    'use strict';
+    this.geometry.dispose();
+    this.material.dispose();
+    return this;
+};
+
+/**
+ * An SPE.Emitter instance.
+ * @typedef {Object} Emitter
+ * @see SPE.Emitter
+ */
+
+/**
+ * A map of options to configure an SPE.Emitter instance.
+ *
+ * @typedef {Object} EmitterOptions
+ *
+ * @property {distribution} [type=BOX] The default distribution this emitter should use to control
+ *                         its particle's spawn position and force behaviour.
+ *                         Must be an SPE.distributions.* value.
+ *
+ *
+ * @property {Number} [particleCount=100] The total number of particles this emitter will hold. NOTE: this is not the number
+ *                                  of particles emitted in a second, or anything like that. The number of particles
+ *                                  emitted per-second is calculated by particleCount / maxAge (approximately!)
+ *
+ * @property {Number|null} [duration=null] The duration in seconds that this emitter should live for. If not specified, the emitter
+ *                                         will emit particles indefinitely.
+ *                                         NOTE: When an emitter is older than a specified duration, the emitter is NOT removed from
+ *                                         it's group, but rather is just marked as dead, allowing it to be reanimated at a later time
+ *                                         using `SPE.Emitter.prototype.enable()`.
+ *
+ * @property {Boolean} [isStatic=false] Whether this emitter should be not be simulated (true).
+ * @property {Boolean} [activeMultiplier=1] A value between 0 and 1 describing what percentage of this emitter's particlesPerSecond should be
+ *                                          emitted, where 0 is 0%, and 1 is 100%.
+ *                                          For example, having an emitter with 100 particles, a maxAge of 2, yields a particlesPerSecond
+ *                                          value of 50. Setting `activeMultiplier` to 0.5, then, will only emit 25 particles per second (0.5 = 50%).
+ *                                          Values greater than 1 will emulate a burst of particles, causing the emitter to run out of particles
+ *                                          before it's next activation cycle.
+ *
+ * @property {Boolean} [direction=1] The direction of the emitter. If value is `1`, emitter will start at beginning of particle's lifecycle.
+ *                                   If value is `-1`, emitter will start at end of particle's lifecycle and work it's way backwards.
+ *
+ * @property {Object} [maxAge={}] An object describing the particle's maximum age in seconds.
+ * @property {Number} [maxAge.value=2] A number between 0 and 1 describing the amount of maxAge to apply to all particles.
+ * @property {Number} [maxAge.spread=0] A number describing the maxAge variance on a per-particle basis.
+ *
+ *
+ * @property {Object} [position={}] An object describing this emitter's position.
+ * @property {Object} [position.value=new THREE.Vector3()] A THREE.Vector3 instance describing this emitter's base position.
+ * @property {Object} [position.spread=new THREE.Vector3()] A THREE.Vector3 instance describing this emitter's position variance on a per-particle basis.
+ *                                                          Note that when using a SPHERE or DISC distribution, only the x-component
+ *                                                          of this vector is used.
+ * @property {Object} [position.spreadClamp=new THREE.Vector3()] A THREE.Vector3 instance describing the numeric multiples the particle's should
+ *                                                               be spread out over.
+ *                                                               Note that when using a SPHERE or DISC distribution, only the x-component
+ *                                                               of this vector is used.
+ * @property {Number} [position.radius=10] This emitter's base radius.
+ * @property {Object} [position.radiusScale=new THREE.Vector3()] A THREE.Vector3 instance describing the radius's scale in all three axes. Allows a SPHERE or DISC to be squashed or stretched.
+ * @property {distribution} [position.distribution=value of the `type` option.] A specific distribution to use when radiusing particles. Overrides the `type` option.
+ * @property {Boolean} [position.randomise=false] When a particle is re-spawned, whether it's position should be re-randomised or not. Can incur a performance hit.
+ *
+ *
+ * @property {Object} [velocity={}] An object describing this particle velocity.
+ * @property {Object} [velocity.value=new THREE.Vector3()] A THREE.Vector3 instance describing this emitter's base velocity.
+ * @property {Object} [velocity.spread=new THREE.Vector3()] A THREE.Vector3 instance describing this emitter's velocity variance on a per-particle basis.
+ *                                                          Note that when using a SPHERE or DISC distribution, only the x-component
+ *                                                          of this vector is used.
+ * @property {distribution} [velocity.distribution=value of the `type` option.] A specific distribution to use when calculating a particle's velocity. Overrides the `type` option.
+ * @property {Boolean} [velocity.randomise=false] When a particle is re-spawned, whether it's velocity should be re-randomised or not. Can incur a performance hit.
+ *
+ *
+ * @property {Object} [acceleration={}] An object describing this particle's acceleration.
+ * @property {Object} [acceleration.value=new THREE.Vector3()] A THREE.Vector3 instance describing this emitter's base acceleration.
+ * @property {Object} [acceleration.spread=new THREE.Vector3()] A THREE.Vector3 instance describing this emitter's acceleration variance on a per-particle basis.
+ *                           Note that when using a SPHERE or DISC distribution, only the x-component
+ *                           of this vector is used.
+ * @property {distribution} [acceleration.distribution=value of the `type` option.] A specific distribution to use when calculating a particle's acceleration. Overrides the `type` option.
+ * @property {Boolean} [acceleration.randomise=false] When a particle is re-spawned, whether it's acceleration should be re-randomised or not. Can incur a performance hit.
+ *
+ *
+ * @property {Object} [drag={}] An object describing this particle drag. Drag is applied to both velocity and acceleration values.
+ * @property {Number} [drag.value=0] A number between 0 and 1 describing the amount of drag to apply to all particles.
+ * @property {Number} [drag.spread=0] A number describing the drag variance on a per-particle basis.
+ * @property {Boolean} [drag.randomise=false] When a particle is re-spawned, whether it's drag should be re-randomised or not. Can incur a performance hit.
+ *
+ *
+ * @property {Object} [wiggle={}] This is quite a fun one! The values of this object will determine whether a particle will wiggle, or jiggle, or wave,
+ *                                or shimmy, or waggle, or... Well you get the idea. The wiggle is calculated over-time, meaning that a particle will
+ *                                start off with no wiggle, and end up wiggling about with the distance of the `value` specified by the time it dies.
+ *                                It's quite handy to simulate fire embers, or similar effects where the particle's position should slightly change over
+ *                                time, and such change isn't easily controlled by rotation, velocity, or acceleration. The wiggle is a combination of sin and cos calculations, so is circular in nature.
+ * @property {Number} [wiggle.value=0] A number describing the amount of wiggle to apply to all particles. It's measured in distance.
+ * @property {Number} [wiggle.spread=0] A number describing the wiggle variance on a per-particle basis.
+ *
+ *
+ * @property {Object} [rotation={}] An object describing this emitter's rotation. It can either be static, or set to rotate from 0radians to the value of `rotation.value`
+ *                                  over a particle's lifetime. Rotation values affect both a particle's position and the forces applied to it.
+ * @property {Object} [rotation.axis=new THREE.Vector3(0, 1, 0)] A THREE.Vector3 instance describing this emitter's axis of rotation.
+ * @property {Object} [rotation.axisSpread=new THREE.Vector3()] A THREE.Vector3 instance describing the amount of variance to apply to the axis of rotation on
+ *                                                              a per-particle basis.
+ * @property {Number} [rotation.angle=0] The angle of rotation, given in radians. If `rotation.static` is true, the emitter will start off rotated at this angle, and stay as such.
+ *                                       Otherwise, the particles will rotate from 0radians to this value over their lifetimes.
+ * @property {Number} [rotation.angleSpread=0] The amount of variance in each particle's rotation angle.
+ * @property {Boolean} [rotation.static=false] Whether the rotation should be static or not.
+ * @property {Object} [rotation.center=The value of `position.value`] A THREE.Vector3 instance describing the center point of rotation.
+ * @property {Boolean} [rotation.randomise=false] When a particle is re-spawned, whether it's rotation should be re-randomised or not. Can incur a performance hit.
+ *
+ *
+ * @property {Object} [color={}] An object describing a particle's color. This property is a "value-over-lifetime" property, meaning an array of values and spreads can be
+ *                               given to describe specific value changes over a particle's lifetime.
+ *                               Depending on the value of SPE.valueOverLifetimeLength, if arrays of THREE.Color instances are given, then the array will be interpolated to
+ *                               have a length matching the value of SPE.valueOverLifetimeLength.
+ * @property {Object} [color.value=new THREE.Color()] Either a single THREE.Color instance, or an array of THREE.Color instances to describe the color of a particle over it's lifetime.
+ * @property {Object} [color.spread=new THREE.Vector3()] Either a single THREE.Vector3 instance, or an array of THREE.Vector3 instances to describe the color variance of a particle over it's lifetime.
+ * @property {Boolean} [color.randomise=false] When a particle is re-spawned, whether it's color should be re-randomised or not. Can incur a performance hit.
+ *
+ *
+ * @property {Object} [opacity={}] An object describing a particle's opacity. This property is a "value-over-lifetime" property, meaning an array of values and spreads can be
+ *                               given to describe specific value changes over a particle's lifetime.
+ *                               Depending on the value of SPE.valueOverLifetimeLength, if arrays of numbers are given, then the array will be interpolated to
+ *                               have a length matching the value of SPE.valueOverLifetimeLength.
+ * @property {Number} [opacity.value=1] Either a single number, or an array of numbers to describe the opacity of a particle over it's lifetime.
+ * @property {Number} [opacity.spread=0] Either a single number, or an array of numbers to describe the opacity variance of a particle over it's lifetime.
+ * @property {Boolean} [opacity.randomise=false] When a particle is re-spawned, whether it's opacity should be re-randomised or not. Can incur a performance hit.
+ *
+ *
+ * @property {Object} [size={}] An object describing a particle's size. This property is a "value-over-lifetime" property, meaning an array of values and spreads can be
+ *                               given to describe specific value changes over a particle's lifetime.
+ *                               Depending on the value of SPE.valueOverLifetimeLength, if arrays of numbers are given, then the array will be interpolated to
+ *                               have a length matching the value of SPE.valueOverLifetimeLength.
+ * @property {Number} [size.value=1] Either a single number, or an array of numbers to describe the size of a particle over it's lifetime.
+ * @property {Number} [size.spread=0] Either a single number, or an array of numbers to describe the size variance of a particle over it's lifetime.
+ * @property {Boolean} [size.randomise=false] When a particle is re-spawned, whether it's size should be re-randomised or not. Can incur a performance hit.
+ *
+ *
+ * @property {Object} [angle={}] An object describing a particle's angle. The angle is a 2d-rotation, measured in radians, applied to the particle's texture.
+ *                               NOTE: if a particle's texture is a sprite-sheet, this value IS IGNORED.
+ *                               This property is a "value-over-lifetime" property, meaning an array of values and spreads can be
+ *                               given to describe specific value changes over a particle's lifetime.
+ *                               Depending on the value of SPE.valueOverLifetimeLength, if arrays of numbers are given, then the array will be interpolated to
+ *                               have a length matching the value of SPE.valueOverLifetimeLength.
+ * @property {Number} [angle.value=0] Either a single number, or an array of numbers to describe the angle of a particle over it's lifetime.
+ * @property {Number} [angle.spread=0] Either a single number, or an array of numbers to describe the angle variance of a particle over it's lifetime.
+ * @property {Boolean} [angle.randomise=false] When a particle is re-spawned, whether it's angle should be re-randomised or not. Can incur a performance hit.
+ *
+ */
+
+/**
+ * The SPE.Emitter class.
+ *
+ * @constructor
+ *
+ * @param {EmitterOptions} options A map of options to configure the emitter.
+ */
+SPE.Emitter = function( options ) {
+    'use strict';
+
+    var utils = SPE.utils,
+        types = utils.types,
+        lifetimeLength = SPE.valueOverLifetimeLength;
+
+    // Ensure we have a map of options to play with,
+    // and that each option is in the correct format.
+    options = utils.ensureTypedArg( options, types.OBJECT, {} );
+    options.position = utils.ensureTypedArg( options.position, types.OBJECT, {} );
+    options.velocity = utils.ensureTypedArg( options.velocity, types.OBJECT, {} );
+    options.acceleration = utils.ensureTypedArg( options.acceleration, types.OBJECT, {} );
+    options.radius = utils.ensureTypedArg( options.radius, types.OBJECT, {} );
+    options.drag = utils.ensureTypedArg( options.drag, types.OBJECT, {} );
+    options.rotation = utils.ensureTypedArg( options.rotation, types.OBJECT, {} );
+    options.color = utils.ensureTypedArg( options.color, types.OBJECT, {} );
+    options.opacity = utils.ensureTypedArg( options.opacity, types.OBJECT, {} );
+    options.size = utils.ensureTypedArg( options.size, types.OBJECT, {} );
+    options.angle = utils.ensureTypedArg( options.angle, types.OBJECT, {} );
+    options.wiggle = utils.ensureTypedArg( options.wiggle, types.OBJECT, {} );
+    options.maxAge = utils.ensureTypedArg( options.maxAge, types.OBJECT, {} );
+
+    if ( options.onParticleSpawn ) {
+        console.warn( 'onParticleSpawn has been removed. Please set properties directly to alter values at runtime.' );
+    }
+
+    this.uuid = THREE.Math.generateUUID();
+
+    this.type = utils.ensureTypedArg( options.type, types.NUMBER, SPE.distributions.BOX );
+
+    // Start assigning properties...kicking it off with props that DON'T support values over
+    // lifetimes.
+    //
+    // Btw, values over lifetimes are just the new way of referring to *Start, *Middle, and *End.
+    this.position = {
+        _value: utils.ensureInstanceOf( options.position.value, THREE.Vector3, new THREE.Vector3() ),
+        _spread: utils.ensureInstanceOf( options.position.spread, THREE.Vector3, new THREE.Vector3() ),
+        _spreadClamp: utils.ensureInstanceOf( options.position.spreadClamp, THREE.Vector3, new THREE.Vector3() ),
+        _distribution: utils.ensureTypedArg( options.position.distribution, types.NUMBER, this.type ),
+        _randomise: utils.ensureTypedArg( options.position.randomise, types.BOOLEAN, false ),
+        _radius: utils.ensureTypedArg( options.position.radius, types.NUMBER, 10 ),
+        _radiusScale: utils.ensureInstanceOf( options.position.radiusScale, THREE.Vector3, new THREE.Vector3( 1, 1, 1 ) ),
+        _distributionClamp: utils.ensureTypedArg( options.position.distributionClamp, types.NUMBER, 0 ),
+    };
+
+    this.velocity = {
+        _value: utils.ensureInstanceOf( options.velocity.value, THREE.Vector3, new THREE.Vector3() ),
+        _spread: utils.ensureInstanceOf( options.velocity.spread, THREE.Vector3, new THREE.Vector3() ),
+        _distribution: utils.ensureTypedArg( options.velocity.distribution, types.NUMBER, this.type ),
+        _randomise: utils.ensureTypedArg( options.position.randomise, types.BOOLEAN, false )
+    };
+
+    this.acceleration = {
+        _value: utils.ensureInstanceOf( options.acceleration.value, THREE.Vector3, new THREE.Vector3() ),
+        _spread: utils.ensureInstanceOf( options.acceleration.spread, THREE.Vector3, new THREE.Vector3() ),
+        _distribution: utils.ensureTypedArg( options.acceleration.distribution, types.NUMBER, this.type ),
+        _randomise: utils.ensureTypedArg( options.position.randomise, types.BOOLEAN, false )
+    };
+
+    this.drag = {
+        _value: utils.ensureTypedArg( options.drag.value, types.NUMBER, 0 ),
+        _spread: utils.ensureTypedArg( options.drag.spread, types.NUMBER, 0 ),
+        _randomise: utils.ensureTypedArg( options.position.randomise, types.BOOLEAN, false )
+    };
+
+    this.wiggle = {
+        _value: utils.ensureTypedArg( options.wiggle.value, types.NUMBER, 0 ),
+        _spread: utils.ensureTypedArg( options.wiggle.spread, types.NUMBER, 0 )
+    };
+
+    this.rotation = {
+        _axis: utils.ensureInstanceOf( options.rotation.axis, THREE.Vector3, new THREE.Vector3( 0.0, 1.0, 0.0 ) ),
+        _axisSpread: utils.ensureInstanceOf( options.rotation.axisSpread, THREE.Vector3, new THREE.Vector3() ),
+        _angle: utils.ensureTypedArg( options.rotation.angle, types.NUMBER, 0 ),
+        _angleSpread: utils.ensureTypedArg( options.rotation.angleSpread, types.NUMBER, 0 ),
+        _static: utils.ensureTypedArg( options.rotation.static, types.BOOLEAN, false ),
+        _center: utils.ensureInstanceOf( options.rotation.center, THREE.Vector3, this.position._value.clone() ),
+        _randomise: utils.ensureTypedArg( options.position.randomise, types.BOOLEAN, false )
+    };
+
+
+    this.maxAge = {
+        _value: utils.ensureTypedArg( options.maxAge.value, types.NUMBER, 2 ),
+        _spread: utils.ensureTypedArg( options.maxAge.spread, types.NUMBER, 0 )
+    };
+
+
+
+    // The following properties can support either single values, or an array of values that change
+    // the property over a particle's lifetime (value over lifetime).
+    this.color = {
+        _value: utils.ensureArrayInstanceOf( options.color.value, THREE.Color, new THREE.Color() ),
+        _spread: utils.ensureArrayInstanceOf( options.color.spread, THREE.Vector3, new THREE.Vector3() ),
+        _randomise: utils.ensureTypedArg( options.position.randomise, types.BOOLEAN, false )
+    };
+
+    this.opacity = {
+        _value: utils.ensureArrayTypedArg( options.opacity.value, types.NUMBER, 1 ),
+        _spread: utils.ensureArrayTypedArg( options.opacity.spread, types.NUMBER, 0 ),
+        _randomise: utils.ensureTypedArg( options.position.randomise, types.BOOLEAN, false )
+    };
+
+    this.size = {
+        _value: utils.ensureArrayTypedArg( options.size.value, types.NUMBER, 1 ),
+        _spread: utils.ensureArrayTypedArg( options.size.spread, types.NUMBER, 0 ),
+        _randomise: utils.ensureTypedArg( options.position.randomise, types.BOOLEAN, false )
+    };
+
+    this.angle = {
+        _value: utils.ensureArrayTypedArg( options.angle.value, types.NUMBER, 0 ),
+        _spread: utils.ensureArrayTypedArg( options.angle.spread, types.NUMBER, 0 ),
+        _randomise: utils.ensureTypedArg( options.position.randomise, types.BOOLEAN, false )
+    };
+
+
+    // Assign renaining option values.
+    this.particleCount = utils.ensureTypedArg( options.particleCount, types.NUMBER, 100 );
+    this.duration = utils.ensureTypedArg( options.duration, types.NUMBER, null );
+    this.isStatic = utils.ensureTypedArg( options.isStatic, types.BOOLEAN, false );
+    this.activeMultiplier = utils.ensureTypedArg( options.activeMultiplier, types.NUMBER, 1 );
+    this.direction = utils.ensureTypedArg( options.direction, types.NUMBER, 1 );
+
+    // Whether this emitter is alive or not.
+    this.alive = utils.ensureTypedArg( options.alive, types.BOOLEAN, true );
+
+
+    // The following properties are set internally and are not
+    // user-controllable.
+    this.particlesPerSecond = 0;
+
+    // The current particle index for which particles should
+    // be marked as active on the next update cycle.
+    this.activationIndex = 0;
+
+    // The offset in the typed arrays this emitter's
+    // particle's values will start at
+    this.attributeOffset = 0;
+
+    // The end of the range in the attribute buffers
+    this.attributeEnd = 0;
+
+
+
+    // Holds the time the emitter has been alive for.
+    this.age = 0.0;
+
+    // Holds the number of currently-alive particles
+    this.activeParticleCount = 0.0;
+
+    // Holds a reference to this emitter's group once
+    // it's added to one.
+    this.group = null;
+
+    // Holds a reference to this emitter's group's attributes object
+    // for easier access.
+    this.attributes = null;
+
+    // Holds a reference to the params attribute's typed array
+    // for quicker access.
+    this.paramsArray = null;
+
+    // A set of flags to determine whether particular properties
+    // should be re-randomised when a particle is reset.
+    //
+    // If a `randomise` property is given, this is preferred.
+    // Otherwise, it looks at whether a spread value has been
+    // given.
+    //
+    // It allows randomization to be turned off as desired. If
+    // all randomization is turned off, then I'd expect a performance
+    // boost as no attribute buffers (excluding the `params`)
+    // would have to be re-passed to the GPU each frame (since nothing
+    // except the `params` attribute would have changed).
+    this.resetFlags = {
+        // params: utils.ensureTypedArg( options.maxAge.randomise, types.BOOLEAN, !!options.maxAge.spread ) ||
+        //     utils.ensureTypedArg( options.wiggle.randomise, types.BOOLEAN, !!options.wiggle.spread ),
+        position: utils.ensureTypedArg( options.position.randomise, types.BOOLEAN, false ) ||
+            utils.ensureTypedArg( options.radius.randomise, types.BOOLEAN, false ),
+        velocity: utils.ensureTypedArg( options.velocity.randomise, types.BOOLEAN, false ),
+        acceleration: utils.ensureTypedArg( options.acceleration.randomise, types.BOOLEAN, false ) ||
+            utils.ensureTypedArg( options.drag.randomise, types.BOOLEAN, false ),
+        rotation: utils.ensureTypedArg( options.rotation.randomise, types.BOOLEAN, false ),
+        rotationCenter: utils.ensureTypedArg( options.rotation.randomise, types.BOOLEAN, false ),
+        size: utils.ensureTypedArg( options.size.randomise, types.BOOLEAN, false ),
+        color: utils.ensureTypedArg( options.color.randomise, types.BOOLEAN, false ),
+        opacity: utils.ensureTypedArg( options.opacity.randomise, types.BOOLEAN, false ),
+        angle: utils.ensureTypedArg( options.angle.randomise, types.BOOLEAN, false )
+    };
+
+    this.updateFlags = {};
+    this.updateCounts = {};
+
+    // A map to indicate which emitter parameters should update
+    // which attribute.
+    this.updateMap = {
+        maxAge: 'params',
+        position: 'position',
+        velocity: 'velocity',
+        acceleration: 'acceleration',
+        drag: 'acceleration',
+        wiggle: 'params',
+        rotation: 'rotation',
+        size: 'size',
+        color: 'color',
+        opacity: 'opacity',
+        angle: 'angle'
+    };
+
+    for ( var i in this.updateMap ) {
+        if ( this.updateMap.hasOwnProperty( i ) ) {
+            this.updateCounts[ this.updateMap[ i ] ] = 0.0;
+            this.updateFlags[ this.updateMap[ i ] ] = false;
+            this._createGetterSetters( this[ i ], i );
+        }
+    }
+
+    this.bufferUpdateRanges = {};
+    this.attributeKeys = null;
+    this.attributeCount = 0;
+
+
+    // Ensure that the value-over-lifetime property objects above
+    // have value and spread properties that are of the same length.
+    //
+    // Also, for now, make sure they have a length of 3 (min/max arguments here).
+    utils.ensureValueOverLifetimeCompliance( this.color, lifetimeLength, lifetimeLength );
+    utils.ensureValueOverLifetimeCompliance( this.opacity, lifetimeLength, lifetimeLength );
+    utils.ensureValueOverLifetimeCompliance( this.size, lifetimeLength, lifetimeLength );
+    utils.ensureValueOverLifetimeCompliance( this.angle, lifetimeLength, lifetimeLength );
+};
+
+SPE.Emitter.constructor = SPE.Emitter;
+
+SPE.Emitter.prototype._createGetterSetters = function( propObj, propName ) {
+    'use strict';
+
+    var self = this;
+
+    for ( var i in propObj ) {
+        if ( propObj.hasOwnProperty( i ) ) {
+
+            var name = i.replace( '_', '' );
+
+            Object.defineProperty( propObj, name, {
+                get: ( function( prop ) {
+                    return function() {
+                        return this[ prop ];
+                    };
+                }( i ) ),
+
+                set: ( function( prop ) {
+                    return function( value ) {
+                        var mapName = self.updateMap[ propName ],
+                            prevValue = this[ prop ],
+                            length = SPE.valueOverLifetimeLength;
+
+                        if ( prop === '_rotationCenter' ) {
+                            self.updateFlags.rotationCenter = true;
+                            self.updateCounts.rotationCenter = 0.0;
+                        }
+                        else if ( prop === '_randomise' ) {
+                            self.resetFlags[ mapName ] = value;
+                        }
+                        else {
+                            self.updateFlags[ mapName ] = true;
+                            self.updateCounts[ mapName ] = 0.0;
+                        }
+
+                        self.group._updateDefines();
+
+                        this[ prop ] = value;
+
+                        // If the previous value was an array, then make
+                        // sure the provided value is interpolated correctly.
+                        if ( Array.isArray( prevValue ) ) {
+                            SPE.utils.ensureValueOverLifetimeCompliance( self[ propName ], length, length );
+                        }
+                    };
+                }( i ) )
+            } );
+        }
+    }
+};
+
+SPE.Emitter.prototype._setBufferUpdateRanges = function( keys ) {
+    'use strict';
+
+    this.attributeKeys = keys;
+    this.attributeCount = keys.length;
+
+    for ( var i = this.attributeCount - 1; i >= 0; --i ) {
+        this.bufferUpdateRanges[ keys[ i ] ] = {
+            min: Number.POSITIVE_INFINITY,
+            max: Number.NEGATIVE_INFINITY
+        };
+    }
+};
+
+SPE.Emitter.prototype._calculatePPSValue = function( groupMaxAge ) {
+    'use strict';
+
+    var particleCount = this.particleCount;
+
+
+    // Calculate the `particlesPerSecond` value for this emitter. It's used
+    // when determining which particles should die and which should live to
+    // see another day. Or be born, for that matter. The "God" property.
+    if ( this.duration ) {
+        this.particlesPerSecond = particleCount / ( groupMaxAge < this.duration ? groupMaxAge : this.duration );
+    }
+    else {
+        this.particlesPerSecond = particleCount / groupMaxAge;
+    }
+};
+
+SPE.Emitter.prototype._setAttributeOffset = function( startIndex ) {
+    this.attributeOffset = startIndex;
+    this.activationIndex = startIndex;
+    this.activationEnd = startIndex + this.particleCount;
+};
+
+
+SPE.Emitter.prototype._assignValue = function( prop, index ) {
+    'use strict';
+
+    switch ( prop ) {
+        case 'position':
+            this._assignPositionValue( index );
+            break;
+
+        case 'velocity':
+        case 'acceleration':
+            this._assignForceValue( index, prop );
+            break;
+
+        case 'size':
+        case 'opacity':
+            this._assignAbsLifetimeValue( index, prop );
+            break;
+
+        case 'angle':
+            this._assignAngleValue( index );
+            break;
+
+        case 'params':
+            this._assignParamsValue( index );
+            break;
+
+        case 'rotation':
+            this._assignRotationValue( index );
+            break;
+
+        case 'color':
+            this._assignColorValue( index );
+            break;
+    }
+};
+
+SPE.Emitter.prototype._assignPositionValue = function( index ) {
+    'use strict';
+
+    var distributions = SPE.distributions,
+        utils = SPE.utils,
+        prop = this.position,
+        attr = this.attributes.position,
+        value = prop._value,
+        spread = prop._spread,
+        distribution = prop._distribution;
+
+    switch ( distribution ) {
+        case distributions.BOX:
+            utils.randomVector3( attr, index, value, spread, prop._spreadClamp );
+            break;
+
+        case distributions.SPHERE:
+            utils.randomVector3OnSphere( attr, index, value, prop._radius, prop._spread.x, prop._radiusScale, prop._spreadClamp.x, prop._distributionClamp || this.particleCount );
+            break;
+
+        case distributions.DISC:
+            utils.randomVector3OnDisc( attr, index, value, prop._radius, prop._spread.x, prop._radiusScale, prop._spreadClamp.x );
+            break;
+    }
+};
+
+SPE.Emitter.prototype._assignForceValue = function( index, attrName ) {
+    'use strict';
+
+    var distributions = SPE.distributions,
+        utils = SPE.utils,
+        prop = this[ attrName ],
+        value = prop._value,
+        spread = prop._spread,
+        distribution = prop._distribution,
+        pos,
+        positionX,
+        positionY,
+        positionZ,
+        i;
+
+    switch ( distribution ) {
+        case distributions.BOX:
+            utils.randomVector3( this.attributes[ attrName ], index, value, spread );
+            break;
+
+        case distributions.SPHERE:
+            pos = this.attributes.position.typedArray.array;
+            i = index * 3;
+
+            // Ensure position values aren't zero, otherwise no force will be
+            // applied.
+            // positionX = utils.zeroToEpsilon( pos[ i ], true );
+            // positionY = utils.zeroToEpsilon( pos[ i + 1 ], true );
+            // positionZ = utils.zeroToEpsilon( pos[ i + 2 ], true );
+            positionX = pos[ i ];
+            positionY = pos[ i + 1 ];
+            positionZ = pos[ i + 2 ];
+
+            utils.randomDirectionVector3OnSphere(
+                this.attributes[ attrName ], index,
+                positionX, positionY, positionZ,
+                this.position._value,
+                prop._value.x,
+                prop._spread.x
+            );
+            break;
+
+        case distributions.DISC:
+            pos = this.attributes.position.typedArray.array;
+            i = index * 3;
+
+            // Ensure position values aren't zero, otherwise no force will be
+            // applied.
+            // positionX = utils.zeroToEpsilon( pos[ i ], true );
+            // positionY = utils.zeroToEpsilon( pos[ i + 1 ], true );
+            // positionZ = utils.zeroToEpsilon( pos[ i + 2 ], true );
+            positionX = pos[ i ];
+            positionY = pos[ i + 1 ];
+            positionZ = pos[ i + 2 ];
+
+            utils.randomDirectionVector3OnDisc(
+                this.attributes[ attrName ], index,
+                positionX, positionY, positionZ,
+                this.position._value,
+                prop._value.x,
+                prop._spread.x
+            );
+            break;
+    }
+
+    if ( attrName === 'acceleration' ) {
+        var drag = utils.clamp( utils.randomFloat( this.drag._value, this.drag._spread ), 0, 1 );
+        this.attributes.acceleration.typedArray.array[ index * 4 + 3 ] = drag;
+    }
+};
+
+SPE.Emitter.prototype._assignAbsLifetimeValue = function( index, propName ) {
+    'use strict';
+
+    var array = this.attributes[ propName ].typedArray,
+        prop = this[ propName ],
+        utils = SPE.utils,
+        value;
+
+    if ( utils.arrayValuesAreEqual( prop._value ) && utils.arrayValuesAreEqual( prop._spread ) ) {
+        value = Math.abs( utils.randomFloat( prop._value[ 0 ], prop._spread[ 0 ] ) );
+        array.setVec4Components( index, value, value, value, value );
+    }
+    else {
+        array.setVec4Components( index,
+            Math.abs( utils.randomFloat( prop._value[ 0 ], prop._spread[ 0 ] ) ),
+            Math.abs( utils.randomFloat( prop._value[ 1 ], prop._spread[ 1 ] ) ),
+            Math.abs( utils.randomFloat( prop._value[ 2 ], prop._spread[ 2 ] ) ),
+            Math.abs( utils.randomFloat( prop._value[ 3 ], prop._spread[ 3 ] ) )
+        );
+    }
+};
+
+SPE.Emitter.prototype._assignAngleValue = function( index ) {
+    'use strict';
+
+    var array = this.attributes.angle.typedArray,
+        prop = this.angle,
+        utils = SPE.utils,
+        value;
+
+    if ( utils.arrayValuesAreEqual( prop._value ) && utils.arrayValuesAreEqual( prop._spread ) ) {
+        value = utils.randomFloat( prop._value[ 0 ], prop._spread[ 0 ] );
+        array.setVec4Components( index, value, value, value, value );
+    }
+    else {
+        array.setVec4Components( index,
+            utils.randomFloat( prop._value[ 0 ], prop._spread[ 0 ] ),
+            utils.randomFloat( prop._value[ 1 ], prop._spread[ 1 ] ),
+            utils.randomFloat( prop._value[ 2 ], prop._spread[ 2 ] ),
+            utils.randomFloat( prop._value[ 3 ], prop._spread[ 3 ] )
+        );
+    }
+};
+
+SPE.Emitter.prototype._assignParamsValue = function( index ) {
+    'use strict';
+
+    this.attributes.params.typedArray.setVec4Components( index,
+        this.isStatic ? 1 : 0,
+        0.0,
+        Math.abs( SPE.utils.randomFloat( this.maxAge._value, this.maxAge._spread ) ),
+        SPE.utils.randomFloat( this.wiggle._value, this.wiggle._spread )
+    );
+};
+
+SPE.Emitter.prototype._assignRotationValue = function( index ) {
+    'use strict';
+
+    this.attributes.rotation.typedArray.setVec3Components( index,
+        SPE.utils.getPackedRotationAxis( this.rotation._axis, this.rotation._axisSpread ),
+        SPE.utils.randomFloat( this.rotation._angle, this.rotation._angleSpread ),
+        this.rotation._static ? 0 : 1
+    );
+
+    this.attributes.rotationCenter.typedArray.setVec3( index, this.rotation._center );
+};
+
+SPE.Emitter.prototype._assignColorValue = function( index ) {
+    'use strict';
+    SPE.utils.randomColorAsHex( this.attributes.color, index, this.color._value, this.color._spread );
+};
+
+SPE.Emitter.prototype._resetParticle = function( index ) {
+    'use strict';
+
+    var resetFlags = this.resetFlags,
+        updateFlags = this.updateFlags,
+        updateCounts = this.updateCounts,
+        keys = this.attributeKeys,
+        key,
+        updateFlag;
+
+    for ( var i = this.attributeCount - 1; i >= 0; --i ) {
+        key = keys[ i ];
+        updateFlag = updateFlags[ key ];
+
+        if ( resetFlags[ key ] === true || updateFlag === true ) {
+            this._assignValue( key, index );
+            this._updateAttributeUpdateRange( key, index );
+
+            if ( updateFlag === true && updateCounts[ key ] === this.particleCount ) {
+                updateFlags[ key ] = false;
+                updateCounts[ key ] = 0.0;
+            }
+            else if ( updateFlag == true ) {
+                ++updateCounts[ key ];
+            }
+        }
+    }
+};
+
+SPE.Emitter.prototype._updateAttributeUpdateRange = function( attr, i ) {
+    'use strict';
+
+    var ranges = this.bufferUpdateRanges[ attr ];
+
+    ranges.min = Math.min( i, ranges.min );
+    ranges.max = Math.max( i, ranges.max );
+};
+
+SPE.Emitter.prototype._resetBufferRanges = function() {
+    'use strict';
+
+    var ranges = this.bufferUpdateRanges,
+        keys = this.bufferUpdateKeys,
+        i = this.bufferUpdateCount - 1,
+        key;
+
+    for ( i; i >= 0; --i ) {
+        key = keys[ i ];
+        ranges[ key ].min = Number.POSITIVE_INFINITY;
+        ranges[ key ].max = Number.NEGATIVE_INFINITY;
+    }
+};
+
+SPE.Emitter.prototype._onRemove = function() {
+    'use strict';
+    // Reset any properties of the emitter that were set by
+    // a group when it was added.
+    this.particlesPerSecond = 0;
+    this.attributeOffset = 0;
+    this.activationIndex = 0;
+    this.activeParticleCount = 0;
+    this.group = null;
+    this.attributes = null;
+    this.paramsArray = null;
+    this.age = 0.0;
+};
+
+SPE.Emitter.prototype._decrementParticleCount = function() {
+    'use strict';
+    --this.activeParticleCount;
+
+    // TODO:
+    //  - Trigger event if count === 0.
+};
+
+SPE.Emitter.prototype._incrementParticleCount = function() {
+    'use strict';
+    ++this.activeParticleCount;
+
+    // TODO:
+    //  - Trigger event if count === this.particleCount.
+};
+
+SPE.Emitter.prototype._checkParticleAges = function( start, end, params, dt ) {
+    'use strict';
+    for ( var i = end - 1, index, maxAge, age, alive; i >= start; --i ) {
+        index = i * 4;
+
+        alive = params[ index ];
+
+        if ( alive === 0.0 ) {
+            continue;
+        }
+
+        // Increment age
+        age = params[ index + 1 ];
+        maxAge = params[ index + 2 ];
+
+        if ( this.direction === 1 ) {
+            age += dt;
+
+            if ( age >= maxAge ) {
+                age = 0.0;
+                alive = 0.0;
+                this._decrementParticleCount();
+            }
+        }
+        else {
+            age -= dt;
+
+            if ( age <= 0.0 ) {
+                age = maxAge;
+                alive = 0.0;
+                this._decrementParticleCount();
+            }
+        }
+
+        params[ index ] = alive;
+        params[ index + 1 ] = age;
+
+        this._updateAttributeUpdateRange( 'params', i );
+    }
+};
+
+SPE.Emitter.prototype._activateParticles = function( activationStart, activationEnd, params, dtPerParticle ) {
+    'use strict';
+    var direction = this.direction;
+
+    for ( var i = activationStart, index, dtValue; i < activationEnd; ++i ) {
+        index = i * 4;
+
+        // Don't re-activate particles that aren't dead yet.
+        // if ( params[ index ] !== 0.0 && ( this.particleCount !== 1 || this.activeMultiplier !== 1 ) ) {
+        //     continue;
+        // }
+
+        if ( params[ index ] != 0.0 && this.particleCount !== 1 ) {
+            continue;
+        }
+
+        // Increment the active particle count.
+        this._incrementParticleCount();
+
+        // Mark the particle as alive.
+        params[ index ] = 1.0;
+
+        // Reset the particle
+        this._resetParticle( i );
+
+        // Move each particle being activated to
+        // it's actual position in time.
+        //
+        // This stops particles being 'clumped' together
+        // when frame rates are on the lower side of 60fps
+        // or not constant (a very real possibility!)
+        dtValue = dtPerParticle * ( i - activationStart )
+        params[ index + 1 ] = direction === -1 ? params[ index + 2 ] - dtValue : dtValue;
+
+        this._updateAttributeUpdateRange( 'params', i );
+    }
+};
+
+/**
+ * Simulates one frame's worth of particles, updating particles
+ * that are already alive, and marking ones that are currently dead
+ * but should be alive as alive.
+ *
+ * If the emitter is marked as static, then this function will do nothing.
+ *
+ * @param  {Number} dt The number of seconds to simulate (deltaTime)
+ */
+SPE.Emitter.prototype.tick = function( dt ) {
+    'use strict';
+
+    if ( this.isStatic ) {
+        return;
+    }
+
+    if ( this.paramsArray === null ) {
+        this.paramsArray = this.attributes.params.typedArray.array;
+    }
+
+    var start = this.attributeOffset,
+        end = start + this.particleCount,
+        params = this.paramsArray, // vec3( alive, age, maxAge, wiggle )
+        ppsDt = this.particlesPerSecond * this.activeMultiplier * dt,
+        activationIndex = this.activationIndex;
+
+    // Reset the buffer update indices.
+    this._resetBufferRanges();
+
+    // Increment age for those particles that are alive,
+    // and kill off any particles whose age is over the limit.
+    this._checkParticleAges( start, end, params, dt );
+
+    // If the emitter is dead, reset the age of the emitter to zero,
+    // ready to go again if required
+    if ( this.alive === false ) {
+        this.age = 0.0;
+        return;
+    }
+
+    // If the emitter has a specified lifetime and we've exceeded it,
+    // mark the emitter as dead.
+    if ( this.duration !== null && this.age > this.duration ) {
+        this.alive = false;
+        this.age = 0.0;
+        return;
+    }
+
+
+    var activationStart = this.particleCount === 1 ? activationIndex : ( activationIndex | 0 ),
+        activationEnd = Math.min( activationStart + ppsDt, this.activationEnd ),
+        activationCount = activationEnd - this.activationIndex | 0,
+        dtPerParticle = activationCount > 0 ? dt / activationCount : 0;
+
+    this._activateParticles( activationStart, activationEnd, params, dtPerParticle );
+
+    // Move the activation window forward, soldier.
+    this.activationIndex += ppsDt;
+
+    if ( this.activationIndex > end ) {
+        this.activationIndex = start;
+    }
+
+
+    // Increment the age of the emitter.
+    this.age += dt;
+};
+
+/**
+ * Resets all the emitter's particles to their start positions
+ * and marks the particles as dead if the `force` argument is
+ * true.
+ *
+ * @param  {Boolean} [force=undefined] If true, all particles will be marked as dead instantly.
+ * @return {Emitter}       This emitter instance.
+ */
+SPE.Emitter.prototype.reset = function( force ) {
+    'use strict';
+
+    this.age = 0.0;
+    this.alive = false;
+
+    if ( force === true ) {
+        var start = this.attributeOffset,
+            end = start + this.particleCount,
+            array = this.paramsArray,
+            attr = this.attributes.params.bufferAttribute;
+
+        for ( var i = end - 1, index; i >= start; --i ) {
+            index = i * 4;
+
+            array[ index ] = 0.0;
+            array[ index + 1 ] = 0.0;
+        }
+
+        attr.updateRange.offset = 0;
+        attr.updateRange.count = -1;
+        attr.needsUpdate = true;
+    }
+
+    return this;
+};
+
+/**
+ * Enables the emitter. If not already enabled, the emitter
+ * will start emitting particles.
+ *
+ * @return {Emitter} This emitter instance.
+ */
+SPE.Emitter.prototype.enable = function() {
+    'use strict';
+    this.alive = true;
+    return this;
+};
+
+/**
+ * Disables th emitter, but does not instantly remove it's
+ * particles fromt the scene. When called, the emitter will be
+ * 'switched off' and just stop emitting. Any particle's alive will
+ * be allowed to finish their lifecycle.
+ *
+ * @return {Emitter} This emitter instance.
+ */
+SPE.Emitter.prototype.disable = function() {
+    'use strict';
+
+    this.alive = false;
+    return this;
+};
+
+/**
+ * Remove this emitter from it's parent group (if it has been added to one).
+ * Delgates to SPE.group.prototype.removeEmitter().
+ *
+ * When called, all particle's belonging to this emitter will be instantly
+ * removed from the scene.
+ *
+ * @return {Emitter} This emitter instance.
+ *
+ * @see SPE.Group.prototype.removeEmitter
+ */
+SPE.Emitter.prototype.remove = function() {
+    'use strict';
+    if ( this.group !== null ) {
+        this.group.removeEmitter( this );
+    }
+    else {
+        console.error( 'Emitter does not belong to a group, cannot remove.' );
+    }
+
+    return this;
+};
+
+/***/ }),
+/* 170 */
 /***/ (function(module, exports) {
 
 module.exports = after
@@ -18511,7 +24623,7 @@ function noop() {}
 
 
 /***/ }),
-/* 163 */
+/* 171 */
 /***/ (function(module, exports) {
 
 /**
@@ -18546,75 +24658,124 @@ module.exports = function(arraybuffer, start, end) {
 
 
 /***/ }),
-/* 164 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
-exports.default = AssetLoader;
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _Avatar = __webpack_require__(92);
 
-function AssetLoader() {
-	return (
-		//Set timeout for scene to run even if all assets are not fully loaded. Default time is 3 seconds. 
+var _Avatar2 = _interopRequireDefault(_Avatar);
 
-		//Linter is showing error on timeout, but syntax is copied from Transcend
-		_react2.default.createElement(
-			"a-assets",
-			{ timeout: "3000" },
-			_react2.default.createElement("img", { id: "blossoms", src: "/images/blossoms.jpg" }),
-			_react2.default.createElement("img", { id: "stars", src: "/images/sky-stars.png" }),
-			_react2.default.createElement("img", { id: "fractal", src: "/images/fractal.jpg" }),
-			_react2.default.createElement("img", { id: "tiedye", src: "/images/tiedye.jpg" }),
-			_react2.default.createElement("a-mixin", { id: "chair-part", geometry: "primitive: box", material: "color: #BFBFBF" })
-		)
-	);
-} // This component loads assets and mixins, so that they can be called by other components without needing to continually re-render and interrupting the scene.
+var _AssetLoader = __webpack_require__(91);
 
-/***/ }),
-/* 165 */
-/***/ (function(module, exports, __webpack_require__) {
+var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
 
-"use strict";
+var _glMatrix = __webpack_require__(225);
 
+var _glMatrix2 = _interopRequireDefault(_glMatrix);
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+var _aframeParticleSystemComponent = __webpack_require__(168);
 
-var _react = __webpack_require__(6);
-
-var _react2 = _interopRequireDefault(_react);
+var _aframeParticleSystemComponent2 = _interopRequireDefault(_aframeParticleSystemComponent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// props passed from Room (or 'Scene') component
+var avatarRadius = 1.75,
+    sceneRadius = 8,
+    cameraToCenter = _glMatrix.vec3.fromValues(0, 0, -sceneRadius);
 
-// I am thinking the avatars are orbs with dedicated lights, the light is what changes based on sentiment: glowing orbs. If time, with WebRTC of people on them :D
-
-var Avatar = function Avatar() {
-	return _react2.default.createElement(
-		"div",
-		null,
-		_react2.default.createElement("a-sphere", {
-			radius: "1.25",
-			color: "yellow" })
-	);
+var centerScene = function centerScene(cameraPosition, radius, out) {
+  return _glMatrix.vec3.add(out, cameraPosition, cameraToCenter);
 };
 
-exports.default = Avatar;
+window.sceneRadius = sceneRadius;
+
+// Position of avatar for participant number (index)
+var positionOfAvatar = function positionOfAvatar(index, totalCount, center, out) {
+  var angle = index / totalCount * 2 * Math.PI,
+      hand = [0, 0, 0];
+  _glMatrix.vec3.rotateY(hand, cameraToCenter, [0, 0, 0], angle);
+  console.log("hand", hand);
+  return _glMatrix.vec3.sub(out, center, hand);
+};
+
+var vecToStr = function vecToStr(vec) {
+  return vec.join(' ');
+};
+
+window.vec3 = _glMatrix.vec3;
+window.glMatrix = _glMatrix2.default;
+
+/*const animate = (skyColor, prevSkyColor) => {
+  if (skyColor !== prevSkyColor) {
+    return (
+     <a-animation
+        begin="sentiment-change"
+        attribute="material.color"
+        from={prevSkyColor}
+        to={skyColor}
+        ease="ease-in-circ" />
+    )
+  }
+}*/
+
+var Scene = function Scene(props) {
+
+  // get primary emotion from props, convert it to color for sky animation
+  var emotionColors = {
+    anger: '#FF0000', // red
+    surprise: '#FF8300', // orange
+    sadness: '#20A7D2', // blue
+    fear: '#494850', // dark grey
+    joy: '#FBFF00' // yellow
+  };
+
+  var skyColor = emotionColors[props.currEmotion];
+  var prevSkyColor = emotionColors[props.prevEmotion];
+
+  var users = [1, 2, 3, 4, 5];
+  var center = _glMatrix.vec3.fromValues(0, 0, 0);
+  var position = _glMatrix.vec3.fromValues(0, 1.6, 0);
+  centerScene(position, sceneRadius, center);
+
+  var userPositions = users.map(function (user, i) {
+    return positionOfAvatar(i, users.length, center, [0, 0, 0]);
+  }),
+      myPosition = userPositions[0];
+  console.log('avatar position:', center, "POSITIONS", userPositions);
+
+  return _react2.default.createElement(
+    'a-scene',
+    { 'vr-mode-ui': 'enabled: true' },
+    _react2.default.createElement(_AssetLoader2.default, null),
+    _react2.default.createElement(_Avatar2.default, { position: '-1.5 1 -4' }),
+    _react2.default.createElement('a-entity', { 'particle-system': 'preset: rain; maxAge: 1; velocityValue: 0 100 0; rotationAxis: z', position: vecToStr(myPosition) }),
+    _react2.default.createElement('a-light', { color: 'red', light: 'color:red;angle:45;type:spot;target:avatar', angle: '45', position: '-16.717 11.189 17.925', type: 'spot', target: 'avatar', rotation: '0 -18.73571990077792 -6.245239966925973', scale: '1 1 1', visible: 'true' }),
+    _react2.default.createElement('a-light', { color: 'red', light: 'angle:45;color:#f0debb;type:spot;target:null', angle: '45', type: 'spot', target: 'avatar' }),
+    userPositions.map(vecToStr).map(function (position, index) {
+      return index ? _react2.default.createElement('a-sphere', { key: position, position: position, radius: '1.75', color: 'white', material: 'src: #blossoms' }) : null;
+    }),
+    _react2.default.createElement('a-sky', {
+      id: 'sky',
+      src: '#stars',
+      color: skyColor })
+  );
+};
+
+exports.default = Scene;
 
 /***/ }),
-/* 166 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18626,19 +24787,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Avatar = __webpack_require__(165);
+var _Avatar = __webpack_require__(92);
 
 var _Avatar2 = _interopRequireDefault(_Avatar);
 
-var _AssetLoader = __webpack_require__(164);
+var _AssetLoader = __webpack_require__(91);
 
 var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
 
-var _stars = __webpack_require__(170);
+var _stars = __webpack_require__(177);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18960,39 +25121,39 @@ var SpaceScene = function (_Component) {
 exports.default = SpaceScene;
 
 /***/ }),
-/* 167 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(161);
+var _reactDom = __webpack_require__(167);
 
-var _reactRedux = __webpack_require__(53);
+var _reactRedux = __webpack_require__(54);
 
-var _reactRouter = __webpack_require__(54);
+var _reactRouter = __webpack_require__(55);
 
-var _store = __webpack_require__(89);
+var _store = __webpack_require__(90);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _Home = __webpack_require__(158);
+var _Home = __webpack_require__(164);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _Room = __webpack_require__(160);
+var _Room = __webpack_require__(166);
 
 var _Room2 = _interopRequireDefault(_Room);
 
-var _Bubbles = __webpack_require__(88);
+var _Bubbles = __webpack_require__(89);
 
 var _Bubbles2 = _interopRequireDefault(_Bubbles);
 
-var _NotFound = __webpack_require__(159);
+var _NotFound = __webpack_require__(165);
 
 var _NotFound2 = _interopRequireDefault(_NotFound);
 
@@ -19012,7 +25173,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 ), document.getElementById('app'));
 
 /***/ }),
-/* 168 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19022,17 +25183,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _redux = __webpack_require__(51);
+var _redux = __webpack_require__(52);
 
 var rootReducer = (0, _redux.combineReducers)({
-  language: __webpack_require__(90).default,
-  sentiment: __webpack_require__(91).default
+  language: __webpack_require__(93).default,
+  sentiment: __webpack_require__(94).default
 });
 
 exports.default = rootReducer;
 
 /***/ }),
-/* 169 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19180,7 +25341,7 @@ function onDocumentMouseMove(event) {
 module.exports = { initScene: initScene, makeBubbles: makeBubbles, animate: animate, addBubbles: addBubbles, sizeOrColor: sizeOrColor, updateSpeed: updateSpeed, updatePath: updatePath };
 
 /***/ }),
-/* 170 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19283,7 +25444,7 @@ function onWindowResize() {
 module.exports = { initScene: initScene, createMoon: createMoon, createStar: createStar, render: render };
 
 /***/ }),
-/* 171 */
+/* 178 */
 /***/ (function(module, exports) {
 
 
@@ -19374,7 +25535,7 @@ Backoff.prototype.setJitter = function(jitter){
 
 
 /***/ }),
-/* 172 */
+/* 179 */
 /***/ (function(module, exports) {
 
 /*
@@ -19447,7 +25608,7 @@ Backoff.prototype.setJitter = function(jitter){
 
 
 /***/ }),
-/* 173 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -19550,7 +25711,7 @@ module.exports = (function() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 174 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19582,7 +25743,7 @@ function applyDecorators(Class, props) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 175 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19727,7 +25888,7 @@ function autobind() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 176 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19746,80 +25907,80 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-var _override = __webpack_require__(186);
+var _override = __webpack_require__(193);
 
 exports.override = _interopRequire(_override);
 
-var _deprecate = __webpack_require__(179);
+var _deprecate = __webpack_require__(186);
 
 exports.deprecate = _interopRequire(_deprecate);
 exports.deprecated = _interopRequire(_deprecate);
 
-var _suppressWarnings = __webpack_require__(188);
+var _suppressWarnings = __webpack_require__(195);
 
 exports.suppressWarnings = _interopRequire(_suppressWarnings);
 
-var _memoize = __webpack_require__(182);
+var _memoize = __webpack_require__(189);
 
 exports.memoize = _interopRequire(_memoize);
 
-var _autobind = __webpack_require__(175);
+var _autobind = __webpack_require__(182);
 
 exports.autobind = _interopRequire(_autobind);
 
-var _readonly = __webpack_require__(187);
+var _readonly = __webpack_require__(194);
 
 exports.readonly = _interopRequire(_readonly);
 
-var _enumerable = __webpack_require__(180);
+var _enumerable = __webpack_require__(187);
 
 exports.enumerable = _interopRequire(_enumerable);
 
-var _nonenumerable = __webpack_require__(185);
+var _nonenumerable = __webpack_require__(192);
 
 exports.nonenumerable = _interopRequire(_nonenumerable);
 
-var _nonconfigurable = __webpack_require__(184);
+var _nonconfigurable = __webpack_require__(191);
 
 exports.nonconfigurable = _interopRequire(_nonconfigurable);
 
-var _debounce = __webpack_require__(177);
+var _debounce = __webpack_require__(184);
 
 exports.debounce = _interopRequire(_debounce);
 
-var _throttle = __webpack_require__(189);
+var _throttle = __webpack_require__(196);
 
 exports.throttle = _interopRequire(_throttle);
 
-var _decorate = __webpack_require__(178);
+var _decorate = __webpack_require__(185);
 
 exports.decorate = _interopRequire(_decorate);
 
-var _mixin = __webpack_require__(183);
+var _mixin = __webpack_require__(190);
 
 exports.mixin = _interopRequire(_mixin);
 exports.mixins = _interopRequire(_mixin);
 
-var _lazyInitialize = __webpack_require__(94);
+var _lazyInitialize = __webpack_require__(97);
 
 exports.lazyInitialize = _interopRequire(_lazyInitialize);
 
-var _time = __webpack_require__(190);
+var _time = __webpack_require__(197);
 
 exports.time = _interopRequire(_time);
 
-var _extendDescriptor = __webpack_require__(181);
+var _extendDescriptor = __webpack_require__(188);
 
 exports.extendDescriptor = _interopRequire(_extendDescriptor);
 
 // Helper to apply decorators to a class without transpiler support
 
-var _applyDecorators = __webpack_require__(174);
+var _applyDecorators = __webpack_require__(181);
 
 exports.applyDecorators = _interopRequire(_applyDecorators);
 
 /***/ }),
-/* 177 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19892,7 +26053,7 @@ function debounce() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 178 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19965,7 +26126,7 @@ function decorate() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 179 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20022,7 +26183,7 @@ function deprecate() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 180 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20051,7 +26212,7 @@ function enumerable() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 181 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20093,7 +26254,7 @@ function extendDescriptor() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 182 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20193,7 +26354,7 @@ function memoize() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 183 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20272,7 +26433,7 @@ function mixin() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 184 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20301,7 +26462,7 @@ function nonconfigurable() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 185 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20330,7 +26491,7 @@ function nonenumerable() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 186 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20623,7 +26784,7 @@ function override() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 187 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20652,7 +26813,7 @@ function readonly() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 188 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20703,7 +26864,7 @@ function suppressWarnings() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 189 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20795,7 +26956,7 @@ function throttle() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 190 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20873,7 +27034,7 @@ function time() {
 }
 
 /***/ }),
-/* 191 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20891,7 +27052,7 @@ function time() {
 
 var _assign = __webpack_require__(4);
 
-var emptyObject = __webpack_require__(28);
+var emptyObject = __webpack_require__(29);
 var _invariant = __webpack_require__(1);
 
 if (process.env.NODE_ENV !== 'production') {
@@ -21605,7 +27766,7 @@ module.exports = factory;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 192 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -21614,7 +27775,7 @@ module.exports = factory;
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(193);
+exports = module.exports = __webpack_require__(200);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -21797,7 +27958,7 @@ function localstorage() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 193 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -21813,7 +27974,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(63);
+exports.humanize = __webpack_require__(64);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -22005,7 +28166,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 194 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -22435,19 +28596,19 @@ function coerce(val) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 195 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(196);
+module.exports = __webpack_require__(203);
 
 
 /***/ }),
-/* 196 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(197);
+module.exports = __webpack_require__(204);
 
 /**
  * Exports parser
@@ -22455,25 +28616,25 @@ module.exports = __webpack_require__(197);
  * @api public
  *
  */
-module.exports.parser = __webpack_require__(27);
+module.exports.parser = __webpack_require__(28);
 
 
 /***/ }),
-/* 197 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var transports = __webpack_require__(95);
-var Emitter = __webpack_require__(26);
-var debug = __webpack_require__(41)('engine.io-client:socket');
-var index = __webpack_require__(105);
-var parser = __webpack_require__(27);
-var parseuri = __webpack_require__(107);
-var parsejson = __webpack_require__(235);
-var parseqs = __webpack_require__(64);
+var transports = __webpack_require__(98);
+var Emitter = __webpack_require__(27);
+var debug = __webpack_require__(42)('engine.io-client:socket');
+var index = __webpack_require__(111);
+var parser = __webpack_require__(28);
+var parseuri = __webpack_require__(113);
+var parsejson = __webpack_require__(248);
+var parseqs = __webpack_require__(65);
 
 /**
  * Module exports.
@@ -22606,9 +28767,9 @@ Socket.protocol = parser.protocol; // this is an int
  */
 
 Socket.Socket = Socket;
-Socket.Transport = __webpack_require__(55);
-Socket.transports = __webpack_require__(95);
-Socket.parser = __webpack_require__(27);
+Socket.Transport = __webpack_require__(56);
+Socket.transports = __webpack_require__(98);
+Socket.parser = __webpack_require__(28);
 
 /**
  * Creates transport of the given type.
@@ -23210,7 +29371,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 198 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -23218,8 +29379,8 @@ Socket.prototype.filterUpgrades = function (upgrades) {
  * Module requirements.
  */
 
-var Polling = __webpack_require__(96);
-var inherit = __webpack_require__(40);
+var Polling = __webpack_require__(99);
+var inherit = __webpack_require__(41);
 
 /**
  * Module exports.
@@ -23448,18 +29609,18 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 199 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module requirements.
  */
 
-var XMLHttpRequest = __webpack_require__(56);
-var Polling = __webpack_require__(96);
-var Emitter = __webpack_require__(26);
-var inherit = __webpack_require__(40);
-var debug = __webpack_require__(41)('engine.io-client:polling-xhr');
+var XMLHttpRequest = __webpack_require__(57);
+var Polling = __webpack_require__(99);
+var Emitter = __webpack_require__(27);
+var inherit = __webpack_require__(41);
+var debug = __webpack_require__(42)('engine.io-client:polling-xhr');
 
 /**
  * Module exports.
@@ -23868,24 +30029,24 @@ function unloadHandler () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 200 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(55);
-var parser = __webpack_require__(27);
-var parseqs = __webpack_require__(64);
-var inherit = __webpack_require__(40);
-var yeast = __webpack_require__(157);
-var debug = __webpack_require__(41)('engine.io-client:websocket');
+var Transport = __webpack_require__(56);
+var parser = __webpack_require__(28);
+var parseqs = __webpack_require__(65);
+var inherit = __webpack_require__(41);
+var yeast = __webpack_require__(163);
+var debug = __webpack_require__(42)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(367);
+    NodeWebSocket = __webpack_require__(380);
   } catch (e) { }
 }
 
@@ -24161,7 +30322,7 @@ WS.prototype.check = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 201 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -24177,7 +30338,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(63);
+exports.humanize = __webpack_require__(64);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -24369,7 +30530,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 202 */
+/* 209 */
 /***/ (function(module, exports) {
 
 
@@ -24394,7 +30555,7 @@ module.exports = Object.keys || function keys (obj){
 
 
 /***/ }),
-/* 203 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/utf8js v2.1.2 by @mathias */
@@ -24652,10 +30813,10 @@ module.exports = Object.keys || function keys (obj){
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(156)(module), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(162)(module), __webpack_require__(8)))
 
 /***/ }),
-/* 204 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24692,7 +30853,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 205 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24709,7 +30870,7 @@ module.exports = camelize;
 
 
 
-var camelize = __webpack_require__(204);
+var camelize = __webpack_require__(211);
 
 var msPattern = /^-ms-/;
 
@@ -24737,7 +30898,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 206 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24754,7 +30915,7 @@ module.exports = camelizeStyleName;
  * 
  */
 
-var isTextNode = __webpack_require__(214);
+var isTextNode = __webpack_require__(221);
 
 /*eslint-disable no-bitwise */
 
@@ -24782,7 +30943,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 207 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24915,7 +31076,7 @@ module.exports = createArrayFromMixed;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 208 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24936,8 +31097,8 @@ module.exports = createArrayFromMixed;
 
 var ExecutionEnvironment = __webpack_require__(7);
 
-var createArrayFromMixed = __webpack_require__(207);
-var getMarkupWrap = __webpack_require__(209);
+var createArrayFromMixed = __webpack_require__(214);
+var getMarkupWrap = __webpack_require__(216);
 var invariant = __webpack_require__(1);
 
 /**
@@ -25005,7 +31166,7 @@ module.exports = createNodesFromMarkup;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 209 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25106,7 +31267,7 @@ module.exports = getMarkupWrap;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 210 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25150,7 +31311,7 @@ function getUnboundedScrollPosition(scrollable) {
 module.exports = getUnboundedScrollPosition;
 
 /***/ }),
-/* 211 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25188,7 +31349,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 212 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25205,7 +31366,7 @@ module.exports = hyphenate;
 
 
 
-var hyphenate = __webpack_require__(211);
+var hyphenate = __webpack_require__(218);
 
 var msPattern = /^ms-/;
 
@@ -25232,7 +31393,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 213 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25262,7 +31423,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 214 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25279,7 +31440,7 @@ module.exports = isNode;
  * @typechecks
  */
 
-var isNode = __webpack_require__(213);
+var isNode = __webpack_require__(220);
 
 /**
  * @param {*} object The object to check.
@@ -25292,7 +31453,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 215 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25327,7 +31488,7 @@ function memoizeStringOnly(callback) {
 module.exports = memoizeStringOnly;
 
 /***/ }),
-/* 216 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25355,7 +31516,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = performance || {};
 
 /***/ }),
-/* 217 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25372,7 +31533,7 @@ module.exports = performance || {};
  * @typechecks
  */
 
-var performance = __webpack_require__(216);
+var performance = __webpack_require__(223);
 
 var performanceNow;
 
@@ -25394,7 +31555,4307 @@ if (performance.now) {
 module.exports = performanceNow;
 
 /***/ }),
-/* 218 */
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * @fileoverview gl-matrix - High performance matrix and vector operations
+ * @author Brandon Jones
+ * @author Colin MacKenzie IV
+ * @version 2.3.2
+ */
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+// END HEADER
+
+exports.glMatrix = __webpack_require__(18);
+exports.mat2 = __webpack_require__(226);
+exports.mat2d = __webpack_require__(227);
+exports.mat3 = __webpack_require__(103);
+exports.mat4 = __webpack_require__(228);
+exports.quat = __webpack_require__(229);
+exports.vec2 = __webpack_require__(230);
+exports.vec3 = __webpack_require__(104);
+exports.vec4 = __webpack_require__(105);
+
+/***/ }),
+/* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+
+var glMatrix = __webpack_require__(18);
+
+/**
+ * @class 2x2 Matrix
+ * @name mat2
+ */
+var mat2 = {};
+
+/**
+ * Creates a new identity mat2
+ *
+ * @returns {mat2} a new 2x2 matrix
+ */
+mat2.create = function() {
+    var out = new glMatrix.ARRAY_TYPE(4);
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 1;
+    return out;
+};
+
+/**
+ * Creates a new mat2 initialized with values from an existing matrix
+ *
+ * @param {mat2} a matrix to clone
+ * @returns {mat2} a new 2x2 matrix
+ */
+mat2.clone = function(a) {
+    var out = new glMatrix.ARRAY_TYPE(4);
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    return out;
+};
+
+/**
+ * Copy the values from one mat2 to another
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the source matrix
+ * @returns {mat2} out
+ */
+mat2.copy = function(out, a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    return out;
+};
+
+/**
+ * Set a mat2 to the identity matrix
+ *
+ * @param {mat2} out the receiving matrix
+ * @returns {mat2} out
+ */
+mat2.identity = function(out) {
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 1;
+    return out;
+};
+
+/**
+ * Create a new mat2 with the given values
+ *
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m10 Component in column 1, row 0 position (index 2)
+ * @param {Number} m11 Component in column 1, row 1 position (index 3)
+ * @returns {mat2} out A new 2x2 matrix
+ */
+mat2.fromValues = function(m00, m01, m10, m11) {
+    var out = new glMatrix.ARRAY_TYPE(4);
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m10;
+    out[3] = m11;
+    return out;
+};
+
+/**
+ * Set the components of a mat2 to the given values
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m10 Component in column 1, row 0 position (index 2)
+ * @param {Number} m11 Component in column 1, row 1 position (index 3)
+ * @returns {mat2} out
+ */
+mat2.set = function(out, m00, m01, m10, m11) {
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m10;
+    out[3] = m11;
+    return out;
+};
+
+
+/**
+ * Transpose the values of a mat2
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the source matrix
+ * @returns {mat2} out
+ */
+mat2.transpose = function(out, a) {
+    // If we are transposing ourselves we can skip a few steps but have to cache some values
+    if (out === a) {
+        var a1 = a[1];
+        out[1] = a[2];
+        out[2] = a1;
+    } else {
+        out[0] = a[0];
+        out[1] = a[2];
+        out[2] = a[1];
+        out[3] = a[3];
+    }
+    
+    return out;
+};
+
+/**
+ * Inverts a mat2
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the source matrix
+ * @returns {mat2} out
+ */
+mat2.invert = function(out, a) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
+
+        // Calculate the determinant
+        det = a0 * a3 - a2 * a1;
+
+    if (!det) {
+        return null;
+    }
+    det = 1.0 / det;
+    
+    out[0] =  a3 * det;
+    out[1] = -a1 * det;
+    out[2] = -a2 * det;
+    out[3] =  a0 * det;
+
+    return out;
+};
+
+/**
+ * Calculates the adjugate of a mat2
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the source matrix
+ * @returns {mat2} out
+ */
+mat2.adjoint = function(out, a) {
+    // Caching this value is nessecary if out == a
+    var a0 = a[0];
+    out[0] =  a[3];
+    out[1] = -a[1];
+    out[2] = -a[2];
+    out[3] =  a0;
+
+    return out;
+};
+
+/**
+ * Calculates the determinant of a mat2
+ *
+ * @param {mat2} a the source matrix
+ * @returns {Number} determinant of a
+ */
+mat2.determinant = function (a) {
+    return a[0] * a[3] - a[2] * a[1];
+};
+
+/**
+ * Multiplies two mat2's
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the first operand
+ * @param {mat2} b the second operand
+ * @returns {mat2} out
+ */
+mat2.multiply = function (out, a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
+    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
+    out[0] = a0 * b0 + a2 * b1;
+    out[1] = a1 * b0 + a3 * b1;
+    out[2] = a0 * b2 + a2 * b3;
+    out[3] = a1 * b2 + a3 * b3;
+    return out;
+};
+
+/**
+ * Alias for {@link mat2.multiply}
+ * @function
+ */
+mat2.mul = mat2.multiply;
+
+/**
+ * Rotates a mat2 by the given angle
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat2} out
+ */
+mat2.rotate = function (out, a, rad) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
+        s = Math.sin(rad),
+        c = Math.cos(rad);
+    out[0] = a0 *  c + a2 * s;
+    out[1] = a1 *  c + a3 * s;
+    out[2] = a0 * -s + a2 * c;
+    out[3] = a1 * -s + a3 * c;
+    return out;
+};
+
+/**
+ * Scales the mat2 by the dimensions in the given vec2
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the matrix to rotate
+ * @param {vec2} v the vec2 to scale the matrix by
+ * @returns {mat2} out
+ **/
+mat2.scale = function(out, a, v) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
+        v0 = v[0], v1 = v[1];
+    out[0] = a0 * v0;
+    out[1] = a1 * v0;
+    out[2] = a2 * v1;
+    out[3] = a3 * v1;
+    return out;
+};
+
+/**
+ * Creates a matrix from a given angle
+ * This is equivalent to (but much faster than):
+ *
+ *     mat2.identity(dest);
+ *     mat2.rotate(dest, dest, rad);
+ *
+ * @param {mat2} out mat2 receiving operation result
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat2} out
+ */
+mat2.fromRotation = function(out, rad) {
+    var s = Math.sin(rad),
+        c = Math.cos(rad);
+    out[0] = c;
+    out[1] = s;
+    out[2] = -s;
+    out[3] = c;
+    return out;
+}
+
+/**
+ * Creates a matrix from a vector scaling
+ * This is equivalent to (but much faster than):
+ *
+ *     mat2.identity(dest);
+ *     mat2.scale(dest, dest, vec);
+ *
+ * @param {mat2} out mat2 receiving operation result
+ * @param {vec2} v Scaling vector
+ * @returns {mat2} out
+ */
+mat2.fromScaling = function(out, v) {
+    out[0] = v[0];
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = v[1];
+    return out;
+}
+
+/**
+ * Returns a string representation of a mat2
+ *
+ * @param {mat2} mat matrix to represent as a string
+ * @returns {String} string representation of the matrix
+ */
+mat2.str = function (a) {
+    return 'mat2(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
+};
+
+/**
+ * Returns Frobenius norm of a mat2
+ *
+ * @param {mat2} a the matrix to calculate Frobenius norm of
+ * @returns {Number} Frobenius norm
+ */
+mat2.frob = function (a) {
+    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2)))
+};
+
+/**
+ * Returns L, D and U matrices (Lower triangular, Diagonal and Upper triangular) by factorizing the input matrix
+ * @param {mat2} L the lower triangular matrix 
+ * @param {mat2} D the diagonal matrix 
+ * @param {mat2} U the upper triangular matrix 
+ * @param {mat2} a the input matrix to factorize
+ */
+
+mat2.LDU = function (L, D, U, a) { 
+    L[2] = a[2]/a[0]; 
+    U[0] = a[0]; 
+    U[1] = a[1]; 
+    U[3] = a[3] - L[2] * U[1]; 
+    return [L, D, U];       
+}; 
+
+/**
+ * Adds two mat2's
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the first operand
+ * @param {mat2} b the second operand
+ * @returns {mat2} out
+ */
+mat2.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    out[3] = a[3] + b[3];
+    return out;
+};
+
+/**
+ * Subtracts matrix b from matrix a
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the first operand
+ * @param {mat2} b the second operand
+ * @returns {mat2} out
+ */
+mat2.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    out[3] = a[3] - b[3];
+    return out;
+};
+
+/**
+ * Alias for {@link mat2.subtract}
+ * @function
+ */
+mat2.sub = mat2.subtract;
+
+/**
+ * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {mat2} a The first matrix.
+ * @param {mat2} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat2.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
+};
+
+/**
+ * Returns whether or not the matrices have approximately the same elements in the same position.
+ *
+ * @param {mat2} a The first matrix.
+ * @param {mat2} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat2.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
+    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+            Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)));
+};
+
+/**
+ * Multiply each element of the matrix by a scalar.
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the matrix to scale
+ * @param {Number} b amount to scale the matrix's elements by
+ * @returns {mat2} out
+ */
+mat2.multiplyScalar = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    out[3] = a[3] * b;
+    return out;
+};
+
+/**
+ * Adds two mat2's after multiplying each element of the second operand by a scalar value.
+ *
+ * @param {mat2} out the receiving vector
+ * @param {mat2} a the first operand
+ * @param {mat2} b the second operand
+ * @param {Number} scale the amount to scale b's elements by before adding
+ * @returns {mat2} out
+ */
+mat2.multiplyScalarAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    out[3] = a[3] + (b[3] * scale);
+    return out;
+};
+
+module.exports = mat2;
+
+
+/***/ }),
+/* 227 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+
+var glMatrix = __webpack_require__(18);
+
+/**
+ * @class 2x3 Matrix
+ * @name mat2d
+ * 
+ * @description 
+ * A mat2d contains six elements defined as:
+ * <pre>
+ * [a, c, tx,
+ *  b, d, ty]
+ * </pre>
+ * This is a short form for the 3x3 matrix:
+ * <pre>
+ * [a, c, tx,
+ *  b, d, ty,
+ *  0, 0, 1]
+ * </pre>
+ * The last row is ignored so the array is shorter and operations are faster.
+ */
+var mat2d = {};
+
+/**
+ * Creates a new identity mat2d
+ *
+ * @returns {mat2d} a new 2x3 matrix
+ */
+mat2d.create = function() {
+    var out = new glMatrix.ARRAY_TYPE(6);
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 1;
+    out[4] = 0;
+    out[5] = 0;
+    return out;
+};
+
+/**
+ * Creates a new mat2d initialized with values from an existing matrix
+ *
+ * @param {mat2d} a matrix to clone
+ * @returns {mat2d} a new 2x3 matrix
+ */
+mat2d.clone = function(a) {
+    var out = new glMatrix.ARRAY_TYPE(6);
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    out[4] = a[4];
+    out[5] = a[5];
+    return out;
+};
+
+/**
+ * Copy the values from one mat2d to another
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the source matrix
+ * @returns {mat2d} out
+ */
+mat2d.copy = function(out, a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    out[4] = a[4];
+    out[5] = a[5];
+    return out;
+};
+
+/**
+ * Set a mat2d to the identity matrix
+ *
+ * @param {mat2d} out the receiving matrix
+ * @returns {mat2d} out
+ */
+mat2d.identity = function(out) {
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 1;
+    out[4] = 0;
+    out[5] = 0;
+    return out;
+};
+
+/**
+ * Create a new mat2d with the given values
+ *
+ * @param {Number} a Component A (index 0)
+ * @param {Number} b Component B (index 1)
+ * @param {Number} c Component C (index 2)
+ * @param {Number} d Component D (index 3)
+ * @param {Number} tx Component TX (index 4)
+ * @param {Number} ty Component TY (index 5)
+ * @returns {mat2d} A new mat2d
+ */
+mat2d.fromValues = function(a, b, c, d, tx, ty) {
+    var out = new glMatrix.ARRAY_TYPE(6);
+    out[0] = a;
+    out[1] = b;
+    out[2] = c;
+    out[3] = d;
+    out[4] = tx;
+    out[5] = ty;
+    return out;
+};
+
+/**
+ * Set the components of a mat2d to the given values
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {Number} a Component A (index 0)
+ * @param {Number} b Component B (index 1)
+ * @param {Number} c Component C (index 2)
+ * @param {Number} d Component D (index 3)
+ * @param {Number} tx Component TX (index 4)
+ * @param {Number} ty Component TY (index 5)
+ * @returns {mat2d} out
+ */
+mat2d.set = function(out, a, b, c, d, tx, ty) {
+    out[0] = a;
+    out[1] = b;
+    out[2] = c;
+    out[3] = d;
+    out[4] = tx;
+    out[5] = ty;
+    return out;
+};
+
+/**
+ * Inverts a mat2d
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the source matrix
+ * @returns {mat2d} out
+ */
+mat2d.invert = function(out, a) {
+    var aa = a[0], ab = a[1], ac = a[2], ad = a[3],
+        atx = a[4], aty = a[5];
+
+    var det = aa * ad - ab * ac;
+    if(!det){
+        return null;
+    }
+    det = 1.0 / det;
+
+    out[0] = ad * det;
+    out[1] = -ab * det;
+    out[2] = -ac * det;
+    out[3] = aa * det;
+    out[4] = (ac * aty - ad * atx) * det;
+    out[5] = (ab * atx - aa * aty) * det;
+    return out;
+};
+
+/**
+ * Calculates the determinant of a mat2d
+ *
+ * @param {mat2d} a the source matrix
+ * @returns {Number} determinant of a
+ */
+mat2d.determinant = function (a) {
+    return a[0] * a[3] - a[1] * a[2];
+};
+
+/**
+ * Multiplies two mat2d's
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the first operand
+ * @param {mat2d} b the second operand
+ * @returns {mat2d} out
+ */
+mat2d.multiply = function (out, a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
+        b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5];
+    out[0] = a0 * b0 + a2 * b1;
+    out[1] = a1 * b0 + a3 * b1;
+    out[2] = a0 * b2 + a2 * b3;
+    out[3] = a1 * b2 + a3 * b3;
+    out[4] = a0 * b4 + a2 * b5 + a4;
+    out[5] = a1 * b4 + a3 * b5 + a5;
+    return out;
+};
+
+/**
+ * Alias for {@link mat2d.multiply}
+ * @function
+ */
+mat2d.mul = mat2d.multiply;
+
+/**
+ * Rotates a mat2d by the given angle
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat2d} out
+ */
+mat2d.rotate = function (out, a, rad) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
+        s = Math.sin(rad),
+        c = Math.cos(rad);
+    out[0] = a0 *  c + a2 * s;
+    out[1] = a1 *  c + a3 * s;
+    out[2] = a0 * -s + a2 * c;
+    out[3] = a1 * -s + a3 * c;
+    out[4] = a4;
+    out[5] = a5;
+    return out;
+};
+
+/**
+ * Scales the mat2d by the dimensions in the given vec2
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the matrix to translate
+ * @param {vec2} v the vec2 to scale the matrix by
+ * @returns {mat2d} out
+ **/
+mat2d.scale = function(out, a, v) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
+        v0 = v[0], v1 = v[1];
+    out[0] = a0 * v0;
+    out[1] = a1 * v0;
+    out[2] = a2 * v1;
+    out[3] = a3 * v1;
+    out[4] = a4;
+    out[5] = a5;
+    return out;
+};
+
+/**
+ * Translates the mat2d by the dimensions in the given vec2
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the matrix to translate
+ * @param {vec2} v the vec2 to translate the matrix by
+ * @returns {mat2d} out
+ **/
+mat2d.translate = function(out, a, v) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
+        v0 = v[0], v1 = v[1];
+    out[0] = a0;
+    out[1] = a1;
+    out[2] = a2;
+    out[3] = a3;
+    out[4] = a0 * v0 + a2 * v1 + a4;
+    out[5] = a1 * v0 + a3 * v1 + a5;
+    return out;
+};
+
+/**
+ * Creates a matrix from a given angle
+ * This is equivalent to (but much faster than):
+ *
+ *     mat2d.identity(dest);
+ *     mat2d.rotate(dest, dest, rad);
+ *
+ * @param {mat2d} out mat2d receiving operation result
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat2d} out
+ */
+mat2d.fromRotation = function(out, rad) {
+    var s = Math.sin(rad), c = Math.cos(rad);
+    out[0] = c;
+    out[1] = s;
+    out[2] = -s;
+    out[3] = c;
+    out[4] = 0;
+    out[5] = 0;
+    return out;
+}
+
+/**
+ * Creates a matrix from a vector scaling
+ * This is equivalent to (but much faster than):
+ *
+ *     mat2d.identity(dest);
+ *     mat2d.scale(dest, dest, vec);
+ *
+ * @param {mat2d} out mat2d receiving operation result
+ * @param {vec2} v Scaling vector
+ * @returns {mat2d} out
+ */
+mat2d.fromScaling = function(out, v) {
+    out[0] = v[0];
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = v[1];
+    out[4] = 0;
+    out[5] = 0;
+    return out;
+}
+
+/**
+ * Creates a matrix from a vector translation
+ * This is equivalent to (but much faster than):
+ *
+ *     mat2d.identity(dest);
+ *     mat2d.translate(dest, dest, vec);
+ *
+ * @param {mat2d} out mat2d receiving operation result
+ * @param {vec2} v Translation vector
+ * @returns {mat2d} out
+ */
+mat2d.fromTranslation = function(out, v) {
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 1;
+    out[4] = v[0];
+    out[5] = v[1];
+    return out;
+}
+
+/**
+ * Returns a string representation of a mat2d
+ *
+ * @param {mat2d} a matrix to represent as a string
+ * @returns {String} string representation of the matrix
+ */
+mat2d.str = function (a) {
+    return 'mat2d(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
+                    a[3] + ', ' + a[4] + ', ' + a[5] + ')';
+};
+
+/**
+ * Returns Frobenius norm of a mat2d
+ *
+ * @param {mat2d} a the matrix to calculate Frobenius norm of
+ * @returns {Number} Frobenius norm
+ */
+mat2d.frob = function (a) { 
+    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + 1))
+}; 
+
+/**
+ * Adds two mat2d's
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the first operand
+ * @param {mat2d} b the second operand
+ * @returns {mat2d} out
+ */
+mat2d.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    out[3] = a[3] + b[3];
+    out[4] = a[4] + b[4];
+    out[5] = a[5] + b[5];
+    return out;
+};
+
+/**
+ * Subtracts matrix b from matrix a
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the first operand
+ * @param {mat2d} b the second operand
+ * @returns {mat2d} out
+ */
+mat2d.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    out[3] = a[3] - b[3];
+    out[4] = a[4] - b[4];
+    out[5] = a[5] - b[5];
+    return out;
+};
+
+/**
+ * Alias for {@link mat2d.subtract}
+ * @function
+ */
+mat2d.sub = mat2d.subtract;
+
+/**
+ * Multiply each element of the matrix by a scalar.
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the matrix to scale
+ * @param {Number} b amount to scale the matrix's elements by
+ * @returns {mat2d} out
+ */
+mat2d.multiplyScalar = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    out[3] = a[3] * b;
+    out[4] = a[4] * b;
+    out[5] = a[5] * b;
+    return out;
+};
+
+/**
+ * Adds two mat2d's after multiplying each element of the second operand by a scalar value.
+ *
+ * @param {mat2d} out the receiving vector
+ * @param {mat2d} a the first operand
+ * @param {mat2d} b the second operand
+ * @param {Number} scale the amount to scale b's elements by before adding
+ * @returns {mat2d} out
+ */
+mat2d.multiplyScalarAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    out[3] = a[3] + (b[3] * scale);
+    out[4] = a[4] + (b[4] * scale);
+    out[5] = a[5] + (b[5] * scale);
+    return out;
+};
+
+/**
+ * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {mat2d} a The first matrix.
+ * @param {mat2d} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat2d.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] && a[5] === b[5];
+};
+
+/**
+ * Returns whether or not the matrices have approximately the same elements in the same position.
+ *
+ * @param {mat2d} a The first matrix.
+ * @param {mat2d} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat2d.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5];
+    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+            Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
+            Math.abs(a4 - b4) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
+            Math.abs(a5 - b5) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a5), Math.abs(b5)));
+};
+
+module.exports = mat2d;
+
+
+/***/ }),
+/* 228 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+
+var glMatrix = __webpack_require__(18);
+
+/**
+ * @class 4x4 Matrix
+ * @name mat4
+ */
+var mat4 = {
+  scalar: {},
+  SIMD: {},
+};
+
+/**
+ * Creates a new identity mat4
+ *
+ * @returns {mat4} a new 4x4 matrix
+ */
+mat4.create = function() {
+    var out = new glMatrix.ARRAY_TYPE(16);
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = 1;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = 1;
+    out[11] = 0;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = 0;
+    out[15] = 1;
+    return out;
+};
+
+/**
+ * Creates a new mat4 initialized with values from an existing matrix
+ *
+ * @param {mat4} a matrix to clone
+ * @returns {mat4} a new 4x4 matrix
+ */
+mat4.clone = function(a) {
+    var out = new glMatrix.ARRAY_TYPE(16);
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    out[4] = a[4];
+    out[5] = a[5];
+    out[6] = a[6];
+    out[7] = a[7];
+    out[8] = a[8];
+    out[9] = a[9];
+    out[10] = a[10];
+    out[11] = a[11];
+    out[12] = a[12];
+    out[13] = a[13];
+    out[14] = a[14];
+    out[15] = a[15];
+    return out;
+};
+
+/**
+ * Copy the values from one mat4 to another
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.copy = function(out, a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    out[4] = a[4];
+    out[5] = a[5];
+    out[6] = a[6];
+    out[7] = a[7];
+    out[8] = a[8];
+    out[9] = a[9];
+    out[10] = a[10];
+    out[11] = a[11];
+    out[12] = a[12];
+    out[13] = a[13];
+    out[14] = a[14];
+    out[15] = a[15];
+    return out;
+};
+
+/**
+ * Create a new mat4 with the given values
+ *
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m02 Component in column 0, row 2 position (index 2)
+ * @param {Number} m03 Component in column 0, row 3 position (index 3)
+ * @param {Number} m10 Component in column 1, row 0 position (index 4)
+ * @param {Number} m11 Component in column 1, row 1 position (index 5)
+ * @param {Number} m12 Component in column 1, row 2 position (index 6)
+ * @param {Number} m13 Component in column 1, row 3 position (index 7)
+ * @param {Number} m20 Component in column 2, row 0 position (index 8)
+ * @param {Number} m21 Component in column 2, row 1 position (index 9)
+ * @param {Number} m22 Component in column 2, row 2 position (index 10)
+ * @param {Number} m23 Component in column 2, row 3 position (index 11)
+ * @param {Number} m30 Component in column 3, row 0 position (index 12)
+ * @param {Number} m31 Component in column 3, row 1 position (index 13)
+ * @param {Number} m32 Component in column 3, row 2 position (index 14)
+ * @param {Number} m33 Component in column 3, row 3 position (index 15)
+ * @returns {mat4} A new mat4
+ */
+mat4.fromValues = function(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+    var out = new glMatrix.ARRAY_TYPE(16);
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m02;
+    out[3] = m03;
+    out[4] = m10;
+    out[5] = m11;
+    out[6] = m12;
+    out[7] = m13;
+    out[8] = m20;
+    out[9] = m21;
+    out[10] = m22;
+    out[11] = m23;
+    out[12] = m30;
+    out[13] = m31;
+    out[14] = m32;
+    out[15] = m33;
+    return out;
+};
+
+/**
+ * Set the components of a mat4 to the given values
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m02 Component in column 0, row 2 position (index 2)
+ * @param {Number} m03 Component in column 0, row 3 position (index 3)
+ * @param {Number} m10 Component in column 1, row 0 position (index 4)
+ * @param {Number} m11 Component in column 1, row 1 position (index 5)
+ * @param {Number} m12 Component in column 1, row 2 position (index 6)
+ * @param {Number} m13 Component in column 1, row 3 position (index 7)
+ * @param {Number} m20 Component in column 2, row 0 position (index 8)
+ * @param {Number} m21 Component in column 2, row 1 position (index 9)
+ * @param {Number} m22 Component in column 2, row 2 position (index 10)
+ * @param {Number} m23 Component in column 2, row 3 position (index 11)
+ * @param {Number} m30 Component in column 3, row 0 position (index 12)
+ * @param {Number} m31 Component in column 3, row 1 position (index 13)
+ * @param {Number} m32 Component in column 3, row 2 position (index 14)
+ * @param {Number} m33 Component in column 3, row 3 position (index 15)
+ * @returns {mat4} out
+ */
+mat4.set = function(out, m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m02;
+    out[3] = m03;
+    out[4] = m10;
+    out[5] = m11;
+    out[6] = m12;
+    out[7] = m13;
+    out[8] = m20;
+    out[9] = m21;
+    out[10] = m22;
+    out[11] = m23;
+    out[12] = m30;
+    out[13] = m31;
+    out[14] = m32;
+    out[15] = m33;
+    return out;
+};
+
+
+/**
+ * Set a mat4 to the identity matrix
+ *
+ * @param {mat4} out the receiving matrix
+ * @returns {mat4} out
+ */
+mat4.identity = function(out) {
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = 1;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = 1;
+    out[11] = 0;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = 0;
+    out[15] = 1;
+    return out;
+};
+
+/**
+ * Transpose the values of a mat4 not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.scalar.transpose = function(out, a) {
+    // If we are transposing ourselves we can skip a few steps but have to cache some values
+    if (out === a) {
+        var a01 = a[1], a02 = a[2], a03 = a[3],
+            a12 = a[6], a13 = a[7],
+            a23 = a[11];
+
+        out[1] = a[4];
+        out[2] = a[8];
+        out[3] = a[12];
+        out[4] = a01;
+        out[6] = a[9];
+        out[7] = a[13];
+        out[8] = a02;
+        out[9] = a12;
+        out[11] = a[14];
+        out[12] = a03;
+        out[13] = a13;
+        out[14] = a23;
+    } else {
+        out[0] = a[0];
+        out[1] = a[4];
+        out[2] = a[8];
+        out[3] = a[12];
+        out[4] = a[1];
+        out[5] = a[5];
+        out[6] = a[9];
+        out[7] = a[13];
+        out[8] = a[2];
+        out[9] = a[6];
+        out[10] = a[10];
+        out[11] = a[14];
+        out[12] = a[3];
+        out[13] = a[7];
+        out[14] = a[11];
+        out[15] = a[15];
+    }
+
+    return out;
+};
+
+/**
+ * Transpose the values of a mat4 using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.SIMD.transpose = function(out, a) {
+    var a0, a1, a2, a3,
+        tmp01, tmp23,
+        out0, out1, out2, out3;
+
+    a0 = SIMD.Float32x4.load(a, 0);
+    a1 = SIMD.Float32x4.load(a, 4);
+    a2 = SIMD.Float32x4.load(a, 8);
+    a3 = SIMD.Float32x4.load(a, 12);
+
+    tmp01 = SIMD.Float32x4.shuffle(a0, a1, 0, 1, 4, 5);
+    tmp23 = SIMD.Float32x4.shuffle(a2, a3, 0, 1, 4, 5);
+    out0  = SIMD.Float32x4.shuffle(tmp01, tmp23, 0, 2, 4, 6);
+    out1  = SIMD.Float32x4.shuffle(tmp01, tmp23, 1, 3, 5, 7);
+    SIMD.Float32x4.store(out, 0,  out0);
+    SIMD.Float32x4.store(out, 4,  out1);
+
+    tmp01 = SIMD.Float32x4.shuffle(a0, a1, 2, 3, 6, 7);
+    tmp23 = SIMD.Float32x4.shuffle(a2, a3, 2, 3, 6, 7);
+    out2  = SIMD.Float32x4.shuffle(tmp01, tmp23, 0, 2, 4, 6);
+    out3  = SIMD.Float32x4.shuffle(tmp01, tmp23, 1, 3, 5, 7);
+    SIMD.Float32x4.store(out, 8,  out2);
+    SIMD.Float32x4.store(out, 12, out3);
+
+    return out;
+};
+
+/**
+ * Transpse a mat4 using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.transpose = glMatrix.USE_SIMD ? mat4.SIMD.transpose : mat4.scalar.transpose;
+
+/**
+ * Inverts a mat4 not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.scalar.invert = function(out, a) {
+    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
+        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
+        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
+        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
+
+        b00 = a00 * a11 - a01 * a10,
+        b01 = a00 * a12 - a02 * a10,
+        b02 = a00 * a13 - a03 * a10,
+        b03 = a01 * a12 - a02 * a11,
+        b04 = a01 * a13 - a03 * a11,
+        b05 = a02 * a13 - a03 * a12,
+        b06 = a20 * a31 - a21 * a30,
+        b07 = a20 * a32 - a22 * a30,
+        b08 = a20 * a33 - a23 * a30,
+        b09 = a21 * a32 - a22 * a31,
+        b10 = a21 * a33 - a23 * a31,
+        b11 = a22 * a33 - a23 * a32,
+
+        // Calculate the determinant
+        det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+
+    if (!det) {
+        return null;
+    }
+    det = 1.0 / det;
+
+    out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
+    out[1] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
+    out[2] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
+    out[3] = (a22 * b04 - a21 * b05 - a23 * b03) * det;
+    out[4] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
+    out[5] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
+    out[6] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
+    out[7] = (a20 * b05 - a22 * b02 + a23 * b01) * det;
+    out[8] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
+    out[9] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
+    out[10] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
+    out[11] = (a21 * b02 - a20 * b04 - a23 * b00) * det;
+    out[12] = (a11 * b07 - a10 * b09 - a12 * b06) * det;
+    out[13] = (a00 * b09 - a01 * b07 + a02 * b06) * det;
+    out[14] = (a31 * b01 - a30 * b03 - a32 * b00) * det;
+    out[15] = (a20 * b03 - a21 * b01 + a22 * b00) * det;
+
+    return out;
+};
+
+/**
+ * Inverts a mat4 using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.SIMD.invert = function(out, a) {
+  var row0, row1, row2, row3,
+      tmp1,
+      minor0, minor1, minor2, minor3,
+      det,
+      a0 = SIMD.Float32x4.load(a, 0),
+      a1 = SIMD.Float32x4.load(a, 4),
+      a2 = SIMD.Float32x4.load(a, 8),
+      a3 = SIMD.Float32x4.load(a, 12);
+
+  // Compute matrix adjugate
+  tmp1 = SIMD.Float32x4.shuffle(a0, a1, 0, 1, 4, 5);
+  row1 = SIMD.Float32x4.shuffle(a2, a3, 0, 1, 4, 5);
+  row0 = SIMD.Float32x4.shuffle(tmp1, row1, 0, 2, 4, 6);
+  row1 = SIMD.Float32x4.shuffle(row1, tmp1, 1, 3, 5, 7);
+  tmp1 = SIMD.Float32x4.shuffle(a0, a1, 2, 3, 6, 7);
+  row3 = SIMD.Float32x4.shuffle(a2, a3, 2, 3, 6, 7);
+  row2 = SIMD.Float32x4.shuffle(tmp1, row3, 0, 2, 4, 6);
+  row3 = SIMD.Float32x4.shuffle(row3, tmp1, 1, 3, 5, 7);
+
+  tmp1   = SIMD.Float32x4.mul(row2, row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor0 = SIMD.Float32x4.mul(row1, tmp1);
+  minor1 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row1, tmp1), minor0);
+  minor1 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor1);
+  minor1 = SIMD.Float32x4.swizzle(minor1, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(row1, row2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor0);
+  minor3 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row3, tmp1));
+  minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor3);
+  minor3 = SIMD.Float32x4.swizzle(minor3, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(row1, 2, 3, 0, 1), row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  row2   = SIMD.Float32x4.swizzle(row2, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor0);
+  minor2 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row2, tmp1));
+  minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor2);
+  minor2 = SIMD.Float32x4.swizzle(minor2, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(row0, row1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor2);
+  minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row2, tmp1), minor3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row3, tmp1), minor2);
+  minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row2, tmp1));
+
+  tmp1   = SIMD.Float32x4.mul(row0, row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row2, tmp1));
+  minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor1);
+  minor2 = SIMD.Float32x4.sub(minor2, SIMD.Float32x4.mul(row1, tmp1));
+
+  tmp1   = SIMD.Float32x4.mul(row0, row2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor1);
+  minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row1, tmp1));
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row3, tmp1));
+  minor3 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor3);
+
+  // Compute matrix determinant
+  det   = SIMD.Float32x4.mul(row0, minor0);
+  det   = SIMD.Float32x4.add(SIMD.Float32x4.swizzle(det, 2, 3, 0, 1), det);
+  det   = SIMD.Float32x4.add(SIMD.Float32x4.swizzle(det, 1, 0, 3, 2), det);
+  tmp1  = SIMD.Float32x4.reciprocalApproximation(det);
+  det   = SIMD.Float32x4.sub(
+               SIMD.Float32x4.add(tmp1, tmp1),
+               SIMD.Float32x4.mul(det, SIMD.Float32x4.mul(tmp1, tmp1)));
+  det   = SIMD.Float32x4.swizzle(det, 0, 0, 0, 0);
+  if (!det) {
+      return null;
+  }
+
+  // Compute matrix inverse
+  SIMD.Float32x4.store(out, 0,  SIMD.Float32x4.mul(det, minor0));
+  SIMD.Float32x4.store(out, 4,  SIMD.Float32x4.mul(det, minor1));
+  SIMD.Float32x4.store(out, 8,  SIMD.Float32x4.mul(det, minor2));
+  SIMD.Float32x4.store(out, 12, SIMD.Float32x4.mul(det, minor3));
+  return out;
+}
+
+/**
+ * Inverts a mat4 using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.invert = glMatrix.USE_SIMD ? mat4.SIMD.invert : mat4.scalar.invert;
+
+/**
+ * Calculates the adjugate of a mat4 not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.scalar.adjoint = function(out, a) {
+    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
+        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
+        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
+        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
+
+    out[0]  =  (a11 * (a22 * a33 - a23 * a32) - a21 * (a12 * a33 - a13 * a32) + a31 * (a12 * a23 - a13 * a22));
+    out[1]  = -(a01 * (a22 * a33 - a23 * a32) - a21 * (a02 * a33 - a03 * a32) + a31 * (a02 * a23 - a03 * a22));
+    out[2]  =  (a01 * (a12 * a33 - a13 * a32) - a11 * (a02 * a33 - a03 * a32) + a31 * (a02 * a13 - a03 * a12));
+    out[3]  = -(a01 * (a12 * a23 - a13 * a22) - a11 * (a02 * a23 - a03 * a22) + a21 * (a02 * a13 - a03 * a12));
+    out[4]  = -(a10 * (a22 * a33 - a23 * a32) - a20 * (a12 * a33 - a13 * a32) + a30 * (a12 * a23 - a13 * a22));
+    out[5]  =  (a00 * (a22 * a33 - a23 * a32) - a20 * (a02 * a33 - a03 * a32) + a30 * (a02 * a23 - a03 * a22));
+    out[6]  = -(a00 * (a12 * a33 - a13 * a32) - a10 * (a02 * a33 - a03 * a32) + a30 * (a02 * a13 - a03 * a12));
+    out[7]  =  (a00 * (a12 * a23 - a13 * a22) - a10 * (a02 * a23 - a03 * a22) + a20 * (a02 * a13 - a03 * a12));
+    out[8]  =  (a10 * (a21 * a33 - a23 * a31) - a20 * (a11 * a33 - a13 * a31) + a30 * (a11 * a23 - a13 * a21));
+    out[9]  = -(a00 * (a21 * a33 - a23 * a31) - a20 * (a01 * a33 - a03 * a31) + a30 * (a01 * a23 - a03 * a21));
+    out[10] =  (a00 * (a11 * a33 - a13 * a31) - a10 * (a01 * a33 - a03 * a31) + a30 * (a01 * a13 - a03 * a11));
+    out[11] = -(a00 * (a11 * a23 - a13 * a21) - a10 * (a01 * a23 - a03 * a21) + a20 * (a01 * a13 - a03 * a11));
+    out[12] = -(a10 * (a21 * a32 - a22 * a31) - a20 * (a11 * a32 - a12 * a31) + a30 * (a11 * a22 - a12 * a21));
+    out[13] =  (a00 * (a21 * a32 - a22 * a31) - a20 * (a01 * a32 - a02 * a31) + a30 * (a01 * a22 - a02 * a21));
+    out[14] = -(a00 * (a11 * a32 - a12 * a31) - a10 * (a01 * a32 - a02 * a31) + a30 * (a01 * a12 - a02 * a11));
+    out[15] =  (a00 * (a11 * a22 - a12 * a21) - a10 * (a01 * a22 - a02 * a21) + a20 * (a01 * a12 - a02 * a11));
+    return out;
+};
+
+/**
+ * Calculates the adjugate of a mat4 using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.SIMD.adjoint = function(out, a) {
+  var a0, a1, a2, a3;
+  var row0, row1, row2, row3;
+  var tmp1;
+  var minor0, minor1, minor2, minor3;
+
+  var a0 = SIMD.Float32x4.load(a, 0);
+  var a1 = SIMD.Float32x4.load(a, 4);
+  var a2 = SIMD.Float32x4.load(a, 8);
+  var a3 = SIMD.Float32x4.load(a, 12);
+
+  // Transpose the source matrix.  Sort of.  Not a true transpose operation
+  tmp1 = SIMD.Float32x4.shuffle(a0, a1, 0, 1, 4, 5);
+  row1 = SIMD.Float32x4.shuffle(a2, a3, 0, 1, 4, 5);
+  row0 = SIMD.Float32x4.shuffle(tmp1, row1, 0, 2, 4, 6);
+  row1 = SIMD.Float32x4.shuffle(row1, tmp1, 1, 3, 5, 7);
+
+  tmp1 = SIMD.Float32x4.shuffle(a0, a1, 2, 3, 6, 7);
+  row3 = SIMD.Float32x4.shuffle(a2, a3, 2, 3, 6, 7);
+  row2 = SIMD.Float32x4.shuffle(tmp1, row3, 0, 2, 4, 6);
+  row3 = SIMD.Float32x4.shuffle(row3, tmp1, 1, 3, 5, 7);
+
+  tmp1   = SIMD.Float32x4.mul(row2, row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor0 = SIMD.Float32x4.mul(row1, tmp1);
+  minor1 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row1, tmp1), minor0);
+  minor1 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor1);
+  minor1 = SIMD.Float32x4.swizzle(minor1, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(row1, row2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor0);
+  minor3 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row3, tmp1));
+  minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor3);
+  minor3 = SIMD.Float32x4.swizzle(minor3, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(row1, 2, 3, 0, 1), row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  row2   = SIMD.Float32x4.swizzle(row2, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor0);
+  minor2 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row2, tmp1));
+  minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor2);
+  minor2 = SIMD.Float32x4.swizzle(minor2, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(row0, row1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor2);
+  minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row2, tmp1), minor3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row3, tmp1), minor2);
+  minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row2, tmp1));
+
+  tmp1   = SIMD.Float32x4.mul(row0, row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row2, tmp1));
+  minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor1);
+  minor2 = SIMD.Float32x4.sub(minor2, SIMD.Float32x4.mul(row1, tmp1));
+
+  tmp1   = SIMD.Float32x4.mul(row0, row2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor1);
+  minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row1, tmp1));
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row3, tmp1));
+  minor3 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor3);
+
+  SIMD.Float32x4.store(out, 0,  minor0);
+  SIMD.Float32x4.store(out, 4,  minor1);
+  SIMD.Float32x4.store(out, 8,  minor2);
+  SIMD.Float32x4.store(out, 12, minor3);
+  return out;
+};
+
+/**
+ * Calculates the adjugate of a mat4 using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+ mat4.adjoint = glMatrix.USE_SIMD ? mat4.SIMD.adjoint : mat4.scalar.adjoint;
+
+/**
+ * Calculates the determinant of a mat4
+ *
+ * @param {mat4} a the source matrix
+ * @returns {Number} determinant of a
+ */
+mat4.determinant = function (a) {
+    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
+        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
+        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
+        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
+
+        b00 = a00 * a11 - a01 * a10,
+        b01 = a00 * a12 - a02 * a10,
+        b02 = a00 * a13 - a03 * a10,
+        b03 = a01 * a12 - a02 * a11,
+        b04 = a01 * a13 - a03 * a11,
+        b05 = a02 * a13 - a03 * a12,
+        b06 = a20 * a31 - a21 * a30,
+        b07 = a20 * a32 - a22 * a30,
+        b08 = a20 * a33 - a23 * a30,
+        b09 = a21 * a32 - a22 * a31,
+        b10 = a21 * a33 - a23 * a31,
+        b11 = a22 * a33 - a23 * a32;
+
+    // Calculate the determinant
+    return b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+};
+
+/**
+ * Multiplies two mat4's explicitly using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the first operand, must be a Float32Array
+ * @param {mat4} b the second operand, must be a Float32Array
+ * @returns {mat4} out
+ */
+mat4.SIMD.multiply = function (out, a, b) {
+    var a0 = SIMD.Float32x4.load(a, 0);
+    var a1 = SIMD.Float32x4.load(a, 4);
+    var a2 = SIMD.Float32x4.load(a, 8);
+    var a3 = SIMD.Float32x4.load(a, 12);
+
+    var b0 = SIMD.Float32x4.load(b, 0);
+    var out0 = SIMD.Float32x4.add(
+                   SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b0, 0, 0, 0, 0), a0),
+                   SIMD.Float32x4.add(
+                       SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b0, 1, 1, 1, 1), a1),
+                       SIMD.Float32x4.add(
+                           SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b0, 2, 2, 2, 2), a2),
+                           SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b0, 3, 3, 3, 3), a3))));
+    SIMD.Float32x4.store(out, 0, out0);
+
+    var b1 = SIMD.Float32x4.load(b, 4);
+    var out1 = SIMD.Float32x4.add(
+                   SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b1, 0, 0, 0, 0), a0),
+                   SIMD.Float32x4.add(
+                       SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b1, 1, 1, 1, 1), a1),
+                       SIMD.Float32x4.add(
+                           SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b1, 2, 2, 2, 2), a2),
+                           SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b1, 3, 3, 3, 3), a3))));
+    SIMD.Float32x4.store(out, 4, out1);
+
+    var b2 = SIMD.Float32x4.load(b, 8);
+    var out2 = SIMD.Float32x4.add(
+                   SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b2, 0, 0, 0, 0), a0),
+                   SIMD.Float32x4.add(
+                       SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b2, 1, 1, 1, 1), a1),
+                       SIMD.Float32x4.add(
+                               SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b2, 2, 2, 2, 2), a2),
+                               SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b2, 3, 3, 3, 3), a3))));
+    SIMD.Float32x4.store(out, 8, out2);
+
+    var b3 = SIMD.Float32x4.load(b, 12);
+    var out3 = SIMD.Float32x4.add(
+                   SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b3, 0, 0, 0, 0), a0),
+                   SIMD.Float32x4.add(
+                        SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b3, 1, 1, 1, 1), a1),
+                        SIMD.Float32x4.add(
+                            SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b3, 2, 2, 2, 2), a2),
+                            SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b3, 3, 3, 3, 3), a3))));
+    SIMD.Float32x4.store(out, 12, out3);
+
+    return out;
+};
+
+/**
+ * Multiplies two mat4's explicitly not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the first operand
+ * @param {mat4} b the second operand
+ * @returns {mat4} out
+ */
+mat4.scalar.multiply = function (out, a, b) {
+    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
+        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
+        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
+        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
+
+    // Cache only the current line of the second matrix
+    var b0  = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
+    out[0] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
+    out[1] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
+    out[2] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
+    out[3] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
+
+    b0 = b[4]; b1 = b[5]; b2 = b[6]; b3 = b[7];
+    out[4] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
+    out[5] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
+    out[6] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
+    out[7] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
+
+    b0 = b[8]; b1 = b[9]; b2 = b[10]; b3 = b[11];
+    out[8] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
+    out[9] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
+    out[10] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
+    out[11] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
+
+    b0 = b[12]; b1 = b[13]; b2 = b[14]; b3 = b[15];
+    out[12] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
+    out[13] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
+    out[14] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
+    out[15] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
+    return out;
+};
+
+/**
+ * Multiplies two mat4's using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the first operand
+ * @param {mat4} b the second operand
+ * @returns {mat4} out
+ */
+mat4.multiply = glMatrix.USE_SIMD ? mat4.SIMD.multiply : mat4.scalar.multiply;
+
+/**
+ * Alias for {@link mat4.multiply}
+ * @function
+ */
+mat4.mul = mat4.multiply;
+
+/**
+ * Translate a mat4 by the given vector not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to translate
+ * @param {vec3} v vector to translate by
+ * @returns {mat4} out
+ */
+mat4.scalar.translate = function (out, a, v) {
+    var x = v[0], y = v[1], z = v[2],
+        a00, a01, a02, a03,
+        a10, a11, a12, a13,
+        a20, a21, a22, a23;
+
+    if (a === out) {
+        out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];
+        out[13] = a[1] * x + a[5] * y + a[9] * z + a[13];
+        out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];
+        out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];
+    } else {
+        a00 = a[0]; a01 = a[1]; a02 = a[2]; a03 = a[3];
+        a10 = a[4]; a11 = a[5]; a12 = a[6]; a13 = a[7];
+        a20 = a[8]; a21 = a[9]; a22 = a[10]; a23 = a[11];
+
+        out[0] = a00; out[1] = a01; out[2] = a02; out[3] = a03;
+        out[4] = a10; out[5] = a11; out[6] = a12; out[7] = a13;
+        out[8] = a20; out[9] = a21; out[10] = a22; out[11] = a23;
+
+        out[12] = a00 * x + a10 * y + a20 * z + a[12];
+        out[13] = a01 * x + a11 * y + a21 * z + a[13];
+        out[14] = a02 * x + a12 * y + a22 * z + a[14];
+        out[15] = a03 * x + a13 * y + a23 * z + a[15];
+    }
+
+    return out;
+};
+
+/**
+ * Translates a mat4 by the given vector using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to translate
+ * @param {vec3} v vector to translate by
+ * @returns {mat4} out
+ */
+mat4.SIMD.translate = function (out, a, v) {
+    var a0 = SIMD.Float32x4.load(a, 0),
+        a1 = SIMD.Float32x4.load(a, 4),
+        a2 = SIMD.Float32x4.load(a, 8),
+        a3 = SIMD.Float32x4.load(a, 12),
+        vec = SIMD.Float32x4(v[0], v[1], v[2] , 0);
+
+    if (a !== out) {
+        out[0] = a[0]; out[1] = a[1]; out[2] = a[2]; out[3] = a[3];
+        out[4] = a[4]; out[5] = a[5]; out[6] = a[6]; out[7] = a[7];
+        out[8] = a[8]; out[9] = a[9]; out[10] = a[10]; out[11] = a[11];
+    }
+
+    a0 = SIMD.Float32x4.mul(a0, SIMD.Float32x4.swizzle(vec, 0, 0, 0, 0));
+    a1 = SIMD.Float32x4.mul(a1, SIMD.Float32x4.swizzle(vec, 1, 1, 1, 1));
+    a2 = SIMD.Float32x4.mul(a2, SIMD.Float32x4.swizzle(vec, 2, 2, 2, 2));
+
+    var t0 = SIMD.Float32x4.add(a0, SIMD.Float32x4.add(a1, SIMD.Float32x4.add(a2, a3)));
+    SIMD.Float32x4.store(out, 12, t0);
+
+    return out;
+};
+
+/**
+ * Translates a mat4 by the given vector using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to translate
+ * @param {vec3} v vector to translate by
+ * @returns {mat4} out
+ */
+mat4.translate = glMatrix.USE_SIMD ? mat4.SIMD.translate : mat4.scalar.translate;
+
+/**
+ * Scales the mat4 by the dimensions in the given vec3 not using vectorization
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to scale
+ * @param {vec3} v the vec3 to scale the matrix by
+ * @returns {mat4} out
+ **/
+mat4.scalar.scale = function(out, a, v) {
+    var x = v[0], y = v[1], z = v[2];
+
+    out[0] = a[0] * x;
+    out[1] = a[1] * x;
+    out[2] = a[2] * x;
+    out[3] = a[3] * x;
+    out[4] = a[4] * y;
+    out[5] = a[5] * y;
+    out[6] = a[6] * y;
+    out[7] = a[7] * y;
+    out[8] = a[8] * z;
+    out[9] = a[9] * z;
+    out[10] = a[10] * z;
+    out[11] = a[11] * z;
+    out[12] = a[12];
+    out[13] = a[13];
+    out[14] = a[14];
+    out[15] = a[15];
+    return out;
+};
+
+/**
+ * Scales the mat4 by the dimensions in the given vec3 using vectorization
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to scale
+ * @param {vec3} v the vec3 to scale the matrix by
+ * @returns {mat4} out
+ **/
+mat4.SIMD.scale = function(out, a, v) {
+    var a0, a1, a2;
+    var vec = SIMD.Float32x4(v[0], v[1], v[2], 0);
+
+    a0 = SIMD.Float32x4.load(a, 0);
+    SIMD.Float32x4.store(
+        out, 0, SIMD.Float32x4.mul(a0, SIMD.Float32x4.swizzle(vec, 0, 0, 0, 0)));
+
+    a1 = SIMD.Float32x4.load(a, 4);
+    SIMD.Float32x4.store(
+        out, 4, SIMD.Float32x4.mul(a1, SIMD.Float32x4.swizzle(vec, 1, 1, 1, 1)));
+
+    a2 = SIMD.Float32x4.load(a, 8);
+    SIMD.Float32x4.store(
+        out, 8, SIMD.Float32x4.mul(a2, SIMD.Float32x4.swizzle(vec, 2, 2, 2, 2)));
+
+    out[12] = a[12];
+    out[13] = a[13];
+    out[14] = a[14];
+    out[15] = a[15];
+    return out;
+};
+
+/**
+ * Scales the mat4 by the dimensions in the given vec3 using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to scale
+ * @param {vec3} v the vec3 to scale the matrix by
+ * @returns {mat4} out
+ */
+mat4.scale = glMatrix.USE_SIMD ? mat4.SIMD.scale : mat4.scalar.scale;
+
+/**
+ * Rotates a mat4 by the given angle around the given axis
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @param {vec3} axis the axis to rotate around
+ * @returns {mat4} out
+ */
+mat4.rotate = function (out, a, rad, axis) {
+    var x = axis[0], y = axis[1], z = axis[2],
+        len = Math.sqrt(x * x + y * y + z * z),
+        s, c, t,
+        a00, a01, a02, a03,
+        a10, a11, a12, a13,
+        a20, a21, a22, a23,
+        b00, b01, b02,
+        b10, b11, b12,
+        b20, b21, b22;
+
+    if (Math.abs(len) < glMatrix.EPSILON) { return null; }
+
+    len = 1 / len;
+    x *= len;
+    y *= len;
+    z *= len;
+
+    s = Math.sin(rad);
+    c = Math.cos(rad);
+    t = 1 - c;
+
+    a00 = a[0]; a01 = a[1]; a02 = a[2]; a03 = a[3];
+    a10 = a[4]; a11 = a[5]; a12 = a[6]; a13 = a[7];
+    a20 = a[8]; a21 = a[9]; a22 = a[10]; a23 = a[11];
+
+    // Construct the elements of the rotation matrix
+    b00 = x * x * t + c; b01 = y * x * t + z * s; b02 = z * x * t - y * s;
+    b10 = x * y * t - z * s; b11 = y * y * t + c; b12 = z * y * t + x * s;
+    b20 = x * z * t + y * s; b21 = y * z * t - x * s; b22 = z * z * t + c;
+
+    // Perform rotation-specific matrix multiplication
+    out[0] = a00 * b00 + a10 * b01 + a20 * b02;
+    out[1] = a01 * b00 + a11 * b01 + a21 * b02;
+    out[2] = a02 * b00 + a12 * b01 + a22 * b02;
+    out[3] = a03 * b00 + a13 * b01 + a23 * b02;
+    out[4] = a00 * b10 + a10 * b11 + a20 * b12;
+    out[5] = a01 * b10 + a11 * b11 + a21 * b12;
+    out[6] = a02 * b10 + a12 * b11 + a22 * b12;
+    out[7] = a03 * b10 + a13 * b11 + a23 * b12;
+    out[8] = a00 * b20 + a10 * b21 + a20 * b22;
+    out[9] = a01 * b20 + a11 * b21 + a21 * b22;
+    out[10] = a02 * b20 + a12 * b21 + a22 * b22;
+    out[11] = a03 * b20 + a13 * b21 + a23 * b22;
+
+    if (a !== out) { // If the source and destination differ, copy the unchanged last row
+        out[12] = a[12];
+        out[13] = a[13];
+        out[14] = a[14];
+        out[15] = a[15];
+    }
+    return out;
+};
+
+/**
+ * Rotates a matrix by the given angle around the X axis not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.scalar.rotateX = function (out, a, rad) {
+    var s = Math.sin(rad),
+        c = Math.cos(rad),
+        a10 = a[4],
+        a11 = a[5],
+        a12 = a[6],
+        a13 = a[7],
+        a20 = a[8],
+        a21 = a[9],
+        a22 = a[10],
+        a23 = a[11];
+
+    if (a !== out) { // If the source and destination differ, copy the unchanged rows
+        out[0]  = a[0];
+        out[1]  = a[1];
+        out[2]  = a[2];
+        out[3]  = a[3];
+        out[12] = a[12];
+        out[13] = a[13];
+        out[14] = a[14];
+        out[15] = a[15];
+    }
+
+    // Perform axis-specific matrix multiplication
+    out[4] = a10 * c + a20 * s;
+    out[5] = a11 * c + a21 * s;
+    out[6] = a12 * c + a22 * s;
+    out[7] = a13 * c + a23 * s;
+    out[8] = a20 * c - a10 * s;
+    out[9] = a21 * c - a11 * s;
+    out[10] = a22 * c - a12 * s;
+    out[11] = a23 * c - a13 * s;
+    return out;
+};
+
+/**
+ * Rotates a matrix by the given angle around the X axis using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.SIMD.rotateX = function (out, a, rad) {
+    var s = SIMD.Float32x4.splat(Math.sin(rad)),
+        c = SIMD.Float32x4.splat(Math.cos(rad));
+
+    if (a !== out) { // If the source and destination differ, copy the unchanged rows
+      out[0]  = a[0];
+      out[1]  = a[1];
+      out[2]  = a[2];
+      out[3]  = a[3];
+      out[12] = a[12];
+      out[13] = a[13];
+      out[14] = a[14];
+      out[15] = a[15];
+    }
+
+    // Perform axis-specific matrix multiplication
+    var a_1 = SIMD.Float32x4.load(a, 4);
+    var a_2 = SIMD.Float32x4.load(a, 8);
+    SIMD.Float32x4.store(out, 4,
+                         SIMD.Float32x4.add(SIMD.Float32x4.mul(a_1, c), SIMD.Float32x4.mul(a_2, s)));
+    SIMD.Float32x4.store(out, 8,
+                         SIMD.Float32x4.sub(SIMD.Float32x4.mul(a_2, c), SIMD.Float32x4.mul(a_1, s)));
+    return out;
+};
+
+/**
+ * Rotates a matrix by the given angle around the X axis using SIMD if availabe and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.rotateX = glMatrix.USE_SIMD ? mat4.SIMD.rotateX : mat4.scalar.rotateX;
+
+/**
+ * Rotates a matrix by the given angle around the Y axis not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.scalar.rotateY = function (out, a, rad) {
+    var s = Math.sin(rad),
+        c = Math.cos(rad),
+        a00 = a[0],
+        a01 = a[1],
+        a02 = a[2],
+        a03 = a[3],
+        a20 = a[8],
+        a21 = a[9],
+        a22 = a[10],
+        a23 = a[11];
+
+    if (a !== out) { // If the source and destination differ, copy the unchanged rows
+        out[4]  = a[4];
+        out[5]  = a[5];
+        out[6]  = a[6];
+        out[7]  = a[7];
+        out[12] = a[12];
+        out[13] = a[13];
+        out[14] = a[14];
+        out[15] = a[15];
+    }
+
+    // Perform axis-specific matrix multiplication
+    out[0] = a00 * c - a20 * s;
+    out[1] = a01 * c - a21 * s;
+    out[2] = a02 * c - a22 * s;
+    out[3] = a03 * c - a23 * s;
+    out[8] = a00 * s + a20 * c;
+    out[9] = a01 * s + a21 * c;
+    out[10] = a02 * s + a22 * c;
+    out[11] = a03 * s + a23 * c;
+    return out;
+};
+
+/**
+ * Rotates a matrix by the given angle around the Y axis using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.SIMD.rotateY = function (out, a, rad) {
+    var s = SIMD.Float32x4.splat(Math.sin(rad)),
+        c = SIMD.Float32x4.splat(Math.cos(rad));
+
+    if (a !== out) { // If the source and destination differ, copy the unchanged rows
+        out[4]  = a[4];
+        out[5]  = a[5];
+        out[6]  = a[6];
+        out[7]  = a[7];
+        out[12] = a[12];
+        out[13] = a[13];
+        out[14] = a[14];
+        out[15] = a[15];
+    }
+
+    // Perform axis-specific matrix multiplication
+    var a_0 = SIMD.Float32x4.load(a, 0);
+    var a_2 = SIMD.Float32x4.load(a, 8);
+    SIMD.Float32x4.store(out, 0,
+                         SIMD.Float32x4.sub(SIMD.Float32x4.mul(a_0, c), SIMD.Float32x4.mul(a_2, s)));
+    SIMD.Float32x4.store(out, 8,
+                         SIMD.Float32x4.add(SIMD.Float32x4.mul(a_0, s), SIMD.Float32x4.mul(a_2, c)));
+    return out;
+};
+
+/**
+ * Rotates a matrix by the given angle around the Y axis if SIMD available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+ mat4.rotateY = glMatrix.USE_SIMD ? mat4.SIMD.rotateY : mat4.scalar.rotateY;
+
+/**
+ * Rotates a matrix by the given angle around the Z axis not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.scalar.rotateZ = function (out, a, rad) {
+    var s = Math.sin(rad),
+        c = Math.cos(rad),
+        a00 = a[0],
+        a01 = a[1],
+        a02 = a[2],
+        a03 = a[3],
+        a10 = a[4],
+        a11 = a[5],
+        a12 = a[6],
+        a13 = a[7];
+
+    if (a !== out) { // If the source and destination differ, copy the unchanged last row
+        out[8]  = a[8];
+        out[9]  = a[9];
+        out[10] = a[10];
+        out[11] = a[11];
+        out[12] = a[12];
+        out[13] = a[13];
+        out[14] = a[14];
+        out[15] = a[15];
+    }
+
+    // Perform axis-specific matrix multiplication
+    out[0] = a00 * c + a10 * s;
+    out[1] = a01 * c + a11 * s;
+    out[2] = a02 * c + a12 * s;
+    out[3] = a03 * c + a13 * s;
+    out[4] = a10 * c - a00 * s;
+    out[5] = a11 * c - a01 * s;
+    out[6] = a12 * c - a02 * s;
+    out[7] = a13 * c - a03 * s;
+    return out;
+};
+
+/**
+ * Rotates a matrix by the given angle around the Z axis using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.SIMD.rotateZ = function (out, a, rad) {
+    var s = SIMD.Float32x4.splat(Math.sin(rad)),
+        c = SIMD.Float32x4.splat(Math.cos(rad));
+
+    if (a !== out) { // If the source and destination differ, copy the unchanged last row
+        out[8]  = a[8];
+        out[9]  = a[9];
+        out[10] = a[10];
+        out[11] = a[11];
+        out[12] = a[12];
+        out[13] = a[13];
+        out[14] = a[14];
+        out[15] = a[15];
+    }
+
+    // Perform axis-specific matrix multiplication
+    var a_0 = SIMD.Float32x4.load(a, 0);
+    var a_1 = SIMD.Float32x4.load(a, 4);
+    SIMD.Float32x4.store(out, 0,
+                         SIMD.Float32x4.add(SIMD.Float32x4.mul(a_0, c), SIMD.Float32x4.mul(a_1, s)));
+    SIMD.Float32x4.store(out, 4,
+                         SIMD.Float32x4.sub(SIMD.Float32x4.mul(a_1, c), SIMD.Float32x4.mul(a_0, s)));
+    return out;
+};
+
+/**
+ * Rotates a matrix by the given angle around the Z axis if SIMD available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+ mat4.rotateZ = glMatrix.USE_SIMD ? mat4.SIMD.rotateZ : mat4.scalar.rotateZ;
+
+/**
+ * Creates a matrix from a vector translation
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.translate(dest, dest, vec);
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {vec3} v Translation vector
+ * @returns {mat4} out
+ */
+mat4.fromTranslation = function(out, v) {
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = 1;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = 1;
+    out[11] = 0;
+    out[12] = v[0];
+    out[13] = v[1];
+    out[14] = v[2];
+    out[15] = 1;
+    return out;
+}
+
+/**
+ * Creates a matrix from a vector scaling
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.scale(dest, dest, vec);
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {vec3} v Scaling vector
+ * @returns {mat4} out
+ */
+mat4.fromScaling = function(out, v) {
+    out[0] = v[0];
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = v[1];
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = v[2];
+    out[11] = 0;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = 0;
+    out[15] = 1;
+    return out;
+}
+
+/**
+ * Creates a matrix from a given angle around a given axis
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.rotate(dest, dest, rad, axis);
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {Number} rad the angle to rotate the matrix by
+ * @param {vec3} axis the axis to rotate around
+ * @returns {mat4} out
+ */
+mat4.fromRotation = function(out, rad, axis) {
+    var x = axis[0], y = axis[1], z = axis[2],
+        len = Math.sqrt(x * x + y * y + z * z),
+        s, c, t;
+
+    if (Math.abs(len) < glMatrix.EPSILON) { return null; }
+
+    len = 1 / len;
+    x *= len;
+    y *= len;
+    z *= len;
+
+    s = Math.sin(rad);
+    c = Math.cos(rad);
+    t = 1 - c;
+
+    // Perform rotation-specific matrix multiplication
+    out[0] = x * x * t + c;
+    out[1] = y * x * t + z * s;
+    out[2] = z * x * t - y * s;
+    out[3] = 0;
+    out[4] = x * y * t - z * s;
+    out[5] = y * y * t + c;
+    out[6] = z * y * t + x * s;
+    out[7] = 0;
+    out[8] = x * z * t + y * s;
+    out[9] = y * z * t - x * s;
+    out[10] = z * z * t + c;
+    out[11] = 0;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = 0;
+    out[15] = 1;
+    return out;
+}
+
+/**
+ * Creates a matrix from the given angle around the X axis
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.rotateX(dest, dest, rad);
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.fromXRotation = function(out, rad) {
+    var s = Math.sin(rad),
+        c = Math.cos(rad);
+
+    // Perform axis-specific matrix multiplication
+    out[0]  = 1;
+    out[1]  = 0;
+    out[2]  = 0;
+    out[3]  = 0;
+    out[4] = 0;
+    out[5] = c;
+    out[6] = s;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = -s;
+    out[10] = c;
+    out[11] = 0;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = 0;
+    out[15] = 1;
+    return out;
+}
+
+/**
+ * Creates a matrix from the given angle around the Y axis
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.rotateY(dest, dest, rad);
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.fromYRotation = function(out, rad) {
+    var s = Math.sin(rad),
+        c = Math.cos(rad);
+
+    // Perform axis-specific matrix multiplication
+    out[0]  = c;
+    out[1]  = 0;
+    out[2]  = -s;
+    out[3]  = 0;
+    out[4] = 0;
+    out[5] = 1;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = s;
+    out[9] = 0;
+    out[10] = c;
+    out[11] = 0;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = 0;
+    out[15] = 1;
+    return out;
+}
+
+/**
+ * Creates a matrix from the given angle around the Z axis
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.rotateZ(dest, dest, rad);
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.fromZRotation = function(out, rad) {
+    var s = Math.sin(rad),
+        c = Math.cos(rad);
+
+    // Perform axis-specific matrix multiplication
+    out[0]  = c;
+    out[1]  = s;
+    out[2]  = 0;
+    out[3]  = 0;
+    out[4] = -s;
+    out[5] = c;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = 1;
+    out[11] = 0;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = 0;
+    out[15] = 1;
+    return out;
+}
+
+/**
+ * Creates a matrix from a quaternion rotation and vector translation
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.translate(dest, vec);
+ *     var quatMat = mat4.create();
+ *     quat4.toMat4(quat, quatMat);
+ *     mat4.multiply(dest, quatMat);
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {quat4} q Rotation quaternion
+ * @param {vec3} v Translation vector
+ * @returns {mat4} out
+ */
+mat4.fromRotationTranslation = function (out, q, v) {
+    // Quaternion math
+    var x = q[0], y = q[1], z = q[2], w = q[3],
+        x2 = x + x,
+        y2 = y + y,
+        z2 = z + z,
+
+        xx = x * x2,
+        xy = x * y2,
+        xz = x * z2,
+        yy = y * y2,
+        yz = y * z2,
+        zz = z * z2,
+        wx = w * x2,
+        wy = w * y2,
+        wz = w * z2;
+
+    out[0] = 1 - (yy + zz);
+    out[1] = xy + wz;
+    out[2] = xz - wy;
+    out[3] = 0;
+    out[4] = xy - wz;
+    out[5] = 1 - (xx + zz);
+    out[6] = yz + wx;
+    out[7] = 0;
+    out[8] = xz + wy;
+    out[9] = yz - wx;
+    out[10] = 1 - (xx + yy);
+    out[11] = 0;
+    out[12] = v[0];
+    out[13] = v[1];
+    out[14] = v[2];
+    out[15] = 1;
+
+    return out;
+};
+
+/**
+ * Returns the translation vector component of a transformation
+ *  matrix. If a matrix is built with fromRotationTranslation,
+ *  the returned vector will be the same as the translation vector
+ *  originally supplied.
+ * @param  {vec3} out Vector to receive translation component
+ * @param  {mat4} mat Matrix to be decomposed (input)
+ * @return {vec3} out
+ */
+mat4.getTranslation = function (out, mat) {
+  out[0] = mat[12];
+  out[1] = mat[13];
+  out[2] = mat[14];
+
+  return out;
+};
+
+/**
+ * Returns a quaternion representing the rotational component
+ *  of a transformation matrix. If a matrix is built with
+ *  fromRotationTranslation, the returned quaternion will be the
+ *  same as the quaternion originally supplied.
+ * @param {quat} out Quaternion to receive the rotation component
+ * @param {mat4} mat Matrix to be decomposed (input)
+ * @return {quat} out
+ */
+mat4.getRotation = function (out, mat) {
+  // Algorithm taken from http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm
+  var trace = mat[0] + mat[5] + mat[10];
+  var S = 0;
+
+  if (trace > 0) { 
+    S = Math.sqrt(trace + 1.0) * 2;
+    out[3] = 0.25 * S;
+    out[0] = (mat[6] - mat[9]) / S;
+    out[1] = (mat[8] - mat[2]) / S; 
+    out[2] = (mat[1] - mat[4]) / S; 
+  } else if ((mat[0] > mat[5])&(mat[0] > mat[10])) { 
+    S = Math.sqrt(1.0 + mat[0] - mat[5] - mat[10]) * 2;
+    out[3] = (mat[6] - mat[9]) / S;
+    out[0] = 0.25 * S;
+    out[1] = (mat[1] + mat[4]) / S; 
+    out[2] = (mat[8] + mat[2]) / S; 
+  } else if (mat[5] > mat[10]) { 
+    S = Math.sqrt(1.0 + mat[5] - mat[0] - mat[10]) * 2;
+    out[3] = (mat[8] - mat[2]) / S;
+    out[0] = (mat[1] + mat[4]) / S; 
+    out[1] = 0.25 * S;
+    out[2] = (mat[6] + mat[9]) / S; 
+  } else { 
+    S = Math.sqrt(1.0 + mat[10] - mat[0] - mat[5]) * 2;
+    out[3] = (mat[1] - mat[4]) / S;
+    out[0] = (mat[8] + mat[2]) / S;
+    out[1] = (mat[6] + mat[9]) / S;
+    out[2] = 0.25 * S;
+  }
+
+  return out;
+};
+
+/**
+ * Creates a matrix from a quaternion rotation, vector translation and vector scale
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.translate(dest, vec);
+ *     var quatMat = mat4.create();
+ *     quat4.toMat4(quat, quatMat);
+ *     mat4.multiply(dest, quatMat);
+ *     mat4.scale(dest, scale)
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {quat4} q Rotation quaternion
+ * @param {vec3} v Translation vector
+ * @param {vec3} s Scaling vector
+ * @returns {mat4} out
+ */
+mat4.fromRotationTranslationScale = function (out, q, v, s) {
+    // Quaternion math
+    var x = q[0], y = q[1], z = q[2], w = q[3],
+        x2 = x + x,
+        y2 = y + y,
+        z2 = z + z,
+
+        xx = x * x2,
+        xy = x * y2,
+        xz = x * z2,
+        yy = y * y2,
+        yz = y * z2,
+        zz = z * z2,
+        wx = w * x2,
+        wy = w * y2,
+        wz = w * z2,
+        sx = s[0],
+        sy = s[1],
+        sz = s[2];
+
+    out[0] = (1 - (yy + zz)) * sx;
+    out[1] = (xy + wz) * sx;
+    out[2] = (xz - wy) * sx;
+    out[3] = 0;
+    out[4] = (xy - wz) * sy;
+    out[5] = (1 - (xx + zz)) * sy;
+    out[6] = (yz + wx) * sy;
+    out[7] = 0;
+    out[8] = (xz + wy) * sz;
+    out[9] = (yz - wx) * sz;
+    out[10] = (1 - (xx + yy)) * sz;
+    out[11] = 0;
+    out[12] = v[0];
+    out[13] = v[1];
+    out[14] = v[2];
+    out[15] = 1;
+
+    return out;
+};
+
+/**
+ * Creates a matrix from a quaternion rotation, vector translation and vector scale, rotating and scaling around the given origin
+ * This is equivalent to (but much faster than):
+ *
+ *     mat4.identity(dest);
+ *     mat4.translate(dest, vec);
+ *     mat4.translate(dest, origin);
+ *     var quatMat = mat4.create();
+ *     quat4.toMat4(quat, quatMat);
+ *     mat4.multiply(dest, quatMat);
+ *     mat4.scale(dest, scale)
+ *     mat4.translate(dest, negativeOrigin);
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {quat4} q Rotation quaternion
+ * @param {vec3} v Translation vector
+ * @param {vec3} s Scaling vector
+ * @param {vec3} o The origin vector around which to scale and rotate
+ * @returns {mat4} out
+ */
+mat4.fromRotationTranslationScaleOrigin = function (out, q, v, s, o) {
+  // Quaternion math
+  var x = q[0], y = q[1], z = q[2], w = q[3],
+      x2 = x + x,
+      y2 = y + y,
+      z2 = z + z,
+
+      xx = x * x2,
+      xy = x * y2,
+      xz = x * z2,
+      yy = y * y2,
+      yz = y * z2,
+      zz = z * z2,
+      wx = w * x2,
+      wy = w * y2,
+      wz = w * z2,
+
+      sx = s[0],
+      sy = s[1],
+      sz = s[2],
+
+      ox = o[0],
+      oy = o[1],
+      oz = o[2];
+
+  out[0] = (1 - (yy + zz)) * sx;
+  out[1] = (xy + wz) * sx;
+  out[2] = (xz - wy) * sx;
+  out[3] = 0;
+  out[4] = (xy - wz) * sy;
+  out[5] = (1 - (xx + zz)) * sy;
+  out[6] = (yz + wx) * sy;
+  out[7] = 0;
+  out[8] = (xz + wy) * sz;
+  out[9] = (yz - wx) * sz;
+  out[10] = (1 - (xx + yy)) * sz;
+  out[11] = 0;
+  out[12] = v[0] + ox - (out[0] * ox + out[4] * oy + out[8] * oz);
+  out[13] = v[1] + oy - (out[1] * ox + out[5] * oy + out[9] * oz);
+  out[14] = v[2] + oz - (out[2] * ox + out[6] * oy + out[10] * oz);
+  out[15] = 1;
+
+  return out;
+};
+
+/**
+ * Calculates a 4x4 matrix from the given quaternion
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {quat} q Quaternion to create matrix from
+ *
+ * @returns {mat4} out
+ */
+mat4.fromQuat = function (out, q) {
+    var x = q[0], y = q[1], z = q[2], w = q[3],
+        x2 = x + x,
+        y2 = y + y,
+        z2 = z + z,
+
+        xx = x * x2,
+        yx = y * x2,
+        yy = y * y2,
+        zx = z * x2,
+        zy = z * y2,
+        zz = z * z2,
+        wx = w * x2,
+        wy = w * y2,
+        wz = w * z2;
+
+    out[0] = 1 - yy - zz;
+    out[1] = yx + wz;
+    out[2] = zx - wy;
+    out[3] = 0;
+
+    out[4] = yx - wz;
+    out[5] = 1 - xx - zz;
+    out[6] = zy + wx;
+    out[7] = 0;
+
+    out[8] = zx + wy;
+    out[9] = zy - wx;
+    out[10] = 1 - xx - yy;
+    out[11] = 0;
+
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = 0;
+    out[15] = 1;
+
+    return out;
+};
+
+/**
+ * Generates a frustum matrix with the given bounds
+ *
+ * @param {mat4} out mat4 frustum matrix will be written into
+ * @param {Number} left Left bound of the frustum
+ * @param {Number} right Right bound of the frustum
+ * @param {Number} bottom Bottom bound of the frustum
+ * @param {Number} top Top bound of the frustum
+ * @param {Number} near Near bound of the frustum
+ * @param {Number} far Far bound of the frustum
+ * @returns {mat4} out
+ */
+mat4.frustum = function (out, left, right, bottom, top, near, far) {
+    var rl = 1 / (right - left),
+        tb = 1 / (top - bottom),
+        nf = 1 / (near - far);
+    out[0] = (near * 2) * rl;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = (near * 2) * tb;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = (right + left) * rl;
+    out[9] = (top + bottom) * tb;
+    out[10] = (far + near) * nf;
+    out[11] = -1;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = (far * near * 2) * nf;
+    out[15] = 0;
+    return out;
+};
+
+/**
+ * Generates a perspective projection matrix with the given bounds
+ *
+ * @param {mat4} out mat4 frustum matrix will be written into
+ * @param {number} fovy Vertical field of view in radians
+ * @param {number} aspect Aspect ratio. typically viewport width/height
+ * @param {number} near Near bound of the frustum
+ * @param {number} far Far bound of the frustum
+ * @returns {mat4} out
+ */
+mat4.perspective = function (out, fovy, aspect, near, far) {
+    var f = 1.0 / Math.tan(fovy / 2),
+        nf = 1 / (near - far);
+    out[0] = f / aspect;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = f;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = (far + near) * nf;
+    out[11] = -1;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = (2 * far * near) * nf;
+    out[15] = 0;
+    return out;
+};
+
+/**
+ * Generates a perspective projection matrix with the given field of view.
+ * This is primarily useful for generating projection matrices to be used
+ * with the still experiemental WebVR API.
+ *
+ * @param {mat4} out mat4 frustum matrix will be written into
+ * @param {Object} fov Object containing the following values: upDegrees, downDegrees, leftDegrees, rightDegrees
+ * @param {number} near Near bound of the frustum
+ * @param {number} far Far bound of the frustum
+ * @returns {mat4} out
+ */
+mat4.perspectiveFromFieldOfView = function (out, fov, near, far) {
+    var upTan = Math.tan(fov.upDegrees * Math.PI/180.0),
+        downTan = Math.tan(fov.downDegrees * Math.PI/180.0),
+        leftTan = Math.tan(fov.leftDegrees * Math.PI/180.0),
+        rightTan = Math.tan(fov.rightDegrees * Math.PI/180.0),
+        xScale = 2.0 / (leftTan + rightTan),
+        yScale = 2.0 / (upTan + downTan);
+
+    out[0] = xScale;
+    out[1] = 0.0;
+    out[2] = 0.0;
+    out[3] = 0.0;
+    out[4] = 0.0;
+    out[5] = yScale;
+    out[6] = 0.0;
+    out[7] = 0.0;
+    out[8] = -((leftTan - rightTan) * xScale * 0.5);
+    out[9] = ((upTan - downTan) * yScale * 0.5);
+    out[10] = far / (near - far);
+    out[11] = -1.0;
+    out[12] = 0.0;
+    out[13] = 0.0;
+    out[14] = (far * near) / (near - far);
+    out[15] = 0.0;
+    return out;
+}
+
+/**
+ * Generates a orthogonal projection matrix with the given bounds
+ *
+ * @param {mat4} out mat4 frustum matrix will be written into
+ * @param {number} left Left bound of the frustum
+ * @param {number} right Right bound of the frustum
+ * @param {number} bottom Bottom bound of the frustum
+ * @param {number} top Top bound of the frustum
+ * @param {number} near Near bound of the frustum
+ * @param {number} far Far bound of the frustum
+ * @returns {mat4} out
+ */
+mat4.ortho = function (out, left, right, bottom, top, near, far) {
+    var lr = 1 / (left - right),
+        bt = 1 / (bottom - top),
+        nf = 1 / (near - far);
+    out[0] = -2 * lr;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = -2 * bt;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = 2 * nf;
+    out[11] = 0;
+    out[12] = (left + right) * lr;
+    out[13] = (top + bottom) * bt;
+    out[14] = (far + near) * nf;
+    out[15] = 1;
+    return out;
+};
+
+/**
+ * Generates a look-at matrix with the given eye position, focal point, and up axis
+ *
+ * @param {mat4} out mat4 frustum matrix will be written into
+ * @param {vec3} eye Position of the viewer
+ * @param {vec3} center Point the viewer is looking at
+ * @param {vec3} up vec3 pointing up
+ * @returns {mat4} out
+ */
+mat4.lookAt = function (out, eye, center, up) {
+    var x0, x1, x2, y0, y1, y2, z0, z1, z2, len,
+        eyex = eye[0],
+        eyey = eye[1],
+        eyez = eye[2],
+        upx = up[0],
+        upy = up[1],
+        upz = up[2],
+        centerx = center[0],
+        centery = center[1],
+        centerz = center[2];
+
+    if (Math.abs(eyex - centerx) < glMatrix.EPSILON &&
+        Math.abs(eyey - centery) < glMatrix.EPSILON &&
+        Math.abs(eyez - centerz) < glMatrix.EPSILON) {
+        return mat4.identity(out);
+    }
+
+    z0 = eyex - centerx;
+    z1 = eyey - centery;
+    z2 = eyez - centerz;
+
+    len = 1 / Math.sqrt(z0 * z0 + z1 * z1 + z2 * z2);
+    z0 *= len;
+    z1 *= len;
+    z2 *= len;
+
+    x0 = upy * z2 - upz * z1;
+    x1 = upz * z0 - upx * z2;
+    x2 = upx * z1 - upy * z0;
+    len = Math.sqrt(x0 * x0 + x1 * x1 + x2 * x2);
+    if (!len) {
+        x0 = 0;
+        x1 = 0;
+        x2 = 0;
+    } else {
+        len = 1 / len;
+        x0 *= len;
+        x1 *= len;
+        x2 *= len;
+    }
+
+    y0 = z1 * x2 - z2 * x1;
+    y1 = z2 * x0 - z0 * x2;
+    y2 = z0 * x1 - z1 * x0;
+
+    len = Math.sqrt(y0 * y0 + y1 * y1 + y2 * y2);
+    if (!len) {
+        y0 = 0;
+        y1 = 0;
+        y2 = 0;
+    } else {
+        len = 1 / len;
+        y0 *= len;
+        y1 *= len;
+        y2 *= len;
+    }
+
+    out[0] = x0;
+    out[1] = y0;
+    out[2] = z0;
+    out[3] = 0;
+    out[4] = x1;
+    out[5] = y1;
+    out[6] = z1;
+    out[7] = 0;
+    out[8] = x2;
+    out[9] = y2;
+    out[10] = z2;
+    out[11] = 0;
+    out[12] = -(x0 * eyex + x1 * eyey + x2 * eyez);
+    out[13] = -(y0 * eyex + y1 * eyey + y2 * eyez);
+    out[14] = -(z0 * eyex + z1 * eyey + z2 * eyez);
+    out[15] = 1;
+
+    return out;
+};
+
+/**
+ * Returns a string representation of a mat4
+ *
+ * @param {mat4} mat matrix to represent as a string
+ * @returns {String} string representation of the matrix
+ */
+mat4.str = function (a) {
+    return 'mat4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ', ' +
+                    a[4] + ', ' + a[5] + ', ' + a[6] + ', ' + a[7] + ', ' +
+                    a[8] + ', ' + a[9] + ', ' + a[10] + ', ' + a[11] + ', ' +
+                    a[12] + ', ' + a[13] + ', ' + a[14] + ', ' + a[15] + ')';
+};
+
+/**
+ * Returns Frobenius norm of a mat4
+ *
+ * @param {mat4} a the matrix to calculate Frobenius norm of
+ * @returns {Number} Frobenius norm
+ */
+mat4.frob = function (a) {
+    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2) + Math.pow(a[9], 2) + Math.pow(a[10], 2) + Math.pow(a[11], 2) + Math.pow(a[12], 2) + Math.pow(a[13], 2) + Math.pow(a[14], 2) + Math.pow(a[15], 2) ))
+};
+
+/**
+ * Adds two mat4's
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the first operand
+ * @param {mat4} b the second operand
+ * @returns {mat4} out
+ */
+mat4.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    out[3] = a[3] + b[3];
+    out[4] = a[4] + b[4];
+    out[5] = a[5] + b[5];
+    out[6] = a[6] + b[6];
+    out[7] = a[7] + b[7];
+    out[8] = a[8] + b[8];
+    out[9] = a[9] + b[9];
+    out[10] = a[10] + b[10];
+    out[11] = a[11] + b[11];
+    out[12] = a[12] + b[12];
+    out[13] = a[13] + b[13];
+    out[14] = a[14] + b[14];
+    out[15] = a[15] + b[15];
+    return out;
+};
+
+/**
+ * Subtracts matrix b from matrix a
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the first operand
+ * @param {mat4} b the second operand
+ * @returns {mat4} out
+ */
+mat4.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    out[3] = a[3] - b[3];
+    out[4] = a[4] - b[4];
+    out[5] = a[5] - b[5];
+    out[6] = a[6] - b[6];
+    out[7] = a[7] - b[7];
+    out[8] = a[8] - b[8];
+    out[9] = a[9] - b[9];
+    out[10] = a[10] - b[10];
+    out[11] = a[11] - b[11];
+    out[12] = a[12] - b[12];
+    out[13] = a[13] - b[13];
+    out[14] = a[14] - b[14];
+    out[15] = a[15] - b[15];
+    return out;
+};
+
+/**
+ * Alias for {@link mat4.subtract}
+ * @function
+ */
+mat4.sub = mat4.subtract;
+
+/**
+ * Multiply each element of the matrix by a scalar.
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to scale
+ * @param {Number} b amount to scale the matrix's elements by
+ * @returns {mat4} out
+ */
+mat4.multiplyScalar = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    out[3] = a[3] * b;
+    out[4] = a[4] * b;
+    out[5] = a[5] * b;
+    out[6] = a[6] * b;
+    out[7] = a[7] * b;
+    out[8] = a[8] * b;
+    out[9] = a[9] * b;
+    out[10] = a[10] * b;
+    out[11] = a[11] * b;
+    out[12] = a[12] * b;
+    out[13] = a[13] * b;
+    out[14] = a[14] * b;
+    out[15] = a[15] * b;
+    return out;
+};
+
+/**
+ * Adds two mat4's after multiplying each element of the second operand by a scalar value.
+ *
+ * @param {mat4} out the receiving vector
+ * @param {mat4} a the first operand
+ * @param {mat4} b the second operand
+ * @param {Number} scale the amount to scale b's elements by before adding
+ * @returns {mat4} out
+ */
+mat4.multiplyScalarAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    out[3] = a[3] + (b[3] * scale);
+    out[4] = a[4] + (b[4] * scale);
+    out[5] = a[5] + (b[5] * scale);
+    out[6] = a[6] + (b[6] * scale);
+    out[7] = a[7] + (b[7] * scale);
+    out[8] = a[8] + (b[8] * scale);
+    out[9] = a[9] + (b[9] * scale);
+    out[10] = a[10] + (b[10] * scale);
+    out[11] = a[11] + (b[11] * scale);
+    out[12] = a[12] + (b[12] * scale);
+    out[13] = a[13] + (b[13] * scale);
+    out[14] = a[14] + (b[14] * scale);
+    out[15] = a[15] + (b[15] * scale);
+    return out;
+};
+
+/**
+ * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {mat4} a The first matrix.
+ * @param {mat4} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat4.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && 
+           a[4] === b[4] && a[5] === b[5] && a[6] === b[6] && a[7] === b[7] && 
+           a[8] === b[8] && a[9] === b[9] && a[10] === b[10] && a[11] === b[11] &&
+           a[12] === b[12] && a[13] === b[13] && a[14] === b[14] && a[15] === b[15];
+};
+
+/**
+ * Returns whether or not the matrices have approximately the same elements in the same position.
+ *
+ * @param {mat4} a The first matrix.
+ * @param {mat4} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat4.equals = function (a, b) {
+    var a0  = a[0],  a1  = a[1],  a2  = a[2],  a3  = a[3],
+        a4  = a[4],  a5  = a[5],  a6  = a[6],  a7  = a[7], 
+        a8  = a[8],  a9  = a[9],  a10 = a[10], a11 = a[11], 
+        a12 = a[12], a13 = a[13], a14 = a[14], a15 = a[15];
+
+    var b0  = b[0],  b1  = b[1],  b2  = b[2],  b3  = b[3],
+        b4  = b[4],  b5  = b[5],  b6  = b[6],  b7  = b[7], 
+        b8  = b[8],  b9  = b[9],  b10 = b[10], b11 = b[11], 
+        b12 = b[12], b13 = b[13], b14 = b[14], b15 = b[15];
+
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+            Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
+            Math.abs(a4 - b4) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
+            Math.abs(a5 - b5) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a5), Math.abs(b5)) &&
+            Math.abs(a6 - b6) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a6), Math.abs(b6)) &&
+            Math.abs(a7 - b7) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a7), Math.abs(b7)) &&
+            Math.abs(a8 - b8) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a8), Math.abs(b8)) &&
+            Math.abs(a9 - b9) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a9), Math.abs(b9)) &&
+            Math.abs(a10 - b10) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a10), Math.abs(b10)) &&
+            Math.abs(a11 - b11) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a11), Math.abs(b11)) &&
+            Math.abs(a12 - b12) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a12), Math.abs(b12)) &&
+            Math.abs(a13 - b13) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a13), Math.abs(b13)) &&
+            Math.abs(a14 - b14) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a14), Math.abs(b14)) &&
+            Math.abs(a15 - b15) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a15), Math.abs(b15)));
+};
+
+
+
+module.exports = mat4;
+
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+
+var glMatrix = __webpack_require__(18);
+var mat3 = __webpack_require__(103);
+var vec3 = __webpack_require__(104);
+var vec4 = __webpack_require__(105);
+
+/**
+ * @class Quaternion
+ * @name quat
+ */
+var quat = {};
+
+/**
+ * Creates a new identity quat
+ *
+ * @returns {quat} a new quaternion
+ */
+quat.create = function() {
+    var out = new glMatrix.ARRAY_TYPE(4);
+    out[0] = 0;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 1;
+    return out;
+};
+
+/**
+ * Sets a quaternion to represent the shortest rotation from one
+ * vector to another.
+ *
+ * Both vectors are assumed to be unit length.
+ *
+ * @param {quat} out the receiving quaternion.
+ * @param {vec3} a the initial vector
+ * @param {vec3} b the destination vector
+ * @returns {quat} out
+ */
+quat.rotationTo = (function() {
+    var tmpvec3 = vec3.create();
+    var xUnitVec3 = vec3.fromValues(1,0,0);
+    var yUnitVec3 = vec3.fromValues(0,1,0);
+
+    return function(out, a, b) {
+        var dot = vec3.dot(a, b);
+        if (dot < -0.999999) {
+            vec3.cross(tmpvec3, xUnitVec3, a);
+            if (vec3.length(tmpvec3) < 0.000001)
+                vec3.cross(tmpvec3, yUnitVec3, a);
+            vec3.normalize(tmpvec3, tmpvec3);
+            quat.setAxisAngle(out, tmpvec3, Math.PI);
+            return out;
+        } else if (dot > 0.999999) {
+            out[0] = 0;
+            out[1] = 0;
+            out[2] = 0;
+            out[3] = 1;
+            return out;
+        } else {
+            vec3.cross(tmpvec3, a, b);
+            out[0] = tmpvec3[0];
+            out[1] = tmpvec3[1];
+            out[2] = tmpvec3[2];
+            out[3] = 1 + dot;
+            return quat.normalize(out, out);
+        }
+    };
+})();
+
+/**
+ * Sets the specified quaternion with values corresponding to the given
+ * axes. Each axis is a vec3 and is expected to be unit length and
+ * perpendicular to all other specified axes.
+ *
+ * @param {vec3} view  the vector representing the viewing direction
+ * @param {vec3} right the vector representing the local "right" direction
+ * @param {vec3} up    the vector representing the local "up" direction
+ * @returns {quat} out
+ */
+quat.setAxes = (function() {
+    var matr = mat3.create();
+
+    return function(out, view, right, up) {
+        matr[0] = right[0];
+        matr[3] = right[1];
+        matr[6] = right[2];
+
+        matr[1] = up[0];
+        matr[4] = up[1];
+        matr[7] = up[2];
+
+        matr[2] = -view[0];
+        matr[5] = -view[1];
+        matr[8] = -view[2];
+
+        return quat.normalize(out, quat.fromMat3(out, matr));
+    };
+})();
+
+/**
+ * Creates a new quat initialized with values from an existing quaternion
+ *
+ * @param {quat} a quaternion to clone
+ * @returns {quat} a new quaternion
+ * @function
+ */
+quat.clone = vec4.clone;
+
+/**
+ * Creates a new quat initialized with the given values
+ *
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @param {Number} w W component
+ * @returns {quat} a new quaternion
+ * @function
+ */
+quat.fromValues = vec4.fromValues;
+
+/**
+ * Copy the values from one quat to another
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a the source quaternion
+ * @returns {quat} out
+ * @function
+ */
+quat.copy = vec4.copy;
+
+/**
+ * Set the components of a quat to the given values
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @param {Number} w W component
+ * @returns {quat} out
+ * @function
+ */
+quat.set = vec4.set;
+
+/**
+ * Set a quat to the identity quaternion
+ *
+ * @param {quat} out the receiving quaternion
+ * @returns {quat} out
+ */
+quat.identity = function(out) {
+    out[0] = 0;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 1;
+    return out;
+};
+
+/**
+ * Sets a quat from the given angle and rotation axis,
+ * then returns it.
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {vec3} axis the axis around which to rotate
+ * @param {Number} rad the angle in radians
+ * @returns {quat} out
+ **/
+quat.setAxisAngle = function(out, axis, rad) {
+    rad = rad * 0.5;
+    var s = Math.sin(rad);
+    out[0] = s * axis[0];
+    out[1] = s * axis[1];
+    out[2] = s * axis[2];
+    out[3] = Math.cos(rad);
+    return out;
+};
+
+/**
+ * Gets the rotation axis and angle for a given
+ *  quaternion. If a quaternion is created with
+ *  setAxisAngle, this method will return the same
+ *  values as providied in the original parameter list
+ *  OR functionally equivalent values.
+ * Example: The quaternion formed by axis [0, 0, 1] and
+ *  angle -90 is the same as the quaternion formed by
+ *  [0, 0, 1] and 270. This method favors the latter.
+ * @param  {vec3} out_axis  Vector receiving the axis of rotation
+ * @param  {quat} q     Quaternion to be decomposed
+ * @return {Number}     Angle, in radians, of the rotation
+ */
+quat.getAxisAngle = function(out_axis, q) {
+    var rad = Math.acos(q[3]) * 2.0;
+    var s = Math.sin(rad / 2.0);
+    if (s != 0.0) {
+        out_axis[0] = q[0] / s;
+        out_axis[1] = q[1] / s;
+        out_axis[2] = q[2] / s;
+    } else {
+        // If s is zero, return any axis (no rotation - axis does not matter)
+        out_axis[0] = 1;
+        out_axis[1] = 0;
+        out_axis[2] = 0;
+    }
+    return rad;
+};
+
+/**
+ * Adds two quat's
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a the first operand
+ * @param {quat} b the second operand
+ * @returns {quat} out
+ * @function
+ */
+quat.add = vec4.add;
+
+/**
+ * Multiplies two quat's
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a the first operand
+ * @param {quat} b the second operand
+ * @returns {quat} out
+ */
+quat.multiply = function(out, a, b) {
+    var ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        bx = b[0], by = b[1], bz = b[2], bw = b[3];
+
+    out[0] = ax * bw + aw * bx + ay * bz - az * by;
+    out[1] = ay * bw + aw * by + az * bx - ax * bz;
+    out[2] = az * bw + aw * bz + ax * by - ay * bx;
+    out[3] = aw * bw - ax * bx - ay * by - az * bz;
+    return out;
+};
+
+/**
+ * Alias for {@link quat.multiply}
+ * @function
+ */
+quat.mul = quat.multiply;
+
+/**
+ * Scales a quat by a scalar number
+ *
+ * @param {quat} out the receiving vector
+ * @param {quat} a the vector to scale
+ * @param {Number} b amount to scale the vector by
+ * @returns {quat} out
+ * @function
+ */
+quat.scale = vec4.scale;
+
+/**
+ * Rotates a quaternion by the given angle about the X axis
+ *
+ * @param {quat} out quat receiving operation result
+ * @param {quat} a quat to rotate
+ * @param {number} rad angle (in radians) to rotate
+ * @returns {quat} out
+ */
+quat.rotateX = function (out, a, rad) {
+    rad *= 0.5; 
+
+    var ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        bx = Math.sin(rad), bw = Math.cos(rad);
+
+    out[0] = ax * bw + aw * bx;
+    out[1] = ay * bw + az * bx;
+    out[2] = az * bw - ay * bx;
+    out[3] = aw * bw - ax * bx;
+    return out;
+};
+
+/**
+ * Rotates a quaternion by the given angle about the Y axis
+ *
+ * @param {quat} out quat receiving operation result
+ * @param {quat} a quat to rotate
+ * @param {number} rad angle (in radians) to rotate
+ * @returns {quat} out
+ */
+quat.rotateY = function (out, a, rad) {
+    rad *= 0.5; 
+
+    var ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        by = Math.sin(rad), bw = Math.cos(rad);
+
+    out[0] = ax * bw - az * by;
+    out[1] = ay * bw + aw * by;
+    out[2] = az * bw + ax * by;
+    out[3] = aw * bw - ay * by;
+    return out;
+};
+
+/**
+ * Rotates a quaternion by the given angle about the Z axis
+ *
+ * @param {quat} out quat receiving operation result
+ * @param {quat} a quat to rotate
+ * @param {number} rad angle (in radians) to rotate
+ * @returns {quat} out
+ */
+quat.rotateZ = function (out, a, rad) {
+    rad *= 0.5; 
+
+    var ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        bz = Math.sin(rad), bw = Math.cos(rad);
+
+    out[0] = ax * bw + ay * bz;
+    out[1] = ay * bw - ax * bz;
+    out[2] = az * bw + aw * bz;
+    out[3] = aw * bw - az * bz;
+    return out;
+};
+
+/**
+ * Calculates the W component of a quat from the X, Y, and Z components.
+ * Assumes that quaternion is 1 unit in length.
+ * Any existing W component will be ignored.
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a quat to calculate W component of
+ * @returns {quat} out
+ */
+quat.calculateW = function (out, a) {
+    var x = a[0], y = a[1], z = a[2];
+
+    out[0] = x;
+    out[1] = y;
+    out[2] = z;
+    out[3] = Math.sqrt(Math.abs(1.0 - x * x - y * y - z * z));
+    return out;
+};
+
+/**
+ * Calculates the dot product of two quat's
+ *
+ * @param {quat} a the first operand
+ * @param {quat} b the second operand
+ * @returns {Number} dot product of a and b
+ * @function
+ */
+quat.dot = vec4.dot;
+
+/**
+ * Performs a linear interpolation between two quat's
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a the first operand
+ * @param {quat} b the second operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {quat} out
+ * @function
+ */
+quat.lerp = vec4.lerp;
+
+/**
+ * Performs a spherical linear interpolation between two quat
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a the first operand
+ * @param {quat} b the second operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {quat} out
+ */
+quat.slerp = function (out, a, b, t) {
+    // benchmarks:
+    //    http://jsperf.com/quaternion-slerp-implementations
+
+    var ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        bx = b[0], by = b[1], bz = b[2], bw = b[3];
+
+    var        omega, cosom, sinom, scale0, scale1;
+
+    // calc cosine
+    cosom = ax * bx + ay * by + az * bz + aw * bw;
+    // adjust signs (if necessary)
+    if ( cosom < 0.0 ) {
+        cosom = -cosom;
+        bx = - bx;
+        by = - by;
+        bz = - bz;
+        bw = - bw;
+    }
+    // calculate coefficients
+    if ( (1.0 - cosom) > 0.000001 ) {
+        // standard case (slerp)
+        omega  = Math.acos(cosom);
+        sinom  = Math.sin(omega);
+        scale0 = Math.sin((1.0 - t) * omega) / sinom;
+        scale1 = Math.sin(t * omega) / sinom;
+    } else {        
+        // "from" and "to" quaternions are very close 
+        //  ... so we can do a linear interpolation
+        scale0 = 1.0 - t;
+        scale1 = t;
+    }
+    // calculate final values
+    out[0] = scale0 * ax + scale1 * bx;
+    out[1] = scale0 * ay + scale1 * by;
+    out[2] = scale0 * az + scale1 * bz;
+    out[3] = scale0 * aw + scale1 * bw;
+    
+    return out;
+};
+
+/**
+ * Performs a spherical linear interpolation with two control points
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a the first operand
+ * @param {quat} b the second operand
+ * @param {quat} c the third operand
+ * @param {quat} d the fourth operand
+ * @param {Number} t interpolation amount
+ * @returns {quat} out
+ */
+quat.sqlerp = (function () {
+  var temp1 = quat.create();
+  var temp2 = quat.create();
+  
+  return function (out, a, b, c, d, t) {
+    quat.slerp(temp1, a, d, t);
+    quat.slerp(temp2, b, c, t);
+    quat.slerp(out, temp1, temp2, 2 * t * (1 - t));
+    
+    return out;
+  };
+}());
+
+/**
+ * Calculates the inverse of a quat
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a quat to calculate inverse of
+ * @returns {quat} out
+ */
+quat.invert = function(out, a) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
+        dot = a0*a0 + a1*a1 + a2*a2 + a3*a3,
+        invDot = dot ? 1.0/dot : 0;
+    
+    // TODO: Would be faster to return [0,0,0,0] immediately if dot == 0
+
+    out[0] = -a0*invDot;
+    out[1] = -a1*invDot;
+    out[2] = -a2*invDot;
+    out[3] = a3*invDot;
+    return out;
+};
+
+/**
+ * Calculates the conjugate of a quat
+ * If the quaternion is normalized, this function is faster than quat.inverse and produces the same result.
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a quat to calculate conjugate of
+ * @returns {quat} out
+ */
+quat.conjugate = function (out, a) {
+    out[0] = -a[0];
+    out[1] = -a[1];
+    out[2] = -a[2];
+    out[3] = a[3];
+    return out;
+};
+
+/**
+ * Calculates the length of a quat
+ *
+ * @param {quat} a vector to calculate length of
+ * @returns {Number} length of a
+ * @function
+ */
+quat.length = vec4.length;
+
+/**
+ * Alias for {@link quat.length}
+ * @function
+ */
+quat.len = quat.length;
+
+/**
+ * Calculates the squared length of a quat
+ *
+ * @param {quat} a vector to calculate squared length of
+ * @returns {Number} squared length of a
+ * @function
+ */
+quat.squaredLength = vec4.squaredLength;
+
+/**
+ * Alias for {@link quat.squaredLength}
+ * @function
+ */
+quat.sqrLen = quat.squaredLength;
+
+/**
+ * Normalize a quat
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a quaternion to normalize
+ * @returns {quat} out
+ * @function
+ */
+quat.normalize = vec4.normalize;
+
+/**
+ * Creates a quaternion from the given 3x3 rotation matrix.
+ *
+ * NOTE: The resultant quaternion is not normalized, so you should be sure
+ * to renormalize the quaternion yourself where necessary.
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {mat3} m rotation matrix
+ * @returns {quat} out
+ * @function
+ */
+quat.fromMat3 = function(out, m) {
+    // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
+    // article "Quaternion Calculus and Fast Animation".
+    var fTrace = m[0] + m[4] + m[8];
+    var fRoot;
+
+    if ( fTrace > 0.0 ) {
+        // |w| > 1/2, may as well choose w > 1/2
+        fRoot = Math.sqrt(fTrace + 1.0);  // 2w
+        out[3] = 0.5 * fRoot;
+        fRoot = 0.5/fRoot;  // 1/(4w)
+        out[0] = (m[5]-m[7])*fRoot;
+        out[1] = (m[6]-m[2])*fRoot;
+        out[2] = (m[1]-m[3])*fRoot;
+    } else {
+        // |w| <= 1/2
+        var i = 0;
+        if ( m[4] > m[0] )
+          i = 1;
+        if ( m[8] > m[i*3+i] )
+          i = 2;
+        var j = (i+1)%3;
+        var k = (i+2)%3;
+        
+        fRoot = Math.sqrt(m[i*3+i]-m[j*3+j]-m[k*3+k] + 1.0);
+        out[i] = 0.5 * fRoot;
+        fRoot = 0.5 / fRoot;
+        out[3] = (m[j*3+k] - m[k*3+j]) * fRoot;
+        out[j] = (m[j*3+i] + m[i*3+j]) * fRoot;
+        out[k] = (m[k*3+i] + m[i*3+k]) * fRoot;
+    }
+    
+    return out;
+};
+
+/**
+ * Returns a string representation of a quatenion
+ *
+ * @param {quat} vec vector to represent as a string
+ * @returns {String} string representation of the vector
+ */
+quat.str = function (a) {
+    return 'quat(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
+};
+
+/**
+ * Returns whether or not the quaternions have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {quat} a The first quaternion.
+ * @param {quat} b The second quaternion.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+quat.exactEquals = vec4.exactEquals;
+
+/**
+ * Returns whether or not the quaternions have approximately the same elements in the same position.
+ *
+ * @param {quat} a The first vector.
+ * @param {quat} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+quat.equals = vec4.equals;
+
+module.exports = quat;
+
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+
+var glMatrix = __webpack_require__(18);
+
+/**
+ * @class 2 Dimensional Vector
+ * @name vec2
+ */
+var vec2 = {};
+
+/**
+ * Creates a new, empty vec2
+ *
+ * @returns {vec2} a new 2D vector
+ */
+vec2.create = function() {
+    var out = new glMatrix.ARRAY_TYPE(2);
+    out[0] = 0;
+    out[1] = 0;
+    return out;
+};
+
+/**
+ * Creates a new vec2 initialized with values from an existing vector
+ *
+ * @param {vec2} a vector to clone
+ * @returns {vec2} a new 2D vector
+ */
+vec2.clone = function(a) {
+    var out = new glMatrix.ARRAY_TYPE(2);
+    out[0] = a[0];
+    out[1] = a[1];
+    return out;
+};
+
+/**
+ * Creates a new vec2 initialized with the given values
+ *
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @returns {vec2} a new 2D vector
+ */
+vec2.fromValues = function(x, y) {
+    var out = new glMatrix.ARRAY_TYPE(2);
+    out[0] = x;
+    out[1] = y;
+    return out;
+};
+
+/**
+ * Copy the values from one vec2 to another
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the source vector
+ * @returns {vec2} out
+ */
+vec2.copy = function(out, a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    return out;
+};
+
+/**
+ * Set the components of a vec2 to the given values
+ *
+ * @param {vec2} out the receiving vector
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @returns {vec2} out
+ */
+vec2.set = function(out, x, y) {
+    out[0] = x;
+    out[1] = y;
+    return out;
+};
+
+/**
+ * Adds two vec2's
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+vec2.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    return out;
+};
+
+/**
+ * Subtracts vector b from vector a
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+vec2.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    return out;
+};
+
+/**
+ * Alias for {@link vec2.subtract}
+ * @function
+ */
+vec2.sub = vec2.subtract;
+
+/**
+ * Multiplies two vec2's
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+vec2.multiply = function(out, a, b) {
+    out[0] = a[0] * b[0];
+    out[1] = a[1] * b[1];
+    return out;
+};
+
+/**
+ * Alias for {@link vec2.multiply}
+ * @function
+ */
+vec2.mul = vec2.multiply;
+
+/**
+ * Divides two vec2's
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+vec2.divide = function(out, a, b) {
+    out[0] = a[0] / b[0];
+    out[1] = a[1] / b[1];
+    return out;
+};
+
+/**
+ * Alias for {@link vec2.divide}
+ * @function
+ */
+vec2.div = vec2.divide;
+
+/**
+ * Math.ceil the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to ceil
+ * @returns {vec2} out
+ */
+vec2.ceil = function (out, a) {
+    out[0] = Math.ceil(a[0]);
+    out[1] = Math.ceil(a[1]);
+    return out;
+};
+
+/**
+ * Math.floor the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to floor
+ * @returns {vec2} out
+ */
+vec2.floor = function (out, a) {
+    out[0] = Math.floor(a[0]);
+    out[1] = Math.floor(a[1]);
+    return out;
+};
+
+/**
+ * Returns the minimum of two vec2's
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+vec2.min = function(out, a, b) {
+    out[0] = Math.min(a[0], b[0]);
+    out[1] = Math.min(a[1], b[1]);
+    return out;
+};
+
+/**
+ * Returns the maximum of two vec2's
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+vec2.max = function(out, a, b) {
+    out[0] = Math.max(a[0], b[0]);
+    out[1] = Math.max(a[1], b[1]);
+    return out;
+};
+
+/**
+ * Math.round the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to round
+ * @returns {vec2} out
+ */
+vec2.round = function (out, a) {
+    out[0] = Math.round(a[0]);
+    out[1] = Math.round(a[1]);
+    return out;
+};
+
+/**
+ * Scales a vec2 by a scalar number
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to scale
+ * @param {Number} b amount to scale the vector by
+ * @returns {vec2} out
+ */
+vec2.scale = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    return out;
+};
+
+/**
+ * Adds two vec2's after scaling the second operand by a scalar value
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @param {Number} scale the amount to scale b by before adding
+ * @returns {vec2} out
+ */
+vec2.scaleAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    return out;
+};
+
+/**
+ * Calculates the euclidian distance between two vec2's
+ *
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {Number} distance between a and b
+ */
+vec2.distance = function(a, b) {
+    var x = b[0] - a[0],
+        y = b[1] - a[1];
+    return Math.sqrt(x*x + y*y);
+};
+
+/**
+ * Alias for {@link vec2.distance}
+ * @function
+ */
+vec2.dist = vec2.distance;
+
+/**
+ * Calculates the squared euclidian distance between two vec2's
+ *
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {Number} squared distance between a and b
+ */
+vec2.squaredDistance = function(a, b) {
+    var x = b[0] - a[0],
+        y = b[1] - a[1];
+    return x*x + y*y;
+};
+
+/**
+ * Alias for {@link vec2.squaredDistance}
+ * @function
+ */
+vec2.sqrDist = vec2.squaredDistance;
+
+/**
+ * Calculates the length of a vec2
+ *
+ * @param {vec2} a vector to calculate length of
+ * @returns {Number} length of a
+ */
+vec2.length = function (a) {
+    var x = a[0],
+        y = a[1];
+    return Math.sqrt(x*x + y*y);
+};
+
+/**
+ * Alias for {@link vec2.length}
+ * @function
+ */
+vec2.len = vec2.length;
+
+/**
+ * Calculates the squared length of a vec2
+ *
+ * @param {vec2} a vector to calculate squared length of
+ * @returns {Number} squared length of a
+ */
+vec2.squaredLength = function (a) {
+    var x = a[0],
+        y = a[1];
+    return x*x + y*y;
+};
+
+/**
+ * Alias for {@link vec2.squaredLength}
+ * @function
+ */
+vec2.sqrLen = vec2.squaredLength;
+
+/**
+ * Negates the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to negate
+ * @returns {vec2} out
+ */
+vec2.negate = function(out, a) {
+    out[0] = -a[0];
+    out[1] = -a[1];
+    return out;
+};
+
+/**
+ * Returns the inverse of the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to invert
+ * @returns {vec2} out
+ */
+vec2.inverse = function(out, a) {
+  out[0] = 1.0 / a[0];
+  out[1] = 1.0 / a[1];
+  return out;
+};
+
+/**
+ * Normalize a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to normalize
+ * @returns {vec2} out
+ */
+vec2.normalize = function(out, a) {
+    var x = a[0],
+        y = a[1];
+    var len = x*x + y*y;
+    if (len > 0) {
+        //TODO: evaluate use of glm_invsqrt here?
+        len = 1 / Math.sqrt(len);
+        out[0] = a[0] * len;
+        out[1] = a[1] * len;
+    }
+    return out;
+};
+
+/**
+ * Calculates the dot product of two vec2's
+ *
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {Number} dot product of a and b
+ */
+vec2.dot = function (a, b) {
+    return a[0] * b[0] + a[1] * b[1];
+};
+
+/**
+ * Computes the cross product of two vec2's
+ * Note that the cross product must by definition produce a 3D vector
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec3} out
+ */
+vec2.cross = function(out, a, b) {
+    var z = a[0] * b[1] - a[1] * b[0];
+    out[0] = out[1] = 0;
+    out[2] = z;
+    return out;
+};
+
+/**
+ * Performs a linear interpolation between two vec2's
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {vec2} out
+ */
+vec2.lerp = function (out, a, b, t) {
+    var ax = a[0],
+        ay = a[1];
+    out[0] = ax + t * (b[0] - ax);
+    out[1] = ay + t * (b[1] - ay);
+    return out;
+};
+
+/**
+ * Generates a random vector with the given scale
+ *
+ * @param {vec2} out the receiving vector
+ * @param {Number} [scale] Length of the resulting vector. If ommitted, a unit vector will be returned
+ * @returns {vec2} out
+ */
+vec2.random = function (out, scale) {
+    scale = scale || 1.0;
+    var r = glMatrix.RANDOM() * 2.0 * Math.PI;
+    out[0] = Math.cos(r) * scale;
+    out[1] = Math.sin(r) * scale;
+    return out;
+};
+
+/**
+ * Transforms the vec2 with a mat2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat2} m matrix to transform with
+ * @returns {vec2} out
+ */
+vec2.transformMat2 = function(out, a, m) {
+    var x = a[0],
+        y = a[1];
+    out[0] = m[0] * x + m[2] * y;
+    out[1] = m[1] * x + m[3] * y;
+    return out;
+};
+
+/**
+ * Transforms the vec2 with a mat2d
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat2d} m matrix to transform with
+ * @returns {vec2} out
+ */
+vec2.transformMat2d = function(out, a, m) {
+    var x = a[0],
+        y = a[1];
+    out[0] = m[0] * x + m[2] * y + m[4];
+    out[1] = m[1] * x + m[3] * y + m[5];
+    return out;
+};
+
+/**
+ * Transforms the vec2 with a mat3
+ * 3rd vector component is implicitly '1'
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat3} m matrix to transform with
+ * @returns {vec2} out
+ */
+vec2.transformMat3 = function(out, a, m) {
+    var x = a[0],
+        y = a[1];
+    out[0] = m[0] * x + m[3] * y + m[6];
+    out[1] = m[1] * x + m[4] * y + m[7];
+    return out;
+};
+
+/**
+ * Transforms the vec2 with a mat4
+ * 3rd vector component is implicitly '0'
+ * 4th vector component is implicitly '1'
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat4} m matrix to transform with
+ * @returns {vec2} out
+ */
+vec2.transformMat4 = function(out, a, m) {
+    var x = a[0], 
+        y = a[1];
+    out[0] = m[0] * x + m[4] * y + m[12];
+    out[1] = m[1] * x + m[5] * y + m[13];
+    return out;
+};
+
+/**
+ * Perform some operation over an array of vec2s.
+ *
+ * @param {Array} a the array of vectors to iterate over
+ * @param {Number} stride Number of elements between the start of each vec2. If 0 assumes tightly packed
+ * @param {Number} offset Number of elements to skip at the beginning of the array
+ * @param {Number} count Number of vec2s to iterate over. If 0 iterates over entire array
+ * @param {Function} fn Function to call for each vector in the array
+ * @param {Object} [arg] additional argument to pass to fn
+ * @returns {Array} a
+ * @function
+ */
+vec2.forEach = (function() {
+    var vec = vec2.create();
+
+    return function(a, stride, offset, count, fn, arg) {
+        var i, l;
+        if(!stride) {
+            stride = 2;
+        }
+
+        if(!offset) {
+            offset = 0;
+        }
+        
+        if(count) {
+            l = Math.min((count * stride) + offset, a.length);
+        } else {
+            l = a.length;
+        }
+
+        for(i = offset; i < l; i += stride) {
+            vec[0] = a[i]; vec[1] = a[i+1];
+            fn(vec, vec, arg);
+            a[i] = vec[0]; a[i+1] = vec[1];
+        }
+        
+        return a;
+    };
+})();
+
+/**
+ * Returns a string representation of a vector
+ *
+ * @param {vec2} vec vector to represent as a string
+ * @returns {String} string representation of the vector
+ */
+vec2.str = function (a) {
+    return 'vec2(' + a[0] + ', ' + a[1] + ')';
+};
+
+/**
+ * Returns whether or not the vectors exactly have the same elements in the same position (when compared with ===)
+ *
+ * @param {vec2} a The first vector.
+ * @param {vec2} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec2.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1];
+};
+
+/**
+ * Returns whether or not the vectors have approximately the same elements in the same position.
+ *
+ * @param {vec2} a The first vector.
+ * @param {vec2} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec2.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1];
+    var b0 = b[0], b1 = b[1];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)));
+};
+
+module.exports = vec2;
+
+
+/***/ }),
+/* 231 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -25405,7 +35866,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 219 */
+/* 232 */
 /***/ (function(module, exports) {
 
 
@@ -25428,7 +35889,7 @@ try {
 
 
 /***/ }),
-/* 220 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25490,7 +35951,7 @@ var loopAsync = exports.loopAsync = function loopAsync(turns, work, callback) {
 };
 
 /***/ }),
-/* 221 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25499,7 +35960,7 @@ var loopAsync = exports.loopAsync = function loopAsync(turns, work, callback) {
 exports.__esModule = true;
 exports.replaceLocation = exports.pushLocation = exports.startListener = exports.getCurrentLocation = exports.go = exports.getUserConfirmation = undefined;
 
-var _BrowserProtocol = __webpack_require__(58);
+var _BrowserProtocol = __webpack_require__(59);
 
 Object.defineProperty(exports, 'getUserConfirmation', {
   enumerable: true,
@@ -25514,17 +35975,17 @@ Object.defineProperty(exports, 'go', {
   }
 });
 
-var _warning = __webpack_require__(22);
+var _warning = __webpack_require__(23);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _LocationUtils = __webpack_require__(29);
+var _LocationUtils = __webpack_require__(30);
 
-var _DOMUtils = __webpack_require__(43);
+var _DOMUtils = __webpack_require__(44);
 
-var _DOMStateStorage = __webpack_require__(101);
+var _DOMStateStorage = __webpack_require__(107);
 
-var _PathUtils = __webpack_require__(19);
+var _PathUtils = __webpack_require__(20);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25633,7 +36094,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 222 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25642,7 +36103,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
 exports.__esModule = true;
 exports.replaceLocation = exports.pushLocation = exports.getCurrentLocation = exports.go = exports.getUserConfirmation = undefined;
 
-var _BrowserProtocol = __webpack_require__(58);
+var _BrowserProtocol = __webpack_require__(59);
 
 Object.defineProperty(exports, 'getUserConfirmation', {
   enumerable: true,
@@ -25657,9 +36118,9 @@ Object.defineProperty(exports, 'go', {
   }
 });
 
-var _LocationUtils = __webpack_require__(29);
+var _LocationUtils = __webpack_require__(30);
 
-var _PathUtils = __webpack_require__(19);
+var _PathUtils = __webpack_require__(20);
 
 var getCurrentLocation = exports.getCurrentLocation = function getCurrentLocation() {
   return (0, _LocationUtils.createLocation)(window.location);
@@ -25676,7 +36137,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
 };
 
 /***/ }),
-/* 223 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25690,19 +36151,19 @@ var _invariant = __webpack_require__(10);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _ExecutionEnvironment = __webpack_require__(59);
+var _ExecutionEnvironment = __webpack_require__(60);
 
-var _BrowserProtocol = __webpack_require__(58);
+var _BrowserProtocol = __webpack_require__(59);
 
 var BrowserProtocol = _interopRequireWildcard(_BrowserProtocol);
 
-var _RefreshProtocol = __webpack_require__(222);
+var _RefreshProtocol = __webpack_require__(235);
 
 var RefreshProtocol = _interopRequireWildcard(_RefreshProtocol);
 
-var _DOMUtils = __webpack_require__(43);
+var _DOMUtils = __webpack_require__(44);
 
-var _createHistory = __webpack_require__(60);
+var _createHistory = __webpack_require__(61);
 
 var _createHistory2 = _interopRequireDefault(_createHistory);
 
@@ -25776,7 +36237,7 @@ exports.default = createBrowserHistory;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 224 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25786,7 +36247,7 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _warning = __webpack_require__(22);
+var _warning = __webpack_require__(23);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -25794,15 +36255,15 @@ var _invariant = __webpack_require__(10);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _ExecutionEnvironment = __webpack_require__(59);
+var _ExecutionEnvironment = __webpack_require__(60);
 
-var _DOMUtils = __webpack_require__(43);
+var _DOMUtils = __webpack_require__(44);
 
-var _HashProtocol = __webpack_require__(221);
+var _HashProtocol = __webpack_require__(234);
 
 var HashProtocol = _interopRequireWildcard(_HashProtocol);
 
-var _createHistory = __webpack_require__(60);
+var _createHistory = __webpack_require__(61);
 
 var _createHistory2 = _interopRequireDefault(_createHistory);
 
@@ -25930,7 +36391,7 @@ exports.default = createHashHistory;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 225 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25940,7 +36401,7 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _warning = __webpack_require__(22);
+var _warning = __webpack_require__(23);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -25948,15 +36409,15 @@ var _invariant = __webpack_require__(10);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(29);
+var _LocationUtils = __webpack_require__(30);
 
-var _PathUtils = __webpack_require__(19);
+var _PathUtils = __webpack_require__(20);
 
-var _createHistory = __webpack_require__(60);
+var _createHistory = __webpack_require__(61);
 
 var _createHistory2 = _interopRequireDefault(_createHistory);
 
-var _Actions = __webpack_require__(42);
+var _Actions = __webpack_require__(43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26077,12 +36538,12 @@ exports.default = createMemoryHistory;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 226 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var strictUriEncode = __webpack_require__(362);
+var strictUriEncode = __webpack_require__(375);
 var objectAssign = __webpack_require__(4);
 
 function encoderForArrayFormat(opts) {
@@ -26289,13 +36750,13 @@ exports.stringify = function (obj, opts) {
 
 
 /***/ }),
-/* 227 */
+/* 240 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__ = __webpack_require__(230);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objectToString_js__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objectToString_js__ = __webpack_require__(244);
 
 
 
@@ -26327,7 +36788,7 @@ function baseGetTag(value) {
 
 
 /***/ }),
-/* 228 */
+/* 241 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26339,11 +36800,11 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
 
 /***/ }),
-/* 229 */
+/* 242 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__overArg_js__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__overArg_js__ = __webpack_require__(245);
 
 
 /** Built-in value references. */
@@ -26353,11 +36814,11 @@ var getPrototype = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__overArg_js
 
 
 /***/ }),
-/* 230 */
+/* 243 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(112);
 
 
 /** Used for built-in method references. */
@@ -26407,7 +36868,7 @@ function getRawTag(value) {
 
 
 /***/ }),
-/* 231 */
+/* 244 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26436,7 +36897,7 @@ function objectToString(value) {
 
 
 /***/ }),
-/* 232 */
+/* 245 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26458,11 +36919,11 @@ function overArg(func, transform) {
 
 
 /***/ }),
-/* 233 */
+/* 246 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__ = __webpack_require__(241);
 
 
 /** Detect free variable `self`. */
@@ -26475,7 +36936,7 @@ var root = __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__["a" /* default */] || fr
 
 
 /***/ }),
-/* 234 */
+/* 247 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26511,7 +36972,7 @@ function isObjectLike(value) {
 
 
 /***/ }),
-/* 235 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -26549,7 +37010,7 @@ module.exports = function parsejson(data) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 236 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26567,7 +37028,7 @@ module.exports = function parsejson(data) {
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(1);
   var warning = __webpack_require__(2);
-  var ReactPropTypesSecret = __webpack_require__(110);
+  var ReactPropTypesSecret = __webpack_require__(116);
   var loggedTypeFailures = {};
 }
 
@@ -26618,7 +37079,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 237 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26679,7 +37140,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 238 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26758,7 +37219,7 @@ var ARIADOMPropertyConfig = {
 module.exports = ARIADOMPropertyConfig;
 
 /***/ }),
-/* 239 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26774,9 +37235,9 @@ module.exports = ARIADOMPropertyConfig;
 
 
 
-var ReactDOMComponentTree = __webpack_require__(5);
+var ReactDOMComponentTree = __webpack_require__(6);
 
-var focusNode = __webpack_require__(98);
+var focusNode = __webpack_require__(101);
 
 var AutoFocusUtils = {
   focusDOMComponent: function () {
@@ -26787,7 +37248,7 @@ var AutoFocusUtils = {
 module.exports = AutoFocusUtils;
 
 /***/ }),
-/* 240 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26803,11 +37264,11 @@ module.exports = AutoFocusUtils;
 
 
 
-var EventPropagators = __webpack_require__(36);
+var EventPropagators = __webpack_require__(37);
 var ExecutionEnvironment = __webpack_require__(7);
-var FallbackCompositionState = __webpack_require__(246);
-var SyntheticCompositionEvent = __webpack_require__(289);
-var SyntheticInputEvent = __webpack_require__(292);
+var FallbackCompositionState = __webpack_require__(259);
+var SyntheticCompositionEvent = __webpack_require__(302);
+var SyntheticInputEvent = __webpack_require__(305);
 
 var END_KEYCODES = [9, 13, 27, 32]; // Tab, Return, Esc, Space
 var START_KEYCODE = 229;
@@ -27177,7 +37638,7 @@ var BeforeInputEventPlugin = {
 module.exports = BeforeInputEventPlugin;
 
 /***/ }),
-/* 241 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27193,14 +37654,14 @@ module.exports = BeforeInputEventPlugin;
 
 
 
-var CSSProperty = __webpack_require__(111);
+var CSSProperty = __webpack_require__(117);
 var ExecutionEnvironment = __webpack_require__(7);
 var ReactInstrumentation = __webpack_require__(14);
 
-var camelizeStyleName = __webpack_require__(205);
-var dangerousStyleValue = __webpack_require__(299);
-var hyphenateStyleName = __webpack_require__(212);
-var memoizeStringOnly = __webpack_require__(215);
+var camelizeStyleName = __webpack_require__(212);
+var dangerousStyleValue = __webpack_require__(312);
+var hyphenateStyleName = __webpack_require__(219);
+var memoizeStringOnly = __webpack_require__(222);
 var warning = __webpack_require__(2);
 
 var processStyleName = memoizeStringOnly(function (styleName) {
@@ -27392,7 +37853,7 @@ module.exports = CSSPropertyOperations;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 242 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27408,16 +37869,16 @@ module.exports = CSSPropertyOperations;
 
 
 
-var EventPluginHub = __webpack_require__(35);
-var EventPropagators = __webpack_require__(36);
+var EventPluginHub = __webpack_require__(36);
+var EventPropagators = __webpack_require__(37);
 var ExecutionEnvironment = __webpack_require__(7);
-var ReactDOMComponentTree = __webpack_require__(5);
+var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(15);
-var SyntheticEvent = __webpack_require__(18);
+var SyntheticEvent = __webpack_require__(19);
 
-var getEventTarget = __webpack_require__(76);
-var isEventSupported = __webpack_require__(77);
-var isTextInputElement = __webpack_require__(129);
+var getEventTarget = __webpack_require__(77);
+var isEventSupported = __webpack_require__(78);
+var isTextInputElement = __webpack_require__(135);
 
 var eventTypes = {
   change: {
@@ -27743,7 +38204,7 @@ var ChangeEventPlugin = {
 module.exports = ChangeEventPlugin;
 
 /***/ }),
-/* 243 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27761,10 +38222,10 @@ module.exports = ChangeEventPlugin;
 
 var _prodInvariant = __webpack_require__(3);
 
-var DOMLazyTree = __webpack_require__(30);
+var DOMLazyTree = __webpack_require__(31);
 var ExecutionEnvironment = __webpack_require__(7);
 
-var createNodesFromMarkup = __webpack_require__(208);
+var createNodesFromMarkup = __webpack_require__(215);
 var emptyFunction = __webpack_require__(13);
 var invariant = __webpack_require__(1);
 
@@ -27797,7 +38258,7 @@ module.exports = Danger;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 244 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27828,7 +38289,7 @@ var DefaultEventPluginOrder = ['ResponderEventPlugin', 'SimpleEventPlugin', 'Tap
 module.exports = DefaultEventPluginOrder;
 
 /***/ }),
-/* 245 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27844,9 +38305,9 @@ module.exports = DefaultEventPluginOrder;
 
 
 
-var EventPropagators = __webpack_require__(36);
-var ReactDOMComponentTree = __webpack_require__(5);
-var SyntheticMouseEvent = __webpack_require__(46);
+var EventPropagators = __webpack_require__(37);
+var ReactDOMComponentTree = __webpack_require__(6);
+var SyntheticMouseEvent = __webpack_require__(47);
 
 var eventTypes = {
   mouseEnter: {
@@ -27933,7 +38394,7 @@ var EnterLeaveEventPlugin = {
 module.exports = EnterLeaveEventPlugin;
 
 /***/ }),
-/* 246 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27951,9 +38412,9 @@ module.exports = EnterLeaveEventPlugin;
 
 var _assign = __webpack_require__(4);
 
-var PooledClass = __webpack_require__(23);
+var PooledClass = __webpack_require__(24);
 
-var getTextContentAccessor = __webpack_require__(127);
+var getTextContentAccessor = __webpack_require__(133);
 
 /**
  * This helper class stores information about text content of a target node,
@@ -28033,7 +38494,7 @@ PooledClass.addPoolingTo(FallbackCompositionState);
 module.exports = FallbackCompositionState;
 
 /***/ }),
-/* 247 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28049,7 +38510,7 @@ module.exports = FallbackCompositionState;
 
 
 
-var DOMProperty = __webpack_require__(20);
+var DOMProperty = __webpack_require__(21);
 
 var MUST_USE_PROPERTY = DOMProperty.injection.MUST_USE_PROPERTY;
 var HAS_BOOLEAN_VALUE = DOMProperty.injection.HAS_BOOLEAN_VALUE;
@@ -28274,7 +38735,7 @@ var HTMLDOMPropertyConfig = {
 module.exports = HTMLDOMPropertyConfig;
 
 /***/ }),
-/* 248 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28290,12 +38751,12 @@ module.exports = HTMLDOMPropertyConfig;
 
 
 
-var ReactReconciler = __webpack_require__(31);
+var ReactReconciler = __webpack_require__(32);
 
-var instantiateReactComponent = __webpack_require__(128);
-var KeyEscapeUtils = __webpack_require__(68);
-var shouldUpdateReactComponent = __webpack_require__(78);
-var traverseAllChildren = __webpack_require__(131);
+var instantiateReactComponent = __webpack_require__(134);
+var KeyEscapeUtils = __webpack_require__(69);
+var shouldUpdateReactComponent = __webpack_require__(79);
+var traverseAllChildren = __webpack_require__(137);
 var warning = __webpack_require__(2);
 
 var ReactComponentTreeHook;
@@ -28434,7 +38895,7 @@ module.exports = ReactChildReconciler;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 249 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28450,8 +38911,8 @@ module.exports = ReactChildReconciler;
 
 
 
-var DOMChildrenOperations = __webpack_require__(65);
-var ReactDOMIDOperations = __webpack_require__(256);
+var DOMChildrenOperations = __webpack_require__(66);
+var ReactDOMIDOperations = __webpack_require__(269);
 
 /**
  * Abstracts away all functionality of the reconciler that requires knowledge of
@@ -28469,7 +38930,7 @@ var ReactComponentBrowserEnvironment = {
 module.exports = ReactComponentBrowserEnvironment;
 
 /***/ }),
-/* 250 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28488,23 +38949,23 @@ module.exports = ReactComponentBrowserEnvironment;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var React = __webpack_require__(34);
-var ReactComponentEnvironment = __webpack_require__(70);
+var React = __webpack_require__(35);
+var ReactComponentEnvironment = __webpack_require__(71);
 var ReactCurrentOwner = __webpack_require__(16);
-var ReactErrorUtils = __webpack_require__(71);
-var ReactInstanceMap = __webpack_require__(37);
+var ReactErrorUtils = __webpack_require__(72);
+var ReactInstanceMap = __webpack_require__(38);
 var ReactInstrumentation = __webpack_require__(14);
-var ReactNodeTypes = __webpack_require__(121);
-var ReactReconciler = __webpack_require__(31);
+var ReactNodeTypes = __webpack_require__(127);
+var ReactReconciler = __webpack_require__(32);
 
 if (process.env.NODE_ENV !== 'production') {
-  var checkReactTypeSpec = __webpack_require__(298);
+  var checkReactTypeSpec = __webpack_require__(311);
 }
 
-var emptyObject = __webpack_require__(28);
+var emptyObject = __webpack_require__(29);
 var invariant = __webpack_require__(1);
-var shallowEqual = __webpack_require__(57);
-var shouldUpdateReactComponent = __webpack_require__(78);
+var shallowEqual = __webpack_require__(58);
+var shouldUpdateReactComponent = __webpack_require__(79);
 var warning = __webpack_require__(2);
 
 var CompositeTypes = {
@@ -29377,7 +39838,7 @@ module.exports = ReactCompositeComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 251 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29395,16 +39856,16 @@ module.exports = ReactCompositeComponent;
 
 
 
-var ReactDOMComponentTree = __webpack_require__(5);
-var ReactDefaultInjection = __webpack_require__(268);
-var ReactMount = __webpack_require__(120);
-var ReactReconciler = __webpack_require__(31);
+var ReactDOMComponentTree = __webpack_require__(6);
+var ReactDefaultInjection = __webpack_require__(281);
+var ReactMount = __webpack_require__(126);
+var ReactReconciler = __webpack_require__(32);
 var ReactUpdates = __webpack_require__(15);
-var ReactVersion = __webpack_require__(283);
+var ReactVersion = __webpack_require__(296);
 
-var findDOMNode = __webpack_require__(300);
-var getHostComponentFromComposite = __webpack_require__(126);
-var renderSubtreeIntoContainer = __webpack_require__(307);
+var findDOMNode = __webpack_require__(313);
+var getHostComponentFromComposite = __webpack_require__(132);
+var renderSubtreeIntoContainer = __webpack_require__(320);
 var warning = __webpack_require__(2);
 
 ReactDefaultInjection.inject();
@@ -29481,9 +39942,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 if (process.env.NODE_ENV !== 'production') {
   var ReactInstrumentation = __webpack_require__(14);
-  var ReactDOMUnknownPropertyHook = __webpack_require__(265);
-  var ReactDOMNullInputValuePropHook = __webpack_require__(259);
-  var ReactDOMInvalidARIAHook = __webpack_require__(258);
+  var ReactDOMUnknownPropertyHook = __webpack_require__(278);
+  var ReactDOMNullInputValuePropHook = __webpack_require__(272);
+  var ReactDOMInvalidARIAHook = __webpack_require__(271);
 
   ReactInstrumentation.debugTool.addHook(ReactDOMUnknownPropertyHook);
   ReactInstrumentation.debugTool.addHook(ReactDOMNullInputValuePropHook);
@@ -29494,7 +39955,7 @@ module.exports = ReactDOM;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 252 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29515,31 +39976,31 @@ module.exports = ReactDOM;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var AutoFocusUtils = __webpack_require__(239);
-var CSSPropertyOperations = __webpack_require__(241);
-var DOMLazyTree = __webpack_require__(30);
-var DOMNamespaces = __webpack_require__(66);
-var DOMProperty = __webpack_require__(20);
-var DOMPropertyOperations = __webpack_require__(113);
-var EventPluginHub = __webpack_require__(35);
-var EventPluginRegistry = __webpack_require__(44);
-var ReactBrowserEventEmitter = __webpack_require__(45);
-var ReactDOMComponentFlags = __webpack_require__(114);
-var ReactDOMComponentTree = __webpack_require__(5);
-var ReactDOMInput = __webpack_require__(257);
-var ReactDOMOption = __webpack_require__(260);
-var ReactDOMSelect = __webpack_require__(115);
-var ReactDOMTextarea = __webpack_require__(263);
+var AutoFocusUtils = __webpack_require__(252);
+var CSSPropertyOperations = __webpack_require__(254);
+var DOMLazyTree = __webpack_require__(31);
+var DOMNamespaces = __webpack_require__(67);
+var DOMProperty = __webpack_require__(21);
+var DOMPropertyOperations = __webpack_require__(119);
+var EventPluginHub = __webpack_require__(36);
+var EventPluginRegistry = __webpack_require__(45);
+var ReactBrowserEventEmitter = __webpack_require__(46);
+var ReactDOMComponentFlags = __webpack_require__(120);
+var ReactDOMComponentTree = __webpack_require__(6);
+var ReactDOMInput = __webpack_require__(270);
+var ReactDOMOption = __webpack_require__(273);
+var ReactDOMSelect = __webpack_require__(121);
+var ReactDOMTextarea = __webpack_require__(276);
 var ReactInstrumentation = __webpack_require__(14);
-var ReactMultiChild = __webpack_require__(276);
-var ReactServerRenderingTransaction = __webpack_require__(281);
+var ReactMultiChild = __webpack_require__(289);
+var ReactServerRenderingTransaction = __webpack_require__(294);
 
 var emptyFunction = __webpack_require__(13);
-var escapeTextContentForBrowser = __webpack_require__(48);
+var escapeTextContentForBrowser = __webpack_require__(49);
 var invariant = __webpack_require__(1);
-var isEventSupported = __webpack_require__(77);
-var shallowEqual = __webpack_require__(57);
-var validateDOMNesting = __webpack_require__(79);
+var isEventSupported = __webpack_require__(78);
+var shallowEqual = __webpack_require__(58);
+var validateDOMNesting = __webpack_require__(80);
 var warning = __webpack_require__(2);
 
 var Flags = ReactDOMComponentFlags;
@@ -30501,7 +40962,7 @@ module.exports = ReactDOMComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 253 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30517,7 +40978,7 @@ module.exports = ReactDOMComponent;
 
 
 
-var validateDOMNesting = __webpack_require__(79);
+var validateDOMNesting = __webpack_require__(80);
 
 var DOC_NODE_TYPE = 9;
 
@@ -30540,7 +41001,7 @@ module.exports = ReactDOMContainerInfo;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 254 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30558,8 +41019,8 @@ module.exports = ReactDOMContainerInfo;
 
 var _assign = __webpack_require__(4);
 
-var DOMLazyTree = __webpack_require__(30);
-var ReactDOMComponentTree = __webpack_require__(5);
+var DOMLazyTree = __webpack_require__(31);
+var ReactDOMComponentTree = __webpack_require__(6);
 
 var ReactDOMEmptyComponent = function (instantiate) {
   // ReactCompositeComponent uses this:
@@ -30605,7 +41066,7 @@ _assign(ReactDOMEmptyComponent.prototype, {
 module.exports = ReactDOMEmptyComponent;
 
 /***/ }),
-/* 255 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30629,7 +41090,7 @@ var ReactDOMFeatureFlags = {
 module.exports = ReactDOMFeatureFlags;
 
 /***/ }),
-/* 256 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30645,8 +41106,8 @@ module.exports = ReactDOMFeatureFlags;
 
 
 
-var DOMChildrenOperations = __webpack_require__(65);
-var ReactDOMComponentTree = __webpack_require__(5);
+var DOMChildrenOperations = __webpack_require__(66);
+var ReactDOMComponentTree = __webpack_require__(6);
 
 /**
  * Operations used to process updates to DOM nodes.
@@ -30668,7 +41129,7 @@ var ReactDOMIDOperations = {
 module.exports = ReactDOMIDOperations;
 
 /***/ }),
-/* 257 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30687,9 +41148,9 @@ module.exports = ReactDOMIDOperations;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var DOMPropertyOperations = __webpack_require__(113);
-var LinkedValueUtils = __webpack_require__(69);
-var ReactDOMComponentTree = __webpack_require__(5);
+var DOMPropertyOperations = __webpack_require__(119);
+var LinkedValueUtils = __webpack_require__(70);
+var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(15);
 
 var invariant = __webpack_require__(1);
@@ -30959,7 +41420,7 @@ module.exports = ReactDOMInput;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 258 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30975,7 +41436,7 @@ module.exports = ReactDOMInput;
 
 
 
-var DOMProperty = __webpack_require__(20);
+var DOMProperty = __webpack_require__(21);
 var ReactComponentTreeHook = __webpack_require__(12);
 
 var warning = __webpack_require__(2);
@@ -31058,7 +41519,7 @@ module.exports = ReactDOMInvalidARIAHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 259 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31107,7 +41568,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 260 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31125,9 +41586,9 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 var _assign = __webpack_require__(4);
 
-var React = __webpack_require__(34);
-var ReactDOMComponentTree = __webpack_require__(5);
-var ReactDOMSelect = __webpack_require__(115);
+var React = __webpack_require__(35);
+var ReactDOMComponentTree = __webpack_require__(6);
+var ReactDOMSelect = __webpack_require__(121);
 
 var warning = __webpack_require__(2);
 var didWarnInvalidOptionChildren = false;
@@ -31236,7 +41697,7 @@ module.exports = ReactDOMOption;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 261 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31254,8 +41715,8 @@ module.exports = ReactDOMOption;
 
 var ExecutionEnvironment = __webpack_require__(7);
 
-var getNodeForCharacterOffset = __webpack_require__(304);
-var getTextContentAccessor = __webpack_require__(127);
+var getNodeForCharacterOffset = __webpack_require__(317);
+var getTextContentAccessor = __webpack_require__(133);
 
 /**
  * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -31453,7 +41914,7 @@ var ReactDOMSelection = {
 module.exports = ReactDOMSelection;
 
 /***/ }),
-/* 262 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31472,13 +41933,13 @@ module.exports = ReactDOMSelection;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var DOMChildrenOperations = __webpack_require__(65);
-var DOMLazyTree = __webpack_require__(30);
-var ReactDOMComponentTree = __webpack_require__(5);
+var DOMChildrenOperations = __webpack_require__(66);
+var DOMLazyTree = __webpack_require__(31);
+var ReactDOMComponentTree = __webpack_require__(6);
 
-var escapeTextContentForBrowser = __webpack_require__(48);
+var escapeTextContentForBrowser = __webpack_require__(49);
 var invariant = __webpack_require__(1);
-var validateDOMNesting = __webpack_require__(79);
+var validateDOMNesting = __webpack_require__(80);
 
 /**
  * Text nodes violate a couple assumptions that React makes about components:
@@ -31623,7 +42084,7 @@ module.exports = ReactDOMTextComponent;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 263 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31642,8 +42103,8 @@ module.exports = ReactDOMTextComponent;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(4);
 
-var LinkedValueUtils = __webpack_require__(69);
-var ReactDOMComponentTree = __webpack_require__(5);
+var LinkedValueUtils = __webpack_require__(70);
+var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(15);
 
 var invariant = __webpack_require__(1);
@@ -31789,7 +42250,7 @@ module.exports = ReactDOMTextarea;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 264 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31931,7 +42392,7 @@ module.exports = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 265 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31947,8 +42408,8 @@ module.exports = {
 
 
 
-var DOMProperty = __webpack_require__(20);
-var EventPluginRegistry = __webpack_require__(44);
+var DOMProperty = __webpack_require__(21);
+var EventPluginRegistry = __webpack_require__(45);
 var ReactComponentTreeHook = __webpack_require__(12);
 
 var warning = __webpack_require__(2);
@@ -32049,7 +42510,7 @@ module.exports = ReactDOMUnknownPropertyHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 266 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32066,12 +42527,12 @@ module.exports = ReactDOMUnknownPropertyHook;
 
 
 
-var ReactInvalidSetStateWarningHook = __webpack_require__(274);
-var ReactHostOperationHistoryHook = __webpack_require__(272);
+var ReactInvalidSetStateWarningHook = __webpack_require__(287);
+var ReactHostOperationHistoryHook = __webpack_require__(285);
 var ReactComponentTreeHook = __webpack_require__(12);
 var ExecutionEnvironment = __webpack_require__(7);
 
-var performanceNow = __webpack_require__(217);
+var performanceNow = __webpack_require__(224);
 var warning = __webpack_require__(2);
 
 var hooks = [];
@@ -32414,7 +42875,7 @@ module.exports = ReactDebugTool;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 267 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32433,7 +42894,7 @@ module.exports = ReactDebugTool;
 var _assign = __webpack_require__(4);
 
 var ReactUpdates = __webpack_require__(15);
-var Transaction = __webpack_require__(47);
+var Transaction = __webpack_require__(48);
 
 var emptyFunction = __webpack_require__(13);
 
@@ -32487,7 +42948,7 @@ var ReactDefaultBatchingStrategy = {
 module.exports = ReactDefaultBatchingStrategy;
 
 /***/ }),
-/* 268 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32503,25 +42964,25 @@ module.exports = ReactDefaultBatchingStrategy;
 
 
 
-var ARIADOMPropertyConfig = __webpack_require__(238);
-var BeforeInputEventPlugin = __webpack_require__(240);
-var ChangeEventPlugin = __webpack_require__(242);
-var DefaultEventPluginOrder = __webpack_require__(244);
-var EnterLeaveEventPlugin = __webpack_require__(245);
-var HTMLDOMPropertyConfig = __webpack_require__(247);
-var ReactComponentBrowserEnvironment = __webpack_require__(249);
-var ReactDOMComponent = __webpack_require__(252);
-var ReactDOMComponentTree = __webpack_require__(5);
-var ReactDOMEmptyComponent = __webpack_require__(254);
-var ReactDOMTreeTraversal = __webpack_require__(264);
-var ReactDOMTextComponent = __webpack_require__(262);
-var ReactDefaultBatchingStrategy = __webpack_require__(267);
-var ReactEventListener = __webpack_require__(271);
-var ReactInjection = __webpack_require__(273);
-var ReactReconcileTransaction = __webpack_require__(279);
-var SVGDOMPropertyConfig = __webpack_require__(284);
-var SelectEventPlugin = __webpack_require__(285);
-var SimpleEventPlugin = __webpack_require__(286);
+var ARIADOMPropertyConfig = __webpack_require__(251);
+var BeforeInputEventPlugin = __webpack_require__(253);
+var ChangeEventPlugin = __webpack_require__(255);
+var DefaultEventPluginOrder = __webpack_require__(257);
+var EnterLeaveEventPlugin = __webpack_require__(258);
+var HTMLDOMPropertyConfig = __webpack_require__(260);
+var ReactComponentBrowserEnvironment = __webpack_require__(262);
+var ReactDOMComponent = __webpack_require__(265);
+var ReactDOMComponentTree = __webpack_require__(6);
+var ReactDOMEmptyComponent = __webpack_require__(267);
+var ReactDOMTreeTraversal = __webpack_require__(277);
+var ReactDOMTextComponent = __webpack_require__(275);
+var ReactDefaultBatchingStrategy = __webpack_require__(280);
+var ReactEventListener = __webpack_require__(284);
+var ReactInjection = __webpack_require__(286);
+var ReactReconcileTransaction = __webpack_require__(292);
+var SVGDOMPropertyConfig = __webpack_require__(297);
+var SelectEventPlugin = __webpack_require__(298);
+var SimpleEventPlugin = __webpack_require__(299);
 
 var alreadyInjected = false;
 
@@ -32578,7 +43039,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 269 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32603,7 +43064,7 @@ var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol
 module.exports = REACT_ELEMENT_TYPE;
 
 /***/ }),
-/* 270 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32619,7 +43080,7 @@ module.exports = REACT_ELEMENT_TYPE;
 
 
 
-var EventPluginHub = __webpack_require__(35);
+var EventPluginHub = __webpack_require__(36);
 
 function runEventQueueInBatch(events) {
   EventPluginHub.enqueueEvents(events);
@@ -32641,7 +43102,7 @@ var ReactEventEmitterMixin = {
 module.exports = ReactEventEmitterMixin;
 
 /***/ }),
-/* 271 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32659,14 +43120,14 @@ module.exports = ReactEventEmitterMixin;
 
 var _assign = __webpack_require__(4);
 
-var EventListener = __webpack_require__(97);
+var EventListener = __webpack_require__(100);
 var ExecutionEnvironment = __webpack_require__(7);
-var PooledClass = __webpack_require__(23);
-var ReactDOMComponentTree = __webpack_require__(5);
+var PooledClass = __webpack_require__(24);
+var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(15);
 
-var getEventTarget = __webpack_require__(76);
-var getUnboundedScrollPosition = __webpack_require__(210);
+var getEventTarget = __webpack_require__(77);
+var getUnboundedScrollPosition = __webpack_require__(217);
 
 /**
  * Find the deepest React component completely containing the root of the
@@ -32801,7 +43262,7 @@ var ReactEventListener = {
 module.exports = ReactEventListener;
 
 /***/ }),
-/* 272 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32840,7 +43301,7 @@ var ReactHostOperationHistoryHook = {
 module.exports = ReactHostOperationHistoryHook;
 
 /***/ }),
-/* 273 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32856,13 +43317,13 @@ module.exports = ReactHostOperationHistoryHook;
 
 
 
-var DOMProperty = __webpack_require__(20);
-var EventPluginHub = __webpack_require__(35);
-var EventPluginUtils = __webpack_require__(67);
-var ReactComponentEnvironment = __webpack_require__(70);
-var ReactEmptyComponent = __webpack_require__(116);
-var ReactBrowserEventEmitter = __webpack_require__(45);
-var ReactHostComponent = __webpack_require__(118);
+var DOMProperty = __webpack_require__(21);
+var EventPluginHub = __webpack_require__(36);
+var EventPluginUtils = __webpack_require__(68);
+var ReactComponentEnvironment = __webpack_require__(71);
+var ReactEmptyComponent = __webpack_require__(122);
+var ReactBrowserEventEmitter = __webpack_require__(46);
+var ReactHostComponent = __webpack_require__(124);
 var ReactUpdates = __webpack_require__(15);
 
 var ReactInjection = {
@@ -32879,7 +43340,7 @@ var ReactInjection = {
 module.exports = ReactInjection;
 
 /***/ }),
-/* 274 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32922,7 +43383,7 @@ module.exports = ReactInvalidSetStateWarningHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 275 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32938,7 +43399,7 @@ module.exports = ReactInvalidSetStateWarningHook;
 
 
 
-var adler32 = __webpack_require__(297);
+var adler32 = __webpack_require__(310);
 
 var TAG_END = /\/?>/;
 var COMMENT_START = /^<\!\-\-/;
@@ -32977,7 +43438,7 @@ var ReactMarkupChecksum = {
 module.exports = ReactMarkupChecksum;
 
 /***/ }),
-/* 276 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32995,16 +43456,16 @@ module.exports = ReactMarkupChecksum;
 
 var _prodInvariant = __webpack_require__(3);
 
-var ReactComponentEnvironment = __webpack_require__(70);
-var ReactInstanceMap = __webpack_require__(37);
+var ReactComponentEnvironment = __webpack_require__(71);
+var ReactInstanceMap = __webpack_require__(38);
 var ReactInstrumentation = __webpack_require__(14);
 
 var ReactCurrentOwner = __webpack_require__(16);
-var ReactReconciler = __webpack_require__(31);
-var ReactChildReconciler = __webpack_require__(248);
+var ReactReconciler = __webpack_require__(32);
+var ReactChildReconciler = __webpack_require__(261);
 
 var emptyFunction = __webpack_require__(13);
-var flattenChildren = __webpack_require__(301);
+var flattenChildren = __webpack_require__(314);
 var invariant = __webpack_require__(1);
 
 /**
@@ -33433,7 +43894,7 @@ module.exports = ReactMultiChild;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 277 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33533,7 +43994,7 @@ module.exports = ReactOwner;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 278 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33564,7 +44025,7 @@ module.exports = ReactPropTypeLocationNames;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 279 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33582,13 +44043,13 @@ module.exports = ReactPropTypeLocationNames;
 
 var _assign = __webpack_require__(4);
 
-var CallbackQueue = __webpack_require__(112);
-var PooledClass = __webpack_require__(23);
-var ReactBrowserEventEmitter = __webpack_require__(45);
-var ReactInputSelection = __webpack_require__(119);
+var CallbackQueue = __webpack_require__(118);
+var PooledClass = __webpack_require__(24);
+var ReactBrowserEventEmitter = __webpack_require__(46);
+var ReactInputSelection = __webpack_require__(125);
 var ReactInstrumentation = __webpack_require__(14);
-var Transaction = __webpack_require__(47);
-var ReactUpdateQueue = __webpack_require__(72);
+var Transaction = __webpack_require__(48);
+var ReactUpdateQueue = __webpack_require__(73);
 
 /**
  * Ensures that, when possible, the selection range (currently selected text
@@ -33748,7 +44209,7 @@ module.exports = ReactReconcileTransaction;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 280 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33765,7 +44226,7 @@ module.exports = ReactReconcileTransaction;
 
 
 
-var ReactOwner = __webpack_require__(277);
+var ReactOwner = __webpack_require__(290);
 
 var ReactRef = {};
 
@@ -33842,7 +44303,7 @@ ReactRef.detachRefs = function (instance, element) {
 module.exports = ReactRef;
 
 /***/ }),
-/* 281 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33860,10 +44321,10 @@ module.exports = ReactRef;
 
 var _assign = __webpack_require__(4);
 
-var PooledClass = __webpack_require__(23);
-var Transaction = __webpack_require__(47);
+var PooledClass = __webpack_require__(24);
+var Transaction = __webpack_require__(48);
 var ReactInstrumentation = __webpack_require__(14);
-var ReactServerUpdateQueue = __webpack_require__(282);
+var ReactServerUpdateQueue = __webpack_require__(295);
 
 /**
  * Executed within the scope of the `Transaction` instance. Consider these as
@@ -33938,7 +44399,7 @@ module.exports = ReactServerRenderingTransaction;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 282 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33957,7 +44418,7 @@ module.exports = ReactServerRenderingTransaction;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ReactUpdateQueue = __webpack_require__(72);
+var ReactUpdateQueue = __webpack_require__(73);
 
 var warning = __webpack_require__(2);
 
@@ -34083,7 +44544,7 @@ module.exports = ReactServerUpdateQueue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 283 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34102,7 +44563,7 @@ module.exports = ReactServerUpdateQueue;
 module.exports = '15.5.4';
 
 /***/ }),
-/* 284 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34409,7 +44870,7 @@ Object.keys(ATTRS).forEach(function (key) {
 module.exports = SVGDOMPropertyConfig;
 
 /***/ }),
-/* 285 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34425,15 +44886,15 @@ module.exports = SVGDOMPropertyConfig;
 
 
 
-var EventPropagators = __webpack_require__(36);
+var EventPropagators = __webpack_require__(37);
 var ExecutionEnvironment = __webpack_require__(7);
-var ReactDOMComponentTree = __webpack_require__(5);
-var ReactInputSelection = __webpack_require__(119);
-var SyntheticEvent = __webpack_require__(18);
+var ReactDOMComponentTree = __webpack_require__(6);
+var ReactInputSelection = __webpack_require__(125);
+var SyntheticEvent = __webpack_require__(19);
 
-var getActiveElement = __webpack_require__(99);
-var isTextInputElement = __webpack_require__(129);
-var shallowEqual = __webpack_require__(57);
+var getActiveElement = __webpack_require__(102);
+var isTextInputElement = __webpack_require__(135);
+var shallowEqual = __webpack_require__(58);
 
 var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
 
@@ -34605,7 +45066,7 @@ var SelectEventPlugin = {
 module.exports = SelectEventPlugin;
 
 /***/ }),
-/* 286 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34624,23 +45085,23 @@ module.exports = SelectEventPlugin;
 
 var _prodInvariant = __webpack_require__(3);
 
-var EventListener = __webpack_require__(97);
-var EventPropagators = __webpack_require__(36);
-var ReactDOMComponentTree = __webpack_require__(5);
-var SyntheticAnimationEvent = __webpack_require__(287);
-var SyntheticClipboardEvent = __webpack_require__(288);
-var SyntheticEvent = __webpack_require__(18);
-var SyntheticFocusEvent = __webpack_require__(291);
-var SyntheticKeyboardEvent = __webpack_require__(293);
-var SyntheticMouseEvent = __webpack_require__(46);
-var SyntheticDragEvent = __webpack_require__(290);
-var SyntheticTouchEvent = __webpack_require__(294);
-var SyntheticTransitionEvent = __webpack_require__(295);
-var SyntheticUIEvent = __webpack_require__(38);
-var SyntheticWheelEvent = __webpack_require__(296);
+var EventListener = __webpack_require__(100);
+var EventPropagators = __webpack_require__(37);
+var ReactDOMComponentTree = __webpack_require__(6);
+var SyntheticAnimationEvent = __webpack_require__(300);
+var SyntheticClipboardEvent = __webpack_require__(301);
+var SyntheticEvent = __webpack_require__(19);
+var SyntheticFocusEvent = __webpack_require__(304);
+var SyntheticKeyboardEvent = __webpack_require__(306);
+var SyntheticMouseEvent = __webpack_require__(47);
+var SyntheticDragEvent = __webpack_require__(303);
+var SyntheticTouchEvent = __webpack_require__(307);
+var SyntheticTransitionEvent = __webpack_require__(308);
+var SyntheticUIEvent = __webpack_require__(39);
+var SyntheticWheelEvent = __webpack_require__(309);
 
 var emptyFunction = __webpack_require__(13);
-var getEventCharCode = __webpack_require__(74);
+var getEventCharCode = __webpack_require__(75);
 var invariant = __webpack_require__(1);
 
 /**
@@ -34839,7 +45300,7 @@ module.exports = SimpleEventPlugin;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 287 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34855,7 +45316,7 @@ module.exports = SimpleEventPlugin;
 
 
 
-var SyntheticEvent = __webpack_require__(18);
+var SyntheticEvent = __webpack_require__(19);
 
 /**
  * @interface Event
@@ -34883,7 +45344,7 @@ SyntheticEvent.augmentClass(SyntheticAnimationEvent, AnimationEventInterface);
 module.exports = SyntheticAnimationEvent;
 
 /***/ }),
-/* 288 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34899,7 +45360,7 @@ module.exports = SyntheticAnimationEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(18);
+var SyntheticEvent = __webpack_require__(19);
 
 /**
  * @interface Event
@@ -34926,7 +45387,7 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 module.exports = SyntheticClipboardEvent;
 
 /***/ }),
-/* 289 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34942,7 +45403,7 @@ module.exports = SyntheticClipboardEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(18);
+var SyntheticEvent = __webpack_require__(19);
 
 /**
  * @interface Event
@@ -34967,7 +45428,7 @@ SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface
 module.exports = SyntheticCompositionEvent;
 
 /***/ }),
-/* 290 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34983,7 +45444,7 @@ module.exports = SyntheticCompositionEvent;
 
 
 
-var SyntheticMouseEvent = __webpack_require__(46);
+var SyntheticMouseEvent = __webpack_require__(47);
 
 /**
  * @interface DragEvent
@@ -35008,7 +45469,7 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 module.exports = SyntheticDragEvent;
 
 /***/ }),
-/* 291 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35024,7 +45485,7 @@ module.exports = SyntheticDragEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(38);
+var SyntheticUIEvent = __webpack_require__(39);
 
 /**
  * @interface FocusEvent
@@ -35049,7 +45510,7 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 module.exports = SyntheticFocusEvent;
 
 /***/ }),
-/* 292 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35065,7 +45526,7 @@ module.exports = SyntheticFocusEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(18);
+var SyntheticEvent = __webpack_require__(19);
 
 /**
  * @interface Event
@@ -35091,7 +45552,7 @@ SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 module.exports = SyntheticInputEvent;
 
 /***/ }),
-/* 293 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35107,11 +45568,11 @@ module.exports = SyntheticInputEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(38);
+var SyntheticUIEvent = __webpack_require__(39);
 
-var getEventCharCode = __webpack_require__(74);
-var getEventKey = __webpack_require__(302);
-var getEventModifierState = __webpack_require__(75);
+var getEventCharCode = __webpack_require__(75);
+var getEventKey = __webpack_require__(315);
+var getEventModifierState = __webpack_require__(76);
 
 /**
  * @interface KeyboardEvent
@@ -35180,7 +45641,7 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 module.exports = SyntheticKeyboardEvent;
 
 /***/ }),
-/* 294 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35196,9 +45657,9 @@ module.exports = SyntheticKeyboardEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(38);
+var SyntheticUIEvent = __webpack_require__(39);
 
-var getEventModifierState = __webpack_require__(75);
+var getEventModifierState = __webpack_require__(76);
 
 /**
  * @interface TouchEvent
@@ -35230,7 +45691,7 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 module.exports = SyntheticTouchEvent;
 
 /***/ }),
-/* 295 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35246,7 +45707,7 @@ module.exports = SyntheticTouchEvent;
 
 
 
-var SyntheticEvent = __webpack_require__(18);
+var SyntheticEvent = __webpack_require__(19);
 
 /**
  * @interface Event
@@ -35274,7 +45735,7 @@ SyntheticEvent.augmentClass(SyntheticTransitionEvent, TransitionEventInterface);
 module.exports = SyntheticTransitionEvent;
 
 /***/ }),
-/* 296 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35290,7 +45751,7 @@ module.exports = SyntheticTransitionEvent;
 
 
 
-var SyntheticMouseEvent = __webpack_require__(46);
+var SyntheticMouseEvent = __webpack_require__(47);
 
 /**
  * @interface WheelEvent
@@ -35333,7 +45794,7 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 module.exports = SyntheticWheelEvent;
 
 /***/ }),
-/* 297 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35382,7 +45843,7 @@ function adler32(data) {
 module.exports = adler32;
 
 /***/ }),
-/* 298 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35400,8 +45861,8 @@ module.exports = adler32;
 
 var _prodInvariant = __webpack_require__(3);
 
-var ReactPropTypeLocationNames = __webpack_require__(278);
-var ReactPropTypesSecret = __webpack_require__(122);
+var ReactPropTypeLocationNames = __webpack_require__(291);
+var ReactPropTypesSecret = __webpack_require__(128);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -35475,7 +45936,7 @@ module.exports = checkReactTypeSpec;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 299 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35491,7 +45952,7 @@ module.exports = checkReactTypeSpec;
 
 
 
-var CSSProperty = __webpack_require__(111);
+var CSSProperty = __webpack_require__(117);
 var warning = __webpack_require__(2);
 
 var isUnitlessNumber = CSSProperty.isUnitlessNumber;
@@ -35560,7 +46021,7 @@ module.exports = dangerousStyleValue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 300 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35579,10 +46040,10 @@ module.exports = dangerousStyleValue;
 var _prodInvariant = __webpack_require__(3);
 
 var ReactCurrentOwner = __webpack_require__(16);
-var ReactDOMComponentTree = __webpack_require__(5);
-var ReactInstanceMap = __webpack_require__(37);
+var ReactDOMComponentTree = __webpack_require__(6);
+var ReactInstanceMap = __webpack_require__(38);
 
-var getHostComponentFromComposite = __webpack_require__(126);
+var getHostComponentFromComposite = __webpack_require__(132);
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 
@@ -35626,7 +46087,7 @@ module.exports = findDOMNode;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 301 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35643,8 +46104,8 @@ module.exports = findDOMNode;
 
 
 
-var KeyEscapeUtils = __webpack_require__(68);
-var traverseAllChildren = __webpack_require__(131);
+var KeyEscapeUtils = __webpack_require__(69);
+var traverseAllChildren = __webpack_require__(137);
 var warning = __webpack_require__(2);
 
 var ReactComponentTreeHook;
@@ -35708,7 +46169,7 @@ module.exports = flattenChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 302 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35724,7 +46185,7 @@ module.exports = flattenChildren;
 
 
 
-var getEventCharCode = __webpack_require__(74);
+var getEventCharCode = __webpack_require__(75);
 
 /**
  * Normalization of deprecated HTML5 `key` values
@@ -35815,7 +46276,7 @@ function getEventKey(nativeEvent) {
 module.exports = getEventKey;
 
 /***/ }),
-/* 303 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35861,7 +46322,7 @@ function getIteratorFn(maybeIterable) {
 module.exports = getIteratorFn;
 
 /***/ }),
-/* 304 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35940,7 +46401,7 @@ function getNodeForCharacterOffset(root, offset) {
 module.exports = getNodeForCharacterOffset;
 
 /***/ }),
-/* 305 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36046,7 +46507,7 @@ function getVendorPrefixedEventName(eventName) {
 module.exports = getVendorPrefixedEventName;
 
 /***/ }),
-/* 306 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36062,7 +46523,7 @@ module.exports = getVendorPrefixedEventName;
 
 
 
-var escapeTextContentForBrowser = __webpack_require__(48);
+var escapeTextContentForBrowser = __webpack_require__(49);
 
 /**
  * Escapes attribute value to prevent scripting attacks.
@@ -36077,7 +46538,7 @@ function quoteAttributeValueForBrowser(value) {
 module.exports = quoteAttributeValueForBrowser;
 
 /***/ }),
-/* 307 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36093,22 +46554,22 @@ module.exports = quoteAttributeValueForBrowser;
 
 
 
-var ReactMount = __webpack_require__(120);
+var ReactMount = __webpack_require__(126);
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ }),
-/* 308 */
+/* 321 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Provider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_PropTypes__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_warning__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_PropTypes__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_warning__ = __webpack_require__(81);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -36180,17 +46641,17 @@ Provider.displayName = 'Provider';
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 309 */
+/* 322 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export createConnect */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_connectAdvanced__ = __webpack_require__(132);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_shallowEqual__ = __webpack_require__(316);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mapDispatchToProps__ = __webpack_require__(310);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mapStateToProps__ = __webpack_require__(311);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mergeProps__ = __webpack_require__(312);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__selectorFactory__ = __webpack_require__(313);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_connectAdvanced__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_shallowEqual__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mapDispatchToProps__ = __webpack_require__(323);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mapStateToProps__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mergeProps__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__selectorFactory__ = __webpack_require__(326);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -36296,15 +46757,15 @@ function createConnect() {
 /* harmony default export */ __webpack_exports__["a"] = (createConnect());
 
 /***/ }),
-/* 310 */
+/* 323 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export whenMapDispatchToPropsIsFunction */
 /* unused harmony export whenMapDispatchToPropsIsMissing */
 /* unused harmony export whenMapDispatchToPropsIsObject */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__ = __webpack_require__(139);
 
 
 
@@ -36327,13 +46788,13 @@ function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
 /* harmony default export */ __webpack_exports__["a"] = ([whenMapDispatchToPropsIsFunction, whenMapDispatchToPropsIsMissing, whenMapDispatchToPropsIsObject]);
 
 /***/ }),
-/* 311 */
+/* 324 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export whenMapStateToPropsIsFunction */
 /* unused harmony export whenMapStateToPropsIsMissing */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__ = __webpack_require__(139);
 
 
 function whenMapStateToPropsIsFunction(mapStateToProps) {
@@ -36349,7 +46810,7 @@ function whenMapStateToPropsIsMissing(mapStateToProps) {
 /* harmony default export */ __webpack_exports__["a"] = ([whenMapStateToPropsIsFunction, whenMapStateToPropsIsMissing]);
 
 /***/ }),
-/* 312 */
+/* 325 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36357,7 +46818,7 @@ function whenMapStateToPropsIsMissing(mapStateToProps) {
 /* unused harmony export wrapMergePropsFunc */
 /* unused harmony export whenMergePropsIsFunction */
 /* unused harmony export whenMergePropsIsOmitted */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__ = __webpack_require__(141);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -36406,14 +46867,14 @@ function whenMergePropsIsOmitted(mergeProps) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 313 */
+/* 326 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* unused harmony export impureFinalPropsSelectorFactory */
 /* unused harmony export pureFinalPropsSelectorFactory */
 /* harmony export (immutable) */ __webpack_exports__["a"] = finalPropsSelectorFactory;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__verifySubselectors__ = __webpack_require__(314);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__verifySubselectors__ = __webpack_require__(327);
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 
@@ -36519,12 +46980,12 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 314 */
+/* 327 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = verifySubselectors;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_warning__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_warning__ = __webpack_require__(81);
 
 
 function verify(selector, methodName, displayName) {
@@ -36544,7 +47005,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
 }
 
 /***/ }),
-/* 315 */
+/* 328 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36640,7 +47101,7 @@ var Subscription = function () {
 
 
 /***/ }),
-/* 316 */
+/* 329 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36677,15 +47138,15 @@ function shallowEqual(objA, objB) {
 }
 
 /***/ }),
-/* 317 */
+/* 330 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_create_react_class__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_create_react_class__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Link__ = __webpack_require__(142);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -36706,7 +47167,7 @@ var IndexLink = __WEBPACK_IMPORTED_MODULE_1_create_react_class___default()({
 /* harmony default export */ __webpack_exports__["a"] = (IndexLink);
 
 /***/ }),
-/* 318 */
+/* 331 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36714,11 +47175,11 @@ var IndexLink = __WEBPACK_IMPORTED_MODULE_1_create_react_class___default()({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_create_react_class__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routerWarning__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routerWarning__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Redirect__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__InternalPropTypes__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Redirect__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__InternalPropTypes__ = __webpack_require__(40);
 
 
 
@@ -36762,7 +47223,7 @@ var IndexRedirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default()({
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 319 */
+/* 332 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36770,11 +47231,11 @@ var IndexRedirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default()({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_create_react_class__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routerWarning__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routerWarning__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RouteUtils__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__InternalPropTypes__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RouteUtils__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__InternalPropTypes__ = __webpack_require__(40);
 
 
 
@@ -36819,7 +47280,7 @@ var IndexRoute = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default()({
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 320 */
+/* 333 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36829,8 +47290,8 @@ var IndexRoute = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default()({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RouteUtils__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__InternalPropTypes__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RouteUtils__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__InternalPropTypes__ = __webpack_require__(40);
 
 
 
@@ -36873,24 +47334,24 @@ var Route = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default()({
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 321 */
+/* 334 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_create_react_class__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__InternalPropTypes__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__RouterContext__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__RouteUtils__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__RouterUtils__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__routerWarning__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__InternalPropTypes__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__RouterContext__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__RouteUtils__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__RouterUtils__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__routerWarning__ = __webpack_require__(34);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -37044,12 +47505,12 @@ var Router = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default()({
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 322 */
+/* 335 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = getTransitionUtils;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AsyncUtils__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AsyncUtils__ = __webpack_require__(82);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 
@@ -37208,14 +47669,14 @@ function getTransitionUtils() {
 }
 
 /***/ }),
-/* 323 */
+/* 336 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(6);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RouterContext__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routerWarning__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RouterContext__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routerWarning__ = __webpack_require__(34);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -37260,23 +47721,23 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 324 */
+/* 337 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_createBrowserHistory__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_createBrowserHistory__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_createBrowserHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_history_lib_createBrowserHistory__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__createRouterHistory__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__createRouterHistory__ = __webpack_require__(147);
 
 
 /* harmony default export */ __webpack_exports__["a"] = (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__createRouterHistory__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_history_lib_createBrowserHistory___default.a));
 
 /***/ }),
-/* 325 */
+/* 338 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PatternUtils__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PatternUtils__ = __webpack_require__(33);
 
 
 function routeParamsChanged(route, prevState, nextState) {
@@ -37349,12 +47810,12 @@ function computeChangedRoutes(prevState, nextState) {
 /* harmony default export */ __webpack_exports__["a"] = (computeChangedRoutes);
 
 /***/ }),
-/* 326 */
+/* 339 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AsyncUtils__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PromiseUtils__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AsyncUtils__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PromiseUtils__ = __webpack_require__(143);
 
 
 
@@ -37391,11 +47852,11 @@ function getComponents(nextState, callback) {
 /* harmony default export */ __webpack_exports__["a"] = (getComponents);
 
 /***/ }),
-/* 327 */
+/* 340 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PatternUtils__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PatternUtils__ = __webpack_require__(33);
 
 
 /**
@@ -37419,24 +47880,24 @@ function getRouteParams(route, params) {
 /* harmony default export */ __webpack_exports__["a"] = (getRouteParams);
 
 /***/ }),
-/* 328 */
+/* 341 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_createHashHistory__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_createHashHistory__ = __webpack_require__(237);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_createHashHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_history_lib_createHashHistory__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__createRouterHistory__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__createRouterHistory__ = __webpack_require__(147);
 
 
 /* harmony default export */ __webpack_exports__["a"] = (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__createRouterHistory__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_history_lib_createHashHistory___default.a));
 
 /***/ }),
-/* 329 */
+/* 342 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = isActive;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PatternUtils__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PatternUtils__ = __webpack_require__(33);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 
@@ -37584,18 +48045,18 @@ function isActive(_ref, indexOnly, currentLocation, routes, params) {
 }
 
 /***/ }),
-/* 330 */
+/* 343 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_Actions__ = __webpack_require__(42);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_Actions__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_history_lib_Actions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_history_lib_Actions__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__createMemoryHistory__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RouteUtils__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__RouterUtils__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__createMemoryHistory__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RouteUtils__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__RouterUtils__ = __webpack_require__(145);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -37654,16 +48115,16 @@ function match(_ref, callback) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 331 */
+/* 344 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (immutable) */ __webpack_exports__["a"] = matchRoutes;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AsyncUtils__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PromiseUtils__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PatternUtils__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routerWarning__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RouteUtils__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__AsyncUtils__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PromiseUtils__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PatternUtils__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routerWarning__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RouteUtils__ = __webpack_require__(22);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -37907,21 +48368,21 @@ function matchRoutes(routes, location, callback, remainingPathname) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 332 */
+/* 345 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (immutable) */ __webpack_exports__["a"] = withRouter;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_create_react_class__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ContextUtils__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__PropTypes__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ContextUtils__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__PropTypes__ = __webpack_require__(84);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -37983,7 +48444,7 @@ function withRouter(WrappedComponent, options) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 333 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37999,11 +48460,11 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 exports.default = SpeechRecognition;
 
-var _react = __webpack_require__(6);
+var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _coreDecorators = __webpack_require__(176);
+var _coreDecorators = __webpack_require__(183);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38157,7 +48618,7 @@ function SpeechRecognition(WrappedComponent) {
 }
 
 /***/ }),
-/* 334 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38167,7 +48628,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _SpeechRecognition = __webpack_require__(333);
+var _SpeechRecognition = __webpack_require__(346);
 
 var _SpeechRecognition2 = _interopRequireDefault(_SpeechRecognition);
 
@@ -38176,7 +48637,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _SpeechRecognition2.default;
 
 /***/ }),
-/* 335 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38240,7 +48701,7 @@ var KeyEscapeUtils = {
 module.exports = KeyEscapeUtils;
 
 /***/ }),
-/* 336 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38257,7 +48718,7 @@ module.exports = KeyEscapeUtils;
 
 
 
-var _prodInvariant = __webpack_require__(25);
+var _prodInvariant = __webpack_require__(26);
 
 var invariant = __webpack_require__(1);
 
@@ -38358,7 +48819,7 @@ module.exports = PooledClass;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 337 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38374,11 +48835,11 @@ module.exports = PooledClass;
 
 
 
-var PooledClass = __webpack_require__(336);
-var ReactElement = __webpack_require__(24);
+var PooledClass = __webpack_require__(349);
+var ReactElement = __webpack_require__(25);
 
 var emptyFunction = __webpack_require__(13);
-var traverseAllChildren = __webpack_require__(347);
+var traverseAllChildren = __webpack_require__(360);
 
 var twoArgumentPooler = PooledClass.twoArgumentPooler;
 var fourArgumentPooler = PooledClass.fourArgumentPooler;
@@ -38554,7 +49015,7 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 /***/ }),
-/* 338 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38570,15 +49031,15 @@ module.exports = ReactChildren;
 
 
 
-var _prodInvariant = __webpack_require__(25),
+var _prodInvariant = __webpack_require__(26),
     _assign = __webpack_require__(4);
 
-var ReactComponent = __webpack_require__(85);
-var ReactElement = __webpack_require__(24);
-var ReactPropTypeLocationNames = __webpack_require__(146);
-var ReactNoopUpdateQueue = __webpack_require__(86);
+var ReactComponent = __webpack_require__(86);
+var ReactElement = __webpack_require__(25);
+var ReactPropTypeLocationNames = __webpack_require__(152);
+var ReactNoopUpdateQueue = __webpack_require__(87);
 
-var emptyObject = __webpack_require__(28);
+var emptyObject = __webpack_require__(29);
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 
@@ -39283,7 +49744,7 @@ module.exports = ReactClass;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 339 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39299,7 +49760,7 @@ module.exports = ReactClass;
 
 
 
-var ReactElement = __webpack_require__(24);
+var ReactElement = __webpack_require__(25);
 
 /**
  * Create a factory that creates HTML tag elements.
@@ -39308,7 +49769,7 @@ var ReactElement = __webpack_require__(24);
  */
 var createDOMFactory = ReactElement.createFactory;
 if (process.env.NODE_ENV !== 'production') {
-  var ReactElementValidator = __webpack_require__(145);
+  var ReactElementValidator = __webpack_require__(151);
   createDOMFactory = ReactElementValidator.createFactory;
 }
 
@@ -39459,7 +49920,7 @@ module.exports = ReactDOMFactories;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 340 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39475,15 +49936,15 @@ module.exports = ReactDOMFactories;
 
 
 
-var _require = __webpack_require__(24),
+var _require = __webpack_require__(25),
     isValidElement = _require.isValidElement;
 
-var factory = __webpack_require__(108);
+var factory = __webpack_require__(114);
 
 module.exports = factory(isValidElement);
 
 /***/ }),
-/* 341 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39505,7 +49966,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
-/* 342 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39523,10 +49984,10 @@ module.exports = ReactPropTypesSecret;
 
 var _assign = __webpack_require__(4);
 
-var ReactComponent = __webpack_require__(85);
-var ReactNoopUpdateQueue = __webpack_require__(86);
+var ReactComponent = __webpack_require__(86);
+var ReactNoopUpdateQueue = __webpack_require__(87);
 
-var emptyObject = __webpack_require__(28);
+var emptyObject = __webpack_require__(29);
 
 /**
  * Base class helpers for the updating state of a component.
@@ -39552,7 +50013,7 @@ ReactPureComponent.prototype.isPureReactComponent = true;
 module.exports = ReactPureComponent;
 
 /***/ }),
-/* 343 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39571,7 +50032,7 @@ module.exports = ReactPureComponent;
 module.exports = '15.5.4';
 
 /***/ }),
-/* 344 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39587,10 +50048,10 @@ module.exports = '15.5.4';
 
 
 
-var _prodInvariant = __webpack_require__(25);
+var _prodInvariant = __webpack_require__(26);
 
-var ReactPropTypeLocationNames = __webpack_require__(146);
-var ReactPropTypesSecret = __webpack_require__(341);
+var ReactPropTypeLocationNames = __webpack_require__(152);
+var ReactPropTypesSecret = __webpack_require__(354);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -39664,7 +50125,7 @@ module.exports = checkReactTypeSpec;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 345 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39690,7 +50151,7 @@ function getNextDebugID() {
 module.exports = getNextDebugID;
 
 /***/ }),
-/* 346 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39705,9 +50166,9 @@ module.exports = getNextDebugID;
  */
 
 
-var _prodInvariant = __webpack_require__(25);
+var _prodInvariant = __webpack_require__(26);
 
-var ReactElement = __webpack_require__(24);
+var ReactElement = __webpack_require__(25);
 
 var invariant = __webpack_require__(1);
 
@@ -39734,7 +50195,7 @@ module.exports = onlyChild;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 347 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39750,14 +50211,14 @@ module.exports = onlyChild;
 
 
 
-var _prodInvariant = __webpack_require__(25);
+var _prodInvariant = __webpack_require__(26);
 
 var ReactCurrentOwner = __webpack_require__(16);
-var REACT_ELEMENT_TYPE = __webpack_require__(144);
+var REACT_ELEMENT_TYPE = __webpack_require__(150);
 
-var getIteratorFn = __webpack_require__(147);
+var getIteratorFn = __webpack_require__(153);
 var invariant = __webpack_require__(1);
-var KeyEscapeUtils = __webpack_require__(335);
+var KeyEscapeUtils = __webpack_require__(348);
 var warning = __webpack_require__(2);
 
 var SEPARATOR = '.';
@@ -39916,13 +50377,13 @@ module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 348 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var compose = __webpack_require__(51).compose;
+var compose = __webpack_require__(52).compose;
 
 exports.__esModule = true;
 exports.composeWithDevTools = (
@@ -39943,7 +50404,7 @@ exports.devToolsEnhancer = (
 
 
 /***/ }),
-/* 349 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39957,9 +50418,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.printBuffer = printBuffer;
 
-var _helpers = __webpack_require__(148);
+var _helpers = __webpack_require__(154);
 
-var _diff = __webpack_require__(351);
+var _diff = __webpack_require__(364);
 
 var _diff2 = _interopRequireDefault(_diff);
 
@@ -40092,7 +50553,7 @@ function printBuffer(buffer, options) {
 }
 
 /***/ }),
-/* 350 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40144,7 +50605,7 @@ exports.default = {
 module.exports = exports["default"];
 
 /***/ }),
-/* 351 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40155,7 +50616,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = diffLogger;
 
-var _deepDiff = __webpack_require__(194);
+var _deepDiff = __webpack_require__(201);
 
 var _deepDiff2 = _interopRequireDefault(_deepDiff);
 
@@ -40244,7 +50705,7 @@ function diffLogger(prevState, newState, logger, isCollapsed) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 352 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40257,11 +50718,11 @@ exports.logger = exports.createLogger = exports.defaults = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _core = __webpack_require__(349);
+var _core = __webpack_require__(362);
 
-var _helpers = __webpack_require__(148);
+var _helpers = __webpack_require__(154);
 
-var _defaults = __webpack_require__(350);
+var _defaults = __webpack_require__(363);
 
 var _defaults2 = _interopRequireDefault(_defaults);
 
@@ -40389,7 +50850,7 @@ exports.logger = defaultLogger;
 exports.default = defaultLogger;
 
 /***/ }),
-/* 353 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40418,12 +50879,12 @@ thunk.withExtraArgument = createThunkMiddleware;
 exports['default'] = thunk;
 
 /***/ }),
-/* 354 */
+/* 367 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = applyMiddleware;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__compose__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__compose__ = __webpack_require__(155);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -40474,7 +50935,7 @@ function applyMiddleware() {
 }
 
 /***/ }),
-/* 355 */
+/* 368 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40528,14 +50989,14 @@ function bindActionCreators(actionCreators, dispatch) {
 }
 
 /***/ }),
-/* 356 */
+/* 369 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (immutable) */ __webpack_exports__["a"] = combineReducers;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_warning__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_warning__ = __webpack_require__(157);
 
 
 
@@ -40668,7 +51129,7 @@ function combineReducers(reducers) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 357 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -40676,10 +51137,10 @@ function combineReducers(reducers) {
  * Module dependencies.
  */
 
-var url = __webpack_require__(358);
-var parser = __webpack_require__(87);
-var Manager = __webpack_require__(152);
-var debug = __webpack_require__(52)('socket.io-client');
+var url = __webpack_require__(371);
+var parser = __webpack_require__(88);
+var Manager = __webpack_require__(158);
+var debug = __webpack_require__(53)('socket.io-client');
 
 /**
  * Module exports.
@@ -40778,12 +51239,12 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(152);
-exports.Socket = __webpack_require__(154);
+exports.Manager = __webpack_require__(158);
+exports.Socket = __webpack_require__(160);
 
 
 /***/ }),
-/* 358 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -40791,8 +51252,8 @@ exports.Socket = __webpack_require__(154);
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(107);
-var debug = __webpack_require__(52)('socket.io-client:url');
+var parseuri = __webpack_require__(113);
+var debug = __webpack_require__(53)('socket.io-client:url');
 
 /**
  * Module exports.
@@ -40865,7 +51326,7 @@ function url (uri, loc) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 359 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -40881,7 +51342,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(63);
+exports.humanize = __webpack_require__(64);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -41073,7 +51534,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 360 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -41082,8 +51543,8 @@ function coerce(val) {
  * Module requirements
  */
 
-var isArray = __webpack_require__(361);
-var isBuf = __webpack_require__(155);
+var isArray = __webpack_require__(374);
+var isBuf = __webpack_require__(161);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
 var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';
@@ -41221,7 +51682,7 @@ exports.removeBlobs = function(data, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 361 */
+/* 374 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -41232,7 +51693,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 362 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41245,14 +51706,14 @@ module.exports = function (str) {
 
 
 /***/ }),
-/* 363 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(364);
+module.exports = __webpack_require__(377);
 
 
 /***/ }),
-/* 364 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41262,7 +51723,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ponyfill = __webpack_require__(365);
+var _ponyfill = __webpack_require__(378);
 
 var _ponyfill2 = _interopRequireDefault(_ponyfill);
 
@@ -41285,10 +51746,10 @@ if (typeof self !== 'undefined') {
 
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(156)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(162)(module)))
 
 /***/ }),
-/* 365 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41317,7 +51778,7 @@ function symbolObservablePonyfill(root) {
 };
 
 /***/ }),
-/* 366 */
+/* 379 */
 /***/ (function(module, exports) {
 
 module.exports = toArray
@@ -41336,7 +51797,7 @@ function toArray(list, index) {
 
 
 /***/ }),
-/* 367 */
+/* 380 */
 /***/ (function(module, exports) {
 
 /* (ignored) */

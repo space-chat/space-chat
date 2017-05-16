@@ -14,11 +14,6 @@ class Home extends Component {
     this.handleLanguageChange = this.handleLanguageChange.bind(this)
   }
 
-  componentWillMount() {
-    // establish new socket connection
-    openSocket()
-  }
-
   handleClick(e) {
     // dispatch action with language from state
     this.props.setLanguage(this.state.language || 'en')

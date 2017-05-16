@@ -89,7 +89,7 @@ export default class Bubbles extends Component {
         return (
             <a-scene vr-mode-ui="enabled: true">
                         <a-entity id="bubbleCamera" camera="userHeight: 1.6" look-controls
-                             orbit-controls="autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;" mouse-cursor="">
+                         mouse-cursor="">
                         </a-entity>
                         <a-assets>
                             <img id="flowerSky" src="images/blossoms.jpg" />
