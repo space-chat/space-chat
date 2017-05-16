@@ -16,9 +16,9 @@ export default class Knots extends Component {
 
 		this.state = {
 			numKnots: 60,
-			colorA: 'red',
-			colorB: '#FF6600',
-			rate: 0.00005
+			colorA: '#CC0033',
+			colorB: '#FF66FF',
+			rate: 0.0005
 		}
 
 		this.handleColor = this.handleColor.bind(this)

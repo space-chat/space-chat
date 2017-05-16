@@ -4,8 +4,8 @@
 let knots = []
 let lightX
 let lightY
-let colorA = 'white'
-let colorB = 'green'
+let colorA = '#CC0033'
+//let colorB = 'green'  
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 let width = window.innerWidth || 2;
@@ -43,6 +43,8 @@ const createKnot = () => {
   knot.setAttribute('radiusTubular', `${Math.random() * 2}`)
   knot.setAttribute('p', `${Math.round(Math.random() * 10)}`)
   knot.setAttribute('q', `${Math.round(Math.random() * 10)}`)
+
+  knot.setAttribute('color', `${colorA}`)
 
   knot.setAttribute('metalness', `${Math.random()}`)
   knot.setAttribute('roughness', `${Math.random()}`)
@@ -91,7 +93,7 @@ const setTargetLightA = (colorA) => {
     lightA.setAttribute('color', `${colorA}`)
     console.log('target is ', knots[i].id)
 
-    document.querySelector('a-scene').appendChild(lightA)
+    document.getElementById(`knot-${i}`).appendChild(lightA)
   }
 }
 
@@ -102,32 +104,33 @@ const setTargetLightB = (colorB) => {
   for (let i = 0; i < knots.length; i++) {
     let lightB = document.createElement('a-light')
 
-    lightB.setAttribute('position', '0 0 0')
+    //lightB.setAttribute('position', '0 0 0')
     lightB.setAttribute('angle', '90')
     lightB.setAttribute('radius', '60')
-    lightB.setAttribute('position', '-3 -4 1')
     lightB.setAttribute('type', 'point')
     lightB.setAttribute('intensity', '2')
     lightB.setAttribute('target', `knot-${i}`)
     lightB.setAttribute('opacity', '0.5')
     lightB.setAttribute('color', `${colorB}`)
 
-    document.querySelector('a-scene').appendChild(lightB)
+    document.getElementById(`knot-${i}`).appendChild(lightB)
   }
 }
 
 const makeRotatingLightX = () => {
+  console.log('lightX is being created')
   lightX = document.createElement('a-light')
   lightX.setAttribute('geometry', 'primitive: sphere; radius: 1.5')
-  lightX.setAttribute('material', 'color: white; shader: flat')
-  lightX.setAttribute('light', 'color: blue; distance: 120; intensity: 3; type: point')
+  lightX.setAttribute('material', 'color: white; shader: flat; opacity: 1')
+  lightX.setAttribute('light', 'color: blue; distance: 120; intensity: 2; type: point')
   document.querySelector('a-scene').appendChild(lightX)
 }
 
 const makeRotatingLightY = () => {
+  console.log('lightY is being created')
   lightY = document.createElement('a-light')
   lightY.setAttribute('geometry', 'primitive: sphere; radius: 2')
-  lightY.setAttribute('material', 'color: white; shader: flat')
+  lightY.setAttribute('material', 'color: white; shader: flat; opacity: 1')
   lightY.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point')
   document.querySelector('a-scene').appendChild(lightY)
 }
@@ -145,12 +148,12 @@ const render = () => {
   //camera.setAttribute('position', { x: addx, y: addy, z: 5 })
 
   // circleZ animation path for lightX
-  lightX.setAttribute('position', { x: 8 * Math.sin(timer + (2 * Math.PI)) })
-  lightX.setAttribute('position', { z: 14 * Math.cos(timer + 3 + (2 * Math.PI)) })
+  lightX.setAttribute('position', { x: 18 * Math.sin(timer + (2 * Math.PI)) })
+  lightX.setAttribute('position', { z: 24 * Math.cos(timer + 3 + (2 * Math.PI)) })
 
   // circleY animation path for lightY
-  lightY.setAttribute('position', { x: 15 * Math.sin(timer + (2 * Math.PI)) })
-  lightY.setAttribute('position', { y: 7 * Math.cos(timer + 2 * (2 * Math.PI)) })
+  lightY.setAttribute('position', { x: 25 * Math.sin(timer + (2 * Math.PI)) })
+  lightY.setAttribute('position', { y: 17 * Math.cos(timer + 2 * (2 * Math.PI)) })
 }
 
 const animate = () => {
