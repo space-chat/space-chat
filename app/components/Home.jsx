@@ -20,9 +20,13 @@ class Home extends Component {
   }
 
   handleClick(e) {
+    e.preventDefault()
     // dispatch action with language from state
     this.props.setLanguage(this.state.language || 'en')
+    // send scene selection on props
+    this.props.setScene(e.target.value)
   }
+
 
   handleLanguageChange(e) {
     // set selected language on state
@@ -58,10 +62,10 @@ class Home extends Component {
         <br />
         <br />
         <br />
-        <Link className="btn btn-default" role="button" to="/room/bubbles" onClick={this.handleClick}>ENTER BUBBLESPACE</Link>
-        <Link className="btn btn-default" role="button" to="/room/knots" onClick={this.handleClick}>ENTER KNOTSPACE</Link>
-        <Link className="btn btn-default" role="button" to="/room/space" onClick={this.handleClick}>ENTER SPACESPACE</Link>
-        <Link className="btn btn-default" role="button" to="/room/cubes" onClick={this.handleClick}>ENTER CUBESPACE</Link>
+        <Link className="btn btn-default" role="button" to="/room/bubbles" value="bubbles" onClick={this.handleClick}>ENTER BUBBLESPACE</Link>
+        <Link className="btn btn-default" role="button" to="/room/knots" value="knots" onClick={this.handleClick}>ENTER KNOTSPACE</Link>
+        <Link className="btn btn-default" role="button" to="/room/space" value="space" onClick={this.handleClick}>ENTER SPACESPACE</Link>
+        <Link className="btn btn-default" role="button" to="/room/cubes" value="cubes" onClick={this.handleClick}>ENTER CUBESPACE</Link>
   		</div>
 		)
 	}
