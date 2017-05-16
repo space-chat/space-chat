@@ -103,8 +103,8 @@ function setUpNamespace (namespace) {
           // add socket id to data payload
           data.speaker = socket.id
           console.log("DATA", data)
-          // nsp.sockets.emit sends to ALL sockets, INCL original sender
-          nsp.sockets.emit('got sentiment', data)
+          // io.sockets.emit sends to ALL sockets, INCL original sender
+          io.of(namespace).emit('got sentiment', data)
         })
         .catch(console.error)
 
