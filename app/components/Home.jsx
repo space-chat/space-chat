@@ -66,7 +66,7 @@ class Home extends Component {
         <br />
         {/* <Link className="btn btn-default" role="button" to="/room" name="bubbles" onClick={this.handleClick}>ENTER BUBBLESPACE</Link> */}
         {/* <Link className="btn btn-default" role="button" to="/room" name="knots" onClick={this.handleClick}>ENTER KNOTSPACE</Link> */}
-        <Link className="btn btn-default" role="button" to="/room" name="space" onClick={this.handleClick}>ENTER SPACESPACE</Link>
+        <button className="btn btn-default" name="space" onClick={this.handleClick}><Link  to="/room" >ENTER SPACESPACE</Link></button>
         {/* <Link className="btn btn-default" role="button" to="/room" name="cubes" onClick={this.handleClick}>ENTER CUBESPACE</Link> */}
       </div>
 		)

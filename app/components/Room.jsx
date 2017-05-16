@@ -40,8 +40,6 @@ class Room extends Component {
       language: '',
       langDict: {}
     }
-
-    this.getScene = this.getScene.bind(this)
   }
 
   componentWillMount() {
@@ -109,7 +107,6 @@ class Room extends Component {
 
     // scene
     let scene = this.props.scene
-
     let renderScene
     switch (scene) {
       case 'bubbles':
@@ -124,11 +121,15 @@ class Room extends Component {
       case 'cubes':
         renderScene = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
+      default:
+        renderScene = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
     }
 
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
-      {renderScene}
+      <div>
+        {renderScene}
+      </div>
     )
   }
 }
