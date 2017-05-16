@@ -103,6 +103,9 @@ class Room extends Component {
     // sentiment score
     let sentimentScore = this.props.sentiment.sentimentScore[0] || 0.5
 
+    // speaker for above data
+    let speaker = this.props.sentiment.speaker
+
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
       // <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
