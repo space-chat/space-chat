@@ -6,11 +6,7 @@ import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity,
 const synth = window.speechSynthesis
 let voices
 
-let socket
-
-export function openSocket() {
-  socket = io()
-}
+const socket = io()
 
 export function closeSocket(language) {
   // disconnecting socket handled server-side
