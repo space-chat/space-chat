@@ -105,6 +105,9 @@ class Room extends Component {
     // sentiment score
     let sentimentScore = this.props.sentiment.sentimentScore[0] || 0.5
 
+    // speaker for above data
+    let speaker = this.props.sentiment.speaker
+
     // scene
     let scene = this.props.scene
     let sceneComponent

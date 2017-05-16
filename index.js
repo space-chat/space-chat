@@ -94,6 +94,8 @@ io.on('connection', socket => {
     // 3) send text to indico for analysis
     indico.analyzeText([messageText], { apis: ["personality", "sentiment", "emotion"] })
       .then(data => {
+        // add socket id to data payload
+        data.speaker = socket.id
         console.log("DATA", data)
         // io.sockets.emit sends to ALL sockets, INCL original sender
         io.sockets.emit('got sentiment', data)

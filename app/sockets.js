@@ -42,8 +42,11 @@ export function receiveMessage(clientLang) {
 }
 
 export function receiveSentiment() {
-  socket.on('got sentiment', ({ emotion, sentiment, personality }) => {
-    console.log(`emotion: ${emotion}`, `sentiment: ${sentiment}`, `personality: ${personality}`)
+  socket.on('got sentiment', ({ emotion, sentiment, personality, speaker }) => {
+    console.log(`emotion: ${emotion}`
+               , `sentiment: ${sentiment}`
+               , `personality: ${personality}`
+               , `speaker: ${speaker}`)
 
     // get primary and secondary emotions, and their intensities
     let emotions = emotion[0]
@@ -92,6 +95,7 @@ export function receiveSentiment() {
     store.dispatch(updateConscientiousness(conscientiousness))
     store.dispatch(updateAgreeableness(agreeableness))
     store.dispatch(updateSentiment(sentScore))
+    store.dispatch(updateSpeaker(speaker))
   }
   )
 }
