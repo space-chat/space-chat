@@ -1,12 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import AssetLoader from './AssetLoader'
 import Avatars from './Avatars'
-import glMatrix, { vec3 } from 'gl-matrix'
 import ParticleSystem from 'aframe-particle-system-component'
-
-function vecToStr(vec=[]) {
-  return vec.join(' ')
-}
+import { vecToStr } from '../utils'
 
 const Avatar = (props) => {
   return (
