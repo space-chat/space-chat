@@ -13,6 +13,12 @@ export default function AssetLoader() {
 			<img id="blossoms" src="/images/blossoms.jpg" />
 			<img id="stars" src="/images/sky-stars.png" />
 			<img id="fractal" src="/images/fractal.jpg" />
+			<img id="deer" src="/images/deer.jpg" />
+			<img id="cliff" src="/images/cliff.jpg" />
+			<img id="gh" src="/images/gh.jpg" />
+			<img id="roses" src="/images/roses.jpg" />
+			<img id="rainbow" src="/images/rainbow.jpg" />
+			<img id="sunset" src="/images/sunset.jpg" />
 			<img id="tiedye" src="/images/tiedye.jpg" />
 			<img id="colors" src="/images/colors.jpg" />
 			<img id="krabi" src="/images/krabi.jpg" />

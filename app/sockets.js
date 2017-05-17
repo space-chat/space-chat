@@ -73,6 +73,7 @@ export function receiveSentiment() {
     let keys2 = Object.keys(personalityTraits)
     var primPersonality = "openness"
 
+
      for (var trait in personalityTraits) {
        if (personalityTraits[trait] > personalityTraits[primPersonality]) {
          primPersonality = trait

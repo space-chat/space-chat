@@ -68,9 +68,13 @@ acorn@^5.0.0:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.0.3.tgz#c460df08491463f028ccb82eab3730bf01087b3d"
 
+aframe-sun-sky@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/aframe-sun-sky/-/aframe-sun-sky-3.0.3.tgz#73d0ae364d2665e95109cc6497a919407d503be6"
+
 aframe-particle-system-component@^1.0.10:
   version "1.0.10"
-  resolved "https://registry.yarnpkg.com/aframe-particle-system-component/-/aframe-particle-system-component-1.0.10.tgz#dc2174072f4ef7d1757a1bfd3d86be4e8768bb30"
+  resolved "https://registry.yarnpkg.com/aframe-particle-system-component/-/aframe-particle-system-component-1.0.10.tgz#dc2174072f4ef7d1757a1bfd3d86be
 
 aframe@^0.5.0:
   version "0.5.0"
