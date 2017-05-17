@@ -21,7 +21,7 @@ import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types' 
 
 import Scene from './Scene.jsx'
-import SpaceScene from './SpaceScene.jsx'
+import Space from './Space.jsx'
 import Bubbles from './Bubbles.jsx'
 import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket } from '../sockets.js'
 
@@ -106,8 +106,8 @@ class Room extends Component {
 
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
-      // <SpaceScene prevEmotion={prevEmotion} currEmotion={currEmotion} />
-      <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
+      <Space prevEmotion={prevEmotion} currEmotion={currEmotion} />
+      // <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
       // <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality}/>
     )
   }
