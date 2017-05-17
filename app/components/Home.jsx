@@ -1,4 +1,4 @@
-import React, { Component } from 'react' 
+import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { setLanguage } from '../reducers/languageReducer.jsx'
@@ -30,9 +30,9 @@ class Home extends Component {
     this.setState({ language: e.target.value })
   }
 
-	render() {
-		return (
-  		<div className="wrapper">
+  render() {
+    return (
+      <div className="above-fold">
         <h3>You are about to enter a virtual experience in<br />which users from across the world will<br />understand your language.<br /><br />And where space will understand how you feel.</h3>
         <br />
         <br />
@@ -41,7 +41,7 @@ class Home extends Component {
           <label className="control-label">Select your language:</label>
         </div>
         <div>
-          <select className="form-control" id="select"onChange={this.handleLanguageChange}>
+          <select className="form-control" id="select" onChange={this.handleLanguageChange}>
             <option value='en'>English</option>
             <option value='es'>Spanish</option>
             <option value='zh'>Chinese</option>
@@ -59,13 +59,22 @@ class Home extends Component {
         <br />
         <br />
         <br />
-        <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="bubbles">ENTER BUBBLESPACE</Link></button>
-        <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="knots" >ENTER KNOTSPACE</Link></button>
-        <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="space">ENTER SPACESPACE</Link></button>
-        <button className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER CUBESPACE</Link></button>
+        <div id="enter-space">
+          <div className="space-btn">
+            <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="bubbles">ENTER BUBBLESPACE</Link></button>
+            <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="knots" >ENTER KNOTSPACE</Link></button>
+          </div>
+          <div className="space-btn">
+            <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="space">ENTER SPACESPACE</Link></button>
+            <button className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER CUBESPACE</Link></button>
+          </div>
+          <div id="down-chevron">
+            <span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+          </div>
+        </div>
       </div>
-		)
-	}
+    )
+  }
 }
 
 export default connect(null, { setLanguage, setScene })(Home)
