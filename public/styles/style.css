@@ -5,7 +5,7 @@ body {
   margin: 0px auto;
 }
 
-#app {
+#app, #sceneComponent {
   position: absolute;
   height: 100%;
   width: 100%;

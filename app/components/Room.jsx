@@ -139,7 +139,7 @@ class Room extends Component {
     console.log('emotions in Room are', prevEmotion, currEmotion)
 
     return (
-      <div>
+      <div id="sceneComponent" >
         {sceneComponent}
       </div>
     )
