@@ -15,12 +15,12 @@ let directionPath = 'clockwise'
 //Set up orbital camera, mouse listener, and window resize listener. 
 function initScene() {
 	var camera = document.getElementById('camera')
-	// camera.setAttribute('fov', 60) //field of view
-	// camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
-	// camera.setAttribute('near', 0.01) //near
-	// camera.setAttribute('far', 1000) //far
-	// camera.setAttribute('position', { z: 3 })
-	// camera.setAttribute('focalLength', 3)
+	camera.setAttribute('fov', 60) //field of view
+	camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
+	camera.setAttribute('near', 0.01) //near
+	camera.setAttribute('far', 1000) //far
+	camera.setAttribute('position', { z: 3 })
+	camera.setAttribute('focalLength', 3)
 
 	window.addEventListener('resize', onWindowResize, false);
 	document.addEventListener('mousemove', onDocumentMouseMove, false)
@@ -111,35 +111,35 @@ const updateDirection = (direction) => {
 }
 
 const render = () => {
-	let camera = document.getElementById('camera')
+	//let camera = document.getElementById('camera')
 	let timer = tickSpeed * Date.now() //change number for cube rotation speed
-	let curr = camera.getAttribute('position')
+	//let curr = camera.getAttribute('position')
 	// let addx = curr.x + ((mouseX = curr.x) * 0.05)
 	// let addy = curr.y + ((- mouseY - curr.y) * 0.05)
 	// camera.setAttribute('position', { x: addx, y: addy, z: 5})
 
-	if (directionPath === 'clockwise') {
-		for (let i = 0; i < cubes.length; i++) {
-			let cube = cubes[i]
-			console.log('in clockwise: cube id is', cube.id)
-			let id = cube.id
-			console.log('id is', id)
-			let rotation = cube.getAttribute('rotation')
-			console.log('cube rotation.x and y is', rotation.x, rotation.y)
-			cube.setAttribute('rotation', { x: rotation.x * Math.sin(timer + (Math.PI)) })
-			cube.setAttribute('rotation', { y: rotation.y * Math.sin(timer + (Math.PI)) })
-			// mesh.rotation.x += 0.01;
-    	// mesh.rotation.y += 0.02
-		}
-	} else if (directionPath === 'counter-clockwise') {
-		for (let i = 0; i < cubes.length; i++) {
-			console.log('cubes', cubes.length)
-			var cube = cubes[i]
-			cube.getElementById(`${cube.id}`)
-			cube.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
-			cube.setAttribute('position', { y: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
-		}
-	}
+	// if (directionPath === 'clockwise') {
+	// 	for (let i = 0; i < cubes.length; i++) {
+	// 		let cube = cubes[i]
+	// 		console.log('in clockwise: cube id is', cube.id)
+	// 		let id = cube.id
+	// 		console.log('id is', id)
+	// 		let rotation = cube.getAttribute('rotation')
+	// 		console.log('cube rotation.x and y is', rotation.x, rotation.y)
+	// 		cube.setAttribute('rotation', { x: rotation.x * Math.sin(timer + (Math.PI)) })
+	// 		cube.setAttribute('rotation', { y: rotation.y * Math.sin(timer + (Math.PI)) })
+	// 		// mesh.rotation.x += 0.01;
+ //    	// mesh.rotation.y += 0.02
+	// 	}
+	// } else if (directionPath === 'counter-clockwise') {
+	// 	for (let i = 0; i < cubes.length; i++) {
+	// 		console.log('cubes', cubes.length)
+	// 		var cube = cubes[i]
+	// 		cube.getElementById(`${cube.id}`)
+	// 		cube.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
+	// 		cube.setAttribute('position', { y: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
+	// 	}
+	// }
 }
 
 const animate = () => {

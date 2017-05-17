@@ -75,11 +75,9 @@ export default class Cubes extends Component {
           <AssetLoader />
 
           {/* Camera */}
-          <a-entity 
-            id="camera"
-            position="0 0 0"
-            camera="userHeight: 1.6"
-            mouse-cursor="" />
+          <a-entity id="camera" position="0 0 20" mouse-cursor="">
+            <a-camera fov="45" user-height="0" />
+          </a-entity>
 
 
           {/* Not sure if I need this. Artifact from bubbles code. */}
