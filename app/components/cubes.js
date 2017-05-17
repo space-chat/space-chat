@@ -31,9 +31,9 @@ const createCube = (images) => {
 	let cube = document.createElement('a-box')
 
 	// set cube position - break into helper func
-	let x = (Math.random() * 401) - 200
-	let y = (Math.random() * 301) - 150
-	let z = (Math.random() * 301) - 150
+	let x = (Math.random() * 501) - 250
+	let y = (Math.random() * 501) - 200
+	let z = (Math.random() * 501) - 200
 	cube.setAttribute('position', { x: x, y: y, z: z})
 
 	// set cube image - break into helper func
@@ -41,16 +41,16 @@ const createCube = (images) => {
 	cube.setAttribute('material', `src: ${images[i]}`)
 
 	// set cube size
-	let j = Math.floor((Math.random() * (2)) + 1)
+	let j = Math.floor((Math.random() * (50 - 10)) + 10)
 	cube.setAttribute('depth', j)
 	cube.setAttribute('height', j)
 	cube.setAttribute('width', j)
 
-	// set cube rotation TO BE UPDATED
-	// let xR = Math.random() * 180
-	// let yR = Math.random() * 180
-	// let zR = Math.random() * 180
-	// cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
+	// set cube rotation 
+	let xR = Math.random() * 180
+	let yR = Math.random() * 180
+	let zR = Math.random() * 180
+	cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
 
 	// cube.setAttribute('pivot', '0 0 0')
 
@@ -64,9 +64,10 @@ const createCube = (images) => {
 
 // Create random cubes
 const makeCubes = (numCubes, images) => {
-	while (numCubes >= 0) {
+	let count = numCubes
+	while (count >= 0) {
 		createCube(images)
-		numCubes--
+		count--
 	}
 	console.log('making cubes')
 }
@@ -109,11 +110,6 @@ const updateDirection = (direction) => {
 	directionPath = direction
 }
 
-const animate = () => {
-	requestAnimationFrame(animate)
-	render()
-}
-
 const render = () => {
 	let camera = document.getElementById('camera')
 	let timer = tickSpeed * Date.now() //change number for cube rotation speed
@@ -125,16 +121,30 @@ const render = () => {
 	if (directionPath === 'clockwise') {
 		for (let i = 0; i < cubes.length; i++) {
 			let cube = cubes[i]
-			cube.setAttribute('position', { x: 5 * Math.cos(timer + i) })
-			cube.setAttribute('position', { y: 5 * Math.sin(timer + i * 1.1) })
+			console.log('in clockwise: cube id is', cube.id)
+			let id = cube.id
+			console.log('id is', id)
+			let rotation = cube.getAttribute('rotation')
+			console.log('cube rotation.x and y is', rotation.x, rotation.y)
+			cube.setAttribute('rotation', { x: rotation.x * Math.sin(timer + (Math.PI)) })
+			cube.setAttribute('rotation', { y: rotation.y * Math.sin(timer + (Math.PI)) })
+			// mesh.rotation.x += 0.01;
+    	// mesh.rotation.y += 0.02
 		}
 	} else if (directionPath === 'counter-clockwise') {
 		for (let i = 0; i < cubes.length; i++) {
+			console.log('cubes', cubes.length)
 			var cube = cubes[i]
+			cube.getElementById(`${cube.id}`)
 			cube.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
-			cube.setAttribute('position', { z: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
+			cube.setAttribute('position', { y: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
 		}
 	}
+}
+
+const animate = () => {
+	requestAnimationFrame(animate)
+	render()
 }
 
 // const onWindowResize = () => {

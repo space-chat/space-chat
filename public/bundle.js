@@ -18489,7 +18489,7 @@ var Cubes = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Cubes.__proto__ || Object.getPrototypeOf(Cubes)).call(this));
 
     _this.state = {
-      numCubes: 350,
+      numCubes: 150,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
       color: ['#FFFFFF', 1], // will update based on primary emotion
       speed: 1, // will update based on sentiment analysis
@@ -41557,9 +41557,9 @@ var createCube = function createCube(images) {
 	var cube = document.createElement('a-box');
 
 	// set cube position - break into helper func
-	var x = Math.random() * 401 - 200;
-	var y = Math.random() * 301 - 150;
-	var z = Math.random() * 301 - 150;
+	var x = Math.random() * 501 - 250;
+	var y = Math.random() * 501 - 200;
+	var z = Math.random() * 501 - 200;
 	cube.setAttribute('position', { x: x, y: y, z: z });
 
 	// set cube image - break into helper func
@@ -41567,16 +41567,16 @@ var createCube = function createCube(images) {
 	cube.setAttribute('material', 'src: ' + images[i]);
 
 	// set cube size
-	var j = Math.floor(Math.random() * 2 + 1);
+	var j = Math.floor(Math.random() * (50 - 10) + 10);
 	cube.setAttribute('depth', j);
 	cube.setAttribute('height', j);
 	cube.setAttribute('width', j);
 
-	// set cube rotation TO BE UPDATED
-	// let xR = Math.random() * 180
-	// let yR = Math.random() * 180
-	// let zR = Math.random() * 180
-	// cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
+	// set cube rotation 
+	var xR = Math.random() * 180;
+	var yR = Math.random() * 180;
+	var zR = Math.random() * 180;
+	cube.setAttribute('rotation', { x: xR, y: 0, z: zR });
 
 	// cube.setAttribute('pivot', '0 0 0')
 
@@ -41590,9 +41590,10 @@ var createCube = function createCube(images) {
 
 // Create random cubes
 var makeCubes = function makeCubes(numCubes, images) {
-	while (numCubes >= 0) {
+	var count = numCubes;
+	while (count >= 0) {
 		createCube(images);
-		numCubes--;
+		count--;
 	}
 	console.log('making cubes');
 };
@@ -41633,11 +41634,6 @@ var updateDirection = function updateDirection(direction) {
 	directionPath = direction;
 };
 
-var animate = function animate() {
-	requestAnimationFrame(animate);
-	render();
-};
-
 var render = function render() {
 	var camera = document.getElementById('camera');
 	var timer = tickSpeed * Date.now(); //change number for cube rotation speed
@@ -41649,16 +41645,30 @@ var render = function render() {
 	if (directionPath === 'clockwise') {
 		for (var i = 0; i < cubes.length; i++) {
 			var _cube = cubes[i];
-			_cube.setAttribute('position', { x: 5 * Math.cos(timer + i) });
-			_cube.setAttribute('position', { y: 5 * Math.sin(timer + i * 1.1) });
+			console.log('in clockwise: cube id is', _cube.id);
+			var id = _cube.id;
+			console.log('id is', id);
+			var rotation = _cube.getAttribute('rotation');
+			console.log('cube rotation.x and y is', rotation.x, rotation.y);
+			_cube.setAttribute('rotation', { x: rotation.x * Math.sin(timer + Math.PI) });
+			_cube.setAttribute('rotation', { y: rotation.y * Math.sin(timer + Math.PI) });
+			// mesh.rotation.x += 0.01;
+			// mesh.rotation.y += 0.02
 		}
 	} else if (directionPath === 'counter-clockwise') {
 		for (var _i = 0; _i < cubes.length; _i++) {
+			console.log('cubes', cubes.length);
 			var cube = cubes[_i];
+			cube.getElementById('' + cube.id);
 			cube.setAttribute('position', { x: 8 * Math.sin(timer + _i + 2 * Math.PI) });
-			cube.setAttribute('position', { z: 14 * Math.cos(timer + _i + 3 + 2 * Math.PI) });
+			cube.setAttribute('position', { y: 14 * Math.cos(timer + _i + 3 + 2 * Math.PI) });
 		}
 	}
+};
+
+var animate = function animate() {
+	requestAnimationFrame(animate);
+	render();
 };
 
 // const onWindowResize = () => {
