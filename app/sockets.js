@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment } from './reducers/sentimentReducer.jsx'
+import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment, updateSpeaker } from './reducers/sentimentReducer.jsx'
 
 // enable text-to-speech in browser
 const synth = window.speechSynthesis
@@ -8,17 +8,26 @@ let voices
 
 let socket
 
-export function openSocket() {
-  socket = io()
+export function openSocket(scene) {
+  // open socket, connect to 'namespace' associated with scene
+  console.log('connecting to namespace ', scene)
+  socket = io(`/${scene}`)
 }
 
-export function closeSocket() {
-  socket.close()
+export function closeSocket(language) {
+  // disconnecting socket handled server-side
+  socket.emit('close me', language)
 }
 
 export function joinRoom(language) {
-  socket.emit('join', language)
+  // subscribing to language channel handled server-side
+  socket.emit('join request', language)
   voices = synth.getVoices()
+}
+
+export function updateRoster() {
+  // when client receives roster, print array of socket id's to console
+  socket.on('roster', roster => console.log('roster is', roster))
 }
 
 export function sendMessage(messageText, lang) {
@@ -27,27 +36,28 @@ export function sendMessage(messageText, lang) {
 }
 
 export function receiveMessage(clientLang) {
+  // when client receives message from language channel
   socket.on('got message', ({ translatedBool, messageText, lang }) => {
     console.log('incoming message ', messageText, ' in language ', lang)
-    // if lang in 'got message' payload matches socket user's language
-    if (clientLang === lang && translatedBool) {
-      // find correct voice, speak text from 'got message' payload
-      var utterance = new SpeechSynthesisUtterance(messageText)
-      utterance.voice = voices.filter(voice => 
-        voice.lang.substr(0,2) === clientLang
-      )[0]
-      synth.speak(utterance)
-    }
+    // find correct voice, speak text from 'got message' payload
+    var utterance = new SpeechSynthesisUtterance(messageText)
+    utterance.voice = voices.filter(voice => 
+      voice.lang.substr(0,2) === clientLang
+    )[0]
+    synth.speak(utterance)
   })
 }
 
 export function receiveSentiment() {
-  socket.on('got sentiment', ({ emotion, sentiment, personality }) => {
-    console.log(`emotion: ${emotion}`, `sentiment: ${sentiment}`, `personality: ${personality}`)
+  socket.on('got sentiment', ({ emotion, sentiment, personality, speaker }) => {
+    console.log(`emotion: ${emotion}`
+               , `sentiment: ${sentiment}`
+               , `personality: ${personality}`
+               , `speaker: ${speaker}`)
 
     // get primary and secondary emotions, and their intensities
     let emotions = emotion[0]
-    let sortedEmotions = [['joy', 0.5], ['surprise', 0.5]] // default 
+    let sortedEmotions = [['joy', 0.5], ['surprise', 0.5]] // default
 
     // rank emotions in sorted array: most intense to least intense
     let keys = Object.keys(emotions)
@@ -92,6 +102,7 @@ export function receiveSentiment() {
     store.dispatch(updateConscientiousness(conscientiousness))
     store.dispatch(updateAgreeableness(agreeableness))
     store.dispatch(updateSentiment(sentScore))
+    store.dispatch(updateSpeaker(speaker))
   }
   )
 }
