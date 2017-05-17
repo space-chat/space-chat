@@ -18491,12 +18491,12 @@ var Cubes = function (_Component) {
     _this.state = {
       numCubes: 350,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
-      color: '#99CC00', // will update based on primary emotion
+      color: '#FFFFFF', // will update based on primary emotion
       speed: 0, // will update based on sentiment analysis
       direction: 'clockwise' // will update based on sentiment analysis
     };
 
-    _this.handleColor = _this.handleColor.bind(_this);
+    //this.handleColor = this.handleColor.bind(this)
     //this.handleSpeed = this.handleSpeed.bind(this)
     //this.handleDirection = this.handleDirection.bind(this)
     return _this;
@@ -18506,30 +18506,9 @@ var Cubes = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       (0, _cubes.initScene)();
-      // setLight('white')
+      (0, _cubes.makeLight)();
       (0, _cubes.makeCubes)(this.state.numCubes, this.state.cubeImages);
       (0, _cubes.animate)();
-    }
-  }, {
-    key: 'handleColor',
-    value: function handleColor() {
-      (0, _cubes.updateColor)(this.state.color);
-    }
-
-    // Default speed is 0.0005
-
-  }, {
-    key: 'handleSpeed',
-    value: function handleSpeed() {
-      (0, _cubes.updateSpeed)(this.state.speed);
-    }
-
-    // make cubes reverse spin direction based on sentiment
-
-  }, {
-    key: 'handleDirection',
-    value: function handleDirection() {
-      (0, _cubes.updateDirection)(this.state.direction);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -18539,7 +18518,7 @@ var Cubes = function (_Component) {
         surprise: ['#ffcc99', 4],
         sadness: ['#ff8533', 1],
         fear: ['#99CC00', 2],
-        joy: [null, 1]
+        joy: ['#FFFFFF', 1]
       };
 
       //compare current colors/emotion
@@ -18553,7 +18532,7 @@ var Cubes = function (_Component) {
       var speed = void 0;
       var direction = void 0;
 
-      color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : this.state.color;
+      color = currentColor !== emotionColors[emotion][0] ? emotionColors[emotion][0] : this.state.color;
 
       sentiment = currentSentiment !== sentiment ? sentiment : this.state.speed;
 
@@ -18561,43 +18540,34 @@ var Cubes = function (_Component) {
 
       this.setState({ color: color, speed: sentiment, direction: direction });
 
+      (0, _cubes.updateColor)(this.state.color);
+      (0, _cubes.updateSpeed)(this.state.speed);
       (0, _cubes.updateDirection)(this.state.direction);
-
-      //console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
     }
+
+    // handleColor() {
+    //   updateColor(this.state.color)
+    //   console.log('ambient light color is', this.state.color)
+    // }
+
+    // // Default speed is 0.0005
+    // handleSpeed() {
+    //   updateSpeed(this.state.speed)
+    //   console.log('speed is', this.state.speed)
+    // }
+
+    // // make cubes reverse spin direction based on sentiment
+    // handleDirection() {
+    //   updateDirection(this.state.direction)
+    //   console.log('direction is', this.state.direction)
+    // }
+
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                return _this2.handleColor();
-              } },
-            'Change light color'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                return _this2.handleSpeed();
-              } },
-            'Change rotation speed'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                return _this2.handleDirection();
-              } },
-            'Change rotation direction'
-          )
-        ),
         _react2.default.createElement(
           'a-scene',
           { 'vr-mode-ui': 'enabled: true' },
@@ -41646,18 +41616,29 @@ var makeCubes = function makeCubes(numCubes, images) {
 	console.log('making cubes');
 };
 
-// Set light updates color based on emotion
-var updateColor = function updateColor(color) {
+// make ambient light
+var makeLight = function makeLight() {
+	console.log('making light');
 
 	var light = document.createElement('a-light');
 
 	light.setAttribute('type', 'ambient');
-	light.setAttribute('color', '' + color);
+	light.setAttribute('color', '#FFFFFF');
 	light.setAttribute('intensity', 1);
 	light.setAttribute('distance', 60);
 	light.setAttribute('decay', 12);
+	light.setAttribute('id', 'light');
 
 	document.querySelector('a-scene').appendChild(light);
+};
+
+// Update ambient light color based on emotion
+var updateColor = function updateColor(color) {
+	console.log('updated light color is', color);
+
+	var light = document.getElementById('light');
+
+	light.setAttribute('color', '' + color);
 };
 
 // updated speed based on intensity or a personality trait
@@ -41710,7 +41691,7 @@ var render = function render() {
 // 	mouseY = (event.clientY - windowHalfY) / 100;
 // }
 
-module.exports = { initScene: initScene, makeCubes: makeCubes, animate: animate, updateColor: updateColor, updateSpeed: updateSpeed, updateDirection: updateDirection };
+module.exports = { initScene: initScene, makeCubes: makeCubes, makeLight: makeLight, animate: animate, updateColor: updateColor, updateSpeed: updateSpeed, updateDirection: updateDirection };
 
 /***/ })
 /******/ ]);

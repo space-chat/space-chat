@@ -71,18 +71,30 @@ const makeCubes = (numCubes, images) => {
 	console.log('making cubes')
 }
 
-// Set light updates color based on emotion
-const updateColor = (color) => {
+// make ambient light
+const makeLight = () => {
+	console.log('making light')
 
 	let light = document.createElement('a-light')
 
 	light.setAttribute('type', 'ambient')
-	light.setAttribute('color', `${color}`)
+	light.setAttribute('color', `#FFFFFF`)
 	light.setAttribute('intensity', 1)
 	light.setAttribute('distance', 60)
 	light.setAttribute('decay', 12)
+	light.setAttribute('id', 'light')
 
 	document.querySelector('a-scene').appendChild(light)
+
+}
+
+// Update ambient light color based on emotion
+const updateColor = (color) => {
+	console.log('updated light color is', color)
+
+	let light = document.getElementById('light')
+
+	light.setAttribute('color', `${color}`)
 }
 
 
@@ -136,5 +148,5 @@ const render = () => {
 // 	mouseY = (event.clientY - windowHalfY) / 100;
 // }
 
-module.exports = { initScene, makeCubes, animate, updateColor, updateSpeed, updateDirection}
+module.exports = { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, updateDirection}
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AssetLoader from './AssetLoader'
 
-import { initScene, makeCubes, animate, updateColor, updateSpeed, updateDirection } from './cubes.js'
+import { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, updateDirection } from './cubes.js'
 
 
 export default class Cubes extends Component {
@@ -12,35 +12,21 @@ export default class Cubes extends Component {
     this.state = {
       numCubes: 350,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
-      color: '#99CC00', // will update based on primary emotion
+      color: '#FFFFFF', // will update based on primary emotion
       speed: 0, // will update based on sentiment analysis
       direction: 'clockwise' // will update based on sentiment analysis
     }
 
-    this.handleColor = this.handleColor.bind(this)
+    //this.handleColor = this.handleColor.bind(this)
     //this.handleSpeed = this.handleSpeed.bind(this)
     //this.handleDirection = this.handleDirection.bind(this)
   }
 
   componentDidMount() {
     initScene()
-    // setLight('white')
+    makeLight()
     makeCubes(this.state.numCubes, this.state.cubeImages)
     animate()
-  }
-
-  handleColor() {
-    updateColor(this.state.color)
-  }
-
-  // Default speed is 0.0005
-  handleSpeed() {
-    updateSpeed(this.state.speed)
-  }
-
-  // make cubes reverse spin direction based on sentiment
-  handleDirection() {
-    updateDirection(this.state.direction)
   }
 
   componentWillReceiveProps() {
@@ -49,42 +35,60 @@ export default class Cubes extends Component {
       surprise: ['#ffcc99', 4],
       sadness: ['#ff8533', 1],
       fear: ['#99CC00', 2],
-      joy: [null, 1],
+      joy: ['#FFFFFF', 1],
     }
 
-  //compare current colors/emotion
-  let currentColor = this.state.color
-  let currentSentiment = this.state.speed
+    //compare current colors/emotion
+    let currentColor = this.state.color
+    let currentSentiment = this.state.speed
 
-  let emotion = this.props.currEmotion
-  let sentiment = this.props.sentimentScore
+    let emotion = this.props.currEmotion
+    let sentiment = this.props.sentimentScore
 
-  let color
-  let speed
-  let direction
+    let color
+    let speed
+    let direction
 
-  color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : this.state.color
+    color = currentColor !== emotionColors[emotion][0] ? emotionColors[emotion][0] : this.state.color
 
-  sentiment = currentSentiment !== sentiment ? sentiment : this.state.speed
+    sentiment = currentSentiment !== sentiment ? sentiment : this.state.speed
 
-  direction = sentiment > 0.5 ? 'clockwise' : 'counterclockwise'
+    direction = sentiment > 0.5 ? 'clockwise' : 'counterclockwise'
 
-  this.setState({ color: color, speed: sentiment, direction: direction })
+    this.setState({ color: color, speed: sentiment, direction: direction })
 
-  updateDirection(this.state.direction)
+    updateColor(this.state.color)
+    updateSpeed(this.state.speed)
+    updateDirection(this.state.direction)
 
-  //console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
-}
+  }
+
+  // handleColor() {
+  //   updateColor(this.state.color)
+  //   console.log('ambient light color is', this.state.color)
+  // }
+
+  // // Default speed is 0.0005
+  // handleSpeed() {
+  //   updateSpeed(this.state.speed)
+  //   console.log('speed is', this.state.speed)
+  // }
+
+  // // make cubes reverse spin direction based on sentiment
+  // handleDirection() {
+  //   updateDirection(this.state.direction)
+  //   console.log('direction is', this.state.direction)
+  // }
 
   render() {
     return (
       <div>
         {/* temporary buttons for testing */}
-        <div>
+        {/*<div>
           <button onClick={() => this.handleColor()}>Change light color</button>
           <button onClick={() => this.handleSpeed()}>Change rotation speed</button>
           <button onClick={() => this.handleDirection()}>Change rotation direction</button>
-        </div>
+        </div> */}
         <a-scene vr-mode-ui="enabled: true">
           <AssetLoader />
 
