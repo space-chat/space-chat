@@ -51,6 +51,8 @@ function setUpNamespace (namespace) {
       console.log('all languages on server state are: ', languages)
       // close socket
       socket.disconnect()
+      // send out updated roster of connected sockets in room
+      io.of(namespace).emit('roster', Object.keys(nsp.connected))
     })
 
     // when a socket joins room
@@ -64,6 +66,7 @@ function setUpNamespace (namespace) {
       console.log('all languages on server state are: ', languages)
       // 2) subscribe socket to language channel
       socket.join(language)
+      // send out updated roster of connected sockets in room
       io.of(namespace).emit('roster', Object.keys(nsp.connected))
     })
 

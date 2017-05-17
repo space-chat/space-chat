@@ -27,7 +27,9 @@ export function joinRoom(language) {
 
 export function updateRoster() {
   // when client receives roster, print array of socket id's to console
-  socket.on('roster', roster => console.log('roster is', roster))
+  socket.on('roster', roster => 
+    console.log('roster is', roster)
+  )
 }
 
 export function sendMessage(messageText, lang) {
@@ -103,6 +105,5 @@ export function receiveSentiment() {
     store.dispatch(updateAgreeableness(agreeableness))
     store.dispatch(updateSentiment(sentScore))
     store.dispatch(updateSpeaker(speaker))
-  }
-  )
+  })
 }
