@@ -106,7 +106,7 @@ class Room extends Component {
 
     console.log('emotions in Room are', prevEmotion, currEmotion)
     return (
-      <Space prevEmotion={prevEmotion} currEmotion={currEmotion} />
+      <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
       // <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
       // <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality}/>
     )
