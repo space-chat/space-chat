@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 
-import { initScene, makeKnots, setTargetLightA, setTargetLightB,  makeRotatingLightX, makeRotatingLightY, animate, updateLightRotationRate } from './knots.js'
+import { initScene, makeKnots, setTargetLightA, setTargetLightB,  makeRotatingLightX, makeRotatingLightY, animate, updateColor, updateLightRotationRate } from './knots.js'
 
 /* -------------
 props - prevEmotion, currEmotion, prevIntensity, currIntensity
@@ -16,13 +16,13 @@ export default class Knots extends Component {
 
 		this.state = {
 			numKnots: 60,
-			colorA: '#CC0033',
-			colorB: '#FF66FF',
+			colorA: 'red', // red
+			colorB: '#FF6600', // orange
 			rate: 0.0005
 		}
 
-		this.handleColor = this.handleColor.bind(this)
-    this.handleRate = this.handleRate.bind(this)
+		// this.handleColor = this.handleColor.bind(this)
+  		// this.handleRate = this.handleRate.bind(this)
 	}
 
 	componentDidMount() {
@@ -38,7 +38,7 @@ export default class Knots extends Component {
 	componentWillReceiveProps() {
 		// hashes for translating emotion to color values
 		let emotionColorsA = {
-				anger: 'red',     // red
+			anger: 'red',     // red
 	    	surprise: '#CC0033',  // pink
 	    	sadness: 'blue',   // blue
 	    	fear: '#330000',      // brown
@@ -73,15 +73,19 @@ export default class Knots extends Component {
 		let rate = prevRate !== nextRate ? nextRate : prevRate
 
 		this.setState({ colorA: colorA, colorB: colorB, rate: rate })
-	}
 
-	handleColor() {
-		// updateColor(this.state.colorA, this.state.colorB)
-	}
-
-	handleRate() {
+		updateColor(this.state.colorA, this.state.colorB)
 		updateLightRotationRate(this.state.rate)
+
 	}
+
+	// handleColor() {
+	// 	// updateColor(this.state.colorA, this.state.colorB)
+	// }
+
+	// handleRate() {
+	// 	updateLightRotationRate(this.state.rate)
+	// }
 
 	render() {
 		return (

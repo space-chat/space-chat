@@ -4,7 +4,7 @@
 let knots = []
 let lightX
 let lightY
-let colorA = '#CC0033'
+// let colorA = '#CC0033'
 //let colorB = 'green'  
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
@@ -40,14 +40,15 @@ const createKnot = () => {
   let knot = document.createElement('a-torus-knot')
 
   knot.setAttribute('radius', `${Math.random() * 10}`)
-  knot.setAttribute('radiusTubular', `${Math.random() * 2}`)
+  knot.setAttribute('radiusTubular', `${Math.random() * 8}`)
   knot.setAttribute('p', `${Math.round(Math.random() * 10)}`)
   knot.setAttribute('q', `${Math.round(Math.random() * 10)}`)
 
-  knot.setAttribute('color', `${colorA}`)
+  // knot.setAttribute('color', `${colorA}`)
 
-  knot.setAttribute('metalness', `${Math.random()}`)
+  knot.setAttribute('metalness', `${(Math.random() * 0.5) + 0.5}`)
   knot.setAttribute('roughness', `${Math.random()}`)
+  knot.setAttribute('segments-radial', '10')
 
   knot.setAttribute('position', {
     x: `${getRandCoord()}`,
@@ -88,12 +89,14 @@ const setTargetLightA = (colorA) => {
     lightA.setAttribute('position', '-3 -4 1')
     lightA.setAttribute('type', 'point')
     lightA.setAttribute('intensity', '2')
+    lightA.setAttribute('distance', '200')
     lightA.setAttribute('target', `knot-${i}`)
     lightA.setAttribute('opacity', '0.5')
     lightA.setAttribute('color', `${colorA}`)
+    lightA.setAttribute('id', 'lightA')
     console.log('target is ', knots[i].id)
 
-    document.getElementById(`knot-${i}`).appendChild(lightA)
+    document.querySelector('a-scene').appendChild(lightA)
   }
 }
 
@@ -105,24 +108,32 @@ const setTargetLightB = (colorB) => {
     let lightB = document.createElement('a-light')
 
     //lightB.setAttribute('position', '0 0 0')
-    lightB.setAttribute('angle', '90')
+    lightB.setAttribute('angle', '-90')
     lightB.setAttribute('radius', '60')
+    lightB.setAttribute('position', '3 4 -1')
     lightB.setAttribute('type', 'point')
     lightB.setAttribute('intensity', '2')
+    lightB.setAttribute('distance', '300')
     lightB.setAttribute('target', `knot-${i}`)
     lightB.setAttribute('opacity', '0.5')
     lightB.setAttribute('color', `${colorB}`)
+    lightB.setAttribute('id', 'lightB')
 
-    document.getElementById(`knot-${i}`).appendChild(lightB)
+    document.querySelector('a-scene').appendChild(lightB)
   }
+}
+
+const updateColor = (colorA, colorB) => {
+  document.getElementById('lightA').setAttribute('color', `${colorA}`)
+  document.getElementById('lightB').setAttribute('color', `${colorB}`)
 }
 
 const makeRotatingLightX = () => {
   console.log('lightX is being created')
   lightX = document.createElement('a-light')
   lightX.setAttribute('geometry', 'primitive: sphere; radius: 1.5')
-  lightX.setAttribute('material', 'color: white; shader: flat; opacity: 1')
-  lightX.setAttribute('light', 'color: blue; distance: 120; intensity: 2; type: point')
+  lightX.setAttribute('material', 'color: white; shader: flat; opacity: 0')
+  lightX.setAttribute('light', 'color: blue; distance: 120; intensity: 3; type: point')
   document.querySelector('a-scene').appendChild(lightX)
 }
 
@@ -130,7 +141,7 @@ const makeRotatingLightY = () => {
   console.log('lightY is being created')
   lightY = document.createElement('a-light')
   lightY.setAttribute('geometry', 'primitive: sphere; radius: 2')
-  lightY.setAttribute('material', 'color: white; shader: flat; opacity: 1')
+  lightY.setAttribute('material', 'color: white; shader: flat; opacity: 0')
   lightY.setAttribute('light', 'color: orange; distance: 120; intensity: 2; type: point')
   document.querySelector('a-scene').appendChild(lightY)
 }
@@ -173,4 +184,4 @@ const onDocumentMouseMove = (event) => {
   mouseY = (event.clientY - windowHalfY) / 100
 }
 
-module.exports = { initScene, animate, makeKnots, setTargetLightA, setTargetLightB, makeRotatingLightX, makeRotatingLightY, updateLightRotationRate }
+module.exports = { initScene, animate, makeKnots, setTargetLightA, setTargetLightB, makeRotatingLightX, makeRotatingLightY, updateColor, updateLightRotationRate }
