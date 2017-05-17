@@ -5,7 +5,6 @@ import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity,
 // enable text-to-speech in browser
 const synth = window.speechSynthesis
 let voices
-
 let socket
 
 export function openSocket(scene) {
@@ -19,7 +18,7 @@ export function closeSocket(language) {
   socket.emit('close me', language)
 }
 
-export function joinRoom(language) {
+export function joinChannel(language) {
   // subscribing to language channel handled server-side
   socket.emit('join request', language)
   voices = synth.getVoices()

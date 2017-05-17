@@ -37,20 +37,12 @@ const Scene = (props) => {
 
   let skyColor = emotionColors[props.currEmotion]
   let prevSkyColor = emotionColors[props.prevEmotion]
-
-  let roster = {
-    a: {},
-    b: {},
-    c: {},
-    d: {},
-    e: {},
-    f: {}
   }
 
   return (
     <a-scene vr-mode-ui="enabled: true">
       <AssetLoader />
-      <Avatars Avatar={Avatar} roster={roster} />
+      <Avatars Avatar={Avatar} roster={props.roster} />
 
       <a-light color="red" light="color:red;angle:45;type:spot;target:avatar" angle="45" position="-16.717 11.189 17.925" type="spot" target="avatar" rotation="0 -18.73571990077792 -6.245239966925973" scale="1 1 1" visible="true" />
       <a-light color="red" light="angle:45;color:#f0debb;type:spot;target:null" angle="45" type="spot" target="avatar"></a-light>
