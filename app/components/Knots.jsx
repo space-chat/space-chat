@@ -4,25 +4,11 @@ import Avatars from './Avatars'
 import ParticleSystem from 'aframe-particle-system-component'
 import { vecToStr } from '../utils'
 
-import { initScene, makeKnots, setTargetLightA, setTargetLightB,  makeRotatingLightX, makeRotatingLightY, animate, updateColor, updateLightRotationRate } from './knots.js'
+import { initScene, makeKnots, setAmbientLightA, setAmbientLightB, makeRotatingLightX, makeRotatingLightY, animate, updateKnotColor, updateLightColor, updateLightRotationRate } from './knots.js'
 
 const Avatar = (props) => {
   return (
-    <a-entity position={vecToStr(props.position)} particle-system={
-      ['preset: dust',
-        'type: sphere',
-        'color: fuchsia',
-        'accelerationValue: 0 0 0',
-        'positionSpread: 10 10 10',
-        'maxAge: 1',
-        'particleCount: 100',
-        'size: 0.2',
-        'direction: 1',
-        'velocityValue: 0.1 0.1 0.1',
-        'velocitySpread: 1 1 1'
-      ].join(';')} >
-      <a-sphere radius="2" color="fuchsia" />
-    </a-entity>
+	  <a-icosahedron radius="1" opacity="0.8" metalness="1" />
   )
 }
 
@@ -33,8 +19,8 @@ export default class Knots extends Component {
 
 		this.state = {
 			numKnots: 60,
-			colorA: 'red', // red
-			colorB: '#FF6600', // orange
+			colorA: '#ff0000', // red
+			colorB: '#ff6600', // orange
 			rate: 0.0005
 		}
 	}
@@ -42,8 +28,8 @@ export default class Knots extends Component {
 	componentDidMount() {
 		initScene()
 		makeKnots(this.state.numKnots)
-		setTargetLightA(this.state.colorA)
-		setTargetLightB(this.state.colorB)
+		setAmbientLightA(this.state.colorA)
+		setAmbientLightB(this.state.colorB)
 		makeRotatingLightX()
 		makeRotatingLightY()
 		animate()
@@ -52,17 +38,17 @@ export default class Knots extends Component {
 	componentWillReceiveProps() {
 		// hashes for translating emotion to color values
 		let emotionColorsA = {
-			anger: 'red',     // red
+				anger: '#ff0000',     // red
 	    	surprise: '#CC0033',  // pink
-	    	sadness: 'blue',   // blue
+	    	sadness: '#3366ff',   // blue
 	    	fear: '#330000',      // brown
-	    	joy: 'orange'        // yellow
+	    	joy: '#ff6600'        // yellow
 		}
 
 		let emotionColorsB = {
 			anger: '#FF6600', // orange    
 			surprise: '#FF66FF', // pink
-			sadness: 'green', // green
+			sadness: '#00cc00', // green
 			fear: '#006600', // dark green
 			joy: '#993300' // burnt orange
 		}
@@ -88,7 +74,8 @@ export default class Knots extends Component {
 
 		this.setState({ colorA: colorA, colorB: colorB, rate: rate })
 
-		updateColor(this.state.colorA, this.state.colorB)
+		updateKnotColor(this.state.colorA, this.state.colorB)
+		updateLightColor(this.state.colorA, this.state.colorB)
 		updateLightRotationRate(this.state.rate)
 }
 
@@ -99,9 +86,9 @@ export default class Knots extends Component {
 	    c: {},
 	    d: {},
 	    e: {},
-	    f: {}
+	    f: {},
 		}
-		
+
 		return (
 			<div>
         {/* temporary buttons for testing */}
@@ -115,7 +102,7 @@ export default class Knots extends Component {
 					<Avatars Avatar={Avatar} roster={roster} />
 
 					{/* Camera */}
-			    <a-entity id="camera" position="0 0 20" mouse-cursor="">
+			   <a-entity id="camera" position="0 0 -10" mouse-cursor="">
 			      <a-camera fov="45" user-height="0" />
 			    </a-entity>
 
