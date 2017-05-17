@@ -1,12 +1,18 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment } from './reducers/sentimentReducer.jsx'
+import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment, updateSpeaker } from './reducers/sentimentReducer.jsx'
 
 // enable text-to-speech in browser
 const synth = window.speechSynthesis
 let voices
 
-const socket = io()
+let socket
+
+export function openSocket(scene) {
+  // open socket, connect to 'namespace' associated with scene
+  console.log('connecting to namespace ', scene)
+  socket = io(`/${scene}`)
+}
 
 export function closeSocket(language) {
   // disconnecting socket handled server-side
@@ -17,6 +23,11 @@ export function joinRoom(language) {
   // subscribing to language channel handled server-side
   socket.emit('join request', language)
   voices = synth.getVoices()
+}
+
+export function updateRoster() {
+  // when client receives roster, print array of socket id's to console
+  socket.on('roster', roster => console.log('roster is', roster))
 }
 
 export function sendMessage(messageText, lang) {
@@ -38,8 +49,11 @@ export function receiveMessage(clientLang) {
 }
 
 export function receiveSentiment() {
-  socket.on('got sentiment', ({ emotion, sentiment, personality }) => {
-    console.log(`emotion: ${emotion}`, `sentiment: ${sentiment}`, `personality: ${personality}`)
+  socket.on('got sentiment', ({ emotion, sentiment, personality, speaker }) => {
+    console.log(`emotion: ${emotion}`
+               , `sentiment: ${sentiment}`
+               , `personality: ${personality}`
+               , `speaker: ${speaker}`)
 
     // get primary and secondary emotions, and their intensities
     let emotions = emotion[0]
@@ -88,6 +102,7 @@ export function receiveSentiment() {
     store.dispatch(updateConscientiousness(conscientiousness))
     store.dispatch(updateAgreeableness(agreeableness))
     store.dispatch(updateSentiment(sentScore))
+    store.dispatch(updateSpeaker(speaker))
   }
   )
 }
