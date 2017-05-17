@@ -56,7 +56,7 @@ export default class Avatars extends React.Component {
 				{ avatars
 					.map((props, index) =>
 							index
-							? <Avatar key={props.userId} {...props} {...this.state} />
+							? <Avatar key={props.userId} {...props} {...this.state} {...this.props} />
 							: null)
 				}
 			</a-entity>
