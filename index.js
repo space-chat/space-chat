@@ -72,7 +72,7 @@ function setUpNamespace (namespace) {
       console.log('namespace adapter rooms lang', nsp.adapter.rooms[lang].sockets)
       //console.log('new spoken message! server emitting original text: ', messageText)
       let translatedBool = false
-        
+       
       // 1) immediately send message exactly as received to all OTHER sockets in original language channel
       socket.to(lang).emit('got message', { translatedBool, messageText, lang })
 
@@ -87,9 +87,9 @@ function setUpNamespace (namespace) {
               let translation = results[0]
               console.log('translation successful: ', translation)
               // server sends to all sockets in language channel
-              nsp.in(targetLang).emit('got message', { 
-                translatedBool: true, 
-                messageText: translation, 
+              nsp.in(targetLang).emit('got message', {
+                translatedBool: true,
+                messageText: translation,
                 lang: targetLang })
             })
             .catch(console.error)
