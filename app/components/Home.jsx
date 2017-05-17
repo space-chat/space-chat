@@ -96,7 +96,7 @@ class Home extends Component {
 
           <div id="compatibility">
             <p>
-              Before using Spacechat, please make sure you have functioning audio (input & output), and that you are using a WebGL and Web Speech API compatible desktop or mobile browser (such as Google Chrome.) For more information about compatibility, click <a href="http://caniuse.com/#feat=webgl">here</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#Browser_compatibility">here</a>.
+              Before using Spacechat, please make sure you have functioning audio (input & output), and that you are using a WebGL and Web Speech API compatible desktop or mobile browser (such as Google Chrome). For more information about compatibility, click <a href="http://caniuse.com/#feat=webgl">here</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#Browser_compatibility">here</a>.
             </p>
           </div>
 
