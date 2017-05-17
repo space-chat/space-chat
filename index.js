@@ -61,7 +61,32 @@ io.on('connection', socket => {
     socket.join(language)
     console.log(`clients subscribed to ${language} channel are:
       ${Object.keys(io.sockets.adapter.rooms[language].sockets)}`)
+
+      
   })
+
+  //This is emitted from "didMount" in Room
+  socket.on('start peer', peerId => {
+    //Here's the socket and their corresponding peerId
+    console.log("PEERID", peerId, "socketId", socket.id)
+
+    //How many people are online???
+    var sum = 0; 
+    languages.forEach(language => {
+        sum+= Object.keys(io.sockets.adapter.rooms[language].sockets).length
+      })
+      console.log("num of sockets???", sum)
+
+      if (sum === 2) {
+        console.log("yeessss")
+      }
+  })
+
+  //Allison just logged onto Spacechat. 
+  //She immediately emits 'start peer' with her peerID to the server 
+  //When Stefanie joins, the server emits 'call me' to stefanie with Allison's peer id. 
+  //When stefanie gets call me, she automatically calls allison with allison's peerID
+  //Allison automatically answers and they can start talking. 
 
   // when a socket sends a spoken message as text
   socket.on('message', ({ messageText, lang }) => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { initScene, makeBubbles, animate, addBubbles, sizeOrColor, updateSpeed, updatePath } from './bubbles.js'
+import { initScene, makeBubbles, animate, sizeOrColor, updateSpeed, updatePath } from './bubbles.js'
 
 export default class Bubbles extends Component {
 

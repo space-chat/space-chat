@@ -13,18 +13,18 @@ When Room loads, it:
 (6) Receives translated text from server via receiveMessage()
 ------------------------------------------------ */
 
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 // higher order component that allows Room to transcribe speech
 import SpeechRecognition from 'react-speech-recognition'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 
 import Scene from './Scene.jsx' // space scene
 import Bubbles from './Bubbles.jsx'
 import Knots from './Knots.jsx'
 import Cubes from './Cubes.jsx'
-import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket, openSocket } from '../sockets.js'
+import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket, openSocket, startPeer } from '../sockets.js'
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -46,7 +46,7 @@ class Room extends Component {
     //establish new socket connection
     openSocket()
 
-    this.setState({ 
+    this.setState({
       language: this.props.language,
       langDict: {
         en: 'en-US',
@@ -61,7 +61,8 @@ class Room extends Component {
         ja: 'ja-JP',
         ko: 'ko-KR',
         ru: 'ru-RU'
-      }})
+      }
+    })
     if (!this.props.browserSupportsSpeechRecognition) return null
   }
 
@@ -71,6 +72,13 @@ class Room extends Component {
   }
 
   componentDidMount() {
+    var peer = new Peer({ key: 'lwjd5qra8257b9' });
+     
+    peer.on('open', function (id) {
+      console.log('My peer ID is: ' + id);
+      startPeer(id)
+    });
+   
     // broadcast language to server
     joinRoom(this.state.language)
     // set listeners to receive sentiment analyses, translated messages
@@ -79,7 +87,7 @@ class Room extends Component {
   }
 
   // NB: web speech API waits to finalize text until after a short pause
-  componentWillReceiveProps({transcript, finalTranscript, resetTranscript, recognition}) {
+  componentWillReceiveProps({ transcript, finalTranscript, resetTranscript, recognition }) {
     // set language for speech recognition input
     recognition.lang = this.state.langDict[this.state.language]
     // when transcript finalized/ regular transcript and final transcript are the same
@@ -143,16 +151,7 @@ class Room extends Component {
 Room.propTypes = propTypes
 const EnhancedRoom = SpeechRecognition(Room)
 
-const mapState = ({language, sentiment, scene}) => ({language, sentiment, scene})
+const mapState = ({ language, sentiment, scene }) => ({ language, sentiment, scene })
 
 export default connect(mapState, null)(EnhancedRoom)
 
-
-/*
-1. I am importing react-speech-component which is a simple node package that is a higher order component that uses the web speech API. 
-    This will capture our interim and final transcript speech. 
-    We could just build this ourselves if we wanted. It's not extrememly complicated. 
-    We might even want to rewrite it and adapt it to do text to speech, or anything else we want it to do. 
-    The only thing I don't like about this component is that I don't know how to turn the speech to text off without exiting the page.  
-2. I am putting the final transcript on the state. 
-*/

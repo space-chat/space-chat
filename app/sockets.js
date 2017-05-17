@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment } from './reducers/sentimentReducer.jsx'
+import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment, updateSpeaker } from './reducers/sentimentReducer.jsx'
 
 // enable text-to-speech in browser
 const synth = window.speechSynthesis
@@ -21,6 +21,10 @@ export function joinRoom(language) {
   // subscribing to language channel handled server-side
   socket.emit('join request', language)
   voices = synth.getVoices()
+}
+
+export function startPeer(peerId) {
+  socket.emit('start peer', peerId)
 }
 
 export function sendMessage(messageText, lang) {
