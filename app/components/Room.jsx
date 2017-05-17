@@ -20,9 +20,11 @@ import { connect } from 'react-redux'
 import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types'
 
-import Scene from './Scene.jsx'
+import Scene from './Scene.jsx' // space scene
 import Bubbles from './Bubbles.jsx'
-import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket } from '../sockets.js'
+import Knots from './Knots.jsx'
+import Cubes from './Cubes.jsx'
+import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket, openSocket } from '../sockets.js'
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -37,15 +39,17 @@ class Room extends Component {
     this.state = {
       language: '',
       langDict: {},
-      sky: '#blossoms'
+      bubbleSky: '#blossoms'
     }
   }
 
   componentWillMount() {
-    //choose a random sky
+    //choose a random sky for Bubbles
     const skies = ["#blossoms", "#colors", "#krabi"]
-
-    this.setState({
+    //establish new socket connection
+    openSocket(this.props.scene)
+    
+    this.setState({ 
       language: this.props.language,
       langDict: {
         en: 'en-US',
@@ -61,7 +65,7 @@ class Room extends Component {
         ko: 'ko-KR',
         ru: 'ru-RU'
       },
-      sky: skies[Math.floor(Math.random() * 3)]
+      bubbleSky: skies[Math.floor(Math.random() * 3)]
     })
 
     if (!this.props.browserSupportsSpeechRecognition) return null
@@ -110,10 +114,34 @@ class Room extends Component {
     // sentiment score
     let sentimentScore = this.props.sentiment.sentimentScore[0] || 0.5
 
+    // speaker for above data
+    let speaker = this.props.sentiment.speaker
+
+    // scene
+    let scene = this.props.scene
+    let sceneComponent
+
+    switch (scene) {
+      case 'bubbles':
+        sceneComponent = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} sky={this.state.bubbleSky}/>
+        break
+      case 'knots':
+        sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        break
+      case 'space':
+        sceneComponent = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        break
+      case 'cubes':
+        sceneComponent = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        break
+    }
+
     console.log('emotions in Room are', prevEmotion, currEmotion)
+
     return (
-      // <Scene prevEmotion={prevEmotion} currEmotion={currEmotion} />
-      <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} sky={this.state.sky} />
+      <div>
+        {sceneComponent}
+      </div>
     )
   }
 }
@@ -121,7 +149,7 @@ class Room extends Component {
 Room.propTypes = propTypes
 const EnhancedRoom = SpeechRecognition(Room)
 
-const mapState = ({ language, sentiment }) => ({ language, sentiment })
+const mapState = ({language, sentiment, scene}) => ({language, sentiment, scene})
 
 export default connect(mapState, null)(EnhancedRoom)
 
