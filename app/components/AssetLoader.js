@@ -16,6 +16,7 @@ export default function AssetLoader() {
 			<img id="tiedye" src="/images/tiedye.jpg" />
 			<img id="colors" src="/images/colors.jpg" />
 			<img id="krabi" src="/images/krabi.jpg" />
+			<img id="moon" src="/images/moon.jpg" />
 
 
 		{/* Mixin example from Transcend. Mixins are reusable assets. In this case the 'chair-part' was used to compose chairs in the Chair component. */}
