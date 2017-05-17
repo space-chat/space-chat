@@ -3,7 +3,8 @@ import glMatrix, {vec3} from 'gl-matrix'
 
 // props passed from Room (or 'Scene') component
 
-// I am thinking the avatars are orbs with dedicated lights, the light is what changes based on sentiment: glowing orbs. If time, with WebRTC of people on them :D
+// IDEA: avatars are orbs with dedicated lights
+	// light is what changes based on sentiment: glowing orbs
 
 // state -- where all avatars will be
 // props -- what component type avatars should be
