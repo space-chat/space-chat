@@ -14,7 +14,7 @@ export default class Cubes extends Component {
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
       color: '#99CC00', // will update based on primary emotion
       speed: 0, // will update based on sentiment analysis
-      direction: 'forward' // will update based on sentiment analysis
+      direction: 'clockwise' // will update based on sentiment analysis
     }
 
     this.handleColor = this.handleColor.bind(this)
@@ -34,14 +34,14 @@ export default class Cubes extends Component {
   }
 
   // Default speed is 0.0005
-  // handleSpeed() {
-  //   updateSpeed(this.state.speed)
-  // }
+  handleSpeed() {
+    updateSpeed(this.state.speed)
+  }
 
-  // make cubes reverse spin direction based on sentiment
-  // handleDirection() {
-  //   updateDirection(this.state.direction)
-  // }
+  make cubes reverse spin direction based on sentiment
+  handleDirection() {
+    updateDirection(this.state.direction)
+  }
 
   componentWillReceiveProps() {
     let emotionColors = {
