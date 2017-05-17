@@ -2,12 +2,12 @@
 // Much of this code is based on Three.js' example here:  https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html
 
 let cubes = []
-// let windowHalfX = window.innerWidth / 2
-// let windowHalfY = window.innerHeight / 2
-// let width = window.innerWidth || 2
-// let height = window.innerHeight || 2
-// let mouseX = 0
-// let mouseY = 0
+let windowHalfX = window.innerWidth / 2
+let windowHalfY = window.innerHeight / 2
+let width = window.innerWidth || 2
+let height = window.innerHeight || 2
+let mouseX = 0
+let mouseY = 0
 let currentScale = 0.2
 let tickSpeed = 0.00005
 let directionPath = 'clockwise'
@@ -22,8 +22,8 @@ function initScene() {
 	// camera.setAttribute('position', { z: 3 })
 	// camera.setAttribute('focalLength', 3)
 
-	// window.addEventListener('resize', onWindowResize, false);
-	// document.addEventListener('mousemove', onDocumentMouseMove, false)
+	window.addEventListener('resize', onWindowResize, false);
+	document.addEventListener('mousemove', onDocumentMouseMove, false)
 }
 
 // Create single cube with specified material and size
@@ -147,17 +147,17 @@ const animate = () => {
 	render()
 }
 
-// const onWindowResize = () => {
-// 	let camera = document.getElementById('cubeCamera')
-// 	windowHalfX = window.innerWidth / 2;
-// 	windowHalfY = window.innerHeight / 2;
-// 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
-// }
+const onWindowResize = () => {
+	let camera = document.getElementById('cubeCamera')
+	windowHalfX = window.innerWidth / 2;
+	windowHalfY = window.innerHeight / 2;
+	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
+}
 
-// const onDocumentMouseMove = (event) => {
-// 	mouseX = (event.clientX - windowHalfX) / 100;
-// 	mouseY = (event.clientY - windowHalfY) / 100;
-// }
+const onDocumentMouseMove = (event) => {
+	mouseX = (event.clientX - windowHalfX) / 100;
+	mouseY = (event.clientY - windowHalfY) / 100;
+}
 
 module.exports = { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, updateDirection}
 

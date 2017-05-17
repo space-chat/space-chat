@@ -41528,12 +41528,12 @@ function toArray(list, index) {
 // Much of this code is based on Three.js' example here:  https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html
 
 var cubes = [];
-// let windowHalfX = window.innerWidth / 2
-// let windowHalfY = window.innerHeight / 2
-// let width = window.innerWidth || 2
-// let height = window.innerHeight || 2
-// let mouseX = 0
-// let mouseY = 0
+var windowHalfX = window.innerWidth / 2;
+var windowHalfY = window.innerHeight / 2;
+var width = window.innerWidth || 2;
+var height = window.innerHeight || 2;
+var mouseX = 0;
+var mouseY = 0;
 var currentScale = 0.2;
 var tickSpeed = 0.00005;
 var directionPath = 'clockwise';
@@ -41548,8 +41548,8 @@ function initScene() {
 	// camera.setAttribute('position', { z: 3 })
 	// camera.setAttribute('focalLength', 3)
 
-	// window.addEventListener('resize', onWindowResize, false);
-	// document.addEventListener('mousemove', onDocumentMouseMove, false)
+	window.addEventListener('resize', onWindowResize, false);
+	document.addEventListener('mousemove', onDocumentMouseMove, false);
 }
 
 // Create single cube with specified material and size
@@ -41671,17 +41671,17 @@ var animate = function animate() {
 	render();
 };
 
-// const onWindowResize = () => {
-// 	let camera = document.getElementById('cubeCamera')
-// 	windowHalfX = window.innerWidth / 2;
-// 	windowHalfY = window.innerHeight / 2;
-// 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
-// }
+var onWindowResize = function onWindowResize() {
+	var camera = document.getElementById('cubeCamera');
+	windowHalfX = window.innerWidth / 2;
+	windowHalfY = window.innerHeight / 2;
+	camera.setAttribute('aspect', window.innerWidth / window.innerHeight);
+};
 
-// const onDocumentMouseMove = (event) => {
-// 	mouseX = (event.clientX - windowHalfX) / 100;
-// 	mouseY = (event.clientY - windowHalfY) / 100;
-// }
+var onDocumentMouseMove = function onDocumentMouseMove(event) {
+	mouseX = (event.clientX - windowHalfX) / 100;
+	mouseY = (event.clientY - windowHalfY) / 100;
+};
 
 module.exports = { initScene: initScene, makeCubes: makeCubes, makeLight: makeLight, animate: animate, updateColor: updateColor, updateSpeed: updateSpeed, updateDirection: updateDirection };
 
