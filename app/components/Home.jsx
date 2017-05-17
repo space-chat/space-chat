@@ -15,7 +15,6 @@ class Home extends Component {
     this.handleLanguageChange = this.handleLanguageChange.bind(this)
   }
 
-
   handleClick(e) {
     e.preventDefault()
     // dispatch action with language from state

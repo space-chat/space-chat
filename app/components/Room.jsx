@@ -96,7 +96,7 @@ class Room extends Component {
     }
   }
 
-  // when the scene renders, API will start recording 
+  // when the scene renders, API will start recording
   render() {
     // emotion data
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'

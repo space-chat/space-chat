@@ -115,5 +115,6 @@ function setUpNamespace (namespace) {
 }
 
 server.listen(process.env.PORT || 3002, () => {
-  console.log("listening on 3002 hey girrrlll")
+  console.log('listening on 3002 hey girrrlll')
 })
+
