@@ -52,7 +52,7 @@ function setUpNamespace (namespace) {
       // close socket
       socket.disconnect()
       // send out updated roster of connected sockets in room
-      io.of(namespace).emit('roster', Object.keys(nsp.connected))
+      io.of(namespace).emit('roster update', Object.keys(nsp.connected))
     })
 
     // when a socket joins room
@@ -67,7 +67,7 @@ function setUpNamespace (namespace) {
       // 2) subscribe socket to language channel
       socket.join(language)
       // send out updated roster of connected sockets in room
-      io.of(namespace).emit('roster', Object.keys(nsp.connected))
+      io.of(namespace).emit('roster update', Object.keys(nsp.connected))
     })
 
     // when a socket sends a spoken message as text

@@ -27,8 +27,8 @@ export function joinRoom(language) {
 
 export function updateRoster() {
   // when client receives roster, print array of socket id's to console
-  socket.on('roster', roster => 
-    console.log('roster is', roster)
+  socket.on('roster update', rosterKeys => 
+    
   )
 }
 
