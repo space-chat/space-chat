@@ -46,7 +46,7 @@ const createKnot = () => {
 
   // knot.setAttribute('color', `${colorA}`)
 
-  knot.setAttribute('metalness', `${(Math.random() * 0.5) + 0.5}`)
+  knot.setAttribute('metalness', `${(Math.random() * 0.7) + 0.5}`)
   knot.setAttribute('roughness', `${Math.random()}`)
   knot.setAttribute('segments-radial', '10')
   knot.setAttribute('spherical-env-map', '#tiedye')
@@ -123,9 +123,9 @@ const setAmbientLightB = (colorB) => {
     document.querySelector('a-scene').appendChild(lightB)
 }
 
-const updateLightColor = (colorA, colorB) => {
-  document.getElementById('lightA').setAttribute('color', `${colorA}`)
-  document.getElementById('lightB').setAttribute('color', `${colorB}`)
+const updateLightColor = (colorC, colorD) => {
+  document.getElementById('lightA').setAttribute('color', `${colorC}`)
+  document.getElementById('lightB').setAttribute('color', `${colorD}`)
 }
 
 const makeRotatingLightX = () => {
@@ -157,7 +157,6 @@ const render = (timeStamp) => {
   //let addx = curr.x + ((mouseX - curr.x) * .05)
   //let addy = curr.y + ((- mouseY - curr.y) * .05)
   //camera.setAttribute('position', { x: addx, y: addy, z: 5 })
-  console.log('timer is', timer)
 
   // circleZ animation path for lightX
   lightX.setAttribute('position', { x: 18 * Math.sin(timer + (2 * Math.PI)) })

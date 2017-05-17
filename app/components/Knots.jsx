@@ -21,8 +21,10 @@ export default class Knots extends Component {
 
 		this.state = {
 			numKnots: 60,
-			colorA: '#ff6600', // red
-			colorB: '#993300' , // orange
+			colorA: '#ff6600', // yellow
+			colorB: '#993300' , // burnt orange
+			colorC: '#FFFFFF',
+			colorD: '#FFFFFF',
 			rate: 0.0005
 		}
 	}
@@ -43,16 +45,32 @@ export default class Knots extends Component {
 				anger: '#ff0000',     // red
 	    	surprise: '#CC0033',  // pink
 	    	sadness: '#3366ff',   // blue
-	    	fear: '#330000',      // brown
-	    	joy: '#ff6600'        // yellow
+	    	fear: '#333300',      // dark olive gray
+	    	joy: '#FFFFFF'        // white
 		}
 
 		let emotionColorsB = {
 			anger: '#FF6600', // orange    
-			surprise: '#FF66FF', // pink
+			surprise: '#ffcc66', // pink
+			sadness: '#003366', // dark blue
+			fear: '#666633', // olive green
+			joy: '#FFFFFF' // burnt orange
+		}
+
+		let emotionColorsC = {
+			anger: '#ff0000', // red    
+			surprise: '#FF6600', // pink
 			sadness: '#00cc00', // green
-			fear: '#006600', // dark green
-			joy: '#993300' // burnt orange
+			fear: '#330000', // dark green
+			joy: '#FFFFFF' // white
+		}
+
+		let emotionColorsD = {
+			anger: '#FF6600', // orange    
+			surprise: '#FF66FF', // pink
+			sadness: '#330000', // brown
+			fear: '#330000', // brown
+			joy: '#FFFFFF' // white
 		}
 
 		// translate emotion to color and set color on state
@@ -60,26 +78,32 @@ export default class Knots extends Component {
 
 		let nextColorA = emotionColorsA[emotion]
 		let nextColorB = emotionColorsB[emotion]
+		let nextColorC = emotionColorsC[emotion]
+		let nextColorD = emotionColorsD[emotion]
 		let prevColorA = this.state.colorA
 		let prevColorB = this.state.colorB
+		let prevColorC = this.state.colorC
+		let prevColorD = this.state.colorD
 
 		let colorA = prevColorA !== nextColorA ? nextColorA : prevColorA
 		let colorB = prevColorB !== nextColorB ? nextColorB : prevColorB
+		let colorC = prevColorC !== nextColorC ? nextColorC : prevColorC
+		let colorD = prevColorD !== nextColorD ? nextColorD : prevColorD
 
 		// translate emotional intensity to rotation rate and set rate on state
 		let intensity = this.props.primaryIntensity || 0.5
 
 		// 0   1
 		let prevRate = this.state.rate
-		let nextRate = (1 - intensity) * -100000
+		let nextRate = (1 - intensity) / 1000 + 0.003
 		// let nextRate = (1 - intensity) * -4000 <-- flips sense of numbers
 
 		let rate = prevRate !== nextRate ? nextRate : prevRate
 
-		this.setState({ colorA: colorA, colorB: colorB, rate: rate })
+		this.setState({ colorA: colorA, colorB: colorB, colorC: colorC, colorD: colorD, rate: rate })
 
 		updateKnotColor(this.state.colorA, this.state.colorB)
-		updateLightColor(this.state.colorA, this.state.colorB)
+		updateLightColor(this.state.colorC, this.state.colorD)
 		updateLightRotationRate(this.state.rate)
 }
 
