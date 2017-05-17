@@ -24,7 +24,9 @@ import Bubbles from './Bubbles.jsx'
 import Scene from './Scene.jsx'     // space scene
 import Knots from './Knots.jsx'
 import Cubes from './Cubes.jsx'
-import { joinChannel, sendMessage, receiveMessage, receiveSentiment, closeSocket, openSocket } from '../sockets.js'
+import { openSocket, closeSocket, updateRoster
+       , joinChannel, sendMessage
+       , receiveMessage, receiveSentiment } from '../sockets.js'
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -72,6 +74,7 @@ class Room extends Component {
   }
 
   componentWillUnmount() {
+    console.log('warning: component will unmount!')
     // disconnect socket, also leaves channels, unsets listeners
     closeSocket(this.state.language)
   }
@@ -79,6 +82,8 @@ class Room extends Component {
   componentDidMount() {
     // broadcast language to server
     joinChannel(this.state.language)
+    // set listener to update roster
+    updateRoster()
     // set listeners to receive sentiment analyses, translated messages
     receiveSentiment()
     receiveMessage(this.state.language)

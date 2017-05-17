@@ -37,7 +37,6 @@ const Scene = (props) => {
 
   let skyColor = emotionColors[props.currEmotion]
   let prevSkyColor = emotionColors[props.prevEmotion]
-  }
 
   return (
     <a-scene vr-mode-ui="enabled: true">

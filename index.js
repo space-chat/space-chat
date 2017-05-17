@@ -50,10 +50,10 @@ function setUpNamespace (namespace) {
         // remove that language from state
         languages = languages.filter(lang => lang !== language)
       console.log('all languages on server state are: ', languages)
-      // close socket
-      socket.disconnect()
       // send out id of deleted socket to all other sockets in room
       io.of(namespace).emit('roster deletion', deleteId)
+      // close socket
+      socket.disconnect()
     })
 
     // when a socket joins room
@@ -69,7 +69,7 @@ function setUpNamespace (namespace) {
       socket.join(language)
       // send out id of new socket to all OTHER connected sockets in room
       // ^ might need debugging (|| change to mirror ln 56, add check client-side)
-      io.in(namespace).broadcast.emit('roster addition', socket.id)
+      io.of(namespace).emit('roster addition', socket.id)
     })
 
     // when a socket sends a spoken message as text

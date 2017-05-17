@@ -19,6 +19,7 @@ export function openSocket(scene) {
 }
 
 export function closeSocket(language) {
+  console.log('emitting close me event')
   // disconnecting socket handled server-side
   socket.emit('close me', language)
 }
@@ -32,14 +33,14 @@ export function joinChannel(language) {
 export function updateRoster() {
   // when client added to roster
   socket.on('roster addition', addId => {
-
+    console.log('received roster add event')
     // update store with latest addition to roster
     store.dispatch(addToRoster(addId))
   })
 
   // when client removed from roster
   socket.on('roster deletion', deleteId => {
-
+    console.log('received roster delete event')
     // update store with deletion from roster
     store.dispatch(deleteFromRoster(deleteId))
   })
