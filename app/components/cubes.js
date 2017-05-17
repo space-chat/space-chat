@@ -14,7 +14,7 @@ let directionPath = 'clockwise'
 
 //Set up orbital camera, mouse listener, and window resize listener. 
 function initScene() {
-	var camera = document.getElementById('bubbleCamera')
+	var camera = document.getElementById('camera')
 	camera.setAttribute('fov', 60) //field of view
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
 	camera.setAttribute('near', 0.01) //near
@@ -102,7 +102,7 @@ const animate = () => {
 }
 
 const render = () => {
-	let camera = document.getElementById('cubeCamera')
+	let camera = document.getElementById('camera')
 	let timer = tickSpeed * Date.now() //change number for cube rotation speed
 	let curr = camera.getAttribute('position')
 	let addx = curr.x + ((mouseX = curr.x) * 0.05)

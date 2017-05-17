@@ -116,26 +116,27 @@ class Room extends Component {
     let scene = this.props.scene
     let sceneComponent
 
-    switch (scene) {
-      case 'bubbles':
-        sceneComponent = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
-        break
-      case 'knots':
-        sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
-        break
-      case 'space':
-        sceneComponent = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
-        break
-      case 'cubes':
-        sceneComponent = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
-        break
-    }
+    // switch (scene) {
+    //   case 'bubbles':
+    //     sceneComponent = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+    //     break
+    //   case 'knots':
+    //     sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+    //     break
+    //   case 'space':
+    //     sceneComponent = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+    //     break
+    //   case 'cubes':
+    //     sceneComponent = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+    //     break
+    // }
 
     console.log('emotions in Room are', prevEmotion, currEmotion)
 
     return (
       <div>
-        {sceneComponent}
+        <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        {/* {sceneComponent} */}
       </div>
     )
   }

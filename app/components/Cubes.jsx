@@ -24,7 +24,7 @@ export default class Cubes extends Component {
 
   componentDidMount() {
     initScene()
-    setLight('white')
+    // setLight('white')
     makeCubes(this.state.numCubes, this.state.cubeImages)
     animate()
   }
@@ -38,7 +38,7 @@ export default class Cubes extends Component {
     updateSpeed(this.state.speed)
   }
 
-  make cubes reverse spin direction based on sentiment
+  // make cubes reverse spin direction based on sentiment
   handleDirection() {
     updateDirection(this.state.direction)
   }
