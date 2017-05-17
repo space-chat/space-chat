@@ -25,6 +25,11 @@ export function joinRoom(language) {
   voices = synth.getVoices()
 }
 
+export function updateRoster() {
+  // when client receives roster, print array of socket id's to console
+  socket.on('roster', roster => console.log('roster is', roster))
+}
+
 export function sendMessage(messageText, lang) {
   console.log('sending message ', messageText, ' in language ', lang)
   socket.emit('message', { messageText, lang })
