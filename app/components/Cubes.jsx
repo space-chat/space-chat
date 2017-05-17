@@ -1,23 +1,8 @@
 import React, {Component} from 'react'
 import AssetLoader from './AssetLoader'
 
-import { setLight, makeCubes, animate, updateSpeed, updateDirection } from './cubes.js'
+import { initScene, makeCubes, animate, updateColor, updateSpeed, updateDirection } from './cubes.js'
 
-
-// const animate = (cubeColor, prevCubeColor) => {
-//   console.log('inside animation function')
-//   // Animate colors if sentiment changes
-//   if (cubeColor !== prevCubeColor) {
-//     return (
-//         <a-animation
-//           begin="sentiment-change"
-//           attribute="material.color"
-//           from={prevCubeColor}
-//           to={cubeColor}
-//           ease="ease-in-circ" />
-//     )
-//   }
-// }
 
 export default class Cubes extends Component {
 
@@ -33,44 +18,63 @@ export default class Cubes extends Component {
     }
 
     this.handleColor = this.handleColor.bind(this)
-    this.handleSpeed = this.handleSpeed.bind(this)
-    this.handleDirection = this.handleDirection.bind(this)
+    //this.handleSpeed = this.handleSpeed.bind(this)
+    //this.handleDirection = this.handleDirection.bind(this)
   }
 
   componentDidMount() {
+    initScene()
     setLight('white')
     makeCubes(this.state.numCubes, this.state.cubeImages)
     animate()
   }
 
   handleColor() {
-    setLight(this.state.color)
+    updateColor(this.state.color)
   }
 
   // Default speed is 0.0005
-  handleSpeed() {
-    updateSpeed(this.state.speed)
-  }
-
-  // make cubes reverse spin direction based on sentiment
-  handleDirection() {
-    updateDirection(this.state.direction)
-  }
-
-  //Logic for translating sentiment analysis:
-
-  // let emotionColors = {
-  //   anger: ['#FF3333', 3],
-  //   surprise: ['#ffcc99', 4],
-  //   sadness: ['#ff8533', 1],
-  //   fear: ['#99CC00', 2],
-  //   joy: [null, 1],
+  // handleSpeed() {
+  //   updateSpeed(this.state.speed)
   // }
 
-  // let cubeColor = emotionColors[props.currEmotion][0]
-  // let prevCubeColor = emotionColors[props.prevEmotion][0]
+  // make cubes reverse spin direction based on sentiment
+  // handleDirection() {
+  //   updateDirection(this.state.direction)
+  // }
+
+  componentWillReceiveProps() {
+    let emotionColors = {
+      anger: ['#FF3333', 3],
+      surprise: ['#ffcc99', 4],
+      sadness: ['#ff8533', 1],
+      fear: ['#99CC00', 2],
+      joy: [null, 1],
+    }
+
+  //compare current colors/emotion
+  let currentColor = this.state.color
+  let currentSentiment = this.state.speed
+
+  let emotion = this.props.currEmotion
+  let sentiment = this.props.sentimentScore
+
+  let color
+  let speed
+  let direction
+
+  color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : this.state.color
+
+  sentiment = currentSentiment !== sentiment ? sentiment : this.state.speed
+
+  direction = sentiment > 0.5 ? 'clockwise' : 'counterclockwise'
+
+  this.setState({ color: color, speed: sentiment, direction: direction })
+
+  updateDirection(this.state.direction)
 
   //console.log('cubeColor is', cubeColor, 'prevCubeColor is', prevCubeColor)
+}
 
   render() {
     return (
@@ -84,16 +88,12 @@ export default class Cubes extends Component {
         <a-scene vr-mode-ui="enabled: true">
           <AssetLoader />
 
-          {/* Camera - artifact from bubbles code. */}
-          {/*<a-entity id="cubeCamera"
-            camera="userHeight: 1.6"
-            orbit-controls="autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;">
-          </a-entity>*/}
-
           {/* Camera */}
-          <a-entity position="0 0 0">
-            <a-camera />
-          </a-entity>
+          <a-entity 
+            id="camera"
+            camera="userHeight: 1.6"
+            mouse-cursor="" />
+
 
           {/* Not sure if I need this. Artifact from bubbles code. */}
           {/*<a-sphere position="-1 1.25 -5" radius="0.001" color="#EF2D5E" id="pink">
