@@ -7,19 +7,22 @@ import { vecToStr } from '../utils'
 const Avatar = (props) => {
   return (
     <a-entity position={vecToStr(props.position)} particle-system={
-      ['preset: dust',
-        'type: sphere',
-        'color: fuchsia',
-        'accelerationValue: 0 0 0',
-        'positionSpread: 10 10 10',
-        'maxAge: 1',
-        'particleCount: 100',
-        'size: 0.2',
-        'direction: 1',
-        'velocityValue: 0.1 0.1 0.1',
-        'velocitySpread: 1 1 1'
-      ].join(';')} >
-      <a-sphere radius="2" color="fuchsia" />
+        [   'preset: dust',                       // default, dust, snow, rain
+            'type: sphere',                            // 1 (box), 2(sphere), 3(disc)
+            'accelerationValue: 0 0 0',
+            'accelerationSpread: 0 10 0',
+            'positionSpread: 8 8 8',
+            'color: white',
+            'maxAge: 1',
+            'size: 0.25',
+            'blending: 2',
+            'direction: 1',
+            'velocityValue: 5 5 5',
+            // 'velocitySpread: 8 8 8',
+            'rotationAxis: y',
+            // rotationAngle: 0; dust preset is 3.14
+            'particleCount: 50000'
+        ].join(';')} >
     </a-entity>
   )
 }
