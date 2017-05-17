@@ -91,6 +91,7 @@ export default class Cubes extends Component {
           {/* Camera */}
           <a-entity 
             id="camera"
+            position="0 0 0"
             camera="userHeight: 1.6"
             mouse-cursor="" />
 

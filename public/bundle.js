@@ -18604,6 +18604,7 @@ var Cubes = function (_Component) {
           _react2.default.createElement(_AssetLoader2.default, null),
           _react2.default.createElement('a-entity', {
             id: 'camera',
+            position: '0 0 0',
             camera: 'userHeight: 1.6',
             'mouse-cursor': '' }),
           _react2.default.createElement('a-sky', { id: '#sky', src: '#fractal' })
@@ -41576,12 +41577,12 @@ function toArray(list, index) {
 // Much of this code is based on Three.js' example here:  https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_anaglyph.html
 
 var cubes = [];
-var windowHalfX = window.innerWidth / 2;
-var windowHalfY = window.innerHeight / 2;
-var width = window.innerWidth || 2;
-var height = window.innerHeight || 2;
-var mouseX = 0;
-var mouseY = 0;
+// let windowHalfX = window.innerWidth / 2
+// let windowHalfY = window.innerHeight / 2
+// let width = window.innerWidth || 2
+// let height = window.innerHeight || 2
+// let mouseX = 0
+// let mouseY = 0
 var currentScale = 0.2;
 var tickSpeed = 0.00005;
 var directionPath = 'clockwise';
@@ -41589,15 +41590,15 @@ var directionPath = 'clockwise';
 //Set up orbital camera, mouse listener, and window resize listener. 
 function initScene() {
 	var camera = document.getElementById('camera');
-	camera.setAttribute('fov', 60); //field of view
-	camera.setAttribute('aspect', window.innerWidth / window.innerHeight); //aspect
-	camera.setAttribute('near', 0.01); //near
-	camera.setAttribute('far', 1000); //far
-	camera.setAttribute('position', { z: 3 });
-	camera.setAttribute('focalLength', 3);
+	// camera.setAttribute('fov', 60) //field of view
+	// camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
+	// camera.setAttribute('near', 0.01) //near
+	// camera.setAttribute('far', 1000) //far
+	// camera.setAttribute('position', { z: 3 })
+	// camera.setAttribute('focalLength', 3)
 
-	window.addEventListener('resize', onWindowResize, false);
-	document.addEventListener('mousemove', onDocumentMouseMove, false);
+	// window.addEventListener('resize', onWindowResize, false);
+	// document.addEventListener('mousemove', onDocumentMouseMove, false)
 }
 
 // Create single cube with specified material and size
@@ -41615,7 +41616,7 @@ var createCube = function createCube(images) {
 	cube.setAttribute('material', 'src: ' + images[i]);
 
 	// set cube size
-	var j = Math.floor(Math.random() * (15 - 2) + 2);
+	var j = Math.floor(Math.random() * 2 + 1);
 	cube.setAttribute('depth', j);
 	cube.setAttribute('height', j);
 	cube.setAttribute('width', j);
@@ -41678,9 +41679,9 @@ var render = function render() {
 	var camera = document.getElementById('camera');
 	var timer = tickSpeed * Date.now(); //change number for cube rotation speed
 	var curr = camera.getAttribute('position');
-	var addx = curr.x + (mouseX = curr.x) * 0.05;
-	var addy = curr.y + (-mouseY - curr.y) * 0.05;
-	camera.setAttribute('position', { x: addx, y: addy, z: 5 });
+	// let addx = curr.x + ((mouseX = curr.x) * 0.05)
+	// let addy = curr.y + ((- mouseY - curr.y) * 0.05)
+	// camera.setAttribute('position', { x: addx, y: addy, z: 5})
 
 	if (directionPath === 'clockwise') {
 		for (var i = 0; i < cubes.length; i++) {
@@ -41697,17 +41698,17 @@ var render = function render() {
 	}
 };
 
-var onWindowResize = function onWindowResize() {
-	var camera = document.getElementById('cubeCamera');
-	windowHalfX = window.innerWidth / 2;
-	windowHalfY = window.innerHeight / 2;
-	camera.setAttribute('aspect', window.innerWidth / window.innerHeight);
-};
+// const onWindowResize = () => {
+// 	let camera = document.getElementById('cubeCamera')
+// 	windowHalfX = window.innerWidth / 2;
+// 	windowHalfY = window.innerHeight / 2;
+// 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
+// }
 
-var onDocumentMouseMove = function onDocumentMouseMove(event) {
-	mouseX = (event.clientX - windowHalfX) / 100;
-	mouseY = (event.clientY - windowHalfY) / 100;
-};
+// const onDocumentMouseMove = (event) => {
+// 	mouseX = (event.clientX - windowHalfX) / 100;
+// 	mouseY = (event.clientY - windowHalfY) / 100;
+// }
 
 module.exports = { initScene: initScene, makeCubes: makeCubes, animate: animate, updateColor: updateColor, updateSpeed: updateSpeed, updateDirection: updateDirection };
 
