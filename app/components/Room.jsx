@@ -38,15 +38,18 @@ class Room extends Component {
     super(props)
     this.state = {
       language: '',
-      langDict: {}
+      langDict: {},
+      bubbleSky: '#blossoms'
     }
   }
 
   componentWillMount() {
+    //choose a random sky for Bubbles
+    const skies = ["#blossoms", "#colors", "#krabi"]
     //establish new socket connection
-    openSocket()
-
-    this.setState({
+    openSocket(this.props.scene)
+    
+    this.setState({ 
       language: this.props.language,
       langDict: {
         en: 'en-US',
@@ -61,8 +64,10 @@ class Room extends Component {
         ja: 'ja-JP',
         ko: 'ko-KR',
         ru: 'ru-RU'
-      }
+      },
+      bubbleSky: skies[Math.floor(Math.random() * 3)]
     })
+
     if (!this.props.browserSupportsSpeechRecognition) return null
   }
 
@@ -125,7 +130,7 @@ class Room extends Component {
 
     switch (scene) {
       case 'bubbles':
-        sceneComponent = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        sceneComponent = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} sky={this.state.bubbleSky}/>
         break
       case 'knots':
         sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />

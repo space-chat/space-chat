@@ -8,8 +8,10 @@ let voices
 
 let socket
 
-export function openSocket() {
-  socket = io()
+export function openSocket(scene) {
+  // open socket, connect to 'namespace' associated with scene
+  console.log('connecting to namespace ', scene)
+  socket = io(`/${scene}`)
 }
 
 export function closeSocket(language) {
@@ -25,6 +27,11 @@ export function joinRoom(language) {
 
 export function startPeer(peerId) {
   socket.emit('start peer', peerId)
+}
+
+export function updateRoster() {
+  // when client receives roster, print array of socket id's to console
+  socket.on('roster', roster => console.log('roster is', roster))
 }
 
 export function sendMessage(messageText, lang) {
