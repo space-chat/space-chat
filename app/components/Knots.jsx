@@ -1,36 +1,30 @@
 import React, { Component } from 'react'
-import Avatar from './Avatar'
 import AssetLoader from './AssetLoader'
-import glMatrix, {vec3} from 'gl-matrix'
+import Avatars from './Avatars'
 import ParticleSystem from 'aframe-particle-system-component'
+import { vecToStr } from '../utils'
 
 import { initScene, makeKnots, setTargetLightA, setTargetLightB,  makeRotatingLightX, makeRotatingLightY, animate, updateColor, updateLightRotationRate } from './knots.js'
 
-const avatarHeight = 2
-	, avatarWith = 2
-	, avatarDepth = 2
-	, sceneRadius = 8
-	, cameraToCenter = vec3.fromValues(0, 0 -sceneRadius)
-
-const centerScene = (cameraPosition, radius, out) => {
-	return vec3.add(out, cameraPosition, cameraToCenter)
+const Avatar = (props) => {
+  return (
+    <a-entity position={vecToStr(props.position)} particle-system={
+      ['preset: dust',
+        'type: sphere',
+        'color: fuchsia',
+        'accelerationValue: 0 0 0',
+        'positionSpread: 10 10 10',
+        'maxAge: 1',
+        'particleCount: 100',
+        'size: 0.2',
+        'direction: 1',
+        'velocityValue: 0.1 0.1 0.1',
+        'velocitySpread: 1 1 1'
+      ].join(';')} >
+      <a-sphere radius="2" color="fuchsia" />
+    </a-entity>
+  )
 }
-
-window.sceneRadius = sceneRadius
-
-// position of avatar for participant number (index)
-const positionOfAvatar = (index, totalCount, center, out) => {
-	const angle = (index / totalCount) * 2 * Math.PI
-		, hand = [0, 0, 0]
-	vec3.rotateY(hand, cameraToCenter, [0, 0, 0], angle)
-	console.log("hand", hand)
-	return vec3.sub(out, center, hand)
-}
-
-const vecToStr = vec => vec.join(' ')
-
-window.vec3 = vec3
-window.glMatrix = glMatrix
 
 export default class Knots extends Component {
 
@@ -43,19 +37,6 @@ export default class Knots extends Component {
 			colorB: '#FF6600', // orange
 			rate: 0.0005
 		}
-
-				// avatar logic
-		let users = [1, 2, 3, 4, 5]
-		let center = vec3.fromValues(0, 0, 0)
-		let position = vec3.fromValues(0, 1.6, 0)
-		centerScene(position, sceneRadius, center)
-
-	  const userPositions = users.map((user, i) => positionOfAvatar(i, users.length, center, [0, 0, 0]))
-    , myPosition = userPositions[0]
-		console.log('avatar position:', center, "POSITIONS", userPositions)
-
-		// this.handleColor = this.handleColor.bind(this)
-  		// this.handleRate = this.handleRate.bind(this)
 	}
 
 	componentDidMount() {
@@ -109,23 +90,20 @@ export default class Knots extends Component {
 
 		updateColor(this.state.colorA, this.state.colorB)
 		updateLightRotationRate(this.state.rate)
-
-
-
-	}
-
-	// handleColor() {
-	// 	// updateColor(this.state.colorA, this.state.colorB)
-	// }
-
-	// handleRate() {
-	// 	updateLightRotationRate(this.state.rate)
-	// }
+}
 
 	render() {
+		let roster = {
+	    a: {},
+	    b: {},
+	    c: {},
+	    d: {},
+	    e: {},
+	    f: {}
+		}
+		
 		return (
 			<div>
-
         {/* temporary buttons for testing */}
         <div>
           <button onClick={() => this.handleColor()}>Change color</button>
@@ -134,7 +112,7 @@ export default class Knots extends Component {
         <div>
 				<a-scene fog="type: exponential; color: purple">
 					<AssetLoader />
-
+					<Avatars Avatar={Avatar} roster={roster} />
 
 					{/* Camera */}
 			    <a-entity id="camera" position="0 0 20" mouse-cursor="">
