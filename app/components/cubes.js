@@ -94,7 +94,8 @@ const updateColor = (color) => {
 
 	let light = document.getElementById('light')
 
-	light.setAttribute('color', `${color}`)
+	light.setAttribute('color', `${color[0]}`)
+	light.setAttribute('intensity', `${color[1]}`)
 }
 
 

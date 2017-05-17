@@ -18491,8 +18491,8 @@ var Cubes = function (_Component) {
     _this.state = {
       numCubes: 350,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
-      color: '#FFFFFF', // will update based on primary emotion
-      speed: 0, // will update based on sentiment analysis
+      color: ['#FFFFFF', 1], // will update based on primary emotion
+      speed: 1, // will update based on sentiment analysis
       direction: 'clockwise' // will update based on sentiment analysis
     };
 
@@ -18515,8 +18515,8 @@ var Cubes = function (_Component) {
     value: function componentWillReceiveProps() {
       var emotionColors = {
         anger: ['#FF3333', 3],
-        surprise: ['#ffcc99', 4],
-        sadness: ['#ff8533', 1],
+        surprise: ['#ff66cc', 4],
+        sadness: ['#0066ff', 1],
         fear: ['#99CC00', 2],
         joy: ['#FFFFFF', 1]
       };
@@ -18532,7 +18532,7 @@ var Cubes = function (_Component) {
       var speed = void 0;
       var direction = void 0;
 
-      color = currentColor !== emotionColors[emotion][0] ? emotionColors[emotion][0] : this.state.color;
+      color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : this.state.color;
 
       sentiment = currentSentiment !== sentiment ? sentiment : this.state.speed;
 
@@ -18540,28 +18540,10 @@ var Cubes = function (_Component) {
 
       this.setState({ color: color, speed: sentiment, direction: direction });
 
-      (0, _cubes.updateColor)(this.state.color);
+      (0, _cubes.updateColor)(this.state.color, this.state.intensity);
       (0, _cubes.updateSpeed)(this.state.speed);
       (0, _cubes.updateDirection)(this.state.direction);
     }
-
-    // handleColor() {
-    //   updateColor(this.state.color)
-    //   console.log('ambient light color is', this.state.color)
-    // }
-
-    // // Default speed is 0.0005
-    // handleSpeed() {
-    //   updateSpeed(this.state.speed)
-    //   console.log('speed is', this.state.speed)
-    // }
-
-    // // make cubes reverse spin direction based on sentiment
-    // handleDirection() {
-    //   updateDirection(this.state.direction)
-    //   console.log('direction is', this.state.direction)
-    // }
-
   }, {
     key: 'render',
     value: function render() {
@@ -41638,7 +41620,8 @@ var updateColor = function updateColor(color) {
 
 	var light = document.getElementById('light');
 
-	light.setAttribute('color', '' + color);
+	light.setAttribute('color', '' + color[0]);
+	light.setAttribute('intensity', '' + color[1]);
 };
 
 // updated speed based on intensity or a personality trait

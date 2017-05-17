@@ -12,8 +12,8 @@ export default class Cubes extends Component {
     this.state = {
       numCubes: 350,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
-      color: '#FFFFFF', // will update based on primary emotion
-      speed: 0, // will update based on sentiment analysis
+      color: ['#FFFFFF', 1], // will update based on primary emotion
+      speed: 1, // will update based on sentiment analysis
       direction: 'clockwise' // will update based on sentiment analysis
     }
 
@@ -32,8 +32,8 @@ export default class Cubes extends Component {
   componentWillReceiveProps() {
     let emotionColors = {
       anger: ['#FF3333', 3],
-      surprise: ['#ffcc99', 4],
-      sadness: ['#ff8533', 1],
+      surprise: ['#ff66cc', 4],
+      sadness: ['#0066ff', 1],
       fear: ['#99CC00', 2],
       joy: ['#FFFFFF', 1],
     }
@@ -49,7 +49,7 @@ export default class Cubes extends Component {
     let speed
     let direction
 
-    color = currentColor !== emotionColors[emotion][0] ? emotionColors[emotion][0] : this.state.color
+    color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : this.state.color
 
     sentiment = currentSentiment !== sentiment ? sentiment : this.state.speed
 
@@ -57,28 +57,11 @@ export default class Cubes extends Component {
 
     this.setState({ color: color, speed: sentiment, direction: direction })
 
-    updateColor(this.state.color)
+    updateColor(this.state.color, this.state.intensity)
     updateSpeed(this.state.speed)
     updateDirection(this.state.direction)
 
   }
-
-  // handleColor() {
-  //   updateColor(this.state.color)
-  //   console.log('ambient light color is', this.state.color)
-  // }
-
-  // // Default speed is 0.0005
-  // handleSpeed() {
-  //   updateSpeed(this.state.speed)
-  //   console.log('speed is', this.state.speed)
-  // }
-
-  // // make cubes reverse spin direction based on sentiment
-  // handleDirection() {
-  //   updateDirection(this.state.direction)
-  //   console.log('direction is', this.state.direction)
-  // }
 
   render() {
     return (
