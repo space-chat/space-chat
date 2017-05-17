@@ -134,17 +134,7 @@ export default class Knots extends Component {
         <div>
 				<a-scene fog="type: exponential; color: purple">
 					<AssetLoader />
-					<Avatar position="-1.5 1 -4" />
-					 <a-entity particle-system="preset: rain; maxAge: 1; velocityValue: 0 100 0; rotationAxis: z" position={vecToStr(myPosition)}></a-entity>
-        			<a-light color="blue" light="color:red;angle:45;type:spot;target:avatar" angle="45" position="-16.717 11.189 17.925" type="spot" target="avatar" rotation="0 -18.73571990077792 -6.245239966925973" scale="1 1 1" visible="true" />
-        			<a-light color="green" light="angle:45;color:#f0debb;type:spot;target:null" angle="45" type="spot" target="avatar"></a-light>
 
-        			{
-        				userPositions
-        					.map(vecToStr)
-									.map((position, index) => 
-        						index ? <a-sphere key={position} position={position} radius="1.75" color="white" /> : null)
-        			}
 
 					{/* Camera */}
 			    <a-entity id="camera" position="0 0 20" mouse-cursor="">
