@@ -29,6 +29,12 @@ export function startPeer(peerId) {
   socket.emit('start peer', peerId)
 }
 
+export function callFriend() {
+  socket.on('call me', peerId => {
+    console.log("OTHER ID", peerId)
+  })
+}
+
 export function updateRoster() {
   // when client receives roster, print array of socket id's to console
   socket.on('roster', roster => console.log('roster is', roster))

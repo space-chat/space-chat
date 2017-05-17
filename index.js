@@ -16,7 +16,7 @@ const projectId = 'space-chat-166520'
 const translate = Translate({
   projectId: projectId,
   keyFilename: './servicekey.json'
-}) 
+})
 
 // set up body parsing middleware
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -34,7 +34,7 @@ let languages = [], namespaces = ['bubbles', 'knots', 'space', 'cubes']
 
 namespaces.forEach(namespace => setUpNamespace(namespace))
 
-function setUpNamespace (namespace) {
+function setUpNamespace(namespace) {
   // create namespace as instance of io
   let nsp = io.of(`/${namespace}`)
 
@@ -57,7 +57,7 @@ function setUpNamespace (namespace) {
     socket.on('join request', language => {
       console.log('socket ', socket.id, ' joined channel! lang: ', language)
       // check that language choice is not empty, and not already stored
-        // ^ the first part of this check may no longer be necessary, due to the lang default bug fix
+      // ^ the first part of this check may no longer be necessary, due to the lang default bug fix
       if (language && languages.indexOf(language) === -1)
         // 1) store socket's selected language server-side
         languages.push(language)
@@ -65,21 +65,65 @@ function setUpNamespace (namespace) {
       // 2) subscribe socket to language channel
       socket.join(language)
       io.of(namespace).emit('roster', Object.keys(nsp.connected))
+      console.log('roster', Object.keys(nsp.connected))
     })
+
+    //This is emitted from "didMount" in Room
+    socket.on('start peer', peerId => {
+      //Here's the socket and their corresponding peerId
+      console.log("PEERID", peerId, "socketId", socket.id)
+      // console.log("namespaces????", Object.keys(nsp.connected), "sdfjd", nsp.connected)
+
+      //Who is in a namespace && speaks the same language???
+      const spaceLang = {}
+      languages.forEach(language => {
+        spaceLang[language] = []
+        spaceLang[language].push(Object.keys(nsp.adapter.rooms[language].sockets))
+        spaceLang[language] = spaceLang[language][0]
+      })
+
+      console.log("SPACELANG", spaceLang)
+
+      //  SPACELANG 
+      //    { en:
+      //  [ '/bubbles#YStdC6Aci1vbHeQsAAAC',
+      //    '/bubbles#EJNckrDy9KCIH2Z8AAAD' ],
+      // es: [ '/bubbles#2OfieYRZaPoiTTJEAAAE' ] }
+
+      //Send this socket's peerId to all other users in the same namespace who speak the same language. 
+
+      for (lang in spaceLang) {
+        if(spaceLang[lang].length > 1) {
+          spaceLang[lang].forEach(socId => {
+            if (socket.id !== socId) {
+              io.to(socId).emit('call me', peerId)
+              console.log("IDDD", socId, peerId)
+            }
+          })
+        }
+      }
+
+    })
+
+    //Allison just logged onto Spacechat. 
+    //She immediately emits 'start peer' with her peerID to the server 
+    //When Stefanie joins, the server emits 'call me' to stefanie with Allison's peer id. 
+    //When stefanie gets call me, she automatically calls allison with allison's peerID
+    //Allison automatically answers and they can start talking.
 
     // when a socket sends a spoken message as text
     socket.on('message', ({ messageText, lang }) => {
       console.log('namespace adapter rooms lang', nsp.adapter.rooms[lang].sockets)
       //console.log('new spoken message! server emitting original text: ', messageText)
       let translatedBool = false
-       
+
       // 1) immediately send message exactly as received to all OTHER sockets in original language channel
       socket.to(lang).emit('got message', { translatedBool, messageText, lang })
 
       // 2) send text to API for translation
       languages.forEach(targetLang => {
         console.log('target lang in server state array: ', targetLang, 'orig lang: ', lang)
-        if (targetLang !== lang ) {
+        if (targetLang !== lang) {
           console.log('server translating message into ', targetLang)
           translate.translate(messageText, targetLang)
             .then(results => {
@@ -90,7 +134,8 @@ function setUpNamespace (namespace) {
               nsp.in(targetLang).emit('got message', {
                 translatedBool: true,
                 messageText: translation,
-                lang: targetLang })
+                lang: targetLang
+              })
             })
             .catch(console.error)
         }
@@ -101,7 +146,7 @@ function setUpNamespace (namespace) {
         .then(data => {
           // add socket id to data payload
           data.speaker = socket.id
-           console.log("DATA", data)
+          console.log("DATA", data)
           // io.of(namespce).emit sends to ALL sockets in namespace, INCL original sender
           io.of(namespace).emit('got sentiment', data)
         })

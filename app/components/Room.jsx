@@ -24,7 +24,7 @@ import Scene from './Scene.jsx' // space scene
 import Bubbles from './Bubbles.jsx'
 import Knots from './Knots.jsx'
 import Cubes from './Cubes.jsx'
-import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket, openSocket, startPeer } from '../sockets.js'
+import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket, openSocket, startPeer, callFriend } from '../sockets.js'
 
 const propTypes = {
   // props injected by SpeechRecognition
@@ -77,12 +77,14 @@ class Room extends Component {
   }
 
   componentDidMount() {
+    //Start a peer instance
     var peer = new Peer({ key: 'lwjd5qra8257b9' });
-     
+    
+    //Send the peerId to the server
     peer.on('open', function (id) {
       console.log('My peer ID is: ' + id);
       startPeer(id)
-    });
+    })
    
     // broadcast language to server
     joinRoom(this.state.language)
@@ -105,6 +107,7 @@ class Room extends Component {
 
   // when the scene renders, API will start recording 
   render() {
+    callFriend()
     // emotion data
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
     let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
