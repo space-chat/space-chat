@@ -1,6 +1,11 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment, updateSpeaker } from './reducers/sentimentReducer.jsx'
+import { primaryEmotion, secondaryEmotion
+       , primaryIntensity, secondaryIntensity, primaryPersonality
+       , updateExtraversion, updateOpenness, updateConscientiousness
+       , updateAgreeableness, updateSentiment
+       , updateSpeaker } from './reducers/sentimentReducer.jsx'
+import { addToRoster, deleteFromRoster } from './reducers/rosterReducer.jsx'
 
 // enable text-to-speech in browser
 const synth = window.speechSynthesis
@@ -25,10 +30,20 @@ export function joinChannel(language) {
 }
 
 export function updateRoster() {
-  // when client receives roster, print array of socket id's to console
-  socket.on('roster update', rosterKeys => 
-    
-  )
+  // when client added to roster
+  socket.on('roster addition', addId => {
+
+    // update store with latest addition to roster
+    store.dispatch(addToRoster(addId))
+  })
+
+  // when client removed from roster
+  socket.on('roster deletion', deleteId => {
+
+    // update store with deletion from roster
+    store.dispatch(deleteFromRoster(deleteId))
+  })
+
 }
 
 export function sendMessage(messageText, lang) {

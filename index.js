@@ -43,6 +43,7 @@ function setUpNamespace (namespace) {
     console.log(`new socket ${socket.id} connected to namespace ${nsp.name}`)
 
     socket.on('close me', language => {
+      let deleteId = socket.id
       console.log('disconnecting socket with language ', language)
       // if this is the only socket left in a language channel
       if (nsp.adapter.rooms[language].sockets && nsp.adapter.rooms[language].length === 1)
@@ -51,8 +52,8 @@ function setUpNamespace (namespace) {
       console.log('all languages on server state are: ', languages)
       // close socket
       socket.disconnect()
-      // send out updated roster of connected sockets in room
-      io.of(namespace).emit('roster update', Object.keys(nsp.connected))
+      // send out id of deleted socket to all other sockets in room
+      io.of(namespace).emit('roster deletion', deleteId)
     })
 
     // when a socket joins room
@@ -66,8 +67,9 @@ function setUpNamespace (namespace) {
       console.log('all languages on server state are: ', languages)
       // 2) subscribe socket to language channel
       socket.join(language)
-      // send out updated roster of connected sockets in room
-      io.of(namespace).emit('roster update', Object.keys(nsp.connected))
+      // send out id of new socket to all OTHER connected sockets in room
+      // ^ might need debugging (|| change to mirror ln 56, add check client-side)
+      io.in(namespace).broadcast.emit('roster addition', socket.id)
     })
 
     // when a socket sends a spoken message as text
