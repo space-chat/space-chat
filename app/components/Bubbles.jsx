@@ -88,6 +88,7 @@ export default class Bubbles extends Component {
 
     render() {
         return (
+
                     <a-scene vr-mode-ui="enabled: true">
                         <AssetLoader />
                         <a-entity id="bubbleCamera" camera="userHeight: 1.6" look-controls
