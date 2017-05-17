@@ -14,6 +14,7 @@ const initialState = {
 }
 
 /* ------------------    ACTIONS    ------------------ */
+
 export const UPDATE_PRIMARY_EMO = "UPDATE_PRIMARY_EMO"
 export const UPDATE_SECONDARY_EMO = "UPDATE_SECONDARY_EMO"
 export const UPDATE_PRIMARY_INTENSITY = "UPDATE_PRIMARY_INTENSITY"
@@ -107,6 +108,8 @@ export const updateSpeaker = (speakerId) => {
 }
 
 /* ------------------    REDUCER    ------------------ */
+
+// 'sentimentReducer has a complexity of 10' --- should we break up into emotionReducer (for primary+secondary emotions and respective intensities), personalityReducer, and sentimentReducer (for sentiment score only)?
 
 export default function sentimentReducer(state = initialState, action) {
 

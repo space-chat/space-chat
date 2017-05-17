@@ -1,10 +1,35 @@
-import React, { Component } from 'react'
-import Avatar from './Avatar'
+import React from 'react'
 import AssetLoader from './AssetLoader'
+import Avatars from './Avatars'
+import ParticleSystem from 'aframe-particle-system-component'
+import { vecToStr } from '../utils'
+
+const Avatar = (props) => {
+  return (
+    <a-entity position={vecToStr(props.position)} particle-system={
+        [   'preset: dust',                       // default, dust, snow, rain
+            'type: sphere',                            // 1 (box), 2(sphere), 3(disc)
+            'accelerationValue: 0 0 0',
+            'accelerationSpread: 0 10 0',
+            'positionSpread: 8 8 8',
+            'color: white',
+            'maxAge: 1',
+            'size: 0.25',
+            'blending: 2',
+            'direction: 1',
+            'velocityValue: 5 5 5',
+            // 'velocitySpread: 8 8 8',
+            'rotationAxis: y',
+            // rotationAngle: 0; dust preset is 3.14
+            'particleCount: 50000'
+        ].join(';')} >
+    </a-entity>
+  )
+}
 
 const Scene = (props) => {
 
-  // get primary emotion from props, convert it to color for sky animation 
+  // get primary emotion from props, convert it to color for sky animation
   let emotionColors = {
     anger: '#FF0000',     // red
     surprise: '#FF8300',  // orange
@@ -16,23 +41,29 @@ const Scene = (props) => {
   let skyColor = emotionColors[props.currEmotion]
   let prevSkyColor = emotionColors[props.prevEmotion]
 
-  console.log('skyColor is', skyColor, 'prevSkyColor is', prevSkyColor)
+  let roster = {
+    a: {},
+    b: {},
+    c: {},
+    d: {},
+    e: {},
+    f: {}
+  }
 
-  console.log("PROPS IN SCENE", props)
   return (
-      <a-scene vr-mode-ui="enabled: true">
-        <AssetLoader />
-        <Avatar position="-1.5 1 -4" />
-        <a-sphere id="avatar" position="-1 1.25 -5" radius="1.75" material="src: #blossoms" color="white" />
-        <a-light color="red" angle="45" position="-1 1 0" type="spot" target="avatar" />
+    <a-scene vr-mode-ui="enabled: true">
+      <AssetLoader />
+      <Avatars Avatar={Avatar} roster={roster} />
 
-        <a-sky
-          id="sky"
-          src="#stars"
-          color={skyColor} >
-        </a-sky>
+      <a-light color="red" light="color:red;angle:45;type:spot;target:avatar" angle="45" position="-16.717 11.189 17.925" type="spot" target="avatar" rotation="0 -18.73571990077792 -6.245239966925973" scale="1 1 1" visible="true" />
+      <a-light color="red" light="angle:45;color:#f0debb;type:spot;target:null" angle="45" type="spot" target="avatar"></a-light>
 
-      </a-scene>
+      <a-sky
+        id="sky"
+        src="#stars"
+        color={skyColor} />
+
+    </a-scene>
   )
 }
 

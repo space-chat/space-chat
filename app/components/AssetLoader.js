@@ -20,6 +20,8 @@ export default function AssetLoader() {
 			<img id="rainbow" src="/images/rainbow.jpg" />
 			<img id="sunset" src="/images/sunset.jpg" />
 			<img id="tiedye" src="/images/tiedye.jpg" />
+			<img id="colors" src="/images/colors.jpg" />
+			<img id="krabi" src="/images/krabi.jpg" />
 
 
 		{/* Mixin example from Transcend. Mixins are reusable assets. In this case the 'chair-part' was used to compose chairs in the Chair component. */}
@@ -27,3 +29,9 @@ export default function AssetLoader() {
 		</a-assets>
 	)
 }
+
+//credit for #colors: 
+// photo credit: Rantz <a href="http://www.flickr.com/photos/99804259@N00/33003256230">Susan's World</a> via <a href="http://photopin.com">photopin</a> <a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">(license)</a>
+
+//credit for #krabi
+//photo credit: Sitoo <a href="http://www.flickr.com/photos/7470842@N04/32252838043">A window to Krabi (made of limestone)</a> via <a href="http://photopin.com">photopin</a> <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">(license)</a>

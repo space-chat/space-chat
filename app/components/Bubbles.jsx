@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import AssetLoader from './AssetLoader'
 
-import { initScene, makeBubbles, animate, addBubbles, sizeOrColor, updateSpeed, updatePath } from './bubbles.js'
+import { initScene, makeBubbles, animate, sizeOrColor, updateSpeed, updatePath } from './bubbles.js'
 
 export default class Bubbles extends Component {
 
@@ -8,7 +9,6 @@ export default class Bubbles extends Component {
         super()
 
         this.state = {
-            sky: '#flowerSky',
             color: 'white',
             scale: 0.7,
             personality: 'default',
@@ -20,7 +20,7 @@ export default class Bubbles extends Component {
 
     componentDidMount() {
         initScene()
-        makeBubbles(200, this.state.sky, this.state.color)
+        makeBubbles(200, this.props.sky, this.state.color)
         animate()
     }
 
@@ -63,10 +63,11 @@ export default class Bubbles extends Component {
             if (this.state.color !== '#FF8300') {
                 this.handleSizeOrColor()
             } else {
-                sizeOrColor(0.4, this.state.sky, "#FF8300", 3) //orange
-                sizeOrColor(0.4, this.state.sky, "#0FB235", 4) //green
-                sizeOrColor(0.4, this.state.sky, "#5227B2", 5) //purple
-                sizeOrColor(0.4, this.state.sky, "#FFD437", 7) //yellow
+                //for surprise 
+                sizeOrColor(0.4, this.props.sky, "#FF8300", 3) //orange
+                sizeOrColor(0.4, this.props.sky, "#0FB235", 4) //green
+                sizeOrColor(0.4, this.props.sky, "#5227B2", 5) //purple
+                sizeOrColor(0.4, this.props.sky, "#FFD437", 7) //yellow
             }
 
             updatePath(this.state.pattern)
@@ -82,25 +83,22 @@ export default class Bubbles extends Component {
 
     //Handles changing for all emotions except surprise
     handleSizeOrColor() {
-        sizeOrColor(this.state.scale, this.state.sky, this.state.color, 3)
+        sizeOrColor(this.state.scale, this.props.sky, this.state.color, 3)
     }
 
     render() {
         return (
+
                     <a-scene vr-mode-ui="enabled: true">
+                        <AssetLoader />
                         <a-entity id="bubbleCamera" camera="userHeight: 1.6" look-controls
                          mouse-cursor="">
                         </a-entity>
-                        <a-assets>
-                            <img id="flowerSky" src="images/blossoms.jpg" />
-                        </a-assets>
-                        <a-sphere position="-1 1.25 -5" radius="0.001" color="#EF2D5E" id="pink"></a-sphere>
-                        <a-sky src="#flowerSky"></a-sky>
+                        <a-sky src={this.props.sky}></a-sky>
                     </a-scene>
         )
     }
 }
-
 //Emotions: Change bubble color
         //Anger: Bubbles turn red + increase speed
         //Joy:   Bubbles turn yellow  

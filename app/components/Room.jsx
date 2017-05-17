@@ -13,12 +13,12 @@ When Room loads, it:
 (6) Receives translated text from server via receiveMessage()
 ------------------------------------------------ */
 
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 // higher order component that allows Room to transcribe speech
 import SpeechRecognition from 'react-speech-recognition'
-import PropTypes from 'prop-types' 
+import PropTypes from 'prop-types'
 
 import Scene from './Scene.jsx' // space scene
 import Bubbles from './Bubbles.jsx'
@@ -39,14 +39,17 @@ class Room extends Component {
     super(props)
     this.state = {
       language: '',
-      langDict: {}
+      langDict: {},
+      bubbleSky: '#blossoms'
     }
   }
 
   componentWillMount() {
+    //choose a random sky for Bubbles
+    const skies = ["#blossoms", "#colors", "#krabi"]
     //establish new socket connection
     openSocket(this.props.scene)
-
+    
     this.setState({ 
       language: this.props.language,
       langDict: {
@@ -62,7 +65,10 @@ class Room extends Component {
         ja: 'ja-JP',
         ko: 'ko-KR',
         ru: 'ru-RU'
-      }})
+      },
+      bubbleSky: skies[Math.floor(Math.random() * 3)]
+    })
+
     if (!this.props.browserSupportsSpeechRecognition) return null
   }
 
@@ -80,7 +86,7 @@ class Room extends Component {
   }
 
   // NB: web speech API waits to finalize text until after a short pause
-  componentWillReceiveProps({transcript, finalTranscript, resetTranscript, recognition}) {
+  componentWillReceiveProps({ transcript, finalTranscript, resetTranscript, recognition }) {
     // set language for speech recognition input
     recognition.lang = this.state.langDict[this.state.language]
     // when transcript finalized/ regular transcript and final transcript are the same
@@ -91,7 +97,7 @@ class Room extends Component {
     }
   }
 
-  // when the scene renders, API will start recording 
+  // when the scene renders, API will start recording
   render() {
     // emotion data
     let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
@@ -116,27 +122,26 @@ class Room extends Component {
     let scene = this.props.scene
     let sceneComponent
 
-    // switch (scene) {
-    //   case 'bubbles':
-    //     sceneComponent = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
-    //     break
-    //   case 'knots':
-    //     sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
-    //     break
-    //   case 'space':
-    //     sceneComponent = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
-    //     break
-    //   case 'cubes':
-    //     sceneComponent = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
-    //     break
-    // }
+    switch (scene) {
+      case 'bubbles':
+        sceneComponent = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} sky={this.state.bubbleSky}/>
+        break
+      case 'knots':
+        sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryIntensity={primaryIntensity} />
+        break
+      case 'space':
+        sceneComponent = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        break
+      case 'cubes':
+        sceneComponent = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        break
+    }
 
     console.log('emotions in Room are', prevEmotion, currEmotion)
 
     return (
-      <div>
-        <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} extraversion={extraversion} />
-        {/* {sceneComponent} */}
+      <div id="sceneComponent" >
+        {sceneComponent}
       </div>
     )
   }
@@ -149,12 +154,3 @@ const mapState = ({language, sentiment, scene}) => ({language, sentiment, scene}
 
 export default connect(mapState, null)(EnhancedRoom)
 
-
-/*
-1. I am importing react-speech-component which is a simple node package that is a higher order component that uses the web speech API. 
-    This will capture our interim and final transcript speech. 
-    We could just build this ourselves if we wanted. It's not extrememly complicated. 
-    We might even want to rewrite it and adapt it to do text to speech, or anything else we want it to do. 
-    The only thing I don't like about this component is that I don't know how to turn the speech to text off without exiting the page.  
-2. I am putting the final transcript on the state. 
-*/

@@ -57,7 +57,7 @@ export function receiveSentiment() {
 
     // get primary and secondary emotions, and their intensities
     let emotions = emotion[0]
-    let sortedEmotions = [['joy', 0.5], ['surprise', 0.5]] // default 
+    let sortedEmotions = [['joy', 0.5], ['surprise', 0.5]] // default
 
     // rank emotions in sorted array: most intense to least intense
     let keys = Object.keys(emotions)
