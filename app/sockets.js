@@ -1,16 +1,33 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { updateEmotion } from './reducers/sentimentReducer.jsx'
-
-const socket = io()
+import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment, updateSpeaker } from './reducers/sentimentReducer.jsx'
 
 // enable text-to-speech in browser
 const synth = window.speechSynthesis
 let voices
 
+let socket
+
+export function openSocket(scene) {
+  // open socket, connect to 'namespace' associated with scene
+  console.log('connecting to namespace ', scene)
+  socket = io(`/${scene}`)
+}
+
+export function closeSocket(language) {
+  // disconnecting socket handled server-side
+  socket.emit('close me', language)
+}
+
 export function joinRoom(language) {
-  socket.emit('join', language)
+  // subscribing to language channel handled server-side
+  socket.emit('join request', language)
   voices = synth.getVoices()
+}
+
+export function updateRoster() {
+  // when client receives roster, print array of socket id's to console
+  socket.on('roster', roster => console.log('roster is', roster))
 }
 
 export function sendMessage(messageText, lang) {
@@ -19,59 +36,74 @@ export function sendMessage(messageText, lang) {
 }
 
 export function receiveMessage(clientLang) {
+  // when client receives message from language channel
   socket.on('got message', ({ translatedBool, messageText, lang }) => {
     console.log('incoming message ', messageText, ' in language ', lang)
-    // if lang in 'got message' payload matches socket user's language
-    if (clientLang === lang && translatedBool) {
-      // find correct voice, speak text from 'got message' payload
-      var utterance = new SpeechSynthesisUtterance(messageText)
-      utterance.voice = voices.filter(voice => 
-        voice.lang.substr(0,2) === clientLang
-      )[0]
-      synth.speak(utterance)
-    }
+    // find correct voice, speak text from 'got message' payload
+    var utterance = new SpeechSynthesisUtterance(messageText)
+    utterance.voice = voices.filter(voice => 
+      voice.lang.substr(0,2) === clientLang
+    )[0]
+    synth.speak(utterance)
   })
 }
 
 export function receiveSentiment() {
-  socket.on('got sentiment', ({ emotion, sentiment, personality }) => {
-    console.log(`emotion: ${emotion}`, `sentiment: ${sentiment}`, `personality: ${personality}`)
+  socket.on('got sentiment', ({ emotion, sentiment, personality, speaker }) => {
+    console.log(`emotion: ${emotion}`
+               , `sentiment: ${sentiment}`
+               , `personality: ${personality}`
+               , `speaker: ${speaker}`)
 
-    // update view with sentiment data
+    // get primary and secondary emotions, and their intensities
     let emotions = emotion[0]
+    let sortedEmotions = [['joy', 0.5], ['surprise', 0.5]] // default 
 
-    // identify strongest emotion
-    let primaryEmotion = 'joy' // default
-    for (var e in emotions) {
-      if (emotions[e] > emotions[primaryEmotion]) {
-        primaryEmotion = e
+    // rank emotions in sorted array: most intense to least intense
+    let keys = Object.keys(emotions)
+    sortedEmotions = keys.map(key => emotions[key])
+      .sort().reverse().map(intensity => {
+      for (let e in emotions) {
+        if (emotions[e] === intensity) return [e, intensity]
       }
-    }
+    })
 
-    // update store with new emotion data
-    store.dispatch(updateEmotion(primaryEmotion))
-    //document.querySelector('#sky').emit('sentiment-change')
-    document.querySelector('#animate').emit('sentiment-change')
+    //Get the dominant personality
+    let personalityTraits = personality[0]
+    let keys2 = Object.keys(personalityTraits)
+    var primPersonality = "openness"
+
+
+     for (var trait in personalityTraits) {
+       if (personalityTraits[trait] > personalityTraits[primPersonality]) {
+         primPersonality = trait
+       }
+     }
+
+    // Get other indico info
+    let primEmo = sortedEmotions[0][0]  //primary emotion
+    let secEmo = sortedEmotions[1][0]   //secondary emotion
+    let primInt = sortedEmotions[0][1]  //primary emotion's intensity
+    let secInt = sortedEmotions[1][1]   //secondary emotion's intensity
+    let extraversion = personality[0].extraversion || 0.001
+    let openness = personality[0].agreeableness || 0.001
+    let conscientiousness = personality[0].agreeableness || 0.001
+    let agreeableness = personality[0].agreeableness || 0.001
+    let sentScore = sentiment[0]        //sentiment score
+
+    
+    // update store with new indico data
+    store.dispatch(primaryEmotion(primEmo))
+    store.dispatch(secondaryEmotion(secEmo))
+    store.dispatch(primaryIntensity(primInt))
+    store.dispatch(secondaryIntensity(secInt))
+    store.dispatch(primaryPersonality(primPersonality))
+    store.dispatch(updateExtraversion(extraversion))
+    store.dispatch(updateOpenness(openness))
+    store.dispatch(updateConscientiousness(conscientiousness))
+    store.dispatch(updateAgreeableness(agreeableness))
+    store.dispatch(updateSentiment(sentScore))
+    store.dispatch(updateSpeaker(speaker))
   }
-
-    /* ----- Example of output: ------
-  
-     emotion:
-     [ { anger: 0.11315701900000001,
-         surprise: 0.085946694,
-         sadness: 0.5705037713000001,
-         fear: 0.15985926990000002,
-         joy: 0.0705333054 } ],
-  
-    sentiment: [ 0.0125864741 ],
-  
-    personality:
-     [ { openness: 0.3719486252,
-         extraversion: 0.6793065118,
-         agreeableness: 0.7661266693000001,
-         conscientiousness: 0.47509849260000003 } ] 
-  
-    -------------------------------- */
-
   )
 }
