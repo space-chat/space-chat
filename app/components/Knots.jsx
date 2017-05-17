@@ -4,14 +4,17 @@ import Avatars from './Avatars'
 import ParticleSystem from 'aframe-particle-system-component'
 import { vecToStr } from '../utils'
 
-import { initScene, makeKnots, setAmbientLightA, setAmbientLightB, makeRotatingLightX, makeRotatingLightY, animate, updateKnotColor, updateLightColor, updateLightRotationRate } from './knots.js'
+import { initScene, makeKnots, animate
+	   , setAmbientLightA, setAmbientLightB
+	   , makeRotatingLightX, makeRotatingLightY
+	   , updateKnotColor, updateLightColor, updateLightRotationRate } from './knots.js'
 
 const Avatar = (props) => {
-  return (
-  	<a-entity position={vecToStr(props.position)}>
-	  <a-torus radius="1" opacity="0.7" metalness="1" spherical-env-map="#tiedye" />
-	  </a-entity>
-  )
+	return (
+		<a-entity position={vecToStr(props.position)}>
+			<a-torus radius="1" opacity="0.7" metalness="1" spherical-env-map="#tiedye" />
+		</a-entity>
+	)
 }
 
 export default class Knots extends Component {
@@ -42,11 +45,11 @@ export default class Knots extends Component {
 	componentWillReceiveProps() {
 		// hashes for translating emotion to color values
 		let emotionColorsA = {
-				anger: '#ff0000',     // red
-	    	surprise: '#CC0033',  // pink
-	    	sadness: '#3366ff',   // blue
-	    	fear: '#333300',      // dark olive gray
-	    	joy: '#FFFFFF'        // white
+			anger: '#ff0000',     // red
+	    		surprise: '#CC0033',  // pink
+	    		sadness: '#3366ff',   // blue
+	    		fear: '#333300',      // dark olive gray
+	    		joy: '#FFFFFF'        // white
 		}
 
 		let emotionColorsB = {
@@ -105,16 +108,16 @@ export default class Knots extends Component {
 		updateKnotColor(this.state.colorA, this.state.colorB)
 		updateLightColor(this.state.colorC, this.state.colorD)
 		updateLightRotationRate(this.state.rate)
-}
+	}
 
 	render() {
 		let roster = {
-	    a: {},
-	    b: {},
-	    c: {},
-	    d: {},
-	    e: {},
-	    f: {},
+		    a: {},
+		    b: {},
+		    c: {},
+		    d: {},
+		    e: {},
+		    f: {},
 		}
 
 		return (
@@ -124,66 +127,15 @@ export default class Knots extends Component {
 					<Avatars Avatar={Avatar} roster={roster} />
 
 					{/* Camera */}
-			   <a-entity id="camera" position="0 0 -10" mouse-cursor="">
-			      <a-camera fov="45" user-height="0" />
-			    </a-entity>
+					<a-entity id="camera" position="0 0 -10" mouse-cursor="">
+						<a-camera fov="45" user-height="0" />
+					</a-entity>
 
-	{/*					<a-assets>
-		        <a-mixin id="lightA" geometry="primitive: sphere; radius: 1.5"
-		                 material="color: white; shader: flat; opacity: 0.01"
-		                 light="color: blue; distance: 120; intensity: 3; type: point">
-		        </a-mixin>
-		        <a-mixin id="lightB" geometry="primitive: sphere; radius: 2"
-		                 material="color: white; shader: flat; opacity: 0.01"
-		                 light="color: orange; distance: 120; intensity: 2; type: point">
-		        </a-mixin>
-		        <a-mixin id="torus-knot" geometry="primitive: torusKnot"
-		                 material="color: red">
-		        </a-mixin>
-		      </a-assets>*/}
-
-		      {/* Avatar + Targeted Lights */}
-		      {/*<a-entity id="avatar"
-		      geometry="primitive: torusKnot; radius: 3"
-		      	position="-1 1.25 -5"
-		      	material="color: white"
-		      	p="5"
-		      	metalness=".9"
-		      	roughness="-2" />
-	        <a-light id="fixedLightA" color={this.state.colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar" />
-	        <a-light id="fixedLightB" color={this.state.colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar" />
-
-	        <a-entity id="avatar2"
-		      geometry="primitive: torusKnot; radius: 2"
-		      	position="15 2 -1"
-		      	p="10"
-		      	material="color: white"
-		      	metalness=".9"
-		      	roughness="-2" />
-	        <a-light id="fixedLightA" color={this.state.colorA} angle="90" radius="60" position="-3 -4 1" type="point" distance="0" intensity="3" target="avatar2" />
-	        <a-light id="fixedLightB" color={this.state.colorB} angle="-90" radius="60" position="2 4 1" type="point" distance="0" intensity="2" target="avatar2" />*/}
-
-			    {/* Lights. */}
-				{/* x-axis rotation */}
-			    {/*<a-entity position="0 0 0">
-			      <a-animation attribute="rotation" to="0 360 0"
-			                   repeat="indefinite" easing="linear" dur={this.state.rate}>
-			      </a-animation>
-			      <a-entity mixin="lightA" position="30 0 0"></a-entity>
-			    </a-entity> */}
-	        {/* y-axis rotation */}
-		     {/*} <a-entity position="0 0 0">
-		        <a-animation attribute="rotation" to="360 0 0"
-		                     repeat="indefinite" easing="linear" dur={this.state.rate}>
-		        </a-animation>
-		        <a-entity mixin="lightB" position="0 0 40"></a-entity>
-		      </a-entity>*/}
-
-		       {/* Skysphere */}
-			    <a-sky id="sky" src="#tiedye"></a-sky>
+					{/* Skysphere */}
+					<a-sky id="sky" src="#tiedye"></a-sky>
 
 				</a-scene>
 			</div>
-	  )
+	  	)
 	}
 }
