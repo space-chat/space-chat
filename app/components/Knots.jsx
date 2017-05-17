@@ -67,10 +67,12 @@ export default class Knots extends Component {
 		let colorB = prevColorB !== nextColorB ? nextColorB : prevColorB
 
 		// translate emotional intensity to rotation rate and set rate on state
-		let intensity = this.props.primaryIntensity 
+		let intensity = this.props.primaryIntensity || 0.5
 
+		// 0   1
 		let prevRate = this.state.rate
-		let nextRate = (intensity - 1) * -4000 
+		let nextRate = (1 - intensity) * -100000
+		// let nextRate = (1 - intensity) * -4000 <-- flips sense of numbers
 
 		let rate = prevRate !== nextRate ? nextRate : prevRate
 

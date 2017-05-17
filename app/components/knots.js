@@ -146,17 +146,18 @@ const makeRotatingLightY = () => {
   document.querySelector('a-scene').appendChild(lightY)
 }
 
-const updateLightRotationRate = (n) => {
-  tickSpeed = n
+const updateLightRotationRate = (rate) => {
+  tickSpeed = rate
 }
 
-const render = () => {
+const render = (timeStamp) => {
   //let camera = document.getElementById('camera')
-  let timer = tickSpeed * Date.now() // change tickSpeed for rotating light speed
+  let timer = tickSpeed * timeStamp // change tickSpeed for rotating light speed
   //let curr = camera.getAttribute('position') || { x: 1, y: 1 }
   //let addx = curr.x + ((mouseX - curr.x) * .05)
   //let addy = curr.y + ((- mouseY - curr.y) * .05)
   //camera.setAttribute('position', { x: addx, y: addy, z: 5 })
+  console.log('timer is', timer)
 
   // circleZ animation path for lightX
   lightX.setAttribute('position', { x: 18 * Math.sin(timer + (2 * Math.PI)) })
@@ -167,9 +168,9 @@ const render = () => {
   lightY.setAttribute('position', { y: 17 * Math.cos(timer + 2 * (2 * Math.PI)) })
 }
 
-const animate = () => {
+const animate = (timeStamp) => {
   requestAnimationFrame(animate)
-  render()
+  render(timeStamp)
 }
 
 const onWindowResize = () => {
