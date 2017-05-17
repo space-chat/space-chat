@@ -8,7 +8,9 @@ import { initScene, makeKnots, setAmbientLightA, setAmbientLightB, makeRotatingL
 
 const Avatar = (props) => {
   return (
-	  <a-icosahedron radius="1" opacity="0.8" metalness="1" />
+  	<a-entity position={vecToStr(props.position)}>
+	  <a-torus radius="1" opacity="0.7" metalness="1" spherical-env-map="#tiedye" />
+	  </a-entity>
   )
 }
 
@@ -19,8 +21,8 @@ export default class Knots extends Component {
 
 		this.state = {
 			numKnots: 60,
-			colorA: '#ff0000', // red
-			colorB: '#ff6600', // orange
+			colorA: '#ff6600', // red
+			colorB: '#993300' , // orange
 			rate: 0.0005
 		}
 	}

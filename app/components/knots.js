@@ -31,7 +31,7 @@ const initScene = () => {
 // helper function to generate random coords
 const getRandCoord = () => {
   let coord = Math.random() * 60;
-  return Math.random() < 0.5 ? coord + 3 : coord * -1 - 3;
+  return Math.random() < 0.5 ? coord + 4 : coord * -1 - 4;
 }
 
 // create one random knot
@@ -49,6 +49,7 @@ const createKnot = () => {
   knot.setAttribute('metalness', `${(Math.random() * 0.5) + 0.5}`)
   knot.setAttribute('roughness', `${Math.random()}`)
   knot.setAttribute('segments-radial', '10')
+  knot.setAttribute('spherical-env-map', '#tiedye')
 
   knot.setAttribute('position', {
     x: `${getRandCoord()}`,
