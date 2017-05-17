@@ -135,7 +135,7 @@ class Room extends Component {
 
     return (
       <div>
-        <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} extraversion={extraversion} />
         {/* {sceneComponent} */}
       </div>
     )

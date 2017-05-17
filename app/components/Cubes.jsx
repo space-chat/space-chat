@@ -40,22 +40,21 @@ export default class Cubes extends Component {
 
     //compare current colors/emotion
     let currentColor = this.state.color
-    let currentSentiment = this.state.speed
+    let currentSpeed = this.state.speed
 
     let emotion = this.props.currEmotion
     let sentiment = this.props.sentimentScore
+    console.log('extraversion is', this.props.extraversion)
+    let nextSpeed = this.props.sentimentScore / 100 
 
-    let color
-    let speed
-    let direction
+    let color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor
 
-    color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : this.state.color
+    let speed = currentSpeed !== nextSpeed ? nextSpeed : currentSpeed
+    console.log('speed is', speed)
 
-    sentiment = currentSentiment !== sentiment ? sentiment : this.state.speed
+    let direction = sentiment > 0.5 ? 'clockwise' : 'counter-clockwise'
 
-    direction = sentiment > 0.5 ? 'clockwise' : 'counterclockwise'
-
-    this.setState({ color: color, speed: sentiment, direction: direction })
+    this.setState({ color: color, speed: speed, direction: direction })
 
     updateColor(this.state.color, this.state.intensity)
     updateSpeed(this.state.speed)

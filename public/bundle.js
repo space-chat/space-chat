@@ -18108,7 +18108,7 @@ var Room = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_Cubes2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality })
+        _react2.default.createElement(_Cubes2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, extraversion: extraversion })
       );
     }
   }]);
@@ -18523,22 +18523,21 @@ var Cubes = function (_Component) {
 
       //compare current colors/emotion
       var currentColor = this.state.color;
-      var currentSentiment = this.state.speed;
+      var currentSpeed = this.state.speed;
 
       var emotion = this.props.currEmotion;
       var sentiment = this.props.sentimentScore;
+      console.log('extraversion is', this.props.extraversion);
+      var nextSpeed = this.props.sentimentScore / 100;
 
-      var color = void 0;
-      var speed = void 0;
-      var direction = void 0;
+      var color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor;
 
-      color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : this.state.color;
+      var speed = currentSpeed !== nextSpeed ? nextSpeed : currentSpeed;
+      console.log('speed is', speed);
 
-      sentiment = currentSentiment !== sentiment ? sentiment : this.state.speed;
+      var direction = sentiment > 0.5 ? 'clockwise' : 'counter-clockwise';
 
-      direction = sentiment > 0.5 ? 'clockwise' : 'counterclockwise';
-
-      this.setState({ color: color, speed: sentiment, direction: direction });
+      this.setState({ color: color, speed: speed, direction: direction });
 
       (0, _cubes.updateColor)(this.state.color, this.state.intensity);
       (0, _cubes.updateSpeed)(this.state.speed);
