@@ -93,12 +93,6 @@ export default class Knots extends Component {
 
 		return (
 			<div>
-        {/* temporary buttons for testing */}
-        <div>
-          <button onClick={() => this.handleColor()}>Change color</button>
-          <button onClick={() => this.handleRate()}>Change rotation rate</button>
-        </div>
-        <div>
 				<a-scene fog="type: exponential; color: purple">
 					<AssetLoader />
 					<Avatars Avatar={Avatar} roster={roster} />
@@ -108,7 +102,7 @@ export default class Knots extends Component {
 			      <a-camera fov="45" user-height="0" />
 			    </a-entity>
 
-{/*					<a-assets>
+	{/*					<a-assets>
 		        <a-mixin id="lightA" geometry="primitive: sphere; radius: 1.5"
 		                 material="color: white; shader: flat; opacity: 0.01"
 		                 light="color: blue; distance: 120; intensity: 3; type: point">
@@ -163,7 +157,6 @@ export default class Knots extends Component {
 			    <a-sky id="sky" src="#tiedye"></a-sky>
 
 				</a-scene>
-			</div>
 			</div>
 	  )
 	}
