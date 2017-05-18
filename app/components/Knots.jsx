@@ -46,16 +46,16 @@ export default class Knots extends Component {
 	componentWillReceiveProps() {
 		// hashes for translating emotion to color values
 		let emotionColorsA = {
-				anger: '#ff0000',     // red
-	    		surprise: '#CC0033',  // pink
-	    		sadness: '#3366ff',   // blue
-	    		fear: '#333300',      // dark olive gray
-	    		joy: '#FFFFFF'        // white
+			anger: '#ff0000',     // red
+    		surprise: '#ffcc00',  // pink
+    		sadness: '#3366ff',   // blue
+    		fear: '#333300',      // dark olive gray
+    		joy: '#FFFFFF'        // white
 		}
 
 		let emotionColorsB = {
 			anger: '#FF6600', // orange    
-			surprise: '#ffcc66', // pink
+			surprise: '#ffcc66', // peach
 			sadness: '#003366', // dark blue
 			fear: '#666633', // olive green
 			joy: '#FFFFFF' // burnt orange

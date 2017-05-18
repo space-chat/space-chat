@@ -195,8 +195,8 @@ const render = (timeStamp) => {
   else if (movementPath === "coolness") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 80 * Math.sin(timer + i * 1.1 + (2 * Math.PI)) })
-      knot.setAttribute('position', { z: 80 * Math.cos(timer + i + (2 * Math.PI)) })
+      knot.setAttribute('position', { x: 40 * Math.sin(timer + i * 1.1 + (2 * Math.PI)) })
+      knot.setAttribute('position', { y: 40 * Math.cos(timer + i + (2 * Math.PI)) })
     }
   } else if (movementPath === "pendulum") {
     for (var i = 0, il = knots.length; i < il; i++) {
