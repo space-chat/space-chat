@@ -69,7 +69,6 @@ function setUpNamespace (namespace) {
 
     // when a socket sends a spoken message as text
     socket.on('message', ({ messageText, lang }) => {
-      console.log('namespace adapter rooms lang', nsp.adapter.rooms[lang].sockets)
       //console.log('new spoken message! server emitting original text: ', messageText)
       let translatedBool = false
        
