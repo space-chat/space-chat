@@ -69,7 +69,7 @@ class Home extends Component {
               <button className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER CUBESPACE</Link></button>
             </div>
             <div className="down-chevron">
-              <span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+              <a href="#instructions" className="glyphicon glyphicon-chevron-down" aria-hidden="true"></a>
             </div>
           </div>
         </div>

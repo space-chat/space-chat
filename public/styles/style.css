@@ -1,5 +1,7 @@
 /**** HOME PAGE STYLES *****/
 
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:300,400);
+
 /***ALL SCREENS ***/
 body {
   margin: 0px auto;
@@ -50,8 +52,10 @@ h3 {
 }
 
 .instructions-p {
-  font-size: 3rem;
-  text-align: center; 
+  font-size: 2.3rem;
+  text-align: center;
+  line-height: 150%; 
+  padding: 15px;
 }
 
 #compatibility {
