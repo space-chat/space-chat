@@ -28,7 +28,7 @@ export default class Knots extends Component {
 			colorB: '#993300' , // burnt orange
 			colorC: '#FFFFFF',
 			colorD: '#FFFFFF',
-			rate: 0.0005,
+			rate: 0.00005,
 			path: 'trig'
 		}
 	}
@@ -104,13 +104,16 @@ export default class Knots extends Component {
 
 		// translate emotional intensity to rotation rate and set rate on state
 		let intensity = this.props.primaryIntensity || 0.5
+		console.log('intensity is', intensity)
 
 		// 0   1
 		let prevRate = this.state.rate
-		let nextRate = (1 - intensity) / 1000 + 0.003
+		let nextRate = (1 - intensity) / 30000 + 0.0003
 		// let nextRate = (1 - intensity) * -4000 <-- flips sense of numbers
+		console.log('nextRate is', nextRate)
 
 		let rate = prevRate !== nextRate ? nextRate : prevRate
+		console.log('rate is', rate)
 
 		// compare current personality with incoming
 		let personality = this.props.primaryPersonality

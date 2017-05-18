@@ -13,33 +13,40 @@ let height = window.innerHeight || 2;
 let mouseX = 0;
 let mouseY = 0;
 let movementPath = 'trig' // need to write movement path
-let tickSpeed = 0.005
+let tickSpeed = 0.0001
 
 const initScene = () => {
-  // let camera = document.getElementById('camera')
-  // camera.setAttribute('fov', 60) //field of view
-  // camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
-  // camera.setAttribute('near', 0.01) //near
-  // camera.setAttribute('far', 1000) //far
-  // camera.setAttribute('position', { z: 3 })
-  // camera.setAttribute('focalLength', 3)
+  let camera = document.getElementById('camera')
+  camera.setAttribute('fov', 60) //field of view
+  camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
+  camera.setAttribute('near', 0.01) //near
+  camera.setAttribute('far', 1000) //far
+  camera.setAttribute('position', { z: 3 })
+  camera.setAttribute('focalLength', 3)
 
   window.addEventListener('resize', onWindowResize, false);
   document.addEventListener('mousemove', onDocumentMouseMove, false)
 }
 
 // helper function to generate random coords
-const getRandCoord = () => {
-  let coord = Math.random() * 60;
-  return Math.random() < 0.5 ? coord + 4 : coord * -1 - 4;
-}
+// const getRandCoord = () => {
+//   let coord = Math.random() * 60;
+//   return Math.random() < 0.5 ? coord + 10 : coord * -2 - 10;
+// }
 
 // create one random knot
 const createKnot = () => {
 
   let knot = document.createElement('a-torus-knot')
 
-  knot.setAttribute('radius', `${Math.random() * 10}`)
+  // set knot position - break into helper func
+  let x = (Math.random() * 201) - 100
+  let y = (Math.random() * 501) - 200
+  let z = (Math.random() * 201) - 100
+  knot.setAttribute('position', { x: x, y: y, z: z})
+  console.log('position is', x, y, z)
+
+  knot.setAttribute('radius', `${Math.random()} * 2`)
   knot.setAttribute('radiusTubular', `${Math.random() * 8}`)
   knot.setAttribute('p', `${Math.round(Math.random() * 10)}`)
   knot.setAttribute('q', `${Math.round(Math.random() * 10)}`)
@@ -51,11 +58,11 @@ const createKnot = () => {
   knot.setAttribute('segments-radial', '10')
   knot.setAttribute('spherical-env-map', '#tiedye')
 
-  knot.setAttribute('position', {
-    x: `${getRandCoord()}`,
-    y: `${getRandCoord()}`,
-    z: `${getRandCoord()}`,
-  })
+  // knot.setAttribute('position', {
+  //   x: `${getRandCoord()}`,
+  //   y: `${getRandCoord()}`,
+  //   z: `${getRandCoord()}`,
+  // })
 
   // give each knot a unique id
   knots.push(knot)
@@ -163,38 +170,39 @@ const render = (timeStamp) => {
   camera.setAttribute('position', { x: addx, y: addy, z: 5 })
 
   // circleZ animation path for lightX
-  lightX.setAttribute('position', { x: 18 * Math.sin(timer + (2 * Math.PI)) })
-  lightX.setAttribute('position', { z: 24 * Math.cos(timer + 3 + (2 * Math.PI)) })
+  //  let light = document.getElementById('lightX')
+  lightX.setAttribute('position', { x: 108 * Math.sin(timer + (2 * Math.PI)) })
+  lightX.setAttribute('position', { z: 204 * Math.cos(timer + 3 + (2 * Math.PI)) })
 
   // circleY animation path for lightY
-  lightY.setAttribute('position', { x: 25 * Math.sin(timer + (2 * Math.PI)) })
-  lightY.setAttribute('position', { y: 17 * Math.cos(timer + 2 * (2 * Math.PI)) })
+  lightY.setAttribute('position', { x: 205 * Math.sin(timer + (2 * Math.PI)) })
+  lightY.setAttribute('position', { y: 107 * Math.cos(timer + 2 * (2 * Math.PI)) })
 
   if (movementPath === "trig") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 5 * Math.cos(timer + i) })
-      knot.setAttribute('position', { y: 5 * Math.sin(timer + i * 1.1) })
+      knot.setAttribute('position', { x: 50 * Math.cos(timer + i) })
+      knot.setAttribute('position', { y: 50 * Math.sin(timer + i * 1.1) })
     }
   }
   else if (movementPath === "circleZ") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
-      knot.setAttribute('position', { z: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
+      knot.setAttribute('position', { x: 80 * Math.sin(timer + i + (2 * Math.PI)) })
+      knot.setAttribute('position', { z: 104 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
     }
   }
   else if (movementPath === "coolness") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 8 * Math.sin(timer + i * 1.1 + (2 * Math.PI)) })
-      knot.setAttribute('position', { z: 8 * Math.cos(timer + i + (2 * Math.PI)) })
+      knot.setAttribute('position', { x: 80 * Math.sin(timer + i * 1.1 + (2 * Math.PI)) })
+      knot.setAttribute('position', { z: 80 * Math.cos(timer + i + (2 * Math.PI)) })
     }
   } else if (movementPath === "pendulum") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
-      knot.setAttribute('position', { z: 8 * Math.cos(timer + i * 2 + (2 * Math.PI)) })
+      knot.setAttribute('position', { x: 80 * Math.sin(timer + i + (2 * Math.PI)) })
+      knot.setAttribute('position', { z: 80 * Math.cos(timer + i * 2 + (2 * Math.PI)) })
     }
   }
 }
