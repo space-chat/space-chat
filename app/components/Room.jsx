@@ -3,7 +3,7 @@ When Room loads, it:
 (0) Renders dumb <Scene /> component
 (1) Starts recording and transcribing audio input (thanks to SpeechRecognition API)
 (2) Sets user's chosen language on state
-(3) Emits a 'join' message to server through socket (via joinRoom())
+(3) Emits a 'join' message to server through socket (via joinChannel())
 (4) Sets listeners for 'got sentiment' and 'got message' from server via receiveSentiment() and receiveMessage()
 (4) When speech transcription is finalized (/when user pauses), emits 'message' msg to server through socket via sendMesssage()
    - server then processes transcription:
@@ -20,11 +20,13 @@ import { connect } from 'react-redux'
 import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types'
 
-import Scene from './Scene.jsx' // space scene
 import Bubbles from './Bubbles.jsx'
+import Scene from './Scene.jsx'     // space scene
 import Knots from './Knots.jsx'
 import Cubes from './Cubes.jsx'
-import { joinRoom, sendMessage, receiveMessage, receiveSentiment, closeSocket, openSocket } from '../sockets.js'
+import { openSocket, closeSocket, updateRoster
+       , joinChannel, sendMessage
+       , receiveMessage, receiveSentiment } from '../sockets.js'
 
 
 const propTypes = {
@@ -47,10 +49,11 @@ class Room extends Component {
   componentWillMount() {
     //choose a random sky for Bubbles
     const skies = ["#blossoms", "#colors", "#krabi"]
-    //establish new socket connection
+    //establish new socket connection to 'namespace' associated with scene
     openSocket(this.props.scene)
     
     this.setState({ 
+      bubbleSky: skies[Math.floor(Math.random() * 3)],
       language: this.props.language,
       langDict: {
         en: 'en-US',
@@ -65,21 +68,23 @@ class Room extends Component {
         ja: 'ja-JP',
         ko: 'ko-KR',
         ru: 'ru-RU'
-      },
-      bubbleSky: skies[Math.floor(Math.random() * 3)]
+      }
     })
 
     if (!this.props.browserSupportsSpeechRecognition) return null
   }
 
   componentWillUnmount() {
+    console.log('warning: component will unmount!')
     // disconnect socket, also leaves channels, unsets listeners
     closeSocket(this.state.language)
   }
 
   componentDidMount() {
     // broadcast language to server
-    joinRoom(this.state.language)
+    joinChannel(this.state.language)
+    // set listener to update roster
+    updateRoster()
     // set listeners to receive sentiment analyses, translated messages
     receiveSentiment()
     receiveMessage(this.state.language)
@@ -126,7 +131,9 @@ class Room extends Component {
         sceneComponent = <Scene currEmotion={currEmotion} />
         break
       case 'cubes':
-        sceneComponent = <Cubes currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        sceneComponent = <Cubes roster={this.props.roster} 
+          currEmotion={currEmotion} prevEmotion={prevEmotion} 
+          sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
     }
 
@@ -143,7 +150,7 @@ class Room extends Component {
 Room.propTypes = propTypes
 const EnhancedRoom = SpeechRecognition(Room)
 
-const mapState = ({language, sentiment, scene}) => ({language, sentiment, scene})
+const mapState = ({language, sentiment, scene, roster}) => ({language, sentiment, scene, roster})
 
 export default connect(mapState, null)(EnhancedRoom)
 

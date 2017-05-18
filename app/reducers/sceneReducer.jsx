@@ -2,15 +2,15 @@
 export const SCENE_SET = 'SCENE_SET'
 
 // ACTIONS
-
-
-// ACTION CREATORS
 export const setScene = (scene) => {
   return {
     type: SCENE_SET,
     payload: scene
   }
 }
+
+// ACTION CREATORS
+
 
 // REDUCER
 const sceneReducer = (state = [], action) => {

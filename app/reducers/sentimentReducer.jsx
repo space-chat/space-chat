@@ -7,7 +7,7 @@ const initialState = {
   speaker: ''
 }
 
-/* ------------------    ACTIONS    ------------------ */
+/* ------------------    CONSTANTS    ------------------ */
 
 export const UPDATE_PRIMARY_EMO = "UPDATE_PRIMARY_EMO"
 export const UPDATE_PRIMARY_INTENSITY = "UPDATE_PRIMARY_INTENSITY"
@@ -15,7 +15,7 @@ export const UPDATE_PRIMARY_PERSONALITY = "UPDATE_PRIMARY_PERSONALITY"
 export const UPDATE_SENTIMENT_SCORE = "UPDATE_SENTIMENT_SCORE"
 export const UPDATE_SPEAKER = "UPDATE_SPEAKER"
 
-/* ------------------    ACTION CREATORS    ------------------ */
+/* ------------------    ACTIONS    ------------------ */
 // Take sentiment analysis data sent back from server upon calling receiveSentiment()
 
 export const primaryEmotion = (emotion) => {
