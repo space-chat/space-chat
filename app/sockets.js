@@ -66,6 +66,8 @@ export function receiveMessage(clientLang) {
 }
 
 export function receiveSentiment() {
+  socket.on('got sentiment', data => store.dispatch(gotSentiment(data)))
+
   socket.on('got sentiment', ({ emotion, sentiment, personality, speaker }) => {
     console.log(`emotion: ${emotion}`
                , `sentiment: ${sentiment}`

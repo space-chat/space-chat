@@ -5,6 +5,7 @@ import ParticleSystem from 'aframe-particle-system-component'
 import { vecToStr } from '../utils'
 
 const Avatar = (props) => {
+  console.log('AVATAR PROPS', props)
   return (
     <a-entity position={vecToStr(props.position)} particle-system={
       ['preset: dust',

@@ -1,6 +1,7 @@
 // CONSTANTS
 export const ADDED_TO_ROSTER = 'ADDED_TO_ROSTER'
 export const DELETED_FROM_ROSTER = 'DELETED_FROM_ROSTER'
+export const GOT_SENTIMENT = 'GOT_SENTIMENT'
 
 // ACTIONS
 export const addToRoster = (id) => {
@@ -17,6 +18,13 @@ export const deleteFromRoster = (id) => {
   }
 }
 
+export const gotSentiment = (payload) => {
+  return {
+    type: GOT_SENTIMENT,
+    payload
+  }
+}
+
 // ACTION CREATORS
 
 
@@ -27,11 +35,15 @@ const rosterReducer = (state = {}, action) => {
   switch (action.type) {
 
     case ADDED_TO_ROSTER:
-      newState[action.payload] = 'no sentiment data yet'
+      newState[action.payload] = {}
       return newState
 
     case DELETED_FROM_ROSTER:
       delete newState[action.payload]
+      return newState
+
+    case GOT_SENTIMENT:
+      newState[action.payload.speaker] = action.payload
       return newState
 
     default: return state
