@@ -7,7 +7,9 @@ var bodyParser = require('body-parser')
 
 // import and authenticate with Indico Text APIs
 var indico = require('indico.io')
+
 indico.apiKey = 'e5feeac8e479a303fab000f4b7e0287c'
+
 
 // import the Google Cloud Translate API
 const Translate = require('@google-cloud/translate')
@@ -49,7 +51,7 @@ function setUpNamespace (namespace) {
       let deleteId = socket.id
       console.log('disconnecting socket with language ', language)
       // if this is the only socket left in a language channel
-      if (nsp.adapter.rooms[language].sockets && nsp.adapter.rooms[language].length === 1)
+      if (nsp.adapter.rooms[language] && nsp.adapter.rooms[language].length === 1)
         // remove that language from state
         languages = languages.filter(lang => lang !== language)
       console.log('all languages on server state are: ', languages)
@@ -77,7 +79,6 @@ function setUpNamespace (namespace) {
 
     // when a socket sends a spoken message as text
     socket.on('message', ({ messageText, lang }) => {
-      console.log('namespace adapter rooms lang', nsp.adapter.rooms[lang].sockets)
       //console.log('new spoken message! server emitting original text: ', messageText)
       let translatedBool = false
        

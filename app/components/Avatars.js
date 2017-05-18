@@ -18,7 +18,7 @@ const positionOfAvatar = (index, totalCount, center, out) => {
   const angle = (index / totalCount) * 2 * Math.PI
       , hand = [0, 0, 0]
   vec3.rotateY(hand, cameraToCenter, [0, 0, 0], angle)
-  console.log("hand", hand)
+  // console.log("hand", hand)
   return vec3.sub(out, center, hand)
 }
 
@@ -57,7 +57,7 @@ export default class Avatars extends React.Component {
 				{ avatars
 					.map((props, index) =>
 							index
-							? <Avatar key={props.userId} {...props} {...this.state} />
+							? <Avatar key={props.userId} {...props} {...this.state} {...this.props} />
 							: null)
 				}
 			</a-entity>

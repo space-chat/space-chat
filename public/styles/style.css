@@ -1,30 +1,158 @@
+/**** HOME PAGE STYLES *****/
+
+/***ALL SCREENS ***/
 body {
   margin: 0px auto;
 }
 
-#app {
+#app, #sceneComponent {
   position: absolute;
   height: 100%;
   width: 100%;
 }
 
-a {
+/******* ABOVE THE FOLD ******/
+
+.above-fold {
+  margin-bottom: 0; 
+  height: 80vh; 
+}
+
+a, a:hover {
   color: white; 
+  text-decoration: none; 
  }
 
 h3 {
   text-align: center
 }
 
-.wrapper {
+.glyphicon .glyphicon-chevron-down {
+  color: white; 
+}
+
+.down-chevron {
+  margin: 0 auto; 
+  width: 100px; 
+  font-size: 4rem; 
+  margin-top: 3rem; 
+}
+
+/******* INSTRUCTIONS ******/
+
+#instructions {
+  height: 80vh;
+}
+
+#instructions h3 {
+  font-size: 4rem; 
+  text-align: center; 
+}
+
+.instructions-p {
+  font-size: 3rem;
+  text-align: center; 
+}
+
+#compatibility {
+  text-align: center; 
+  margin-top: 5%; 
+  line-height: 2.5rem; 
+}
+
+#compatibility a {
+  color: blue; 
+}
+
+
+/****** MOBILE PHONES *********/
+@media screen and (min-width: 320px) and (max-width: 999px) {
+/******* ABOVE THE FOLD ******/
+.above-fold {
   max-width: 800px;
   margin: 80px auto;
   display: flex;
   flex-direction: column;
+  height: 100vh; 
 }
 
-.overview {
-  padding-top: 10%;
+h3 {
+  font-size: 6.5rem; 
+}
+
+.form  {
+  margin: 0px auto 20px auto; 
+  font-size: 5rem; 
+}
+
+#select {
+  width: 40rem; 
+  height: 10rem; 
+  font-size: 5rem; 
+  margin: 0px auto; 
+}
+
+#enter-space {
+  margin: 0 0.5rem; 
+  width: 800px;
+}
+
+#enter-space button {
+  margin: 1em;  
+  width: 35rem; 
+  height: 10rem; 
+  font-size: 2.5rem;  
+} 
+
+.space-btn {
+  margin: 0 auto; 
+}
+
+.glyphicon .glyphicon-chevron-down {
+  text-align: center; 
+  font-size: 8rem; 
+  margin: 0 auto; 
+}
+
+.down-chevron {
+  margin: 0 auto; 
+  width: 100px; 
+  font-size: 12rem; 
+  margin-top: 6rem; 
+}
+
+/******* INSTRUCTIONS ******/
+
+#instructions {
+  height: 90vh;
+  width: 90vw; 
+}
+
+#instructions h3 {
+  font-size: 5em;  
+}
+
+.instructions-p {
+  font-size: 4rem;
+  color: white; 
+}
+
+#compatibility {
+  font-size: 4rem; 
+  line-height: 5rem; 
+}
+
+}
+
+/******* LARGE TABLETS, LAPTOPS, AND DESKTOPS ********/
+
+@media screen and (min-width: 1000px) {
+/******* ABOVE THE FOLD ******/
+.above-fold {
+  max-width: 800px;
+  margin: 80px auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .form {
@@ -41,31 +169,19 @@ h3 {
   margin: 0 auto;
 }
 
-#display {
-  padding-top: 24px;
+#enter-space {
+  margin: 0 3rem; 
+  width: 800px;
 }
 
-#display > div {
-  padding-left: 30px;
-  text-indent: -30px;
+.space-btn {
+  display: inline; 
 }
 
-#display > input {
-  display: block;
-  width: 90%;
-  font-size: inherit;
-  line-height: inherit;
-}
+#enter-space button {
+  margin: 1em;   
+} 
 
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 15px 0;
-  background: #fff;
-}
+/******* INSTRUCTIONS ******/
 
-footer p {
-  max-width: 600px;
-  margin: 0 auto;
 }

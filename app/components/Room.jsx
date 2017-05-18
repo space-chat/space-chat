@@ -28,6 +28,7 @@ import { openSocket, closeSocket, updateRoster
        , joinChannel, sendMessage
        , receiveMessage, receiveSentiment } from '../sockets.js'
 
+
 const propTypes = {
   // props injected by SpeechRecognition
   transcript: PropTypes.string,
@@ -152,7 +153,7 @@ class Room extends Component {
     console.log('emotions in Room are', prevEmotion, currEmotion)
 
     return (
-      <div>
+      <div id="sceneComponent" >
         {sceneComponent}
       </div>
     )
