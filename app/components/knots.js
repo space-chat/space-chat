@@ -171,12 +171,12 @@ const render = (timeStamp) => {
 
   // circleZ animation path for lightX
   //  let light = document.getElementById('lightX')
-  lightX.setAttribute('position', { x: 108 * Math.sin(timer + (2 * Math.PI)) })
-  lightX.setAttribute('position', { z: 204 * Math.cos(timer + 3 + (2 * Math.PI)) })
+  lightX.setAttribute('position', { x: 108 * Math.sin(20 * (timer + (2 * Math.PI))) })
+  lightX.setAttribute('position', { z: 108 * Math.cos(20 * (timer + 3 + (2 * Math.PI)))  })
 
   // circleY animation path for lightY
-  lightY.setAttribute('position', { x: 205 * Math.sin(timer + (2 * Math.PI)) })
-  lightY.setAttribute('position', { y: 107 * Math.cos(timer + 2 * (2 * Math.PI)) })
+  lightY.setAttribute('position', { x: 108 * Math.sin(20 * timer + (2 * Math.PI)) })
+  lightY.setAttribute('position', { y: 108 * Math.cos(20 * timer + 2 * (2 * Math.PI)) })
 
   if (movementPath === "trig") {
     for (var i = 0, il = knots.length; i < il; i++) {

@@ -12,7 +12,7 @@ import { initScene, makeKnots, animate
 const Avatar = (props) => {
 	return (
 		<a-entity position={vecToStr(props.position)}>
-			<a-torus radius="1" opacity="0.7" metalness="1" spherical-env-map="#tiedye" />
+			<a-torus id="avatar" radius="1" opacity="0.6" metalness="1" spherical-env-map="#tiedye" />
 		</a-entity>
 	)
 }
@@ -46,7 +46,7 @@ export default class Knots extends Component {
 	componentWillReceiveProps() {
 		// hashes for translating emotion to color values
 		let emotionColorsA = {
-			anger: '#ff0000',     // red
+				anger: '#ff0000',     // red
 	    		surprise: '#CC0033',  // pink
 	    		sadness: '#3366ff',   // blue
 	    		fear: '#333300',      // dark olive gray
@@ -108,7 +108,7 @@ export default class Knots extends Component {
 
 		// 0   1
 		let prevRate = this.state.rate
-		let nextRate = (1 - intensity) / 30000 + 0.0003
+		let nextRate = (1 - intensity) / 25000 + 0.0003
 		// let nextRate = (1 - intensity) * -4000 <-- flips sense of numbers
 		console.log('nextRate is', nextRate)
 
