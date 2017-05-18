@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 import Avatars from './Avatars'
-import ParticleSystem from 'aframe-particle-system-component'
+
 import { vecToStr } from '../utils'
 
 import { initScene, makeKnots, animate

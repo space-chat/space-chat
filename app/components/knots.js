@@ -40,13 +40,13 @@ const createKnot = () => {
   let knot = document.createElement('a-torus-knot')
 
   // set knot position - break into helper func
-  let x = (Math.random() * 201) - 100
+  let x = (Math.random() * 501) - 250
   let y = (Math.random() * 501) - 200
   let z = (Math.random() * 201) - 100
   knot.setAttribute('position', { x: x, y: y, z: z})
   console.log('position is', x, y, z)
 
-  knot.setAttribute('radius', `${Math.random()} * 2`)
+  knot.setAttribute('radius', `${Math.random() * 8}`)
   knot.setAttribute('radiusTubular', `${Math.random() * 8}`)
   knot.setAttribute('p', `${Math.round(Math.random() * 10)}`)
   knot.setAttribute('q', `${Math.round(Math.random() * 10)}`)
