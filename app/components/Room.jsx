@@ -127,7 +127,7 @@ class Room extends Component {
         sceneComponent = <Bubbles currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} sky={this.state.bubbleSky}/>
         break
       case 'knots':
-        sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryIntensity={primaryIntensity} />
+        sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} primaryIntensity={primaryIntensity} />
         break
       case 'space':
         sceneComponent = <Scene currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />

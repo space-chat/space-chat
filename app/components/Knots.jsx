@@ -77,6 +77,14 @@ export default class Knots extends Component {
 			joy: '#FFFFFF' // white
 		}
 
+		// movement depends on dominant personality
+        let movement = {
+            extraversion: "trig",
+            conscientiousness: "coolness",
+            openness: "circleZ",
+            agreeableness: "pendulum"
+        }
+
 		// translate emotion to color and set color on state
 		let emotion = this.props.currEmotion
 
@@ -104,11 +112,23 @@ export default class Knots extends Component {
 
 		let rate = prevRate !== nextRate ? nextRate : prevRate
 
-		this.setState({ colorA: colorA, colorB: colorB, colorC: colorC, colorD: colorD, rate: rate })
+		// compare current personality with incoming
+		let personality = this.props.primaryPersonality
+		console.log('personality is', personality)
+
+		let nextPath = movement[personality]
+		let prevPath = this.state.path
+
+		let path = prevPath !== nextPath ? nextPath : prevPath
+
+		this.setState({ colorA: colorA, colorB: colorB, colorC: colorC, colorD: colorD, rate: rate, path: path })
 
 		updateKnotColor(this.state.colorA, this.state.colorB)
 		updateLightColor(this.state.colorC, this.state.colorD)
 		updateLightRotationRate(this.state.rate)
+		updatePath(this.state.path)
+
+		console.log('props on state are', this.state)
 	}
 
 	render() {
