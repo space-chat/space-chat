@@ -5,6 +5,7 @@ import ParticleSystem from 'aframe-particle-system-component'
 import { vecToStr } from '../utils'
 
 const Avatar = (props) => {
+  console.log('AVATAR PROPS', props)
   return (
     <a-entity position={vecToStr(props.position)} particle-system={
         [   'preset: snow',                       // default, dust, snow, rain
@@ -42,16 +43,17 @@ const Scene = (props) => {
   let skyColor = emotionColors[props.currEmotion]
   let prevSkyColor = emotionColors[props.prevEmotion]
 
-  let roster = {
-    a: {},
-    b: {},
-    c: {}
-  }
-
+  //   let roster = {
+  //   a: {},
+  //   b: {},
+  //   c: {}
+  // }
+  
   return (
     <a-scene vr-mode-ui="enabled: true">
       <AssetLoader />
-      <Avatars Avatar={Avatar} roster={roster} prevSkyColor={skyColor} />
+      <Avatars Avatar={Avatar} roster={props.roster} />
+      {/*<Avatars Avatar={Avatar} roster={roster} prevSkyColor={skyColor} />*/}
 
       <a-light color={`${skyColor}`} light="angle:45;type:spot;target:avatar" angle="45" position="-16.717 11.189 17.925" type="spot" target="avatar" rotation="0 -18.73571990077792 -6.245239966925973" scale="1 1 1" visible="true" />
       <a-light color={`${skyColor}`} light="angle:45;type:spot;target:null" angle="45" type="spot" target="avatar"></a-light>
