@@ -13,7 +13,7 @@ const initialState = {
   speaker: ''
 }
 
-/* ------------------    ACTIONS    ------------------ */
+/* ------------------    CONSTANTS    ------------------ */
 
 export const UPDATE_PRIMARY_EMO = "UPDATE_PRIMARY_EMO"
 export const UPDATE_SECONDARY_EMO = "UPDATE_SECONDARY_EMO"
@@ -27,7 +27,7 @@ export const UPDATE_AGREEABLENESS = "UPDATE_AGREEABLENESS"
 export const UPDATE_SENTIMENT_SCORE = "UPDATE_SENTIMENT_SCORE"
 export const UPDATE_SPEAKER = "UPDATE_SPEAKER"
 
-/* ------------------    ACTION CREATORS    ------------------ */
+/* ------------------    ACTIONS    ------------------ */
 // Take sentiment analysis data sent back from server upon calling receiveSentiment()
 
 export const primaryEmotion = (emotion) => {
@@ -109,7 +109,10 @@ export const updateSpeaker = (speakerId) => {
 
 /* ------------------    REDUCER    ------------------ */
 
-// 'sentimentReducer has a complexity of 10' --- should we break up into emotionReducer (for primary+secondary emotions and respective intensities), personalityReducer, and sentimentReducer (for sentiment score only)?
+// 'sentimentReducer has a complexity of 10' --- should we break up into:
+  // emotionReducer (for primary/secondary emotions and respective intensities), 
+  // sentimentReducer (for sentiment score only),
+  // and personalityReducer?
 
 export default function sentimentReducer(state = initialState, action) {
 

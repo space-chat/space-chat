@@ -1,11 +1,15 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment, updateSpeaker } from './reducers/sentimentReducer.jsx'
+import { primaryEmotion, secondaryEmotion
+       , primaryIntensity, secondaryIntensity, primaryPersonality
+       , updateExtraversion, updateOpenness, updateConscientiousness
+       , updateAgreeableness, updateSentiment
+       , updateSpeaker } from './reducers/sentimentReducer.jsx'
+import { addToRoster, deleteFromRoster, gotSentiment } from './reducers/rosterReducer.jsx'
 
 // enable text-to-speech in browser
 const synth = window.speechSynthesis
 let voices
-
 let socket
 
 export function openSocket(scene) {
@@ -15,19 +19,32 @@ export function openSocket(scene) {
 }
 
 export function closeSocket(language) {
+  console.log('emitting close me event')
   // disconnecting socket handled server-side
   socket.emit('close me', language)
 }
 
-export function joinRoom(language) {
+export function joinChannel(language) {
   // subscribing to language channel handled server-side
   socket.emit('join request', language)
   voices = synth.getVoices()
 }
 
 export function updateRoster() {
-  // when client receives roster, print array of socket id's to console
-  socket.on('roster', roster => console.log('roster is', roster))
+  // when client added to roster
+  socket.on('roster addition', addId => {
+    console.log('received roster add event')
+    // update store with latest addition to roster
+    store.dispatch(addToRoster(addId))
+  })
+
+  // when client removed from roster
+  socket.on('roster deletion', deleteId => {
+    console.log('received roster delete event')
+    // update store with deletion from roster
+    store.dispatch(deleteFromRoster(deleteId))
+  })
+
 }
 
 export function sendMessage(messageText, lang) {
@@ -49,6 +66,8 @@ export function receiveMessage(clientLang) {
 }
 
 export function receiveSentiment() {
+  socket.on('got sentiment', data => store.dispatch(gotSentiment(data)))
+
   socket.on('got sentiment', ({ emotion, sentiment, personality, speaker }) => {
     console.log(`emotion: ${emotion}`
                , `sentiment: ${sentiment}`
@@ -104,6 +123,5 @@ export function receiveSentiment() {
     store.dispatch(updateAgreeableness(agreeableness))
     store.dispatch(updateSentiment(sentScore))
     store.dispatch(updateSpeaker(speaker))
-  }
-  )
+  })
 }
