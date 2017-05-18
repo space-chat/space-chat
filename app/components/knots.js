@@ -12,7 +12,7 @@ let width = window.innerWidth || 2;
 let height = window.innerHeight || 2;
 let mouseX = 0;
 let mouseY = 0;
-// let movementPath = 'spin' // need to write movement path
+let movementPath = 'trig' // need to write movement path
 let tickSpeed = 0.005
 
 const initScene = () => {
@@ -150,13 +150,17 @@ const updateLightRotationRate = (rate) => {
   tickSpeed = rate
 }
 
+const updatePath = (pathName) => {
+  movementPath = pathName
+}
+
 const render = (timeStamp) => {
-  //let camera = document.getElementById('camera')
+  let camera = document.getElementById('camera')
   let timer = tickSpeed * timeStamp // change tickSpeed for rotating light speed
-  //let curr = camera.getAttribute('position') || { x: 1, y: 1 }
-  //let addx = curr.x + ((mouseX - curr.x) * .05)
-  //let addy = curr.y + ((- mouseY - curr.y) * .05)
-  //camera.setAttribute('position', { x: addx, y: addy, z: 5 })
+  let curr = camera.getAttribute('position') || { x: 1, y: 1 }
+  let addx = curr.x + ((mouseX - curr.x) * .05)
+  let addy = curr.y + ((- mouseY - curr.y) * .05)
+  camera.setAttribute('position', { x: addx, y: addy, z: 5 })
 
   // circleZ animation path for lightX
   lightX.setAttribute('position', { x: 18 * Math.sin(timer + (2 * Math.PI)) })
@@ -165,6 +169,34 @@ const render = (timeStamp) => {
   // circleY animation path for lightY
   lightY.setAttribute('position', { x: 25 * Math.sin(timer + (2 * Math.PI)) })
   lightY.setAttribute('position', { y: 17 * Math.cos(timer + 2 * (2 * Math.PI)) })
+
+  if (movementPath === "trig") {
+    for (var i = 0, il = knots.length; i < il; i++) {
+      var knot = knots[i];
+      knot.setAttribute('position', { x: 5 * Math.cos(timer + i) })
+      knot.setAttribute('position', { y: 5 * Math.sin(timer + i * 1.1) })
+    }
+  }
+  else if (movementPath === "circleZ") {
+    for (var i = 0, il = knots.length; i < il; i++) {
+      var knot = knots[i];
+      knot.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
+      knot.setAttribute('position', { z: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
+    }
+  }
+  else if (movementPath === "coolness") {
+    for (var i = 0, il = knots.length; i < il; i++) {
+      var knot = knots[i];
+      knot.setAttribute('position', { x: 8 * Math.sin(timer + i * 1.1 + (2 * Math.PI)) })
+      knot.setAttribute('position', { z: 8 * Math.cos(timer + i + (2 * Math.PI)) })
+    }
+  } else if (movementPath === "pendulum") {
+    for (var i = 0, il = knots.length; i < il; i++) {
+      var knot = knots[i];
+      knot.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
+      knot.setAttribute('position', { z: 8 * Math.cos(timer + i * 2 + (2 * Math.PI)) })
+    }
+  }
 }
 
 const animate = (timeStamp) => {
@@ -184,4 +216,4 @@ const onDocumentMouseMove = (event) => {
   mouseY = (event.clientY - windowHalfY) / 100
 }
 
-module.exports = { initScene, animate, makeKnots, setAmbientLightA, setAmbientLightB, makeRotatingLightX, makeRotatingLightY, updateKnotColor, updateLightColor, updateLightRotationRate }
+module.exports = { initScene, animate, makeKnots, setAmbientLightA, setAmbientLightB, makeRotatingLightX, makeRotatingLightY, updateKnotColor, updateLightColor, updateLightRotationRate, updatePath }

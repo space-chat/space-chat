@@ -7,7 +7,7 @@ import { vecToStr } from '../utils'
 import { initScene, makeKnots, animate
 	   , setAmbientLightA, setAmbientLightB
 	   , makeRotatingLightX, makeRotatingLightY
-	   , updateKnotColor, updateLightColor, updateLightRotationRate } from './knots.js'
+	   , updateKnotColor, updateLightColor, updateLightRotationRate, updatePath } from './knots.js'
 
 const Avatar = (props) => {
 	return (
@@ -28,7 +28,8 @@ export default class Knots extends Component {
 			colorB: '#993300' , // burnt orange
 			colorC: '#FFFFFF',
 			colorD: '#FFFFFF',
-			rate: 0.0005
+			rate: 0.0005,
+			path: 'trig'
 		}
 	}
 
