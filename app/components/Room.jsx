@@ -105,18 +105,11 @@ class Room extends Component {
   // when the scene renders, API will start recording
   render() {
     // emotion data
-    let prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy'
-    let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy'
+    let currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy' 
     let primaryIntensity = this.props.sentiment.primaryIntensity[0] || 0.5
-    let secondaryIntensity = this.props.sentiment.secondaryIntensity[0] || 0.5
 
     // personality data
     let primaryPersonality = this.props.sentiment.primaryPersonality[0] || 'default'
-    let extraversion = this.props.sentiment.extraversion[0] || 0.5
-    let openness = this.props.sentiment.openness[0] || 0.5
-    let conscientiousness = this.props.sentiment.conscientiousness || 0.5
-    let agreeableness = this.props.sentiment.agreeableness || 0.5
-
     // sentiment score
     let sentimentScore = this.props.sentiment.sentimentScore[0] || 0.5
 
@@ -129,18 +122,13 @@ class Room extends Component {
 
     switch (scene) {
       case 'bubbles':
-        sceneComponent = <Bubbles roster={this.props.roster} sky={this.state.bubbleSky} 
-          currEmotion={currEmotion} prevEmotion={prevEmotion} 
-          sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        sceneComponent = <Bubbles currEmotion={currEmotion} primaryPersonality={primaryPersonality} sky={this.state.bubbleSky}/>
         break
       case 'knots':
-
-        sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryIntensity={primaryIntensity} />
+        sceneComponent = <Knots currEmotion={currEmotion} primaryPersonality={primaryPersonality} primaryIntensity={primaryIntensity} />
         break
       case 'space':
-        sceneComponent = <Scene roster={this.props.roster} 
-          currEmotion={currEmotion} prevEmotion={prevEmotion} 
-          sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+        sceneComponent = <Scene currEmotion={currEmotion} />
         break
       case 'cubes':
         sceneComponent = <Cubes roster={this.props.roster} 
@@ -149,7 +137,7 @@ class Room extends Component {
         break
     }
 
-    console.log('emotions in Room are', prevEmotion, currEmotion)
+    console.log('emotions in Room are', currEmotion)
 
     return (
       <div id="sceneComponent" >
