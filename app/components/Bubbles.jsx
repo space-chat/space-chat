@@ -91,9 +91,13 @@ export default class Bubbles extends Component {
 
                     <a-scene vr-mode-ui="enabled: true">
                         <AssetLoader />
-                        <a-entity id="bubbleCamera" camera="userHeight: 1.6" look-controls
-                         mouse-cursor="">
+                        <a-entity id="bubbleCamera" 
+                        camera="userHeight: 1.6" 
+                        orbit-controls="autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;"
+                        mouse-cursor=""
+                        look-controls>
                         </a-entity>
+                        <a-sphere position="-1 1.25 -5" radius="0.001" color="#EF2D5E" id="pink"></a-sphere>
                         <a-sky src={this.props.sky}></a-sky>
                     </a-scene>
         )
