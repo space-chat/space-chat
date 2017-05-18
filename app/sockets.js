@@ -5,7 +5,7 @@ import { primaryEmotion, secondaryEmotion
        , updateExtraversion, updateOpenness, updateConscientiousness
        , updateAgreeableness, updateSentiment
        , updateSpeaker } from './reducers/sentimentReducer.jsx'
-import { addToRoster, deleteFromRoster } from './reducers/rosterReducer.jsx'
+import { addToRoster, deleteFromRoster, gotSentiment } from './reducers/rosterReducer.jsx'
 
 // enable text-to-speech in browser
 const synth = window.speechSynthesis

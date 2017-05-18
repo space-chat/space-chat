@@ -21647,7 +21647,7 @@ function receiveMessage(clientLang) {
 
 function receiveSentiment() {
   socket.on('got sentiment', function (data) {
-    return _store2.default.dispatch(gotSentiment(data));
+    return _store2.default.dispatch((0, _rosterReducer.gotSentiment)(data));
   });
 
   socket.on('got sentiment', function (_ref2) {

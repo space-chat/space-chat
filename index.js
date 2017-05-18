@@ -79,7 +79,7 @@ function setUpNamespace (namespace) {
 
     // when a socket sends a spoken message as text
     socket.on('message', ({ messageText, lang }) => {
-      //console.log('new spoken message! server emitting original text: ', messageText)
+      console.log('new spoken message! server emitting original text: ', messageText)
       let translatedBool = false
        
       // 1) immediately send message exactly as received to all OTHER sockets in original language channel
