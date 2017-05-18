@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AssetLoader from './AssetLoader'
 
-import { initScene, makeBubbles, animate, sizeOrColor, updateSpeed, updatePath } from './bubbles.js'
+import { initScene, makeBubbles, animate, sizeOrColor, updateSpeed, updatePath, stopAnimating } from './bubbles.js'
 
 export default class Bubbles extends Component {
 
@@ -81,22 +81,28 @@ export default class Bubbles extends Component {
     else updateSpeed(0.0007)
   }
 
-  //Handles changing for all emotions except surprise
-  handleSizeOrColor() {
-    sizeOrColor(this.state.scale, this.props.sky, this.state.color, 3)
-  }
+    //stop animating when the person leaves bubbles
+    componentWillUnmount() {
+        stopAnimating()
+    }
 
-  render() {
-    return (
-      <a-scene vr-mode-ui="enabled: true">
-        <AssetLoader />
-        <a-entity id="bubbleCamera" camera="userHeight: 1.6"
-         look-controls mouse-cursor="">
-        </a-entity>
-        <a-sky src={this.props.sky}></a-sky>
-      </a-scene>
-    )
-  }
+    //Handles changing for all emotions except surprise
+    handleSizeOrColor() {
+        sizeOrColor(this.state.scale, this.props.sky, this.state.color, 3)
+    }
+
+    render() {
+        return (
+
+                    <a-scene vr-mode-ui="enabled: true">
+                        <AssetLoader />
+                        <a-entity id="bubbleCamera" camera="userHeight: 1.6" look-controls
+                         mouse-cursor="">
+                        </a-entity>
+                        <a-sky src={this.props.sky}></a-sky>
+                    </a-scene>
+        )
+    }
 }
 //Emotions: Change bubble color
   //Anger:              Bubbles turn red + increase speed
