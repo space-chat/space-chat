@@ -12,6 +12,7 @@ var currentScale = 0.2
 var tickSpeed = 0.00005
 var movementPath = "trig";
 var altitude = "normal"
+var animationId; 
 
 //Set up orbital camera, mouse listener, and window resize listener. 
 function initScene() {
@@ -86,8 +87,13 @@ function updatePath(pathName) {
 }
 
 function animate() {
-	requestAnimationFrame(animate);
+	animationId = requestAnimationFrame(animate);
 	render();
+}
+
+//When the person leaves Bubbles, stop animating.
+function stopAnimating() {
+	cancelAnimationFrame(animationId)
 }
 
 function render() {
@@ -140,4 +146,4 @@ function onDocumentMouseMove(event) {
 }
 
 
-module.exports = { initScene, makeBubbles, animate, addBubbles, sizeOrColor, updateSpeed, updatePath }
+module.exports = { initScene, makeBubbles, animate, addBubbles, sizeOrColor, updateSpeed, updatePath, stopAnimating }

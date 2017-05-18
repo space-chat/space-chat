@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AssetLoader from './AssetLoader'
 
-import { initScene, makeBubbles, animate, sizeOrColor, updateSpeed, updatePath } from './bubbles.js'
+import { initScene, makeBubbles, animate, sizeOrColor, updateSpeed, updatePath, stopAnimating } from './bubbles.js'
 
 export default class Bubbles extends Component {
 
@@ -79,6 +79,11 @@ export default class Bubbles extends Component {
         if (this.state.color === "#FF0000") updateSpeed(0.0015)
         else if (this.state.color === "#494850") updateSpeed(0.00001)
         else updateSpeed(0.0007)
+    }
+
+    //stop animating when the person leaves bubbles
+    componentWillUnmount() {
+        stopAnimating()
     }
 
     //Handles changing for all emotions except surprise
