@@ -95,7 +95,7 @@ function render() {
 	var timer = tickSpeed * Date.now(); //Change the number for bubble speed
 	let curr = camera.getAttribute("position") || { x: 1, y: 1 }
 	let addx = curr.x + ((mouseX - curr.x) * .05)
-	let addy = curr.y + ((- mouseY - curr.y) * .05)
+	let addy = curr.y + ((-mouseY - curr.y) * .05)
 	camera.setAttribute('position', { x: addx, y: addy, z: 5 })
 
 	if (movementPath === "trig") {

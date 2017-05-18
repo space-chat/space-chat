@@ -24747,9 +24747,8 @@ var Bubbles = function (_Component) {
                 _react2.default.createElement(_AssetLoader2.default, null),
                 _react2.default.createElement('a-entity', { id: 'bubbleCamera',
                     camera: 'userHeight: 1.6',
-                    'orbit-controls': 'autoRotate: false; target: #pink; enableDamping: true; dampingFactor: 0.25; rotateSpeed:0.14; minDistance:3; maxDistance:15;',
-                    'mouse-cursor': '',
-                    'look-controls': true }),
+                    'look-controls': true,
+                    'mouse-cursor': '' }),
                 _react2.default.createElement('a-sphere', { position: '-1 1.25 -5', radius: '0.001', color: '#EF2D5E', id: 'pink' }),
                 _react2.default.createElement('a-sky', { src: this.props.sky })
             );
