@@ -134,9 +134,8 @@ class Room extends Component {
           sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
       case 'knots':
-        sceneComponent = <Knots roster={this.props.roster} 
-          currEmotion={currEmotion} prevEmotion={prevEmotion} 
-          sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+
+        sceneComponent = <Knots currEmotion={currEmotion} sentimentScore={sentimentScore} primaryIntensity={primaryIntensity} />
         break
       case 'space':
         sceneComponent = <Scene roster={this.props.roster} 

@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 import Avatars from './Avatars'
-
+import ParticleSystem from 'aframe-particle-system-component'
 import { vecToStr } from '../utils'
 
 import { initScene, makeKnots, animate
 	   , setAmbientLightA, setAmbientLightB
 	   , makeRotatingLightX, makeRotatingLightY
-	   , updateKnotColor, updateLightColor, updateLightRotationRate, updatePath } from './knots.js'
+	   , updateKnotColor, updateLightColor, updateLightRotationRate } from './knots.js'
 
 const Avatar = (props) => {
 	return (
 		<a-entity position={vecToStr(props.position)}>
-			<a-torus id="avatar" radius="1" opacity="0.6" metalness="1" spherical-env-map="#tiedye" />
+			<a-torus radius="1" opacity="0.7" metalness="1" spherical-env-map="#tiedye" />
 		</a-entity>
 	)
 }
@@ -28,8 +28,7 @@ export default class Knots extends Component {
 			colorB: '#993300' , // burnt orange
 			colorC: '#FFFFFF',
 			colorD: '#FFFFFF',
-			rate: 0.00005,
-			path: 'trig'
+			rate: 0.0005
 		}
 	}
 
@@ -47,15 +46,15 @@ export default class Knots extends Component {
 		// hashes for translating emotion to color values
 		let emotionColorsA = {
 			anger: '#ff0000',     // red
-    		surprise: '#ffcc00',  // pink
-    		sadness: '#3366ff',   // blue
-    		fear: '#333300',      // dark olive gray
-    		joy: '#FFFFFF'        // white
+	    		surprise: '#CC0033',  // pink
+	    		sadness: '#3366ff',   // blue
+	    		fear: '#333300',      // dark olive gray
+	    		joy: '#FFFFFF'        // white
 		}
 
 		let emotionColorsB = {
 			anger: '#FF6600', // orange    
-			surprise: '#ffcc66', // peach
+			surprise: '#ffcc66', // pink
 			sadness: '#003366', // dark blue
 			fear: '#666633', // olive green
 			joy: '#FFFFFF' // burnt orange
@@ -77,14 +76,6 @@ export default class Knots extends Component {
 			joy: '#FFFFFF' // white
 		}
 
-		// movement depends on dominant personality
-        let movement = {
-            extraversion: "trig",
-            conscientiousness: "coolness",
-            openness: "circleZ",
-            agreeableness: "pendulum"
-        }
-
 		// translate emotion to color and set color on state
 		let emotion = this.props.currEmotion
 
@@ -104,34 +95,19 @@ export default class Knots extends Component {
 
 		// translate emotional intensity to rotation rate and set rate on state
 		let intensity = this.props.primaryIntensity || 0.5
-		console.log('intensity is', intensity)
 
 		// 0   1
 		let prevRate = this.state.rate
-		let nextRate = (1 - intensity) / 25000 + 0.0003
+		let nextRate = (1 - intensity) / 1000 + 0.003
 		// let nextRate = (1 - intensity) * -4000 <-- flips sense of numbers
-		console.log('nextRate is', nextRate)
 
 		let rate = prevRate !== nextRate ? nextRate : prevRate
-		console.log('rate is', rate)
 
-		// compare current personality with incoming
-		let personality = this.props.primaryPersonality
-		console.log('personality is', personality)
-
-		let nextPath = movement[personality]
-		let prevPath = this.state.path
-
-		let path = prevPath !== nextPath ? nextPath : prevPath
-
-		this.setState({ colorA: colorA, colorB: colorB, colorC: colorC, colorD: colorD, rate: rate, path: path })
+		this.setState({ colorA: colorA, colorB: colorB, colorC: colorC, colorD: colorD, rate: rate })
 
 		updateKnotColor(this.state.colorA, this.state.colorB)
 		updateLightColor(this.state.colorC, this.state.colorD)
 		updateLightRotationRate(this.state.rate)
-		updatePath(this.state.path)
-
-		console.log('props on state are', this.state)
 	}
 
 	render() {
