@@ -18,7 +18,6 @@ export default function AssetLoader() {
 			<img id="gh" src="/images/gh.jpg" />
 			<img id="roses" src="/images/roses.jpg" />
 			<img id="rainbow" src="/images/rainbow.jpg" />
-			<img id="sunset" src="/images/sunset.jpg" />
 			<img id="tiedye" src="/images/tiedye.jpg" />
 			<img id="colors" src="/images/colors.jpg" />
 			<img id="krabi" src="/images/krabi.jpg" />

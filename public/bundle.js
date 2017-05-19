@@ -5330,7 +5330,6 @@ function AssetLoader() {
 			_react2.default.createElement("img", { id: "gh", src: "/images/gh.jpg" }),
 			_react2.default.createElement("img", { id: "roses", src: "/images/roses.jpg" }),
 			_react2.default.createElement("img", { id: "rainbow", src: "/images/rainbow.jpg" }),
-			_react2.default.createElement("img", { id: "sunset", src: "/images/sunset.jpg" }),
 			_react2.default.createElement("img", { id: "tiedye", src: "/images/tiedye.jpg" }),
 			_react2.default.createElement("img", { id: "colors", src: "/images/colors.jpg" }),
 			_react2.default.createElement("img", { id: "krabi", src: "/images/krabi.jpg" }),
@@ -25384,11 +25383,17 @@ var render = function render() {
 	var light = document.getElementById('light');
 	// console.log('light is', light)
 
-	if (movementPath === "trig") {
-		for (var i = 0, il = cubes.length; i < il; i++) {
+	if (movementPath === "trig" && cubes) {
+		for (var i = 0; i < cubes.length; i++) {
 			var cube = cubes[i];
-			cube.setAttribute('position', { x: 5 * Math.cos(timer + i) });
-			cube.setAttribute('position', { y: 5 * Math.sin(timer + i * 1.1) });
+			console.log('cube is', cube);
+			// let idCube = document.getElementById(`${cube.id}`)
+			// console.log('idCube is', idCube)
+			// let x = idCube.getAttribute('rotation').x
+			// // let y = idCube.getAttribute('rotation').y
+			// console.log('x is', x)
+			// cube.setAttribute('rotation', { x: x * Math.sin(timer + (Math.PI)) })
+			// // cube.setAttribute('rotation', { y: y * Math.sin(timer + (Math.PI)) })
 		}
 	}
 };
@@ -25404,7 +25409,7 @@ var stopAnimating = function stopAnimating() {
 };
 
 var onWindowResize = function onWindowResize() {
-	var camera = document.getElementById('cubeCamera');
+	var camera = document.getElementById('camera');
 	windowHalfX = window.innerWidth / 2;
 	windowHalfY = window.innerHeight / 2;
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight);

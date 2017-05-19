@@ -117,13 +117,19 @@ const render = () => {
 	let light = document.getElementById('light')
 	// console.log('light is', light)
 
-	if (movementPath === "trig") {
-	for (var i = 0, il = cubes.length; i < il; i++) {
-		var cube = cubes[i];
-		cube.setAttribute('position', { x: 5 * Math.cos(timer + i) })
-		cube.setAttribute('position', { y: 5 * Math.sin(timer + i * 1.1) })
-	}
-}
+	if (movementPath === "trig" && cubes) {
+  	for (let i = 0; i < cubes.length; i++) {
+  		let cube = cubes[i]
+      console.log('cube is', cube)
+  		// let idCube = document.getElementById(`${cube.id}`)
+  		// console.log('idCube is', idCube)
+  		// let x = idCube.getAttribute('rotation').x
+  		// // let y = idCube.getAttribute('rotation').y
+  		// console.log('x is', x)
+  		// cube.setAttribute('rotation', { x: x * Math.sin(timer + (Math.PI)) })
+  		// // cube.setAttribute('rotation', { y: y * Math.sin(timer + (Math.PI)) })
+  	}
+  }
 }
 
 const animate = () => {
@@ -137,7 +143,7 @@ const stopAnimating = () => {
 }
 
 const onWindowResize = () => {
-	let camera = document.getElementById('cubeCamera')
+	let camera = document.getElementById('camera')
 	windowHalfX = window.innerWidth / 2;
 	windowHalfY = window.innerHeight / 2;
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
