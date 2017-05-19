@@ -41,12 +41,12 @@ h3 {
 
 .button-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding-right: 6px;
 }
 
 .space-btn {
-  width: 315px;
   display: flex;
   justify-content: center;
 }
@@ -109,6 +109,14 @@ h3 {
   .form  {
     margin: 0px; 
     font-size: 5rem; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .control-label {
+    display: flex;
+    justify-content: center;
   }
 
   #select {
@@ -127,11 +135,12 @@ h3 {
     margin: 1em;  
     width: 35rem; 
     height: 10rem; 
-    font-size: 2.5rem;  
+    font-size: 2.9rem;  
   } 
 
   .space-btn {
     margin: 0 auto; 
+    width: 745px;
   }
 
   .glyphicon .glyphicon-chevron-down {
@@ -153,20 +162,21 @@ h3 {
 
   #instructions {
     height: 90vh;
-    width: 90vw; 
+    width: 87vw; 
   }
 
   #instructions h3 {
-    font-size: 5em;  
+    font-size: 5em;
+    line-height: 9rem; 
   }
 
   .instructions-p {
-    font-size: 4rem;
+    font-size: 4.5rem;
     color: white; 
   }
 
   #compatibility {
-    font-size: 4rem; 
+    font-size: 3.8rem; 
     line-height: 5rem; 
   }
 
@@ -203,7 +213,8 @@ h3 {
   }
 
   #enter-space button {
-    margin: 1em;   
+    margin: 1em;
+    width: 315px;
   } 
 
   /******* INSTRUCTIONS ******/
