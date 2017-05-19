@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 import Avatars from './Avatars'
-
 import { vecToStr } from '../utils'
 
 import { initScene, makeKnots, animate
 	   , setAmbientLightA, setAmbientLightB
 	   , makeRotatingLightX, makeRotatingLightY
-	   , updateKnotColor, updateLightColor, updateLightRotationRate, updatePath } from './knots.js'
+	   , updateKnotColor, updateLightColor, updateLightRotationRate, updatePath, stopAnimating } from './knots.js'
 
 const Avatar = (props) => {
 	return (
@@ -133,6 +132,10 @@ export default class Knots extends Component {
 
 		console.log('props on state are', this.state)
 	}
+
+	componentWillUnmount() {
+    stopAnimating()
+  }
 
 	render() {
 		let roster = {

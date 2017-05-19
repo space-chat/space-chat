@@ -3,36 +3,29 @@
 
 let knots = []
 let lightX
-let lightY
-// let colorA = '#CC0033'
-//let colorB = 'green'  
+let lightY 
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 let width = window.innerWidth || 2;
 let height = window.innerHeight || 2;
 let mouseX = 0;
 let mouseY = 0;
-let movementPath = 'trig' // need to write movement path
+let movementPath = 'trig' 
 let tickSpeed = 0.0001
+let animationId 
 
 const initScene = () => {
   let camera = document.getElementById('camera')
-  camera.setAttribute('fov', 60) //field of view
+  camera.setAttribute('fov', 60) 
   camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
-  camera.setAttribute('near', 0.01) //near
-  camera.setAttribute('far', 1000) //far
+  camera.setAttribute('near', 0.01)
+  camera.setAttribute('far', 1000) 
   camera.setAttribute('position', { z: 3 })
   camera.setAttribute('focalLength', 3)
 
   window.addEventListener('resize', onWindowResize, false);
   document.addEventListener('mousemove', onDocumentMouseMove, false)
 }
-
-// helper function to generate random coords
-// const getRandCoord = () => {
-//   let coord = Math.random() * 60;
-//   return Math.random() < 0.5 ? coord + 10 : coord * -2 - 10;
-// }
 
 // create one random knot
 const createKnot = () => {
@@ -51,18 +44,10 @@ const createKnot = () => {
   knot.setAttribute('p', `${Math.round(Math.random() * 10)}`)
   knot.setAttribute('q', `${Math.round(Math.random() * 10)}`)
 
-  // knot.setAttribute('color', `${colorA}`)
-
   knot.setAttribute('metalness', `${(Math.random() * 0.7) + 0.5}`)
   knot.setAttribute('roughness', `${Math.random()}`)
   knot.setAttribute('segments-radial', '10')
   knot.setAttribute('spherical-env-map', '#tiedye')
-
-  // knot.setAttribute('position', {
-  //   x: `${getRandCoord()}`,
-  //   y: `${getRandCoord()}`,
-  //   z: `${getRandCoord()}`,
-  // })
 
   // give each knot a unique id
   knots.push(knot)
@@ -163,14 +148,13 @@ const updatePath = (pathName) => {
 
 const render = (timeStamp) => {
   let camera = document.getElementById('camera')
-  let timer = tickSpeed * timeStamp // change tickSpeed for rotating light speed
+  let timer = tickSpeed * timeStamp 
   let curr = camera.getAttribute('position') || { x: 1, y: 1 }
   let addx = curr.x + ((mouseX - curr.x) * .05)
   let addy = curr.y + ((- mouseY - curr.y) * .05)
   camera.setAttribute('position', { x: addx, y: addy, z: 5 })
 
   // circleZ animation path for lightX
-  //  let light = document.getElementById('lightX')
   lightX.setAttribute('position', { x: 108 * Math.sin(20 * (timer + (2 * Math.PI))) })
   lightX.setAttribute('position', { z: 108 * Math.cos(20 * (timer + 3 + (2 * Math.PI)))  })
 
@@ -208,8 +192,12 @@ const render = (timeStamp) => {
 }
 
 const animate = (timeStamp) => {
-  requestAnimationFrame(animate)
+  animationId = requestAnimationFrame(animate)
   render(timeStamp)
+}
+
+function stopAnimating() {
+  cancelAnimationFrame(animationId)
 }
 
 const onWindowResize = () => {
@@ -224,4 +212,4 @@ const onDocumentMouseMove = (event) => {
   mouseY = (event.clientY - windowHalfY) / 100
 }
 
-module.exports = { initScene, animate, makeKnots, setAmbientLightA, setAmbientLightB, makeRotatingLightX, makeRotatingLightY, updateKnotColor, updateLightColor, updateLightRotationRate, updatePath }
+module.exports = { initScene, animate, makeKnots, setAmbientLightA, setAmbientLightB, makeRotatingLightX, makeRotatingLightY, updateKnotColor, updateLightColor, updateLightRotationRate, updatePath, stopAnimating }
