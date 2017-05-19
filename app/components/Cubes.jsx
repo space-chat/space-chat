@@ -16,10 +16,6 @@ export default class Cubes extends Component {
       speed: 1, // will update based on sentiment analysis
       direction: 'clockwise' // will update based on sentiment analysis
     }
-
-    //this.handleColor = this.handleColor.bind(this)
-    //this.handleSpeed = this.handleSpeed.bind(this)
-    //this.handleDirection = this.handleDirection.bind(this)
   }
 
   componentDidMount() {
@@ -30,7 +26,7 @@ export default class Cubes extends Component {
   }
 
   componentWillReceiveProps() {
-    console.log('props are', this.props)
+    //console.log('props are', this.props)
 
     let emotionColors = {
       anger: ['#FF3333', 3],
@@ -38,6 +34,14 @@ export default class Cubes extends Component {
       sadness: ['#0066ff', 1],
       fear: ['#99CC00', 2],
       joy: ['#FFFFFF', 1],
+    }
+
+    let emotionIntensity = {
+      anger: '3',
+      surprise: '4',
+      sadness: '1',
+      fear: '2',
+      joy: '1',
     }
 
     //compare current colors/emotion
@@ -52,7 +56,7 @@ export default class Cubes extends Component {
     let color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor
 
     let speed = currentSpeed !== nextSpeed ? nextSpeed : currentSpeed
-    console.log('speed is', speed)
+    //console.log('speed is', speed)
 
     let direction = sentiment > 0.5 ? 'clockwise' : 'counter-clockwise'
 

@@ -24739,10 +24739,6 @@ var Cubes = function (_Component) {
       speed: 1, // will update based on sentiment analysis
       direction: 'clockwise' // will update based on sentiment analysis
     };
-
-    //this.handleColor = this.handleColor.bind(this)
-    //this.handleSpeed = this.handleSpeed.bind(this)
-    //this.handleDirection = this.handleDirection.bind(this)
     return _this;
   }
 
@@ -24757,7 +24753,7 @@ var Cubes = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps() {
-      console.log('props are', this.props);
+      //console.log('props are', this.props)
 
       var emotionColors = {
         anger: ['#FF3333', 3],
@@ -24765,6 +24761,14 @@ var Cubes = function (_Component) {
         sadness: ['#0066ff', 1],
         fear: ['#99CC00', 2],
         joy: ['#FFFFFF', 1]
+      };
+
+      var emotionIntensity = {
+        anger: '3',
+        surprise: '4',
+        sadness: '1',
+        fear: '2',
+        joy: '1'
       };
 
       //compare current colors/emotion
@@ -24779,7 +24783,7 @@ var Cubes = function (_Component) {
       var color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor;
 
       var speed = currentSpeed !== nextSpeed ? nextSpeed : currentSpeed;
-      console.log('speed is', speed);
+      //console.log('speed is', speed)
 
       var direction = sentiment > 0.5 ? 'clockwise' : 'counter-clockwise';
 
@@ -24804,11 +24808,7 @@ var Cubes = function (_Component) {
           'a-scene',
           { 'vr-mode-ui': 'enabled: true' },
           _react2.default.createElement(_AssetLoader2.default, null),
-          _react2.default.createElement(
-            'a-entity',
-            { id: 'camera', position: '0 0 20', 'mouse-cursor': '' },
-            _react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
-          ),
+          _react2.default.createElement('a-entity', { id: 'camera', camera: 'userHeight: 1.6', 'look-controls': true, 'mouse-cursor': '' }),
           _react2.default.createElement('a-sky', { id: '#sky', src: '#fractal' })
         )
       );
@@ -25279,17 +25279,17 @@ var mouseX = 0;
 var mouseY = 0;
 var currentScale = 0.2;
 var tickSpeed = 0.00005;
-var directionPath = 'clockwise';
+var movementPath = 'trig';
 var animationId = void 0;
 
 //Set up orbital camera, mouse listener, and window resize listener. 
 function initScene() {
 	var camera = document.getElementById('camera');
-	camera.setAttribute('fov', 60); //field of view
+	camera.setAttribute('fov', 45); //field of view
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight); //aspect
 	camera.setAttribute('near', 0.01); //near
 	camera.setAttribute('far', 1000); //far
-	camera.setAttribute('position', { z: 3 });
+	camera.setAttribute('position', { z: 20 });
 	camera.setAttribute('focalLength', 3);
 
 	window.addEventListener('resize', onWindowResize, false);
@@ -25301,9 +25301,9 @@ var createCube = function createCube(images) {
 	var cube = document.createElement('a-box');
 
 	// set cube position - break into helper func
-	var x = Math.random() * 551 - 250;
-	var y = Math.random() * 551 - 200;
-	var z = Math.random() * 551 - 200;
+	var x = Math.random() * 501 - 250;
+	var y = Math.random() * 501 - 250;
+	var z = Math.random() * 501 - 200;
 	cube.setAttribute('position', { x: x, y: y, z: z });
 
 	// set cube image - break into helper func
@@ -25311,16 +25311,16 @@ var createCube = function createCube(images) {
 	cube.setAttribute('material', 'src: ' + images[i]);
 
 	// set cube size
-	var j = Math.floor(Math.random() * (50 - 10) + 10);
+	var j = Math.floor(Math.random() * (40 - 10) + 10);
 	cube.setAttribute('depth', j);
 	cube.setAttribute('height', j);
 	cube.setAttribute('width', j);
 
 	// set cube rotation 
-	var xR = Math.random() * 180;
-	var yR = Math.random() * 180;
-	var zR = Math.random() * 180;
-	cube.setAttribute('rotation', { x: xR, y: 0, z: zR });
+	// let xR = Math.random() * 180
+	// let yR = Math.random() * 180
+	// let zR = Math.random() * 180
+	// cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
 
 	// cube.setAttribute('pivot', '0 0 0')
 
@@ -25374,8 +25374,23 @@ var updateSpeed = function updateSpeed(n) {
 };
 
 // update rotation direction based on sentiment
-var updateDirection = function updateDirection(direction) {
-	directionPath = direction;
+var updateDirection = function updateDirection() {
+	//directionPath = direction
+};
+
+var render = function render() {
+	console.log('inside render');
+	var timer = tickSpeed * Date.now(); //change number for cube 
+	var light = document.getElementById('light');
+	// console.log('light is', light)
+
+	if (movementPath === "trig") {
+		for (var i = 0, il = cubes.length; i < il; i++) {
+			var cube = cubes[i];
+			cube.setAttribute('position', { x: 5 * Math.cos(timer + i) });
+			cube.setAttribute('position', { y: 5 * Math.sin(timer + i * 1.1) });
+		}
+	}
 };
 
 var animate = function animate() {
@@ -25386,38 +25401,6 @@ var animate = function animate() {
 // stop animating when user leaves scene
 var stopAnimating = function stopAnimating() {
 	cancelAnimationFrame(animationId);
-};
-
-var render = function render() {
-	//let camera = document.getElementById('camera')
-	var timer = tickSpeed * Date.now(); //change number for cube rotation speed
-	//let curr = camera.getAttribute('position')
-	// let addx = curr.x + ((mouseX = curr.x) * 0.05)
-	// let addy = curr.y + ((- mouseY - curr.y) * 0.05)
-	// camera.setAttribute('position', { x: addx, y: addy, z: 5})
-
-	// if (directionPath === 'clockwise') {
-	// 	for (let i = 0; i < cubes.length; i++) {
-	// 		let cube = cubes[i]
-	// 		console.log('in clockwise: cube id is', cube.id)
-	// 		let id = cube.id
-	// 		console.log('id is', id)
-	// 		let rotation = cube.getAttribute('rotation')
-	// 		console.log('cube rotation.x and y is', rotation.x, rotation.y)
-	// 		cube.setAttribute('rotation', { x: rotation.x * Math.sin(timer + (Math.PI)) })
-	// 		cube.setAttribute('rotation', { y: rotation.y * Math.sin(timer + (Math.PI)) })
-	// 		// mesh.rotation.x += 0.01;
-	//    	// mesh.rotation.y += 0.02
-	// 	}
-	// } else if (directionPath === 'counter-clockwise') {
-	// 	for (let i = 0; i < cubes.length; i++) {
-	// 		console.log('cubes', cubes.length)
-	// 		var cube = cubes[i]
-	// 		cube.getElementById(`${cube.id}`)
-	// 		cube.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
-	// 		cube.setAttribute('position', { y: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
-	// 	}
-	// }
 };
 
 var onWindowResize = function onWindowResize() {

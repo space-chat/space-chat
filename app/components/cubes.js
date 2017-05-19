@@ -10,7 +10,7 @@ let mouseX = 0
 let mouseY = 0
 let currentScale = 0.2
 let tickSpeed = 0.00005
-let directionPath = 'clockwise'
+let movementPath = 'trig'
 let animationId
 
 //Set up orbital camera, mouse listener, and window resize listener. 
@@ -107,8 +107,23 @@ const updateSpeed = (n) => {
 }
 
 // update rotation direction based on sentiment
-const updateDirection = (direction) => {
-	directionPath = direction
+const updateDirection = () => {
+	//directionPath = direction
+}
+
+const render = () => {
+	console.log('inside render')
+	let timer = tickSpeed * Date.now() //change number for cube 
+	let light = document.getElementById('light')
+	// console.log('light is', light)
+
+	if (movementPath === "trig") {
+	for (var i = 0, il = cubes.length; i < il; i++) {
+		var cube = cubes[i];
+		cube.setAttribute('position', { x: 5 * Math.cos(timer + i) })
+		cube.setAttribute('position', { y: 5 * Math.sin(timer + i * 1.1) })
+	}
+}
 }
 
 const animate = () => {
@@ -119,38 +134,6 @@ const animate = () => {
 // stop animating when user leaves scene
 const stopAnimating = () => {
 	cancelAnimationFrame(animationId)
-}
-
-const render = () => {
-	//let camera = document.getElementById('camera')
-	let timer = tickSpeed * Date.now() //change number for cube rotation speed
-	//let curr = camera.getAttribute('position')
-	// let addx = curr.x + ((mouseX = curr.x) * 0.05)
-	// let addy = curr.y + ((- mouseY - curr.y) * 0.05)
-	// camera.setAttribute('position', { x: addx, y: addy, z: 5})
-
-	// if (directionPath === 'clockwise') {
-	// 	for (let i = 0; i < cubes.length; i++) {
-	// 		let cube = cubes[i]
-	// 		console.log('in clockwise: cube id is', cube.id)
-	// 		let id = cube.id
-	// 		console.log('id is', id)
-	// 		let rotation = cube.getAttribute('rotation')
-	// 		console.log('cube rotation.x and y is', rotation.x, rotation.y)
-	// 		cube.setAttribute('rotation', { x: rotation.x * Math.sin(timer + (Math.PI)) })
-	// 		cube.setAttribute('rotation', { y: rotation.y * Math.sin(timer + (Math.PI)) })
-	// 		// mesh.rotation.x += 0.01;
- //    	// mesh.rotation.y += 0.02
-	// 	}
-	// } else if (directionPath === 'counter-clockwise') {
-	// 	for (let i = 0; i < cubes.length; i++) {
-	// 		console.log('cubes', cubes.length)
-	// 		var cube = cubes[i]
-	// 		cube.getElementById(`${cube.id}`)
-	// 		cube.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
-	// 		cube.setAttribute('position', { y: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
-	// 	}
-	// }
 }
 
 const onWindowResize = () => {
