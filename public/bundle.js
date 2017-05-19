@@ -24731,7 +24731,7 @@ var Cubes = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Cubes.__proto__ || Object.getPrototypeOf(Cubes)).call(this));
 
     _this.state = {
-      numCubes: 150,
+      numCubes: 180,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
       color: ['#FFFFFF', 1], // will update based on primary emotion
       speed: 1 };
@@ -25303,7 +25303,7 @@ var createCube = function createCube(images) {
 	cube.setAttribute('material', 'src: ' + images[i]);
 
 	// set cube size
-	var j = Math.floor(Math.random() * (40 - 10) + 10);
+	var j = Math.floor(Math.random() * (40 - 2) + 2);
 	cube.setAttribute('depth', j);
 	cube.setAttribute('height', j);
 	cube.setAttribute('width', j);
@@ -25311,9 +25311,6 @@ var createCube = function createCube(images) {
 	// set cube id
 	cubes.push(cube);
 	cube.setAttribute('id', cubes.length);
-	if (cubes.indexOf(cube) % 2 === 0) {
-		cube.setAttribute('roughness', '1');
-	}
 
 	// add cubeWrapper to scene
 	document.querySelector('a-scene').appendChild(cube);
@@ -25349,7 +25346,7 @@ var updateColor = function updateColor(color) {
 
 	var light = document.getElementById('light');
 
-	light.setAttribute('color', '' + color[0]);
+	//light.setAttribute('color', `${color[0]}`)
 	light.setAttribute('intensity', '' + color[1]);
 };
 

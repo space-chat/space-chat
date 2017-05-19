@@ -10,7 +10,7 @@ export default class Cubes extends Component {
     super()
 
     this.state = {
-      numCubes: 150,
+      numCubes: 180,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
       color: ['#FFFFFF', 1], // will update based on primary emotion
       speed: 1, // will update based on sentiment analysis
