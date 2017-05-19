@@ -25377,7 +25377,6 @@ var updateDirection = function updateDirection() {
 };
 
 var render = function render() {
-	console.log('inside render');
 	var timer = tickSpeed * Date.now(); //change number for cube 
 	var light = document.getElementById('light');
 	// console.log('light is', light)
@@ -25385,8 +25384,8 @@ var render = function render() {
 	if (movementPath === "trig") {
 		for (var i = 0, il = cubes.length; i < il; i++) {
 			var cube = cubes[i];
-			cube.setAttribute('position', { x: 205 * Math.cos(timer + i) });
-			cube.setAttribute('position', { y: 205 * Math.sin(timer + i * 1.1) });
+			cube.setAttribute('rotation', { x: 1 * (timer + i) });
+			cube.setAttribute('rotation', { y: 1 * (timer + i * 5) });
 		}
 	}
 };
