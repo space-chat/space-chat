@@ -61,17 +61,15 @@ export default class Cubes extends Component {
 
   render() {
     return (
-      <div>
-        <a-scene vr-mode-ui="enabled: true" fog="type: exponential; color: yellow; density: 0.00015">
-          <AssetLoader />
+      <a-scene vr-mode-ui="enabled: true" fog="type: exponential; color: yellow; density: 0.00015">
+        <AssetLoader />
 
-          {/* Camera */}
-          <a-entity id="camera" camera="userHeight: 1.6" look-controls mouse-cursor="">
-        </a-entity>
+        {/* Camera */}
+        <a-entity id="camera" camera="userHeight: 1.6" look-controls mouse-cursor="">
+      </a-entity>
 
-          <a-sky id="#sky" src="#fractal" />
-        </a-scene>
-      </div>
+        <a-sky id="#sky" src="#fractal" />
+      </a-scene>
     )
   }
 }
