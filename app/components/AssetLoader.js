@@ -12,6 +12,7 @@ export default function AssetLoader() {
 			{/* Sky assets */}
 			<img id="blossoms" src="/images/blossoms.jpg" />
 			<img id="stars" src="/images/sky-stars.png" />
+			<img id="space" src="images/sky_stars.jpg" />
 			<img id="fractal" src="/images/fractal.jpg" />
 			<img id="deer" src="/images/deer.jpg" />
 			<img id="cliff" src="/images/cliff.jpg" />
