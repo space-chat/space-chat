@@ -138,7 +138,7 @@ const makeRotatingLightY = () => {
   document.querySelector('a-scene').appendChild(lightY)
 }
 
-const updateLightRotationRate = (rate) => {
+const updateSpeed = (rate) => {
   tickSpeed = rate
 }
 
@@ -212,4 +212,4 @@ const onDocumentMouseMove = (event) => {
   mouseY = (event.clientY - windowHalfY) / 100
 }
 
-module.exports = { initScene, animate, makeKnots, setAmbientLightA, setAmbientLightB, makeRotatingLightX, makeRotatingLightY, updateKnotColor, updateLightColor, updateLightRotationRate, updatePath, stopAnimating }
+module.exports = { initScene, animate, makeKnots, setAmbientLightA, setAmbientLightB, makeRotatingLightX, makeRotatingLightY, updateKnotColor, updateLightColor, updateSpeed, updatePath, stopAnimating }

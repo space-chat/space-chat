@@ -24939,20 +24939,14 @@ var Knots = function (_Component) {
 
 			// translate emotional intensity to rotation rate and set rate on state
 			var intensity = this.props.primaryIntensity || 0.5;
-			console.log('intensity is', intensity);
 
-			// 0   1
 			var prevRate = this.state.rate;
 			var nextRate = (1 - intensity) / 25000 + 0.0003;
-			// let nextRate = (1 - intensity) * -4000 <-- flips sense of numbers
-			console.log('nextRate is', nextRate);
 
 			var rate = prevRate !== nextRate ? nextRate : prevRate;
-			console.log('rate is', rate);
 
 			// compare current personality with incoming
 			var personality = this.props.primaryPersonality;
-			console.log('personality is', personality);
 
 			var nextPath = movement[personality];
 			var prevPath = this.state.path;
@@ -24963,10 +24957,7 @@ var Knots = function (_Component) {
 
 			(0, _knots.updateKnotColor)(this.state.colorA, this.state.colorB);
 			(0, _knots.updateLightColor)(this.state.colorC, this.state.colorD);
-			(0, _knots.updateLightRotationRate)(this.state.rate);
 			(0, _knots.updatePath)(this.state.path);
-
-			console.log('props on state are', this.state);
 		}
 	}, {
 		key: 'componentWillUnmount',
@@ -24986,20 +24977,16 @@ var Knots = function (_Component) {
 			};
 
 			return _react2.default.createElement(
-				'div',
-				null,
+				'a-scene',
+				{ fog: 'type: exponential; color: purple' },
+				_react2.default.createElement(_AssetLoader2.default, null),
+				_react2.default.createElement(_Avatars2.default, { Avatar: Avatar, roster: roster }),
 				_react2.default.createElement(
-					'a-scene',
-					{ fog: 'type: exponential; color: purple' },
-					_react2.default.createElement(_AssetLoader2.default, null),
-					_react2.default.createElement(_Avatars2.default, { Avatar: Avatar, roster: roster }),
-					_react2.default.createElement(
-						'a-entity',
-						{ id: 'camera', position: '0 0 -10', 'mouse-cursor': '' },
-						_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
-					),
-					_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' })
-				)
+					'a-entity',
+					{ id: 'camera', position: '0 0 -10', 'mouse-cursor': '' },
+					_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
+				),
+				_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' })
 			);
 		}
 	}]);
@@ -25529,7 +25516,7 @@ var makeRotatingLightY = function makeRotatingLightY() {
   document.querySelector('a-scene').appendChild(lightY);
 };
 
-var updateLightRotationRate = function updateLightRotationRate(rate) {
+var updateSpeed = function updateSpeed(rate) {
   tickSpeed = rate;
 };
 
@@ -25601,7 +25588,7 @@ var onDocumentMouseMove = function onDocumentMouseMove(event) {
   mouseY = (event.clientY - windowHalfY) / 100;
 };
 
-module.exports = { initScene: initScene, animate: animate, makeKnots: makeKnots, setAmbientLightA: setAmbientLightA, setAmbientLightB: setAmbientLightB, makeRotatingLightX: makeRotatingLightX, makeRotatingLightY: makeRotatingLightY, updateKnotColor: updateKnotColor, updateLightColor: updateLightColor, updateLightRotationRate: updateLightRotationRate, updatePath: updatePath, stopAnimating: stopAnimating };
+module.exports = { initScene: initScene, animate: animate, makeKnots: makeKnots, setAmbientLightA: setAmbientLightA, setAmbientLightB: setAmbientLightB, makeRotatingLightX: makeRotatingLightX, makeRotatingLightY: makeRotatingLightY, updateKnotColor: updateKnotColor, updateLightColor: updateLightColor, updateSpeed: updateSpeed, updatePath: updatePath, stopAnimating: stopAnimating };
 
 /***/ }),
 /* 179 */
