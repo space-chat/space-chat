@@ -24774,7 +24774,7 @@ var Cubes = function (_Component) {
       var emotion = this.props.currEmotion;
       var sentiment = this.props.sentimentScore;
 
-      var nextSpeed = this.props.sentimentScore / 100;
+      var nextSpeed = (1 - sentiment) / 20;
 
       var color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor;
 

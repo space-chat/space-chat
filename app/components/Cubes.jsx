@@ -50,7 +50,7 @@ export default class Cubes extends Component {
     let emotion = this.props.currEmotion
     let sentiment = this.props.sentimentScore
     
-    let nextSpeed = this.props.sentimentScore / 100 
+    let nextSpeed = (1 - sentiment) / 20 
 
     let color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor
 
