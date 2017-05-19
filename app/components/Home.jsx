@@ -61,12 +61,12 @@ class Home extends Component {
           <br />
           <div id="enter-space">
             <div className="space-btn">
-              <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="bubbles">ENTER BUBBLESPACE</Link></button>
-              <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="knots" >ENTER KNOTSPACE</Link></button>
+              <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="bubbles">ENTER BUBBLES</Link></button>
+              <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="knots" >ENTER PLASMA</Link></button>
             </div>
             <div className="space-btn">
-              <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="space">ENTER SPACESPACE</Link></button>
-              <button className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER CUBESPACE</Link></button>
+              <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="space">ENTER COSMOS</Link></button>
+              <button className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER UFO</Link></button>
             </div>
             <div className="down-chevron">
               <span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
