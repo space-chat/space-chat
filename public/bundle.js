@@ -25382,17 +25382,11 @@ var render = function render() {
 	var light = document.getElementById('light');
 	// console.log('light is', light)
 
-	if (movementPath === "trig" && cubes) {
-		for (var i = 0; i < cubes.length; i++) {
+	if (movementPath === "trig") {
+		for (var i = 0, il = cubes.length; i < il; i++) {
 			var cube = cubes[i];
-			console.log('cube is', cube);
-			// let idCube = document.getElementById(`${cube.id}`)
-			// console.log('idCube is', idCube)
-			// let x = idCube.getAttribute('rotation').x
-			// // let y = idCube.getAttribute('rotation').y
-			// console.log('x is', x)
-			// cube.setAttribute('rotation', { x: x * Math.sin(timer + (Math.PI)) })
-			// // cube.setAttribute('rotation', { y: y * Math.sin(timer + (Math.PI)) })
+			cube.setAttribute('position', { x: 205 * Math.cos(timer + i) });
+			cube.setAttribute('position', { y: 205 * Math.sin(timer + i * 1.1) });
 		}
 	}
 };
