@@ -71,23 +71,12 @@ export default class Cubes extends Component {
   render() {
     return (
       <div>
-        {/* temporary buttons for testing */}
-        {/*<div>
-          <button onClick={() => this.handleColor()}>Change light color</button>
-          <button onClick={() => this.handleSpeed()}>Change rotation speed</button>
-          <button onClick={() => this.handleDirection()}>Change rotation direction</button>
-        </div> */}
         <a-scene vr-mode-ui="enabled: true">
           <AssetLoader />
 
           {/* Camera */}
           <a-entity id="camera" camera="userHeight: 1.6" look-controls mouse-cursor="">
         </a-entity>
-
-
-          {/* Not sure if I need this. Artifact from bubbles code. */}
-          {/*<a-sphere position="-1 1.25 -5" radius="0.001" color="#EF2D5E" id="pink">
-          </a-sphere> */}
 
           <a-sky id="#sky" src="#fractal" />
         </a-scene>

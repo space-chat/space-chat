@@ -32,9 +32,9 @@ const createCube = (images) => {
 	let cube = document.createElement('a-box')
 
 	// set cube position - break into helper func
-	let x = (Math.random() * 551) - 250
-	let y = (Math.random() * 551) - 200
-	let z = (Math.random() * 551) - 200
+	let x = (Math.random() * 501) - 250
+	let y = (Math.random() * 501) - 250
+	let z = (Math.random() * 501) - 200
 	cube.setAttribute('position', { x: x, y: y, z: z})
 
 	// set cube image - break into helper func
@@ -42,16 +42,16 @@ const createCube = (images) => {
 	cube.setAttribute('material', `src: ${images[i]}`)
 
 	// set cube size
-	let j = Math.floor((Math.random() * (45 - 10)) + 10)
+	let j = Math.floor((Math.random() * (40 - 10)) + 10)
 	cube.setAttribute('depth', j)
 	cube.setAttribute('height', j)
 	cube.setAttribute('width', j)
 
 	// set cube rotation 
-	let xR = Math.random() * 180
-	let yR = Math.random() * 180
-	let zR = Math.random() * 180
-	cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
+	// let xR = Math.random() * 180
+	// let yR = Math.random() * 180
+	// let zR = Math.random() * 180
+	// cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
 
 	// cube.setAttribute('pivot', '0 0 0')
 
