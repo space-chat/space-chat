@@ -10,16 +10,16 @@ let mouseX = 0
 let mouseY = 0
 let currentScale = 0.2
 let tickSpeed = 0.00005
-let directionPath = 'clockwise'
+let animationId
 
 //Set up orbital camera, mouse listener, and window resize listener. 
 function initScene() {
 	var camera = document.getElementById('camera')
-	camera.setAttribute('fov', 60) //field of view
+	camera.setAttribute('fov', 45) //field of view
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
 	camera.setAttribute('near', 0.01) //near
 	camera.setAttribute('far', 1000) //far
-	camera.setAttribute('position', { z: 3 })
+	camera.setAttribute('position', { z: 20 })
 	camera.setAttribute('focalLength', 3)
 
 	window.addEventListener('resize', onWindowResize, false);
@@ -32,7 +32,7 @@ const createCube = (images) => {
 
 	// set cube position - break into helper func
 	let x = (Math.random() * 501) - 250
-	let y = (Math.random() * 501) - 200
+	let y = (Math.random() * 501) - 250
 	let z = (Math.random() * 501) - 200
 	cube.setAttribute('position', { x: x, y: y, z: z})
 
@@ -41,18 +41,10 @@ const createCube = (images) => {
 	cube.setAttribute('material', `src: ${images[i]}`)
 
 	// set cube size
-	let j = Math.floor((Math.random() * (50 - 10)) + 10)
+	let j = Math.floor((Math.random() * (40 - 2)) + 2)
 	cube.setAttribute('depth', j)
 	cube.setAttribute('height', j)
 	cube.setAttribute('width', j)
-
-	// set cube rotation 
-	let xR = Math.random() * 180
-	let yR = Math.random() * 180
-	let zR = Math.random() * 180
-	cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
-
-	// cube.setAttribute('pivot', '0 0 0')
 
 	// set cube id
 	cubes.push(cube)
@@ -74,7 +66,6 @@ const makeCubes = (numCubes, images) => {
 
 // make ambient light
 const makeLight = () => {
-	console.log('making light')
 
 	let light = document.createElement('a-light')
 
@@ -91,12 +82,12 @@ const makeLight = () => {
 
 // Update ambient light color based on emotion
 const updateColor = (color) => {
-	console.log('updated light color is', color)
 
 	let light = document.getElementById('light')
 
-	light.setAttribute('color', `${color[0]}`)
+	//light.setAttribute('color', `${color[0]}`)
 	light.setAttribute('intensity', `${color[1]}`)
+
 }
 
 
@@ -105,50 +96,28 @@ const updateSpeed = (n) => {
 	tickSpeed = n
 }
 
-// update rotation direction based on sentiment
-const updateDirection = (direction) => {
-	directionPath = direction
-}
-
 const render = () => {
-	//let camera = document.getElementById('camera')
-	let timer = tickSpeed * Date.now() //change number for cube rotation speed
-	//let curr = camera.getAttribute('position')
-	// let addx = curr.x + ((mouseX = curr.x) * 0.05)
-	// let addy = curr.y + ((- mouseY - curr.y) * 0.05)
-	// camera.setAttribute('position', { x: addx, y: addy, z: 5})
+	let timer = tickSpeed * Date.now() //change number for cube 
 
-	// if (directionPath === 'clockwise') {
-	// 	for (let i = 0; i < cubes.length; i++) {
-	// 		let cube = cubes[i]
-	// 		console.log('in clockwise: cube id is', cube.id)
-	// 		let id = cube.id
-	// 		console.log('id is', id)
-	// 		let rotation = cube.getAttribute('rotation')
-	// 		console.log('cube rotation.x and y is', rotation.x, rotation.y)
-	// 		cube.setAttribute('rotation', { x: rotation.x * Math.sin(timer + (Math.PI)) })
-	// 		cube.setAttribute('rotation', { y: rotation.y * Math.sin(timer + (Math.PI)) })
-	// 		// mesh.rotation.x += 0.01;
- //    	// mesh.rotation.y += 0.02
-	// 	}
-	// } else if (directionPath === 'counter-clockwise') {
-	// 	for (let i = 0; i < cubes.length; i++) {
-	// 		console.log('cubes', cubes.length)
-	// 		var cube = cubes[i]
-	// 		cube.getElementById(`${cube.id}`)
-	// 		cube.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
-	// 		cube.setAttribute('position', { y: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
-	// 	}
-	// }
+  for (var i = 0, il = cubes.length; i < il; i++) {
+    var cube = cubes[i];
+    cube.setAttribute('rotation', { x: 4 * (timer + i) })
+    cube.setAttribute('rotation', { y: 4 * (timer + i * 5) })
+  }
 }
 
 const animate = () => {
-	requestAnimationFrame(animate)
+	animationId = requestAnimationFrame(animate)
 	render()
 }
 
+// stop animating when user leaves scene
+const stopAnimating = () => {
+	cancelAnimationFrame(animationId)
+}
+
 const onWindowResize = () => {
-	let camera = document.getElementById('cubeCamera')
+	let camera = document.getElementById('camera')
 	windowHalfX = window.innerWidth / 2;
 	windowHalfY = window.innerHeight / 2;
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
@@ -159,5 +128,5 @@ const onDocumentMouseMove = (event) => {
 	mouseY = (event.clientY - windowHalfY) / 100;
 }
 
-module.exports = { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, updateDirection}
+module.exports = { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, stopAnimating}
 
