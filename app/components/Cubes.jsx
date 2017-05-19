@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AssetLoader from './AssetLoader'
 
-import { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, updateDirection, stopAnimating } from './cubes.js'
+import { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, stopAnimating } from './cubes.js'
 
 
 export default class Cubes extends Component {
@@ -14,7 +14,6 @@ export default class Cubes extends Component {
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
       color: ['#FFFFFF', 1], // will update based on primary emotion
       speed: 1, // will update based on sentiment analysis
-      direction: 'clockwise' // will update based on sentiment analysis
     }
   }
 
@@ -56,15 +55,12 @@ export default class Cubes extends Component {
     let color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor
 
     let speed = currentSpeed !== nextSpeed ? nextSpeed : currentSpeed
-    //console.log('speed is', speed)
+    console.log('speed is', speed)
 
-    let direction = sentiment > 0.5 ? 'clockwise' : 'counter-clockwise'
-
-    this.setState({ color: color, speed: speed, direction: direction })
+    this.setState({ color: color, speed: speed })
 
     updateColor(this.state.color, this.state.intensity)
     updateSpeed(this.state.speed)
-    updateDirection(this.state.direction)
 
   }
 

@@ -24734,9 +24734,7 @@ var Cubes = function (_Component) {
       numCubes: 150,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
       color: ['#FFFFFF', 1], // will update based on primary emotion
-      speed: 1, // will update based on sentiment analysis
-      direction: 'clockwise' // will update based on sentiment analysis
-    };
+      speed: 1 };
     return _this;
   }
 
@@ -24781,15 +24779,12 @@ var Cubes = function (_Component) {
       var color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor;
 
       var speed = currentSpeed !== nextSpeed ? nextSpeed : currentSpeed;
-      //console.log('speed is', speed)
+      console.log('speed is', speed);
 
-      var direction = sentiment > 0.5 ? 'clockwise' : 'counter-clockwise';
-
-      this.setState({ color: color, speed: speed, direction: direction });
+      this.setState({ color: color, speed: speed });
 
       (0, _cubes.updateColor)(this.state.color, this.state.intensity);
       (0, _cubes.updateSpeed)(this.state.speed);
-      (0, _cubes.updateDirection)(this.state.direction);
     }
   }, {
     key: 'componentWillUnmount',
@@ -25277,7 +25272,6 @@ var mouseX = 0;
 var mouseY = 0;
 var currentScale = 0.2;
 var tickSpeed = 0.00005;
-var movementPath = 'trig';
 var animationId = void 0;
 
 //Set up orbital camera, mouse listener, and window resize listener. 
@@ -25313,14 +25307,6 @@ var createCube = function createCube(images) {
 	cube.setAttribute('depth', j);
 	cube.setAttribute('height', j);
 	cube.setAttribute('width', j);
-
-	// set cube rotation 
-	// let xR = Math.random() * 180
-	// let yR = Math.random() * 180
-	// let zR = Math.random() * 180
-	// cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
-
-	// cube.setAttribute('pivot', '0 0 0')
 
 	// set cube id
 	cubes.push(cube);
@@ -25358,7 +25344,6 @@ var makeLight = function makeLight() {
 
 // Update ambient light color based on emotion
 var updateColor = function updateColor(color) {
-	console.log('updated light color is', color);
 
 	var light = document.getElementById('light');
 
@@ -25371,22 +25356,13 @@ var updateSpeed = function updateSpeed(n) {
 	tickSpeed = n;
 };
 
-// update rotation direction based on sentiment
-var updateDirection = function updateDirection() {
-	//directionPath = direction
-};
-
 var render = function render() {
 	var timer = tickSpeed * Date.now(); //change number for cube 
-	var light = document.getElementById('light');
-	// console.log('light is', light)
 
-	if (movementPath === "trig") {
-		for (var i = 0, il = cubes.length; i < il; i++) {
-			var cube = cubes[i];
-			cube.setAttribute('rotation', { x: 1 * (timer + i) });
-			cube.setAttribute('rotation', { y: 1 * (timer + i * 5) });
-		}
+	for (var i = 0, il = cubes.length; i < il; i++) {
+		var cube = cubes[i];
+		cube.setAttribute('rotation', { x: 4 * (timer + i) });
+		cube.setAttribute('rotation', { y: 4 * (timer + i * 5) });
 	}
 };
 
@@ -25412,7 +25388,7 @@ var onDocumentMouseMove = function onDocumentMouseMove(event) {
 	mouseY = (event.clientY - windowHalfY) / 100;
 };
 
-module.exports = { initScene: initScene, makeCubes: makeCubes, makeLight: makeLight, animate: animate, updateColor: updateColor, updateSpeed: updateSpeed, updateDirection: updateDirection, stopAnimating: stopAnimating };
+module.exports = { initScene: initScene, makeCubes: makeCubes, makeLight: makeLight, animate: animate, updateColor: updateColor, updateSpeed: updateSpeed, stopAnimating: stopAnimating };
 
 /***/ }),
 /* 178 */

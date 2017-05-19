@@ -10,7 +10,6 @@ let mouseX = 0
 let mouseY = 0
 let currentScale = 0.2
 let tickSpeed = 0.00005
-let movementPath = 'trig'
 let animationId
 
 //Set up orbital camera, mouse listener, and window resize listener. 
@@ -46,14 +45,6 @@ const createCube = (images) => {
 	cube.setAttribute('depth', j)
 	cube.setAttribute('height', j)
 	cube.setAttribute('width', j)
-
-	// set cube rotation 
-	// let xR = Math.random() * 180
-	// let yR = Math.random() * 180
-	// let zR = Math.random() * 180
-	// cube.setAttribute('rotation', { x: xR, y: 0, z: zR })
-
-	// cube.setAttribute('pivot', '0 0 0')
 
 	// set cube id
 	cubes.push(cube)
@@ -92,7 +83,6 @@ const makeLight = () => {
 
 // Update ambient light color based on emotion
 const updateColor = (color) => {
-	console.log('updated light color is', color)
 
 	let light = document.getElementById('light')
 
@@ -106,23 +96,15 @@ const updateSpeed = (n) => {
 	tickSpeed = n
 }
 
-// update rotation direction based on sentiment
-const updateDirection = () => {
-	//directionPath = direction
-}
-
 const render = () => {
 	let timer = tickSpeed * Date.now() //change number for cube 
-	let light = document.getElementById('light')
-	// console.log('light is', light)
 
-  if (movementPath === "trig") {
-    for (var i = 0, il = cubes.length; i < il; i++) {
-      var cube = cubes[i];
-      cube.setAttribute('rotation', { x: 1 * (timer + i) })
-      cube.setAttribute('rotation', { y: 1 * (timer + i * 5) })
-    }
-  }}
+  for (var i = 0, il = cubes.length; i < il; i++) {
+    var cube = cubes[i];
+    cube.setAttribute('rotation', { x: 4 * (timer + i) })
+    cube.setAttribute('rotation', { y: 4 * (timer + i * 5) })
+  }
+}
 
 const animate = () => {
 	animationId = requestAnimationFrame(animate)
@@ -146,5 +128,5 @@ const onDocumentMouseMove = (event) => {
 	mouseY = (event.clientY - windowHalfY) / 100;
 }
 
-module.exports = { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, updateDirection, stopAnimating}
+module.exports = { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, stopAnimating}
 
