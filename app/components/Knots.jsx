@@ -23,7 +23,7 @@ export default class Knots extends Component {
 		super()
 
 		this.state = {
-			numKnots: 60,
+			numKnots: 80,
 			colorA: '#ff6600', // yellow
 			colorB: '#993300' , // burnt orange
 			colorC: '#FFFFFF',

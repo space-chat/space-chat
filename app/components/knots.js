@@ -40,16 +40,16 @@ const createKnot = () => {
   let knot = document.createElement('a-torus-knot')
 
   // set knot position - break into helper func
-  let x = (Math.random() * 501) - 250
+  let x = (Math.random() * 501) - 350
   let y = (Math.random() * 501) - 200
-  let z = (Math.random() * 201) - 100
+  let z = (Math.random() * 201) - 200
   knot.setAttribute('position', { x: x, y: y, z: z})
   console.log('position is', x, y, z)
 
-  knot.setAttribute('radius', `${Math.random() * 8}`)
-  knot.setAttribute('radiusTubular', `${Math.random() * 8}`)
-  knot.setAttribute('p', `${Math.round(Math.random() * 10)}`)
-  knot.setAttribute('q', `${Math.round(Math.random() * 10)}`)
+  knot.setAttribute('radius', `${Math.random() * 4}`)
+  knot.setAttribute('radiusTubular', `${Math.random() * 6}`)
+  knot.setAttribute('p', `${Math.round(Math.random() * 6)}`)
+  knot.setAttribute('q', `${Math.round(Math.random() * 7)}`)
 
   // knot.setAttribute('color', `${colorA}`)
 
@@ -188,21 +188,21 @@ const render = (timeStamp) => {
   else if (movementPath === "circleZ") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 80 * Math.sin(timer + i + (2 * Math.PI)) })
-      knot.setAttribute('position', { z: 104 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
+      knot.setAttribute('position', { x: 40 * Math.sin(timer + i + (2)) })
+      knot.setAttribute('position', { z: 50 * Math.cos(timer + i + 3) })
     }
   }
   else if (movementPath === "coolness") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 40 * Math.sin(timer + i * 1.1 + (2 * Math.PI)) })
-      knot.setAttribute('position', { y: 40 * Math.cos(timer + i + (2 * Math.PI)) })
+      knot.setAttribute('position', { x: 40 * Math.sin(timer + i * 0.5) })
+      knot.setAttribute('position', { y: 40 * Math.sin(timer + i * 3) })
     }
   } else if (movementPath === "pendulum") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 80 * Math.sin(timer + i + (2 * Math.PI)) })
-      knot.setAttribute('position', { z: 80 * Math.cos(timer + i * 2 + (2 * Math.PI)) })
+      knot.setAttribute('position', { x: 10 * Math.sin(timer + i * -3 + 10) })
+      knot.setAttribute('position', { z: 40 * Math.cos(timer + i * 0.5) })
     }
   }
 }
