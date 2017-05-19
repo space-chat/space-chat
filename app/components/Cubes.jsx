@@ -30,7 +30,7 @@ export default class Cubes extends Component {
     let emotionColors = {
       anger: ['#FF3333', 3],
       surprise: ['#ffffcc', 4],
-      sadness: ['#0066ff', 1],
+      sadness: ['#0066ff', 0.5],
       fear: ['#99CC00', 2],
       joy: ['#FFFFFF', 1],
     }
