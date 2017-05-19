@@ -3,10 +3,10 @@ import AssetLoader from './AssetLoader'
 import Avatars from './Avatars'
 import { vecToStr } from '../utils'
 
-import { initScene, makeKnots, animate
+import { initScene, makeKnots, animate, stopAnimating
 	   , setAmbientLightA, setAmbientLightB
 	   , makeRotatingLightX, makeRotatingLightY
-	   , updateKnotColor, updateLightColor, updateSpeed, updatePath, stopAnimating } from './knots.js'
+	   , updateKnotColor, updateLightColor, updateSpeed, updatePath } from './knots.js'
 
 const Avatar = (props) => {
 	return (
@@ -23,7 +23,7 @@ export default class Knots extends Component {
 
 		this.state = {
 			numKnots: 60,
-			colorA: '#ff6600', // yellow
+			colorA: '#ff6600', 	// yellow
 			colorB: '#993300' , // burnt orange
 			colorC: '#FFFFFF',
 			colorD: '#FFFFFF',
@@ -152,6 +152,6 @@ export default class Knots extends Component {
 				<a-sky id="sky" src="#tiedye"></a-sky>
 
 			</a-scene>
-	  	)
+	  )
 	}
 }
