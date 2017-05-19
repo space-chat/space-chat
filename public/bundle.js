@@ -24753,7 +24753,7 @@ var Cubes = function (_Component) {
 
       var emotionColors = {
         anger: ['#FF3333', 3],
-        surprise: ['#ff66cc', 4],
+        surprise: ['#ffffcc', 4],
         sadness: ['#0066ff', 1],
         fear: ['#99CC00', 2],
         joy: ['#FFFFFF', 1]
@@ -24799,7 +24799,7 @@ var Cubes = function (_Component) {
         null,
         _react2.default.createElement(
           'a-scene',
-          { 'vr-mode-ui': 'enabled: true' },
+          { 'vr-mode-ui': 'enabled: true', fog: 'type: exponential; color: yellow; density: 0.00015' },
           _react2.default.createElement(_AssetLoader2.default, null),
           _react2.default.createElement('a-entity', { id: 'camera', camera: 'userHeight: 1.6', 'look-controls': true, 'mouse-cursor': '' }),
           _react2.default.createElement('a-sky', { id: '#sky', src: '#fractal' })
@@ -25311,6 +25311,9 @@ var createCube = function createCube(images) {
 	// set cube id
 	cubes.push(cube);
 	cube.setAttribute('id', cubes.length);
+	if (cubes.indexOf(cube) % 2 === 0) {
+		cube.setAttribute('roughness', '1');
+	}
 
 	// add cubeWrapper to scene
 	document.querySelector('a-scene').appendChild(cube);
@@ -25328,7 +25331,6 @@ var makeCubes = function makeCubes(numCubes, images) {
 
 // make ambient light
 var makeLight = function makeLight() {
-	console.log('making light');
 
 	var light = document.createElement('a-light');
 

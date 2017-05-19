@@ -29,7 +29,7 @@ export default class Cubes extends Component {
 
     let emotionColors = {
       anger: ['#FF3333', 3],
-      surprise: ['#ff66cc', 4],
+      surprise: ['#ffffcc', 4],
       sadness: ['#0066ff', 1],
       fear: ['#99CC00', 2],
       joy: ['#FFFFFF', 1],
@@ -71,7 +71,7 @@ export default class Cubes extends Component {
   render() {
     return (
       <div>
-        <a-scene vr-mode-ui="enabled: true">
+        <a-scene vr-mode-ui="enabled: true" fog="type: exponential; color: yellow; density: 0.00015">
           <AssetLoader />
 
           {/* Camera */}

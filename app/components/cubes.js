@@ -49,6 +49,9 @@ const createCube = (images) => {
 	// set cube id
 	cubes.push(cube)
 	cube.setAttribute('id', cubes.length)
+  if (cubes.indexOf(cube) % 2 === 0) {
+    cube.setAttribute('roughness', '1')
+  }
 
 	// add cubeWrapper to scene
 	document.querySelector('a-scene').appendChild(cube)
@@ -66,7 +69,6 @@ const makeCubes = (numCubes, images) => {
 
 // make ambient light
 const makeLight = () => {
-	console.log('making light')
 
 	let light = document.createElement('a-light')
 
@@ -88,6 +90,7 @@ const updateColor = (color) => {
 
 	light.setAttribute('color', `${color[0]}`)
 	light.setAttribute('intensity', `${color[1]}`)
+
 }
 
 
