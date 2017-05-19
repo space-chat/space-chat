@@ -140,7 +140,7 @@ class Room extends Component {
           sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
       case 'space':
-        sceneComponent = <Space roster={this.props.roster} 
+        sceneComponent = <Scene roster={this.props.roster} 
           currEmotion={currEmotion} prevEmotion={prevEmotion} 
           sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
