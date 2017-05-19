@@ -62,6 +62,8 @@ export default class Scene extends Component {
     this.setState({
       skyColor: skyColor
     })
+
+    updateLightColor(this.state.skyColor)
   }
 
   // let skyColor = emotionColors[props.currEmotion]

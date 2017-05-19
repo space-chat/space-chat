@@ -36,17 +36,27 @@ export function initLights(avatarColor) {
     light1.setAttribute('type', 'spot')
     light1.setAttribute('target', 'avatar')
     light1.setAttribute('rotation', '0 -18.73571990077792 -6.245239966925973')
+    light1.setAttribute('intensity', '3')
     document.querySelector('a-scene').appendChild(light1)
 }
 
 export function initParticles() {
     var particles = document.createElement('a-entity')
-    particles.setAttribute('particle-system', 'preset: dust')
+    particles.setAttribute('particle-system', [
+        'preset: dust',
+        'color: fuchsia, blue',
+        'particleCount: 5000',
+        'size: 2',
+        'maxAge: 4',
+        'opacity: 0.8'
+    ].join(';'))
+
     document.querySelector('a-scene').appendChild(particles)
 }
 
-export function updateLightColor() {
-    
+export function updateLightColor(avatarColor) {
+    var light = document.getElementById('light1')
+    light.setAttribute('color', `${avatarColor}`)
 }
 
 
