@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AssetLoader from './AssetLoader'
 
-import { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, updateDirection } from './cubes.js'
+import { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, updateDirection, stopAnimating } from './cubes.js'
 
 
 export default class Cubes extends Component {
@@ -30,6 +30,8 @@ export default class Cubes extends Component {
   }
 
   componentWillReceiveProps() {
+    console.log('props are', this.props)
+
     let emotionColors = {
       anger: ['#FF3333', 3],
       surprise: ['#ff66cc', 4],
@@ -60,6 +62,10 @@ export default class Cubes extends Component {
     updateSpeed(this.state.speed)
     updateDirection(this.state.direction)
 
+  }
+
+  componentWillUnmount() {
+    stopAnimating()
   }
 
   render() {

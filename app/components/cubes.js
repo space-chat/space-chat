@@ -11,6 +11,7 @@ let mouseY = 0
 let currentScale = 0.2
 let tickSpeed = 0.00005
 let directionPath = 'clockwise'
+let animationId
 
 //Set up orbital camera, mouse listener, and window resize listener. 
 function initScene() {
@@ -110,6 +111,16 @@ const updateDirection = (direction) => {
 	directionPath = direction
 }
 
+const animate = () => {
+	animationId = requestAnimationFrame(animate)
+	render()
+}
+
+// stop animating when user leaves scene
+const stopAnimating = () => {
+	cancelAnimationFrame(animationId)
+}
+
 const render = () => {
 	//let camera = document.getElementById('camera')
 	let timer = tickSpeed * Date.now() //change number for cube rotation speed
@@ -142,11 +153,6 @@ const render = () => {
 	// }
 }
 
-const animate = () => {
-	requestAnimationFrame(animate)
-	render()
-}
-
 const onWindowResize = () => {
 	let camera = document.getElementById('cubeCamera')
 	windowHalfX = window.innerWidth / 2;
@@ -159,5 +165,5 @@ const onDocumentMouseMove = (event) => {
 	mouseY = (event.clientY - windowHalfY) / 100;
 }
 
-module.exports = { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, updateDirection}
+module.exports = { initScene, makeCubes, makeLight, animate, updateColor, updateSpeed, updateDirection, stopAnimating}
 
