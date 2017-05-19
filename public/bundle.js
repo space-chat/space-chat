@@ -20596,7 +20596,7 @@ var Room = function (_Component) {
           break;
         case 'cubes':
           sceneComponent = _react2.default.createElement(_Cubes2.default, { roster: this.props.roster,
-            currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
+            currEmotion: currEmotion, sentimentScore: sentimentScore });
           break;
       }
 
@@ -24773,7 +24773,7 @@ var Cubes = function (_Component) {
 
       var emotion = this.props.currEmotion;
       var sentiment = this.props.sentimentScore;
-      console.log('extraversion is', this.props.extraversion);
+
       var nextSpeed = this.props.sentimentScore / 100;
 
       var color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor;
@@ -25301,9 +25301,9 @@ var createCube = function createCube(images) {
 	var cube = document.createElement('a-box');
 
 	// set cube position - break into helper func
-	var x = Math.random() * 501 - 250;
-	var y = Math.random() * 501 - 200;
-	var z = Math.random() * 501 - 200;
+	var x = Math.random() * 551 - 250;
+	var y = Math.random() * 551 - 200;
+	var z = Math.random() * 551 - 200;
 	cube.setAttribute('position', { x: x, y: y, z: z });
 
 	// set cube image - break into helper func

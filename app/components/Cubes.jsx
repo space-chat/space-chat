@@ -46,7 +46,7 @@ export default class Cubes extends Component {
 
     let emotion = this.props.currEmotion
     let sentiment = this.props.sentimentScore
-    console.log('extraversion is', this.props.extraversion)
+    
     let nextSpeed = this.props.sentimentScore / 100 
 
     let color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor
@@ -81,9 +81,8 @@ export default class Cubes extends Component {
           <AssetLoader />
 
           {/* Camera */}
-          <a-entity id="camera" position="0 0 20" mouse-cursor="">
-            <a-camera fov="45" user-height="0" />
-          </a-entity>
+          <a-entity id="camera" camera="userHeight: 1.6" look-controls mouse-cursor="">
+        </a-entity>
 
 
           {/* Not sure if I need this. Artifact from bubbles code. */}

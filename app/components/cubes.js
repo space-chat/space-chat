@@ -16,11 +16,11 @@ let animationId
 //Set up orbital camera, mouse listener, and window resize listener. 
 function initScene() {
 	var camera = document.getElementById('camera')
-	camera.setAttribute('fov', 60) //field of view
+	camera.setAttribute('fov', 45) //field of view
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
 	camera.setAttribute('near', 0.01) //near
 	camera.setAttribute('far', 1000) //far
-	camera.setAttribute('position', { z: 3 })
+	camera.setAttribute('position', { z: 20 })
 	camera.setAttribute('focalLength', 3)
 
 	window.addEventListener('resize', onWindowResize, false);
@@ -32,9 +32,9 @@ const createCube = (images) => {
 	let cube = document.createElement('a-box')
 
 	// set cube position - break into helper func
-	let x = (Math.random() * 501) - 250
-	let y = (Math.random() * 501) - 200
-	let z = (Math.random() * 501) - 200
+	let x = (Math.random() * 551) - 250
+	let y = (Math.random() * 551) - 200
+	let z = (Math.random() * 551) - 200
 	cube.setAttribute('position', { x: x, y: y, z: z})
 
 	// set cube image - break into helper func
@@ -42,7 +42,7 @@ const createCube = (images) => {
 	cube.setAttribute('material', `src: ${images[i]}`)
 
 	// set cube size
-	let j = Math.floor((Math.random() * (50 - 10)) + 10)
+	let j = Math.floor((Math.random() * (45 - 10)) + 10)
 	cube.setAttribute('depth', j)
 	cube.setAttribute('height', j)
 	cube.setAttribute('width', j)
