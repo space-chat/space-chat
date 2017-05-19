@@ -132,8 +132,7 @@ class Room extends Component {
         break
       case 'cubes':
         sceneComponent = <Cubes roster={this.props.roster} 
-          currEmotion={currEmotion} prevEmotion={prevEmotion} 
-          sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
+          currEmotion={currEmotion} sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
     }
 
