@@ -24749,7 +24749,6 @@ var Cubes = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps() {
-      //console.log('props are', this.props)
 
       var emotionColors = {
         anger: ['#FF3333', 3],
@@ -24757,14 +24756,6 @@ var Cubes = function (_Component) {
         sadness: ['#0066ff', 0.5],
         fear: ['#99CC00', 2],
         joy: ['#FFFFFF', 1]
-      };
-
-      var emotionIntensity = {
-        anger: '3',
-        surprise: '4',
-        sadness: '1',
-        fear: '2',
-        joy: '1'
       };
 
       //compare current colors/emotion

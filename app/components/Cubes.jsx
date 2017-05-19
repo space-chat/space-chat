@@ -25,7 +25,6 @@ export default class Cubes extends Component {
   }
 
   componentWillReceiveProps() {
-    //console.log('props are', this.props)
 
     let emotionColors = {
       anger: ['#FF3333', 3],
@@ -33,14 +32,6 @@ export default class Cubes extends Component {
       sadness: ['#0066ff', 0.5],
       fear: ['#99CC00', 2],
       joy: ['#FFFFFF', 1],
-    }
-
-    let emotionIntensity = {
-      anger: '3',
-      surprise: '4',
-      sadness: '1',
-      fear: '2',
-      joy: '1',
     }
 
     //compare current colors/emotion
