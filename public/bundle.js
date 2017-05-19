@@ -24786,15 +24786,11 @@ var Cubes = function (_Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'a-scene',
-          { 'vr-mode-ui': 'enabled: true', fog: 'type: exponential; color: yellow; density: 0.00015' },
-          _react2.default.createElement(_AssetLoader2.default, null),
-          _react2.default.createElement('a-entity', { id: 'camera', camera: 'userHeight: 1.6', 'look-controls': true, 'mouse-cursor': '' }),
-          _react2.default.createElement('a-sky', { id: '#sky', src: '#fractal' })
-        )
+        'a-scene',
+        { 'vr-mode-ui': 'enabled: true', fog: 'type: exponential; color: yellow; density: 0.00015' },
+        _react2.default.createElement(_AssetLoader2.default, null),
+        _react2.default.createElement('a-entity', { id: 'camera', camera: 'userHeight: 1.6', 'look-controls': true, 'mouse-cursor': '' }),
+        _react2.default.createElement('a-sky', { id: '#sky', src: '#fractal' })
       );
     }
   }]);
@@ -24943,20 +24939,14 @@ var Knots = function (_Component) {
 
 			// translate emotional intensity to rotation rate and set rate on state
 			var intensity = this.props.primaryIntensity || 0.5;
-			console.log('intensity is', intensity);
 
-			// 0   1
 			var prevRate = this.state.rate;
 			var nextRate = (1 - intensity) / 25000 + 0.0003;
-			// let nextRate = (1 - intensity) * -4000 <-- flips sense of numbers
-			console.log('nextRate is', nextRate);
 
 			var rate = prevRate !== nextRate ? nextRate : prevRate;
-			console.log('rate is', rate);
 
 			// compare current personality with incoming
 			var personality = this.props.primaryPersonality;
-			console.log('personality is', personality);
 
 			var nextPath = movement[personality];
 			var prevPath = this.state.path;
@@ -24967,10 +24957,12 @@ var Knots = function (_Component) {
 
 			(0, _knots.updateKnotColor)(this.state.colorA, this.state.colorB);
 			(0, _knots.updateLightColor)(this.state.colorC, this.state.colorD);
-			(0, _knots.updateLightRotationRate)(this.state.rate);
 			(0, _knots.updatePath)(this.state.path);
-
-			console.log('props on state are', this.state);
+		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			(0, _knots.stopAnimating)();
 		}
 	}, {
 		key: 'render',
@@ -24985,20 +24977,16 @@ var Knots = function (_Component) {
 			};
 
 			return _react2.default.createElement(
-				'div',
-				null,
+				'a-scene',
+				{ fog: 'type: exponential; color: purple' },
+				_react2.default.createElement(_AssetLoader2.default, null),
+				_react2.default.createElement(_Avatars2.default, { Avatar: Avatar, roster: roster }),
 				_react2.default.createElement(
-					'a-scene',
-					{ fog: 'type: exponential; color: purple' },
-					_react2.default.createElement(_AssetLoader2.default, null),
-					_react2.default.createElement(_Avatars2.default, { Avatar: Avatar, roster: roster }),
-					_react2.default.createElement(
-						'a-entity',
-						{ id: 'camera', position: '0 0 -10', 'mouse-cursor': '' },
-						_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
-					),
-					_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' })
-				)
+					'a-entity',
+					{ id: 'camera', position: '0 0 -10', 'mouse-cursor': '' },
+					_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
+				),
+				_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' })
 			);
 		}
 	}]);
@@ -25393,35 +25381,28 @@ module.exports = { initScene: initScene, makeCubes: makeCubes, makeLight: makeLi
 var knots = [];
 var lightX = void 0;
 var lightY = void 0;
-// let colorA = '#CC0033'
-//let colorB = 'green'  
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 var width = window.innerWidth || 2;
 var height = window.innerHeight || 2;
 var mouseX = 0;
 var mouseY = 0;
-var movementPath = 'trig'; // need to write movement path
+var movementPath = 'trig';
 var tickSpeed = 0.0001;
+var animationId = void 0;
 
 var initScene = function initScene() {
   var camera = document.getElementById('camera');
-  camera.setAttribute('fov', 60); //field of view
+  camera.setAttribute('fov', 60);
   camera.setAttribute('aspect', window.innerWidth / window.innerHeight); //aspect
-  camera.setAttribute('near', 0.01); //near
-  camera.setAttribute('far', 1000); //far
+  camera.setAttribute('near', 0.01);
+  camera.setAttribute('far', 1000);
   camera.setAttribute('position', { z: 3 });
   camera.setAttribute('focalLength', 3);
 
   window.addEventListener('resize', onWindowResize, false);
   document.addEventListener('mousemove', onDocumentMouseMove, false);
 };
-
-// helper function to generate random coords
-// const getRandCoord = () => {
-//   let coord = Math.random() * 60;
-//   return Math.random() < 0.5 ? coord + 10 : coord * -2 - 10;
-// }
 
 // create one random knot
 var createKnot = function createKnot() {
@@ -25440,18 +25421,10 @@ var createKnot = function createKnot() {
   knot.setAttribute('p', '' + Math.round(Math.random() * 10));
   knot.setAttribute('q', '' + Math.round(Math.random() * 10));
 
-  // knot.setAttribute('color', `${colorA}`)
-
   knot.setAttribute('metalness', '' + (Math.random() * 0.7 + 0.5));
   knot.setAttribute('roughness', '' + Math.random());
   knot.setAttribute('segments-radial', '10');
   knot.setAttribute('spherical-env-map', '#tiedye');
-
-  // knot.setAttribute('position', {
-  //   x: `${getRandCoord()}`,
-  //   y: `${getRandCoord()}`,
-  //   z: `${getRandCoord()}`,
-  // })
 
   // give each knot a unique id
   knots.push(knot);
@@ -25543,7 +25516,7 @@ var makeRotatingLightY = function makeRotatingLightY() {
   document.querySelector('a-scene').appendChild(lightY);
 };
 
-var updateLightRotationRate = function updateLightRotationRate(rate) {
+var updateSpeed = function updateSpeed(rate) {
   tickSpeed = rate;
 };
 
@@ -25553,14 +25526,13 @@ var updatePath = function updatePath(pathName) {
 
 var render = function render(timeStamp) {
   var camera = document.getElementById('camera');
-  var timer = tickSpeed * timeStamp; // change tickSpeed for rotating light speed
+  var timer = tickSpeed * timeStamp;
   var curr = camera.getAttribute('position') || { x: 1, y: 1 };
   var addx = curr.x + (mouseX - curr.x) * .05;
   var addy = curr.y + (-mouseY - curr.y) * .05;
   camera.setAttribute('position', { x: addx, y: addy, z: 5 });
 
   // circleZ animation path for lightX
-  //  let light = document.getElementById('lightX')
   lightX.setAttribute('position', { x: 108 * Math.sin(20 * (timer + 2 * Math.PI)) });
   lightX.setAttribute('position', { z: 108 * Math.cos(20 * (timer + 3 + 2 * Math.PI)) });
 
@@ -25596,9 +25568,13 @@ var render = function render(timeStamp) {
 };
 
 var animate = function animate(timeStamp) {
-  requestAnimationFrame(animate);
+  animationId = requestAnimationFrame(animate);
   render(timeStamp);
 };
+
+function stopAnimating() {
+  cancelAnimationFrame(animationId);
+}
 
 var onWindowResize = function onWindowResize() {
   var camera = document.getElementById('camera');
@@ -25612,7 +25588,7 @@ var onDocumentMouseMove = function onDocumentMouseMove(event) {
   mouseY = (event.clientY - windowHalfY) / 100;
 };
 
-module.exports = { initScene: initScene, animate: animate, makeKnots: makeKnots, setAmbientLightA: setAmbientLightA, setAmbientLightB: setAmbientLightB, makeRotatingLightX: makeRotatingLightX, makeRotatingLightY: makeRotatingLightY, updateKnotColor: updateKnotColor, updateLightColor: updateLightColor, updateLightRotationRate: updateLightRotationRate, updatePath: updatePath };
+module.exports = { initScene: initScene, animate: animate, makeKnots: makeKnots, setAmbientLightA: setAmbientLightA, setAmbientLightB: setAmbientLightB, makeRotatingLightX: makeRotatingLightX, makeRotatingLightY: makeRotatingLightY, updateKnotColor: updateKnotColor, updateLightColor: updateLightColor, updateSpeed: updateSpeed, updatePath: updatePath, stopAnimating: stopAnimating };
 
 /***/ }),
 /* 179 */
