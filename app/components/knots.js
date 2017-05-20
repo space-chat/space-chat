@@ -11,7 +11,7 @@ let height = window.innerHeight || 2;
 let mouseX = 0;
 let mouseY = 0;
 let movementPath = 'trig' 
-let tickSpeed = 0.0001
+let tickSpeed = 0.0002
 let animationId 
 
 const initScene = () => {
@@ -39,12 +39,12 @@ const createKnot = () => {
   knot.setAttribute('position', { x: x, y: y, z: z})
   console.log('position is', x, y, z)
 
-  knot.setAttribute('radius', `${Math.random() * 4}`)
-  knot.setAttribute('radiusTubular', `${Math.random() * 6}`)
+  knot.setAttribute('radius', `${Math.random() * (8-3) + 3}`)
+  knot.setAttribute('radiusTubular', `${Math.random() * 9}`)
   knot.setAttribute('p', `${Math.round(Math.random() * 6)}`)
   knot.setAttribute('q', `${Math.round(Math.random() * 7)}`)
 
-  knot.setAttribute('metalness', `${(Math.random() * 0.7) + 0.5}`)
+  knot.setAttribute('metalness', `${(Math.random() * 0.7) + 0.6}`)
   knot.setAttribute('roughness', `${Math.random()}`)
   knot.setAttribute('segments-radial', '10')
   knot.setAttribute('spherical-env-map', '#tiedye')
@@ -156,13 +156,13 @@ const render = (timeStamp) => {
 
   // circleZ animation path for lightX
   //  let light = document.getElementById('lightX')
-  lightX.setAttribute('position', { x: 20 * Math.sin(20 * (timer + (2 * Math.PI))) })
-  lightX.setAttribute('position', { z: 20 * Math.cos(20 * (timer + 3 + (2 * Math.PI)))  })
+  lightX.setAttribute('position', { x: 100 * Math.sin(20 * (timer + (2 * Math.PI))) })
+  lightX.setAttribute('position', { z: 100 * Math.cos(20 * (timer + 3 + (2 * Math.PI)))  })
 
 
   // circleY animation path for lightY
-  lightY.setAttribute('position', { x: 20 * Math.sin(20 * timer + (2 * Math.PI)) })
-  lightY.setAttribute('position', { y: 20 * Math.cos(20 * timer + 2 * (2 * Math.PI)) })
+  lightY.setAttribute('position', { x: 100 * Math.sin(20 * timer + (2 * Math.PI)) })
+  lightY.setAttribute('position', { y: 100 * Math.cos(20 * timer + 2 * (2 * Math.PI)) })
 
   if (movementPath === "trig") {
     for (var i = 0, il = knots.length; i < il; i++) {
@@ -174,21 +174,21 @@ const render = (timeStamp) => {
   else if (movementPath === "circleZ") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 40 * Math.sin(timer + i + (2)) })
-      knot.setAttribute('position', { z: 50 * Math.cos(timer + i + 3) })
+      knot.setAttribute('position', { x: 80 * Math.sin(timer + i + (2)) })
+      knot.setAttribute('position', { z: 100 * Math.cos(timer + i + 3) })
     }
   }
   else if (movementPath === "coolness") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 40 * Math.sin(timer + i * 0.5) })
-      knot.setAttribute('position', { y: 40 * Math.sin(timer + i * 3) })
+      knot.setAttribute('position', { x: 100 * Math.sin(timer + i * 0.5) })
+      knot.setAttribute('position', { y: 100 * Math.sin(timer + i * 3) })
     }
   } else if (movementPath === "pendulum") {
     for (var i = 0, il = knots.length; i < il; i++) {
       var knot = knots[i];
-      knot.setAttribute('position', { x: 10 * Math.sin(timer + i * -3 + 10) })
-      knot.setAttribute('position', { z: 40 * Math.cos(timer + i * 0.5) })
+      knot.setAttribute('position', { x: 100 * Math.sin(timer + i * -3 + 10) })
+      knot.setAttribute('position', { z: 60 * Math.cos(timer + i * 0.5) })
     }
   }
 }

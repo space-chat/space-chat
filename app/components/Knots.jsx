@@ -105,7 +105,7 @@ export default class Knots extends Component {
 		let intensity = this.props.primaryIntensity || 0.5
 
 		let prevRate = this.state.rate
-		let nextRate = (1 - intensity) / 25000 + 0.0003
+		let nextRate = (1 - intensity) / 30000 + 0.0003
 
 		let rate = prevRate !== nextRate ? nextRate : prevRate
 
@@ -116,6 +116,7 @@ export default class Knots extends Component {
 		let prevPath = this.state.path
 
 		let path = prevPath !== nextPath ? nextPath : prevPath
+		console.log('path is', path)
 
 		this.setState({ colorA: colorA, colorB: colorB, colorC: colorC, colorD: colorD, rate: rate, path: path })
 
