@@ -20200,20 +20200,20 @@ var Home = function (_Component) {
                 'div',
                 { className: 'space-btn' },
                 _react2.default.createElement(
-                  'button',
-                  { id: 'bubbles', className: 'btn btn-default btn-bubbles', onClick: this.handleClick },
+                  _reactRouter.Link,
+                  { to: '/room', name: 'bubbles' },
                   _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/room', name: 'bubbles' },
+                    'button',
+                    { className: 'btn btn-default btn-bubbles', onClick: this.handleClick },
                     'ENTER BUBBLES'
                   )
                 ),
                 _react2.default.createElement(
-                  'button',
-                  { id: 'plasma', className: 'btn btn-default', onClick: this.handleClick },
+                  _reactRouter.Link,
+                  { to: '/room', name: 'knots' },
                   _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/room', name: 'knots' },
+                    'button',
+                    { className: 'btn btn-default btn-plasma', onClick: this.handleClick },
                     'ENTER PLASMA'
                   )
                 )

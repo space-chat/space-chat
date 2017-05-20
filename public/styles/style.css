@@ -242,7 +242,7 @@ h3 {
     margin: 0 auto;
     border-radius: 10px;
     border: white;
-    border-style: double;
+    border-style: ridge;
     font-family: 'Play';
     font-size: 24px;
     text-align: center;
@@ -263,9 +263,16 @@ h3 {
 
   .btn-bubbles:hover {
     /*background-color: red;*/
-    border: ridge white;
-    background: url("../images/blossoms.jpg") no-repeat scroll 0 0 transparent;
-    color: gray;
+    border: groove #ccff33;
+    background: url("../images/bubble-btn.png") no-repeat scroll 0 0 transparent;
+    color: transparent;
+  }
+
+  .btn-plasma:hover {
+    /*background-color: red;*/
+    border: groove #ccff33;
+    background: url("../images/plasma-btn.png") no-repeat scroll 0 0 transparent;
+    color: transparent;
   }
 
   /******* INSTRUCTIONS ******/
