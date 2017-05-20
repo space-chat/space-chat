@@ -20222,20 +20222,20 @@ var Home = function (_Component) {
                 'div',
                 { className: 'space-btn' },
                 _react2.default.createElement(
-                  'button',
-                  { id: 'cosmos', className: 'btn btn-default', onClick: this.handleClick },
+                  _reactRouter.Link,
+                  { to: '/room', name: 'space' },
                   _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/room', name: 'space' },
+                    'button',
+                    { className: 'btn btn-default btn-cosmos', onClick: this.handleClick },
                     'ENTER COSMOS'
                   )
                 ),
                 _react2.default.createElement(
-                  'button',
-                  { id: 'ufo', className: 'btn btn-default', onClick: this.handleClick },
+                  _reactRouter.Link,
+                  { to: '/room', name: 'cubes' },
                   _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/room', name: 'cubes' },
+                    'button',
+                    { className: 'btn btn-default btn-ufo', onClick: this.handleClick },
                     'ENTER UFO'
                   )
                 )

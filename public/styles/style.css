@@ -262,16 +262,26 @@ h3 {
   } 
 
   .btn-bubbles:hover {
-    /*background-color: red;*/
-    border: groove #ccff33;
+    border: groove #3333ff;
     background: url("../images/bubble-btn.png") no-repeat scroll 0 0 transparent;
     color: transparent;
   }
 
   .btn-plasma:hover {
-    /*background-color: red;*/
-    border: groove #ccff33;
+    border: groove #cc0000;
     background: url("../images/plasma-btn.png") no-repeat scroll 0 0 transparent;
+    color: transparent;
+  }
+
+  .btn-cosmos:hover {
+    border: groove purple;
+    background: url("../images/cosmos-btn.png") no-repeat scroll 0 0 transparent;
+    color: transparent;
+  }
+
+  .btn-ufo:hover {
+    border: groove #99ff33;
+    background: url("../images/ufo-btn.png") no-repeat scroll 0 0 transparent;
     color: transparent;
   }
 
