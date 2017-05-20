@@ -69,9 +69,9 @@ class Home extends Component {
                 <button className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER UFO</Link></button>
               </div>
             </div>
-            <div className="down-chevron">
+            {/*<div className="down-chevron">
               <span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-            </div>
+            </div>*/}
           </div>
         </div>
 

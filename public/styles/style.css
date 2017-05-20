@@ -27,7 +27,9 @@ a, a:hover {
  }
 
 h3 {
-  text-align: center
+  text-align: center;
+  font-family: 'Play', sans-serif;
+  color: white;
 }
 
 .glyphicon .glyphicon-chevron-down {
@@ -194,18 +196,42 @@ h3 {
   }
 
   .form {
-    width: 150px;
+    width: 300px;
     margin: 0 auto;
+    font: sans-serif;
     padding-left: 8px;
+    font-size: 20px;
   }
 
   .form-control {
-    width: 136px;
+    width: 200px;
     margin: 0;
+    font: sans-serif;
+  }
+
+  .control-label: {
+    font: sans-serif;
+  }
+
+  #select {
+
+  }
+
+  .dropdown {
+    font-family: 'Audiowide';
   }
 
   .btn {
     margin: 0 auto;
+    border-radius: 10px;
+    border-width: 0.25px;
+    border: solid white;
+    /*border-style: double;*/
+    font-family: 'Audiowide';
+    font-size: 24px;
+    text-align: center;
+    background-color: black;
+    /*background: url("../images/blossoms.jpg") no-repeat scroll 0 0 transparent;*/
   }
 
   #enter-space {
@@ -214,7 +240,8 @@ h3 {
 
   #enter-space button {
     margin: 1em;
-    width: 315px;
+    width: 280px;
+    height: 70px;
   } 
 
   /******* INSTRUCTIONS ******/
