@@ -110,7 +110,7 @@ export default class Knots extends Component {
 		let rate = prevRate !== nextRate ? nextRate : prevRate
 
 		// compare current personality with incoming
-		let personality = this.props.primaryPersonality
+		let personality = this.props.primaryPersonality || 'extraversion'
 
 		let nextPath = movement[personality]
 		let prevPath = this.state.path

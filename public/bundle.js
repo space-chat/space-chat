@@ -24946,7 +24946,7 @@ var Knots = function (_Component) {
 			var rate = prevRate !== nextRate ? nextRate : prevRate;
 
 			// compare current personality with incoming
-			var personality = this.props.primaryPersonality;
+			var personality = this.props.primaryPersonality || 'extraversion';
 
 			var nextPath = movement[personality];
 			var prevPath = this.state.path;
