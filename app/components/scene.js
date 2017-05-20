@@ -1,31 +1,119 @@
 import glMatrix, { vec3 } from 'gl-matrix'
 import ParticleSystem from 'aframe-particle-system-component'
+import Layout from 'aframe-layout-component'
 
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
-var width = window.innerWidth || 2;
-var height = window.innerHeight || 2;
-var mouseX = 0;
-var mouseY = 0;
+// var width = window.innerWidth || 2;
+// var height = window.innerHeight || 2;
+// var mouseX = 0;
+// var mouseY = 0;
 // var currentScale = 0.2
 // var tickSpeed = 0.00005
 // var movementPath = "trig";
 // var altitude = "normal"
-// var animationId; 
+// var animationId;
 
 // Set up camera, mouse listener, window resize listener
 export function initScene() {
-	var camera = document.getElementById('sceneCamera')
-	camera.setAttribute('fov', 60) //field of view
-	camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
-	camera.setAttribute('near', 0.01) //near
-	camera.setAttribute('far', 1000) //far
-	camera.setAttribute('position', { z: 3 })
-	camera.setAttribute('focalLength', 3)
+    var camera = document.getElementById('sceneCamera')
+    camera.setAttribute('fov', 60) //field of view
+    camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
+    camera.setAttribute('near', 0.01) //near
+    camera.setAttribute('far', 1000) //far
+    camera.setAttribute('position', { z: 3 })
+    camera.setAttribute('focalLength', 3)
 
-	window.addEventListener('resize', onWindowResize, false);
-	// document.addEventListener('mousemove', onDocumentMouseMove, false)
+    window.addEventListener('resize', onWindowResize, false);
+    // document.addEventListener('mousemove', onDocumentMouseMove, false)
 }
+
+
+/* -------------------- STARFIELD ------------------- */
+
+// initializes or updates starfield with appropriate color
+export function initStars(colorA, colorB) {
+    if (document.getElementById('stars')) {
+        var oldStars = document.getElementById('stars')
+        oldStars.parentNode.removeChild(oldStars)
+    }
+    var stars = document.createElement('a-entity')
+    stars.setAttribute('id', 'stars')
+    stars.setAttribute('particle-system', [
+        'preset: dust',
+        `color: ${colorA}, ${colorB}`,
+        'texture: https://raw.githubusercontent.com/stemkoski/stemkoski.github.com/master/Three.js/images/spikey.png',
+        'particleCount: 100000',
+        'size: 2',
+        'maxAge: 5'
+    ].join(';'))
+    document.querySelector('a-scene').appendChild(stars)
+}
+
+export function moveStars() {
+    var movingStars = document.createElement('a-entity')
+    movingStars.setAttribute('id', 'particles')
+    movingStars.setAttribute('particle-system',
+        ['preset: dust',
+            // 'color: fuchsia, blue',
+            'particleCount: 5000',
+            'size: 2',
+            'rotationAngle: 90',
+            'texture: https://raw.githubusercontent.com/stemkoski/stemkoski.github.com/master/Three.js/images/spikey.png',
+            'maxAge: 4'
+        ].join(';'))
+}
+
+/* -------------------- PLANETS ------------------- */
+
+// returns a partially-random set of x,y,z coordinates to be used in createPlanet()
+function setPlanetPosition() {
+	let x = Math.floor(Math.random() * 41) - 20;
+    let y = Math.floor(Math.random() * 41) - 20;
+    let z = Math.floor(Math.random() * 41) - 20;
+    return {x: x, y: y, z: z}
+}
+
+// returns a partially-random texture to be used in createPlanet()
+function setPlanetTexture() {
+    var options = {
+        moon: '',
+        venus: '',
+        mars: '',
+        neptune: ''
+    }
+}
+
+// returns a partially-random radius to be used in createPlanet()
+function setPlanetSize() {
+    return Math.random() * 0.2
+}
+
+// creates a 'planet' of partially-random size and texture
+function createPlanet() {
+    var planet = document.createElement('a-sphere')
+
+    var size = setPlanetSize()
+    var position = setPlanetPosition()
+    // var texture = setPlanetTexture()
+
+    planet.setAttribute('position', position)
+    planet.setAttribute('src','#moon')
+    planet.setAttribute('color', 'pink')
+    planet.setAttribute('size', size)
+
+    document.querySelector('a-scene').appendChild(planet)
+}
+
+// puts random planets in the sky
+export function initPlanets() {
+    for (var i = 0; i < 50; i++) {
+        createPlanet()
+    }
+}
+
+
+/* -------------------- LIGHTS ------------------- */
 
 export function initLights(avatarColor) {
     var light1 = document.createElement('a-light')
@@ -40,24 +128,12 @@ export function initLights(avatarColor) {
     document.querySelector('a-scene').appendChild(light1)
 }
 
-export function initParticles() {
-    var particles = document.createElement('a-entity')
-    particles.setAttribute('particle-system', [
-        'preset: dust',
-        'color: fuchsia, blue',
-        'particleCount: 5000',
-        'size: 2',
-        'maxAge: 4',
-        'opacity: 0.8'
-    ].join(';'))
-
-    document.querySelector('a-scene').appendChild(particles)
-}
-
 export function updateLightColor(avatarColor) {
     var light = document.getElementById('light1')
     light.setAttribute('color', `${avatarColor}`)
 }
+
+
 
 
 
@@ -140,24 +216,25 @@ export function createStardust() {
     let avatars = document.querySelectorAll('.avatar')
     avatars.forEach(avatar => {
         avatar.setAttribute(
-        'particle-system',
-        [   'preset: dust',                       // default, dust, snow, rain
-            'type: 2',                            // 1 (box), 2(sphere), 3(disc)
-            'accelerationValue: 0 0 0',
-            'accelerationSpread: 0 10 0',
-            'positionSpread: 8 8 8',
-            'color: white,black',
-            'maxAge: 1',
-            'size: 0.25',
-            'blending: 2',
-            'direction: 1',
-            'velocityValue: 5 5 5',
-            // 'velocitySpread: 8 8 8',
-            'rotationAxis: y',
-            // rotationAngle: 0; dust preset is 3.14
-            'particleCount: 50000'
-        ].join(';')
-    )})
+            'particle-system',
+            ['preset: dust',                       // default, dust, snow, rain
+                'type: 2',                            // 1 (box), 2(sphere), 3(disc)
+                'accelerationValue: 0 0 0',
+                'accelerationSpread: 0 10 0',
+                'positionSpread: 8 8 8',
+                'color: white,black',
+                'maxAge: 1',
+                'size: 0.25',
+                'blending: 2',
+                'direction: 1',
+                'velocityValue: 5 5 5',
+                // 'velocitySpread: 8 8 8',
+                'rotationAxis: y',
+                // rotationAngle: 0; dust preset is 3.14
+                'particleCount: 50000'
+            ].join(';')
+        )
+    })
     // document.querySelector('.avatar').appendChild(stardust)
 }
 
@@ -193,6 +270,59 @@ function onWindowResize() {
 }
 
 function onDocumentMouseMove(event) {
-	mouseX = (event.clientX - windowHalfX) / 100;
-	mouseY = (event.clientY - windowHalfY) / 100;
+    mouseX = (event.clientX - windowHalfX) / 100;
+    mouseY = (event.clientY - windowHalfY) / 100;
 }
+
+
+
+
+// export function initParticles() {
+//     var particles1 = document.createElement('a-entity')
+//     particles1.setAttribute('id', 'particles')
+//     particles1.setAttribute('particle-system', [
+//         'preset: dust',
+//         'color: white, pink',
+//         // 'color: fuchsia, blue',
+//         'particleCount: 2000',
+//         'rotationAngle: 0',
+//         'rotationAxis: z',
+//         // 'accelerationValue: 10 10 10',
+//         'size: 2',
+//         'texture: https://raw.githubusercontent.com/stemkoski/stemkoski.github.com/master/Three.js/images/spikey.png',
+//         'maxAge: 5'
+//     ].join(';'))
+//     document.querySelector('a-scene').appendChild(particles1)
+
+    // var particles2 = document.createElement('a-entity')
+    // particles2.setAttribute('id', 'particles')
+    // particles2.setAttribute('particle-system', [
+    //     'preset: dust',
+    //     'color: white, pink',
+    //     // 'color: fuchsia, blue',
+    //     'particleCount: 2000',
+    //     'rotationAngle: 90',
+    //     'rotationAxis: x',
+    //     // 'accelerationValue: 10 10 10',
+    //     'size: 2',
+    //     'texture: https://raw.githubusercontent.com/stemkoski/stemkoski.github.com/master/Three.js/images/spikey.png',
+    //     'maxAge: 5'
+    // ].join(';'))
+    // document.querySelector('a-scene').appendChild(particles2)
+
+    // var particles3 = document.createElement('a-entity')
+    // particles3.setAttribute('id', 'particles')
+    // particles3.setAttribute('particle-system', [
+    //     'preset: dust',
+    //     'color: white, pink',
+    //     // 'color: fuchsia, blue',
+    //     'particleCount: 2000',
+    //     'rotationAngle: 45',
+    //     'rotationAxis: y',
+    //     // 'accelerationValue: 10 10 10',
+    //     'size: 2',
+    //     'texture: https://raw.githubusercontent.com/stemkoski/stemkoski.github.com/master/Three.js/images/spikey.png',
+    //     'maxAge: 5'
+    // ].join(';'))
+    // document.querySelector('a-scene').appendChild(particles3)
+// }

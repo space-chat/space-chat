@@ -1,14 +1,16 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 import Avatars from './Avatars'
 import ParticleSystem from 'aframe-particle-system-component'
 import { vecToStr } from '../utils'
-import { initScene, initLights, initParticles, updateLightColor } from './scene'
+import { initScene, initLights, initStars, initPlanets, updateLightColor } from './scene'
 
 const Avatar = (props) => {
   console.log('AVATAR PROPS', props)
   return (
-    <a-entity position={vecToStr(props.position)} particle-system={
+    <a-entity
+      position={vecToStr(props.position)} 
+      particle-system={
       ['preset: snow',                       // default, dust, snow, rain
         'type: 2',                            // 1 (box), 2(sphere), 3(disc)
         'accelerationValue: 0 0 0',
@@ -44,7 +46,8 @@ export default class Scene extends Component {
   componentDidMount() {
     initScene()
     initLights(this.state.skyColor)
-    initParticles()
+    initPlanets()
+    // initParticles(this.state.particleColorA, this.state.particleColorB)
   }
 
   // This is where we can update our local state based on new props
@@ -57,13 +60,31 @@ export default class Scene extends Component {
       joy: '#FBFF00'        // yellow
     }
 
+    let personalityColorA = {
+      agreeableness: '#FF6666', // salmon
+      conscientiousness: 'fuchsia',
+      openness: 'yellow',
+      extraversion: '#66FFFF' // light neon blue
+    }
+
+    let personalityColorB = {
+      agreeableness: '#FFCCCC', // light salmon-pink
+      conscientiousness: 'blue',
+      openness: 'orange',
+      extraversion: '#66FF33' // light neon green
+    }
+
     let skyColor = emotionColors[this.props.currEmotion]
+    let starColorA = (this.props.primaryPersonality === 'default') ? 'white' : personalityColorA[this.props.primaryPersonality]
+    let starColorB = (this.props.primaryPersonality !== 'default') ? personalityColorB[this.props.primaryPersonality] : 'lightblue'
+
+    console.log('PRIMARY PERSONALITY', this.props.primaryPersonality, 'PARTICLE COLORS', starColorA, starColorB)
 
     this.setState({
       skyColor: skyColor
-    })
+    }, updateLightColor(this.state.skyColor))
 
-    updateLightColor(this.state.skyColor)
+    initStars(starColorA, starColorB)
   }
 
   // let skyColor = emotionColors[props.currEmotion]
@@ -81,6 +102,8 @@ export default class Scene extends Component {
           mouse-cursor="" />
 
         <Avatars Avatar={Avatar} roster={this.props.roster} />
+
+        <a-entity light="type: ambient; color: #CCC"></a-entity>
 
         {/*<a-light
           color={this.state.skyColor}
@@ -110,7 +133,7 @@ export default class Scene extends Component {
 
         <a-sky
           id="sky"
-          src="#stars"
+          src="#starrySky"
           color={this.state.skyColor} />
 
       </a-scene>

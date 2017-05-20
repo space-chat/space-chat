@@ -23,6 +23,7 @@ const positionOfAvatar = (index, totalCount, center, out) => {
 }
 
 function makeAvatars(roster = {}, center = centerOfConversation) {
+	console.log('MAKE-AVATARS is being called', 'ROSTER: ', roster)
 	var userIds = Object.keys(roster)
 	return userIds.map((userId, i) => ({
 		position: positionOfAvatar(i, userIds.length, center, [0, 0, 0]),
