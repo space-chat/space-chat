@@ -20201,7 +20201,7 @@ var Home = function (_Component) {
                 { className: 'space-btn' },
                 _react2.default.createElement(
                   'button',
-                  { className: 'btn btn-default', onClick: this.handleClick },
+                  { id: 'bubbles', className: 'btn btn-default btn-bubbles', onClick: this.handleClick },
                   _react2.default.createElement(
                     _reactRouter.Link,
                     { to: '/room', name: 'bubbles' },
@@ -20210,7 +20210,7 @@ var Home = function (_Component) {
                 ),
                 _react2.default.createElement(
                   'button',
-                  { className: 'btn btn-default', onClick: this.handleClick },
+                  { id: 'plasma', className: 'btn btn-default', onClick: this.handleClick },
                   _react2.default.createElement(
                     _reactRouter.Link,
                     { to: '/room', name: 'knots' },
@@ -20223,7 +20223,7 @@ var Home = function (_Component) {
                 { className: 'space-btn' },
                 _react2.default.createElement(
                   'button',
-                  { className: 'btn btn-default', onClick: this.handleClick },
+                  { id: 'cosmos', className: 'btn btn-default', onClick: this.handleClick },
                   _react2.default.createElement(
                     _reactRouter.Link,
                     { to: '/room', name: 'space' },
@@ -20232,7 +20232,7 @@ var Home = function (_Component) {
                 ),
                 _react2.default.createElement(
                   'button',
-                  { className: 'btn btn-default', onClick: this.handleClick },
+                  { id: 'ufo', className: 'btn btn-default', onClick: this.handleClick },
                   _react2.default.createElement(
                     _reactRouter.Link,
                     { to: '/room', name: 'cubes' },

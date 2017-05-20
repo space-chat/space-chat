@@ -30,6 +30,7 @@ h3 {
   text-align: center;
   font-family: 'Play', sans-serif;
   color: white;
+  font-size: 42px;
 }
 
 .glyphicon .glyphicon-chevron-down {
@@ -39,6 +40,7 @@ h3 {
 .enter-space {
   display: flex;
   justify-content: center;
+
 }
 
 .button-container {
@@ -46,6 +48,7 @@ h3 {
   flex-direction: column;
   justify-content: center;
   padding-right: 6px;
+  margin: 0 auto;
 }
 
 .space-btn {
@@ -54,7 +57,8 @@ h3 {
 }
 
 .space-btn > button.btn.btn-default {
-  width: 131px;
+  width: 200px;
+  margin: 0 auto;
 }
 
 .down-chevron {
@@ -70,6 +74,7 @@ h3 {
 
 #instructions {
   height: 80vh;
+  margin-top: 200px;
 }
 
 #instructions h3 {
@@ -189,10 +194,11 @@ h3 {
 @media screen and (min-width: 1000px) {
   /******* ABOVE THE FOLD ******/
   .above-fold {
-    max-width: 800px;
+    max-width: 900px;
     margin: 80px auto;
     display: flex;
     flex-direction: column;
+    justify-content: center;
   }
 
   .form {
@@ -203,6 +209,7 @@ h3 {
     font-size: 20px;
     text-align: center;
     font-family: 'Play';
+    color: white;
   }
 
   .form-control {
@@ -220,7 +227,11 @@ h3 {
   }
 
   #select {
-
+    color: black;
+    font-family: 'Play';
+    font-size: 18px;
+    background-color: white;
+    text-decoration: none;
   }
 
   .dropdown {
@@ -230,10 +241,9 @@ h3 {
   .btn {
     margin: 0 auto;
     border-radius: 10px;
-    border-width: 0.25px;
-    border: solid white;
-    /*border-style: double;*/
-    font-family: 'Audiowide';
+    border: white;
+    border-style: double;
+    font-family: 'Play';
     font-size: 24px;
     text-align: center;
     background-color: black;
@@ -242,13 +252,21 @@ h3 {
 
   #enter-space {
     width: 800px;
+    margin: 0 auto;
   }
 
   #enter-space button {
     margin: 1em;
-    width: 280px;
+    width: 240px;
     height: 70px;
   } 
+
+  .btn-bubbles:hover {
+    /*background-color: red;*/
+    border: ridge white;
+    background: url("../images/blossoms.jpg") no-repeat scroll 0 0 transparent;
+    color: gray;
+  }
 
   /******* INSTRUCTIONS ******/
 

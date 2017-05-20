@@ -61,12 +61,12 @@ class Home extends Component {
           <div id="enter-space">
             <div className="button-container">
               <div className="space-btn">
-                <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="bubbles">ENTER BUBBLES</Link></button>
-                <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="knots" >ENTER PLASMA</Link></button>
+                <button id="bubbles" className="btn btn-default btn-bubbles" onClick={this.handleClick}><Link to="/room" name="bubbles">ENTER BUBBLES</Link></button>
+                <button id="plasma" className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="knots" >ENTER PLASMA</Link></button>
               </div>
               <div className="space-btn">
-                <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="space">ENTER COSMOS</Link></button>
-                <button className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER UFO</Link></button>
+                <button id="cosmos" className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="space">ENTER COSMOS</Link></button>
+                <button id="ufo" className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER UFO</Link></button>
               </div>
             </div>
             {/*<div className="down-chevron">
