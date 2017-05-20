@@ -3,30 +3,30 @@ import AssetLoader from './AssetLoader'
 import Avatars from './Avatars'
 import ParticleSystem from 'aframe-particle-system-component'
 import { vecToStr } from '../utils'
-import { initScene, initLights, initStars, initPlanets, updateLightColor } from './scene'
+import { initScene, initSky, initLight, initStars, initPlanets, updateSkyColor, updateStarColor, updateLightColor } from './scene'
 
 const Avatar = (props) => {
   console.log('AVATAR PROPS', props)
   return (
     <a-entity
-      position={vecToStr(props.position)} 
+      position={vecToStr(props.position)}
       particle-system={
-      ['preset: snow',                       // default, dust, snow, rain
-        'type: 2',                            // 1 (box), 2(sphere), 3(disc)
-        'accelerationValue: 0 0 0',
-        'accelerationSpread: 0 10 0',
-        'positionSpread: 8 8 8',
-        'color: white',
-        'maxAge: 1',
-        'size: 0.09',
-        'blending: 2',
-        'direction: 1',
-        'velocityValue: 5 5 5',
-        // 'velocitySpread: 8 8 8',
-        'rotationAxis: y',
-        // rotationAngle: 0; dust preset is 3.14
-        'particleCount: 50000'
-      ].join(';')} >
+        ['preset: snow',                       // default, dust, snow, rain
+          'type: 2',                            // 1 (box), 2(sphere), 3(disc)
+          'accelerationValue: 0 0 0',
+          'accelerationSpread: 0 10 0',
+          'positionSpread: 8 8 8',
+          'color: white',
+          'maxAge: 1',
+          'size: 0.09',
+          'blending: 2',
+          'direction: 1',
+          'velocityValue: 5 5 5',
+          // 'velocitySpread: 8 8 8',
+          'rotationAxis: y',
+          // rotationAngle: 0; dust preset is 3.14
+          'particleCount: 50000'
+        ].join(';')} >
       <a-sphere radius="3" src="#moon" />
     </a-entity>
   )
@@ -37,58 +37,55 @@ export default class Scene extends Component {
 
   constructor(props) {
     super(props)
-
-    this.state = {
-      skyColor: 'white'
-    }
   }
 
   componentDidMount() {
     initScene()
-    initLights(this.state.skyColor)
+    initSky()
+    initLight('white')
     initPlanets()
-    // initParticles(this.state.particleColorA, this.state.particleColorB)
   }
 
   // This is where we can update our local state based on new props
   componentWillReceiveProps() {
     let emotionColors = {
-      anger: '#FF0000',     // red
-      surprise: '#FF8300',  // orange
-      sadness: '#20A7D2',   // blue
-      fear: '#494850',      // dark grey
-      joy: '#FBFF00'        // yellow
+      anger:    '#FF0000',    // red
+      surprise: '#FF8300',    // orange
+      sadness:  '#20A7D2',    // blue
+      fear:     '#494850',    // dark grey
+      joy:      '#FBFF00'     // yellow
     }
 
     let personalityColorA = {
-      agreeableness: '#FF6666', // salmon
+      agreeableness:     '#FF6666',  // salmon
       conscientiousness: 'fuchsia',
-      openness: 'yellow',
-      extraversion: '#66FFFF' // light neon blue
+      openness:          'yellow',
+      extraversion:      '#66FFFF'   // light neon blue
     }
 
     let personalityColorB = {
-      agreeableness: '#FFCCCC', // light salmon-pink
+      agreeableness:     '#FFCCCC',  // light salmon-pink
       conscientiousness: 'blue',
-      openness: 'orange',
-      extraversion: '#66FF33' // light neon green
+      openness:          'orange',
+      extraversion:      '#66FF33'   // light neon green
     }
 
-    let skyColor = emotionColors[this.props.currEmotion]
-    let starColorA = (this.props.primaryPersonality === 'default') ? 'white' : personalityColorA[this.props.primaryPersonality]
-    let starColorB = (this.props.primaryPersonality !== 'default') ? personalityColorB[this.props.primaryPersonality] : 'lightblue'
+    let emotion = this.props.currEmotion
+    let personality = this.props.primaryPersonality === 'default' 
+      ? 'agreeableness'
+      : this.props.primaryPersonality
 
-    console.log('PRIMARY PERSONALITY', this.props.primaryPersonality, 'PARTICLE COLORS', starColorA, starColorB)
+    let skyColor = emotionColors[emotion]
+    let starColorA = personalityColorA[personality]
+    let starColorB = personalityColorB[personality]
 
-    this.setState({
-      skyColor: skyColor
-    }, updateLightColor(this.state.skyColor))
+    updateLightColor(skyColor)
+    updateSkyColor(skyColor)
 
+    // NEEDS IMPROVEMENT - currently deleting previous entity and re-making it with new colors
+    // how do we effectively 'animate' the particle system without re-creating it?
     initStars(starColorA, starColorB)
   }
-
-  // let skyColor = emotionColors[props.currEmotion]
-  // let prevSkyColor = emotionColors[props.prevEmotion]
 
   render() {
     return (
@@ -101,7 +98,7 @@ export default class Scene extends Component {
           look-controls
           mouse-cursor="" />
 
-        <Avatars Avatar={Avatar} roster={this.props.roster} />
+        {/*<Avatars Avatar={Avatar} roster={this.props.roster} />*/}
 
         <a-entity light="type: ambient; color: #CCC"></a-entity>
 
@@ -130,11 +127,6 @@ export default class Scene extends Component {
           ].join(';')} >
           <a-sphere radius="3" src="#moon" />
         </a-entity>*/}
-
-        <a-sky
-          id="sky"
-          src="#starrySky"
-          color={this.state.skyColor} />
 
       </a-scene>
     )

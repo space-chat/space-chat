@@ -22,10 +22,21 @@ export default function AssetLoader() {
 			<img id="tiedye" src="/images/tiedye.jpg" />
 			<img id="colors" src="/images/colors.jpg" />
 			<img id="krabi" src="/images/krabi.jpg" />
+
+			{/* planet textures */}
 			<img id="moon" src="/images/moon.jpg" />
+			<img id="planet1" src="/images/planet-texture-1.jpg" />
+			<img id="planet2" src="/images/planet-texture-2.jpg" />
+			<img id="planet3" src="/images/planet-texture-3.jpg" />
+			<img id="planet4" src="/images/planet-texture-4.jpg" />
+			<img id="planet5" src="/images/planet-texture-5.jpg" />
+			<img id="planet6" src="/images/planet-texture-6.png" />
+
+			<img id="star-particle" src="/images/star-particle.png" />
 
 
-		{/* Mixin example from Transcend. Mixins are reusable assets. In this case the 'chair-part' was used to compose chairs in the Chair component. */}
+
+			{/* Mixin example from Transcend. Mixins are reusable assets. In this case the 'chair-part' was used to compose chairs in the Chair component. */}
 			<a-mixin id="chair-part" geometry="primitive: box" material="color: #BFBFBF" />
 		</a-assets>
 	)
