@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import AssetLoader from './AssetLoader'
 import Avatars from './Avatars'
-
 import { vecToStr } from '../utils'
 
-import { initScene, makeKnots, animate
+import { initScene, makeKnots, animate, stopAnimating
 	   , setAmbientLightA, setAmbientLightB
 	   , makeRotatingLightX, makeRotatingLightY
-	   , updateKnotColor, updateLightColor, updateLightRotationRate, updatePath } from './knots.js'
+	   , updateKnotColor, updateLightColor, updateSpeed, updatePath } from './knots.js'
 
 const Avatar = (props) => {
 	return (
@@ -23,8 +22,8 @@ export default class Knots extends Component {
 		super()
 
 		this.state = {
-			numKnots: 80,
-			colorA: '#ff6600', // yellow
+			numKnots: 60,
+			colorA: '#ff6600', 	// yellow
 			colorB: '#993300' , // burnt orange
 			colorC: '#FFFFFF',
 			colorD: '#FFFFFF',
@@ -78,12 +77,12 @@ export default class Knots extends Component {
 		}
 
 		// movement depends on dominant personality
-        let movement = {
-            extraversion: "trig",
-            conscientiousness: "coolness",
-            openness: "circleZ",
-            agreeableness: "pendulum"
-        }
+    let movement = {
+        extraversion: "trig",
+        conscientiousness: "coolness",
+        openness: "circleZ",
+        agreeableness: "pendulum"
+    }
 
 		// translate emotion to color and set color on state
 		let emotion = this.props.currEmotion
@@ -104,20 +103,14 @@ export default class Knots extends Component {
 
 		// translate emotional intensity to rotation rate and set rate on state
 		let intensity = this.props.primaryIntensity || 0.5
-		console.log('intensity is', intensity)
 
-		// 0   1
 		let prevRate = this.state.rate
 		let nextRate = (1 - intensity) / 25000 + 0.0003
-		// let nextRate = (1 - intensity) * -4000 <-- flips sense of numbers
-		console.log('nextRate is', nextRate)
 
 		let rate = prevRate !== nextRate ? nextRate : prevRate
-		console.log('rate is', rate)
 
 		// compare current personality with incoming
 		let personality = this.props.primaryPersonality
-		console.log('personality is', personality)
 
 		let nextPath = movement[personality]
 		let prevPath = this.state.path
@@ -128,11 +121,12 @@ export default class Knots extends Component {
 
 		updateKnotColor(this.state.colorA, this.state.colorB)
 		updateLightColor(this.state.colorC, this.state.colorD)
-		updateLightRotationRate(this.state.rate)
 		updatePath(this.state.path)
+  }
 
-		console.log('props on state are', this.state)
-	}
+	componentWillUnmount() {
+    stopAnimating()
+  }
 
 	render() {
 		let roster = {
@@ -145,21 +139,19 @@ export default class Knots extends Component {
 		}
 
 		return (
-			<div>
-				<a-scene fog="type: exponential; color: purple">
-					<AssetLoader />
-					<Avatars Avatar={Avatar} roster={roster} />
+			<a-scene fog="type: exponential; color: purple">
+				<AssetLoader />
+				<Avatars Avatar={Avatar} roster={roster} />
 
-					{/* Camera */}
-					<a-entity id="camera" position="0 0 -10" mouse-cursor="">
-						<a-camera fov="45" user-height="0" />
-					</a-entity>
+				{/* Camera */}
+				<a-entity id="camera" position="0 0 -10" mouse-cursor="">
+					<a-camera fov="45" user-height="0" />
+				</a-entity>
 
-					{/* Skysphere */}
-					<a-sky id="sky" src="#tiedye"></a-sky>
+				{/* Skysphere */}
+				<a-sky id="sky" src="#tiedye"></a-sky>
 
-				</a-scene>
-			</div>
-	  	)
+			</a-scene>
+	  )
 	}
 }
