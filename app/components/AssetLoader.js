@@ -23,15 +23,16 @@ export default function AssetLoader() {
 			<img id="colors" src="/images/colors.jpg" />
 			<img id="krabi" src="/images/krabi.jpg" />
 
-			{/* planet textures */}
+			{/* space scene */}
 			<img id="moon" src="/images/moon.jpg" />
+			<img id="planet0" src="/images/gold-lava-texture.jpg" />
 			<img id="planet1" src="/images/planet-texture-1.jpg" />
 			<img id="planet2" src="/images/planet-texture-2.jpg" />
 			<img id="planet3" src="/images/planet-texture-3.jpg" />
 			<img id="planet4" src="/images/planet-texture-4.jpg" />
 			<img id="planet5" src="/images/planet-texture-5.jpg" />
 			<img id="planet6" src="/images/planet-texture-6.png" />
-
+			<img id="gold-sparkle" src="/images/gold-sparkles-texture.jpg" />
 			<img id="star-particle" src="/images/star-particle.png" />
 
 

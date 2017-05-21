@@ -11,7 +11,7 @@ export function initScene() {
     camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
     camera.setAttribute('near', 0.01) //near
     camera.setAttribute('far', 1000) //far
-    camera.setAttribute('position', { z: 3 })
+    // camera.setAttribute('position', { z: 3 })
     camera.setAttribute('focalLength', 3)
 
     window.addEventListener('resize', onWindowResize, false);
@@ -54,7 +54,7 @@ export function initStarField(colorA, colorB) {
         ['preset: dust',
             'texture: #star-particle',
             `color: ${colorA}, ${colorB}`,
-            'particleCount: 2000',
+            'particleCount: 8000',
             'size: 3',
             'maxAge: 4',
         ].join(';'))
@@ -165,24 +165,23 @@ export function rotatePlanets() {
     })
 }
 
-// creates stardust that moves in a circular orbit around a larger planet
-export function initPlanetOrbit(num) {
+// creates a planet with small orbiting spheres
+function initPlanetOrbit(texture) {
     // create central planet
     var center = document.createElement('a-sphere')
-    center.setAttribute('position', '0 0 -10')
     center.setAttribute('scale', '2 2 2')
-    center.setAttribute('src', '#planet1')
-    document.querySelector('a-scene').appendChild(center)
+    center.setAttribute('src', texture)
+    document.getElementById('planet-circle').appendChild(center)
 
     // create circle layout for orbit objects
     var circle = document.createElement('a-entity')
-    circle.setAttribute('layout', 'type: circle; radius: 3; plane: xz')
+    circle.setAttribute('layout', 'type: circle; radius: 1.75; plane: xz')
 
     // create orbit objects
-    for (var i = 0; i < num; i++) {
+    for (var i = 0; i < 50; i++) {
         var sphere = document.createElement('a-sphere')
-        sphere.setAttribute('color', 'fuchsia')
-        sphere.setAttribute('opacity', '0.8')
+        sphere.setAttribute('src', '#gold-sparkle')
+        sphere.setAttribute('opacity', '0.7')
         sphere.setAttribute('scale', '0.05 0.05 0.05')
         circle.appendChild(sphere)
     }
@@ -198,6 +197,20 @@ export function initPlanetOrbit(num) {
 
     circle.appendChild(orbit)
     center.appendChild(circle)
+}
+
+// creates a circle of planets around the camera, each with its own orbit
+export function initPlanetCircle() {
+    // create circle layout
+    var circle = document.createElement('a-entity')
+    circle.setAttribute('id', 'planet-circle')
+    circle.setAttribute('layout', 'type: circle; radius: 15; plane: xz')
+    document.querySelector('a-scene').appendChild(circle)
+
+    // create planets
+    for (var i = 0; i < 7; i++) {
+        initPlanetOrbit(`#planet${i}`)
+    }
 }
 
 

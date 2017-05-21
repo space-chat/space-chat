@@ -3,7 +3,7 @@ import AssetLoader from './AssetLoader'
 import Avatars from './Avatars'
 import ParticleSystem from 'aframe-particle-system-component'
 import { vecToStr } from '../utils'
-import { initScene, initSky, initLight, initStarField, initStarField2, initPlanets, rotatePlanets, initPlanetOrbit, updateSkyColor, changeStarColor, updateLightColor } from './scene'
+import { initScene, initSky, initLight, initStarField, initStarField2, initPlanets, rotatePlanets, initPlanetCircle, updateSkyColor, changeStarColor, updateLightColor } from './scene'
 
 const Avatar = (props) => {
   console.log('AVATAR PROPS', props)
@@ -44,7 +44,7 @@ function initScene2() {
   initScene()
   initSky()
   initLight()
-  initPlanetOrbit(50)
+  initPlanetCircle()
 }
 
 export default class Scene extends Component {
@@ -54,8 +54,8 @@ export default class Scene extends Component {
   }
 
   componentDidMount() {
-    // initScene1()
-    initScene2()
+    initScene1()
+    // initScene2()
   }
 
   // This is where we can update our local state based on new props
