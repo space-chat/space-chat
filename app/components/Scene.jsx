@@ -3,7 +3,7 @@ import AssetLoader from './AssetLoader'
 import Avatars from './Avatars'
 import ParticleSystem from 'aframe-particle-system-component'
 import { vecToStr } from '../utils'
-import { initScene, initSky, initLight, initStars, initPlanets, updateSkyColor, updateStarColor, updateLightColor } from './scene'
+import { initScene, initSky, initLight, initStarField, initStarField2, initPlanets, rotatePlanets, initPlanetOrbit, updateSkyColor, changeStarColor, updateLightColor } from './scene'
 
 const Avatar = (props) => {
   console.log('AVATAR PROPS', props)
@@ -22,9 +22,7 @@ const Avatar = (props) => {
           'blending: 2',
           'direction: 1',
           'velocityValue: 5 5 5',
-          // 'velocitySpread: 8 8 8',
           'rotationAxis: y',
-          // rotationAngle: 0; dust preset is 3.14
           'particleCount: 50000'
         ].join(';')} >
       <a-sphere radius="3" src="#moon" />
@@ -32,6 +30,22 @@ const Avatar = (props) => {
   )
 }
 
+function initScene1() {
+  initScene()
+  initSky()
+  initLight()
+  // initStarField('white', 'cyan')
+  // initStarField2(1000)
+  initPlanets(50)
+  rotatePlanets()
+}
+
+function initScene2() {
+  initScene()
+  initSky()
+  initLight()
+  initPlanetOrbit(50)
+}
 
 export default class Scene extends Component {
 
@@ -40,10 +54,8 @@ export default class Scene extends Component {
   }
 
   componentDidMount() {
-    initScene()
-    initSky()
-    initLight('white')
-    initPlanets()
+    // initScene1()
+    initScene2()
   }
 
   // This is where we can update our local state based on new props
@@ -57,6 +69,7 @@ export default class Scene extends Component {
     }
 
     let personalityColorA = {
+      default:           'white',
       agreeableness:     '#FF6666',  // salmon
       conscientiousness: 'fuchsia',
       openness:          'yellow',
@@ -64,6 +77,7 @@ export default class Scene extends Component {
     }
 
     let personalityColorB = {
+      default:           'white',
       agreeableness:     '#FFCCCC',  // light salmon-pink
       conscientiousness: 'blue',
       openness:          'orange',
@@ -71,20 +85,21 @@ export default class Scene extends Component {
     }
 
     let emotion = this.props.currEmotion
-    let personality = this.props.primaryPersonality === 'default' 
-      ? 'agreeableness'
-      : this.props.primaryPersonality
+    let personality = this.props.primaryPersonality
 
     let skyColor = emotionColors[emotion]
     let starColorA = personalityColorA[personality]
     let starColorB = personalityColorB[personality]
 
+    console.log('personality', this.props.primaryPersonality, 'color', starColorA)
     updateLightColor(skyColor)
     updateSkyColor(skyColor)
+    // changeStarColor(starColorA)
 
     // NEEDS IMPROVEMENT - currently deleting previous entity and re-making it with new colors
     // how do we effectively 'animate' the particle system without re-creating it?
-    initStars(starColorA, starColorB)
+    initStarField(starColorA, starColorB)
+    // rotatePlanets()
   }
 
   render() {
@@ -98,35 +113,7 @@ export default class Scene extends Component {
           look-controls
           mouse-cursor="" />
 
-        {/*<Avatars Avatar={Avatar} roster={this.props.roster} />*/}
-
         <a-entity light="type: ambient; color: #CCC"></a-entity>
-
-        {/*<a-light
-          color={this.state.skyColor}
-          angle="45"
-          type="spot"
-          target="avatar" />*/}
-
-        {/*<a-entity position="0 0 0" particle-system={
-          ['preset: snow',                       // default, dust, snow, rain
-            'type: 2',                            // 1 (box), 2(sphere), 3(disc)
-            'accelerationValue: 0 0 0',
-            'accelerationSpread: 0 10 0',
-            'positionSpread: 8 8 8',
-            'color: white',
-            'maxAge: 1',
-            'size: 0.09',
-            'blending: 2',
-            'direction: 1',
-            'velocityValue: 5 5 5',
-            // 'velocitySpread: 8 8 8',
-            'rotationAxis: y',
-            // rotationAngle: 0; dust preset is 3.14
-            'particleCount: 50000'
-          ].join(';')} >
-          <a-sphere radius="3" src="#moon" />
-        </a-entity>*/}
 
       </a-scene>
     )
