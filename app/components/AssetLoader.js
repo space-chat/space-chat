@@ -36,7 +36,6 @@ export default function AssetLoader() {
 			<img id="star-particle" src="/images/star-particle.png" />
 
 
-
 			{/* Mixin example from Transcend. Mixins are reusable assets. In this case the 'chair-part' was used to compose chairs in the Chair component. */}
 			<a-mixin id="chair-part" geometry="primitive: box" material="color: #BFBFBF" />
 		</a-assets>

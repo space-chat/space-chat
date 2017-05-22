@@ -1,153 +1,242 @@
-// initScene() -- initializes scene with camera and window resize listener
-// initStarField() -- initializes starfield based on stemkowski particle system
-// createStardust() -- creates stardust around each Avatar
-// animate()
-// render()
-
-// updateSkyColor() -- sky color changes according to primary Emotion
-// updateStardust() -- stardust intensity adjusts according to intensity of primary Emotion
-// updateStarField() -- increase/decrease star brightness for stars in star field
-
-import glMatrix, { vec3 } from 'gl-matrix'
 import ParticleSystem from 'aframe-particle-system-component'
+import Layout from 'aframe-layout-component'
+import Animation from 'aframe-animation-component'
 
 
-// Set up camera, mouse listener, window resize listener
+// Set up camera, window resize listener
 export function initScene() {
-    // var camera = document.getElementById('spaceCamera')
-    // camera.setAttribute('fov', 60) //field of view
-    // camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
-    // camera.setAttribute('near', 0.01) //near
-    // camera.setAttribute('far', 1000) //far
-    // camera.setAttribute('position', { z: 3 })
-    // camera.setAttribute('focalLength', 3)
-    window.addEventListener('resize', onWindowResize, false)
+    var camera = document.getElementById('sceneCamera')
+    camera.setAttribute('fov', 60) //field of view
+    camera.setAttribute('aspect', window.innerWidth / window.innerHeight) //aspect
+    camera.setAttribute('near', 0.01) //near
+    camera.setAttribute('far', 1000) //far
+    camera.setAttribute('focalLength', 3)
+
+    window.addEventListener('resize', onWindowResize, false);
 }
 
-// Create single star
-function createStar(position) {
-    let star = document.createElement('a-sphere')
-    star.setAttribute('position', position)
-    star.setAttribute('color', 'fuchsia')
-    star.setAttribute('scale', { x: 0.05, y: 0.05, z: 0.05 })
-    // let star = document.createElement('a-entity')
-    // star.setAttribute('position', position)
-    // star.setAttribute('particle-system',
-    //     ['preset: dust',
-    //         'type: sphere',
-    //         'color: yellow, white',
-    //         'accelerationValue: 0 0 0',
-    //         'positionSpread: 0.01 0.01 0.01',
-    //         'maxAge: 1',
-    //         'particleCount: 100',
-    //         'size: 0.2',
-    //         'direction: 1',
-    //         'velocityValue: 0.1 0.1 0.1',
-    //         'velocitySpread: 1 1 1'
-    //     ].join(';')
-    // )
-    document.querySelector('a-scene').appendChild(star)
+
+
+/* --------------------   SKY   ------------------- */
+
+// add background image (starry sky)
+export function initSky() {
+    var sky = document.createElement('a-sky')
+    sky.setAttribute('id', 'sky')
+    sky.setAttribute('src', '#starrySky')
+    sky.setAttribute('color', 'white')
+    document.querySelector('a-scene').appendChild(sky)
 }
 
-function getRandCoord() {
-    var coord = Math.random() * 60;
-    return Math.random() < .5 ? coord + 5 : coord * -1 - 5;
+export function updateSkyColor(color) {
+    var sky = document.getElementById('sky')
+    var animation = document.createElement('a-animation')
+    animation.setAttribute('attribute', 'material.color')
+    animation.setAttribute('to', color)
+    animation.setAttribute('ease', 'ease-in-circ')
+    sky.appendChild(animation)
 }
 
-// Generate random coordinates for star position
+
+
+/* -------------------- STARFIELD ------------------- */
+
+// initializes or updates starfield with appropriate color
+export function initStarField(colorA, colorB) {
+    if (document.getElementById('stars')) {
+        var oldStars = document.getElementById('stars')
+        oldStars.parentNode.removeChild(oldStars)
+    }
+    var stars = document.createElement('a-entity')
+    stars.setAttribute('id', 'stars')
+    stars.setAttribute('particle-system',
+        ['preset: dust',
+            'texture: #star-particle',
+            `color: ${colorA}, ${colorB}`,
+            'particleCount: 8000',
+            'size: 3',
+            'maxAge: 4',
+        ].join(';'))
+    document.querySelector('a-scene').appendChild(stars)
+}
+
+
+
+/* -------------------- SCATTERED PLANETS ------------------- */
+
+// returns semi-random xyz coordinates
 function setPosition() {
-    let xCoord = getRandCoord()
-    let yCoord = getRandCoord()
-    let zCoord = getRandCoord()
-    return { x: xCoord, y: yCoord, z: zCoord }
+    let x = Math.floor(Math.random() * 41) - 20;
+    let y = Math.floor(Math.random() * 41) - 20;
+    let z = Math.floor(Math.random() * 41) - 20;
+    return { x: x, y: y, z: z }
 }
 
-// Create star field
-export function createStarField() {
-    console.log('You hit createStarField!')
-    let count = 1000
-    while (count >= 0) {
-        createStar(setPosition())
-        count--
+// returns a semi-random texture
+function setPlanetTexture() {
+    var textures = ['#moon', '#planet1', '#planet2', '#planet3', '#planet4', '#planet5', '#planet6']
+    return textures[Math.floor(Math.random() * textures.length)]
+}
+
+// returns a semi-random radius
+function setPlanetSize() {
+    return Math.random() * 3
+}
+
+// creates a planet of semi-random size, texture, and position
+function createPlanet() {
+    var planet = document.createElement('a-sphere')
+    var size = setPlanetSize()
+    var position = setPosition()
+    var texture = setPlanetTexture()
+    planet.setAttribute('class', 'planet')
+    planet.setAttribute('position', position)
+    planet.setAttribute('src', texture)
+    planet.setAttribute('scale', size)
+    planet.setAttribute('rotation', "0 0 0")
+    document.querySelector('a-scene').appendChild(planet)
+}
+
+// puts specified number of planets in the sky
+export function initPlanets(num) {
+    for (var i = 0; i < num; i++) {
+        createPlanet()
     }
 }
 
-// Create star field - OPTION 2
-// export function createStarField(position) {
-//     console.log('You hit createStarField!')
-//     let starField = document.createElement('a-entity')
-//     starField.setAttribute('position', position)
-//     starField.setAttribute('particle-system',
-//         [ 'preset: dust',
-//           'rotationAxis: null',
-//           'rotationAngle: 0',
-//           'size: 1',
-//           'accelerationValue: 0 0 0',
-//           'accelerationSpread: 0 0 0',
-//           'velocityValue: 0 0 0',
-//           'velocitySpread: 0 0 0',
-//           'color: red',
-//           'maxAge: 60',
-//           'duration: 1',
-//         ].join(';')
-//     )
-//     document.querySelector('a-scene').appendChild(starField)
-// }
-
-// Initialize 'stardust' around each avatar
-// Needs to receive object of x,y,z coordinates of avatar
-export function createStardust() {
-    let avatars = document.querySelectorAll('.avatar')
-    avatars.forEach(avatar => {
-        avatar.setAttribute(
-        'particle-system',
-        [   'preset: dust',                       // default, dust, snow, rain
-            'type: 2',                            // 1 (box), 2(sphere), 3(disc)
-            'accelerationValue: 0 0 0',
-            'accelerationSpread: 0 10 0',
-            'positionSpread: 8 8 8',
-            'color: white,black',
-            'maxAge: 1',
-            'size: 0.25',
-            'blending: 2',
-            'direction: 1',
-            'velocityValue: 5 5 5',
-            // 'velocitySpread: 8 8 8',
-            'rotationAxis: y',
-            // rotationAngle: 0; dust preset is 3.14
-            'particleCount: 50000'
-        ].join(';')
-    )})
-    // document.querySelector('.avatar').appendChild(stardust)
+// makes all planets in the sky spin slowly along y-axis
+export function rotatePlanets() {
+    var planets = document.querySelectorAll('.planet')
+    var planetsArray = Array.prototype.slice.call(planets)
+    // console.log('PLANETSSSSS', planetsArray)
+    planetsArray.forEach(planet => {
+        var rotate = document.createElement('a-animation')
+        rotate.setAttribute('attribute', 'rotation')
+        rotate.setAttribute('to', '0 360 0')
+        rotate.setAttribute('dur', '10000')
+        rotate.setAttribute('easing', 'linear')
+        rotate.setAttribute('fill', 'forwards')
+        rotate.setAttribute('repeat', 'indefinite')
+        planet.appendChild(rotate)
+    })
 }
 
-// update sky color if primary emotion has changed
-export function updateSkyColor(skyColor, prevSkyColor) {
-    if (skyColor !== prevSkyColor) {
-        let animation = document.createElement('a-animation')
-        animation.setAttribute('begin', 'sentiment-change')
-        animation.setAttribute('attribute', 'material.color')
-        animation.setAttribute('from', prevSkyColor)
-        animation.setAttribute('to', skyColor)
-        animation.setAttribute('ease', 'ease-in-circ')
+
+
+/* -------------------- PLANET CIRCLE ------------------- */
+
+// creates a planet with small orbiting spheres
+function initPlanetOrbit(texture) {
+    // create central planet
+    var center = document.createElement('a-sphere')
+    center.setAttribute('scale', '2 2 2')
+    center.setAttribute('src', texture)
+    document.getElementById('planet-circle').appendChild(center)
+
+    // create circle layout for orbit objects
+    var circle = document.createElement('a-entity')
+    circle.setAttribute('layout', 'type: circle; radius: 1.75; plane: xz')
+
+    // create orbit objects
+    for (var i = 0; i < 50; i++) {
+        var sphere = document.createElement('a-sphere')
+        sphere.setAttribute('src', '#gold-sparkle')
+        sphere.setAttribute('opacity', '0.7')
+        sphere.setAttribute('scale', '0.05 0.05 0.05')
+        circle.appendChild(sphere)
+    }
+
+    // creates animation for orbit
+    var orbit = document.createElement('a-animation')
+    orbit.setAttribute('target', '')
+    orbit.setAttribute('attribute', 'rotation')
+    orbit.setAttribute('to', '0 360 0')
+    orbit.setAttribute('dur', '8000')
+    orbit.setAttribute('easing', 'linear')
+    orbit.setAttribute('repeat', 'indefinite')
+
+    circle.appendChild(orbit)
+    center.appendChild(circle)
+}
+
+// creates a circle of planets around the camera, each with its own orbit
+export function initPlanetCircle() {
+    // create circle layout
+    var circle = document.createElement('a-entity')
+    circle.setAttribute('id', 'planet-circle')
+    circle.setAttribute('layout', 'type: circle; radius: 15; plane: xz')
+    document.querySelector('a-scene').appendChild(circle)
+
+    // create planets
+    for (var i = 0; i < 7; i++) {
+        initPlanetOrbit(`#planet${i}`)
     }
 }
 
-// Adjust color/speed of stardust
-export function updateStardust() {
+
+
+/* -------------------- LIGHTING ------------------- */
+
+export function initLight(color) {
+    var light = document.createElement('a-light')
+    light.setAttribute('id', 'light1')
+    light.setAttribute('color', `${color}`)
+    light.setAttribute('angle', '45')
+    light.setAttribute('position', '-16.717 11.189 17.925')
+    light.setAttribute('type', 'spot')
+    light.setAttribute('target', 'avatar')
+    light.setAttribute('rotation', '0 -18.73571990077792 -6.245239966925973')
+    light.setAttribute('intensity', '1')
+    document.querySelector('a-scene').appendChild(light)
 }
 
-// Adjust brightness of star field
-export function updateStarField() {
+export function updateLightColor(color) {
+    var light = document.getElementById('light1')
+    light.setAttribute('color', `${color}`)
 }
 
-export function animate() {
-}
 
-export function render() {
-}
+
+/* -------------------- ETC ------------------- */
 
 function onWindowResize() {
-    var camera = document.getElementById('spaceCamera')
+    var camera = document.getElementById('sceneCamera')
     camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
 }
+
+
+
+
+/* -------------------- CODE IN PROGRESS  ------------------- */
+
+// function createStar() {
+//     var star = document.createElement('a-image')
+//     var position = setPosition()
+//     star.setAttribute('class', 'star')
+//     star.setAttribute('src', '#star-particle')
+//     star.setAttribute('transparent', 'true')
+//     star.setAttribute('position', position)
+//     star.setAttribute('height', '0.5')
+//     star.setAttribute('width', '0.5')
+//     document.getElementById('starField').appendChild(star)
+// }
+
+// export function initStarField2(num) {
+//     var starField = document.createElement('a-entity')
+//     starField.setAttribute('id', 'starField')
+//     starField.setAttribute('color', 'white')
+//     document.querySelector('a-scene').appendChild(starField)
+
+//     for (var i = 0; i < num; i++) {
+//         createStar()
+//     }
+// }
+
+// export function changeStarColor(color) {
+//     var starField = document.getElementById('starField')
+//     var changeColor = document.createElement('a-animation')
+//     changeColor.setAttribute('attribute', 'color')
+//     changeColor.setAttribute('to', color)
+//     changeColor.setAttribute('delay', 0)
+//     starField.appendChild(changeColor)
+// }

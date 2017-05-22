@@ -22,7 +22,6 @@ import PropTypes from 'prop-types'
 
 import Space from './Space.jsx'
 import Bubbles from './Bubbles.jsx'
-import Scene from './Scene.jsx'     // space scene
 import Knots from './Knots.jsx'
 import Cubes from './Cubes.jsx'
 import { openSocket, closeSocket, updateRoster
@@ -140,7 +139,7 @@ class Room extends Component {
           sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
       case 'space':
-        sceneComponent = <Scene roster={this.props.roster} 
+        sceneComponent = <Space roster={this.props.roster} 
           currEmotion={currEmotion} prevEmotion={prevEmotion} 
           sentimentScore={sentimentScore} primaryPersonality={primaryPersonality} />
         break
