@@ -17,7 +17,7 @@ function initScene(option) {
   }
 }
 
-export default class Scene extends Component {
+export default class Space extends Component {
 
   constructor(props) {
     super(props)
