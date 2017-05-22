@@ -3,20 +3,18 @@ import AssetLoader from './AssetLoader'
 import { initScene, initSky, initLight, initStarField, initPlanets, rotatePlanets, initPlanetCircle, updateSkyColor, updateLightColor } from './space'
 
 // Option 1: scattered, rotating planets of various sizes
-function initScene1() {
-  initScene()
-  initSky()
-  initLight()
-  initPlanets(50)
-  rotatePlanets()
-}
-
 // Option 2: ring of planets, each with its own orbit of small spheres
-function initScene2() {
+function initScene(option) {
   initScene()
   initSky()
   initLight()
-  initPlanetCircle()
+  if (option === 1) {
+    initPlanets(50)
+    rotatePlanets()
+  }
+  if (option === 2) {
+    initPlanetCircle()
+  }
 }
 
 export default class Scene extends Component {
@@ -26,7 +24,7 @@ export default class Scene extends Component {
   }
 
   componentDidMount() {
-    initScene1()
+    initScene(1)
   }
 
   componentWillReceiveProps() {
