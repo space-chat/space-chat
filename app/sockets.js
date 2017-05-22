@@ -1,11 +1,11 @@
 import io from 'socket.io-client'
 import store from './store.jsx'
-import { primaryEmotion, secondaryEmotion, primaryIntensity, secondaryIntensity, primaryPersonality, updateExtraversion, updateOpenness, updateConscientiousness, updateAgreeableness, updateSentiment, updateSpeaker } from './reducers/sentimentReducer.jsx'
+import { primaryEmotion, primaryIntensity, primaryPersonality, updateSentiment, updateSpeaker } from './reducers/sentimentReducer.jsx'
+import { addToRoster, deleteFromRoster, gotSentiment } from './reducers/rosterReducer.jsx'
 
 // enable text-to-speech in browser
 const synth = window.speechSynthesis
 let voices
-
 let socket
 
 export function openSocket(scene) {
@@ -15,19 +15,32 @@ export function openSocket(scene) {
 }
 
 export function closeSocket(language) {
+  console.log('emitting close me event')
   // disconnecting socket handled server-side
   socket.emit('close me', language)
 }
 
-export function joinRoom(language) {
+export function joinChannel(language) {
   // subscribing to language channel handled server-side
   socket.emit('join request', language)
   voices = synth.getVoices()
 }
 
 export function updateRoster() {
-  // when client receives roster, print array of socket id's to console
-  socket.on('roster', roster => console.log('roster is', roster))
+  // when client added to roster
+  socket.on('roster addition', addId => {
+    console.log('received roster add event')
+    // update store with latest addition to roster
+    store.dispatch(addToRoster(addId))
+  })
+
+  // when client removed from roster
+  socket.on('roster deletion', deleteId => {
+    console.log('received roster delete event')
+    // update store with deletion from roster
+    store.dispatch(deleteFromRoster(deleteId))
+  })
+
 }
 
 export function sendMessage(messageText, lang) {
@@ -49,17 +62,19 @@ export function receiveMessage(clientLang) {
 }
 
 export function receiveSentiment() {
+  socket.on('got sentiment', data => store.dispatch(gotSentiment(data)))
+
   socket.on('got sentiment', ({ emotion, sentiment, personality, speaker }) => {
     console.log(`emotion: ${emotion}`
                , `sentiment: ${sentiment}`
                , `personality: ${personality}`
                , `speaker: ${speaker}`)
 
-    // get primary and secondary emotions, and their intensities
+    // Get primary and secondary emotions, and their intensities
     let emotions = emotion[0]
     let sortedEmotions = [['joy', 0.5], ['surprise', 0.5]] // default
 
-    // rank emotions in sorted array: most intense to least intense
+    // Rank emotions in sorted array: most intense to least intense
     let keys = Object.keys(emotions)
     sortedEmotions = keys.map(key => emotions[key])
       .sort().reverse().map(intensity => {
@@ -70,40 +85,26 @@ export function receiveSentiment() {
 
     //Get the dominant personality
     let personalityTraits = personality[0]
-    let keys2 = Object.keys(personalityTraits)
     var primPersonality = "openness"
 
-
+    //Primary personality
      for (var trait in personalityTraits) {
        if (personalityTraits[trait] > personalityTraits[primPersonality]) {
          primPersonality = trait
        }
      }
 
-    // Get other indico info
+    // Emotion and sentiment info
     let primEmo = sortedEmotions[0][0]  //primary emotion
-    let secEmo = sortedEmotions[1][0]   //secondary emotion
     let primInt = sortedEmotions[0][1]  //primary emotion's intensity
-    let secInt = sortedEmotions[1][1]   //secondary emotion's intensity
-    let extraversion = personality[0].extraversion || 0.001
-    let openness = personality[0].agreeableness || 0.001
-    let conscientiousness = personality[0].agreeableness || 0.001
-    let agreeableness = personality[0].agreeableness || 0.001
     let sentScore = sentiment[0]        //sentiment score
 
     
-    // update store with new indico data
+    // Update store with new indico data
     store.dispatch(primaryEmotion(primEmo))
-    store.dispatch(secondaryEmotion(secEmo))
     store.dispatch(primaryIntensity(primInt))
-    store.dispatch(secondaryIntensity(secInt))
     store.dispatch(primaryPersonality(primPersonality))
-    store.dispatch(updateExtraversion(extraversion))
-    store.dispatch(updateOpenness(openness))
-    store.dispatch(updateConscientiousness(conscientiousness))
-    store.dispatch(updateAgreeableness(agreeableness))
     store.dispatch(updateSentiment(sentScore))
     store.dispatch(updateSpeaker(speaker))
-  }
-  )
+  })
 }

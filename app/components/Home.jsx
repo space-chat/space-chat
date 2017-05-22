@@ -31,7 +31,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <div className="home-container">
         <div className="above-fold">
           <h3>You are about to enter a virtual experience in<br />which users from across the world will<br />understand your language.<br /><br />And where space will understand how you feel.</h3>
           <br />
@@ -39,8 +39,7 @@ class Home extends Component {
           <br />
           <div className="form">
             <label className="control-label">Select your language:</label>
-          </div>
-          <div>
+
             <select className="form-control" id="select" onChange={this.handleLanguageChange}>
               <option value='en'>English</option>
               <option value='es'>Spanish</option>
@@ -60,13 +59,15 @@ class Home extends Component {
           <br />
           <br />
           <div id="enter-space">
-            <div className="space-btn">
-              <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="bubbles">ENTER BUBBLESPACE</Link></button>
-              <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="knots" >ENTER KNOTSPACE</Link></button>
-            </div>
-            <div className="space-btn">
-              <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="space">ENTER SPACESPACE</Link></button>
-              <button className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER CUBESPACE</Link></button>
+            <div className="button-container">
+              <div className="space-btn">
+                <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="bubbles">ENTER BUBBLES</Link></button>
+                <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="knots" >ENTER PLASMA</Link></button>
+              </div>
+              <div className="space-btn">
+                <button className="btn btn-default" onClick={this.handleClick}><Link to="/room" name="space">ENTER COSMOS</Link></button>
+                <button className="btn btn-default" onClick={this.handleClick} ><Link to="/room" name="cubes">ENTER UFO</Link></button>
+              </div>
             </div>
             <div className="down-chevron">
               <a href="#instructions" className="glyphicon glyphicon-chevron-down" aria-hidden="true"></a>

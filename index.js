@@ -44,13 +44,19 @@ function setUpNamespace (namespace) {
   nsp.on('connection', socket => {
     console.log(`new socket ${socket.id} connected to namespace ${nsp.name}`)
 
+    // send current roster to the new client
+    // Object.keys(nsp.clients().connected).forEach(id => socket.emit('roster addition', id))
+
     socket.on('close me', language => {
+      let deleteId = socket.id
       console.log('disconnecting socket with language ', language)
       // if this is the only socket left in a language channel
       if (nsp.adapter.rooms[language] && nsp.adapter.rooms[language].length === 1)
         // remove that language from state
         languages = languages.filter(lang => lang !== language)
       console.log('all languages on server state are: ', languages)
+      // send out id of deleted socket to all other sockets in room
+      io.of(namespace).emit('roster deletion', deleteId)
       // close socket
       socket.disconnect()
     })
@@ -66,12 +72,14 @@ function setUpNamespace (namespace) {
       console.log('all languages on server state are: ', languages)
       // 2) subscribe socket to language channel
       socket.join(language)
-      io.of(namespace).emit('roster', Object.keys(nsp.connected))
+      // send out id of new socket to all OTHER connected sockets in room
+      // ^ might need debugging (|| change to mirror ln 56, add check client-side)
+      io.of(namespace).emit('roster addition', socket.id)
     })
 
     // when a socket sends a spoken message as text
     socket.on('message', ({ messageText, lang }) => {
-      //console.log('new spoken message! server emitting original text: ', messageText)
+      console.log('new spoken message! server emitting original text: ', messageText)
       let translatedBool = false
        
       // 1) immediately send message exactly as received to all OTHER sockets in original language channel

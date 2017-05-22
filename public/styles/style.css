@@ -17,7 +17,10 @@ body {
 
 .above-fold {
   margin-bottom: 0; 
-  height: 80vh; 
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 a, a:hover {
@@ -33,11 +36,34 @@ h3 {
   color: white; 
 }
 
+.enter-space {
+  display: flex;
+  justify-content: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 6px;
+}
+
+.space-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.space-btn > button.btn.btn-default {
+  width: 131px;
+}
+
 .down-chevron {
   margin: 0 auto; 
   width: 100px; 
   font-size: 4rem; 
   margin-top: 3rem; 
+  display: flex;
+  justify-content: center;
 }
 
 /******* INSTRUCTIONS ******/
@@ -71,80 +97,92 @@ h3 {
 
 /****** MOBILE PHONES *********/
 @media screen and (min-width: 320px) and (max-width: 999px) {
-/******* ABOVE THE FOLD ******/
-.above-fold {
-  max-width: 800px;
-  margin: 80px auto;
-  display: flex;
-  flex-direction: column;
-  height: 100vh; 
-}
+  /******* ABOVE THE FOLD ******/
+  .above-fold {
+    max-width: 800px;
+    margin: 80px auto;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+  }
 
-h3 {
-  font-size: 6.5rem; 
-}
+  h3 {
+    font-size: 6.5rem; 
+  }
 
-.form  {
-  margin: 0px auto 20px auto; 
-  font-size: 5rem; 
-}
+  .form  {
+    margin: 0px; 
+    font-size: 5rem; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
-#select {
-  width: 40rem; 
-  height: 10rem; 
-  font-size: 5rem; 
-  margin: 0px auto; 
-}
+  .control-label {
+    display: flex;
+    justify-content: center;
+  }
 
-#enter-space {
-  margin: 0 0.5rem; 
-  width: 800px;
-}
+  #select {
+    width: 40rem; 
+    height: 10rem; 
+    font-size: 5rem; 
+    margin: 0px auto; 
+  }
 
-#enter-space button {
-  margin: 1em;  
-  width: 35rem; 
-  height: 10rem; 
-  font-size: 2.5rem;  
-} 
+  #enter-space {
+    margin: 0 0.5rem; 
+    width: 800px;
+  }
 
-.space-btn {
-  margin: 0 auto; 
-}
+  #enter-space button {
+    margin: 1em;  
+    width: 35rem; 
+    height: 10rem; 
+    font-size: 2.9rem;  
+  } 
 
-.glyphicon .glyphicon-chevron-down {
-  text-align: center; 
-  font-size: 8rem; 
-  margin: 0 auto; 
-}
+  .space-btn {
+    margin: 0 auto; 
+    width: 745px;
+  }
 
-.down-chevron {
-  margin: 0 auto; 
-  width: 100px; 
-  font-size: 12rem; 
-  margin-top: 6rem; 
-}
+  .glyphicon .glyphicon-chevron-down {
+    text-align: center; 
+    font-size: 8rem; 
+    margin: 0 auto; 
+  }
 
-/******* INSTRUCTIONS ******/
+  .down-chevron {
+    margin: 0 auto; 
+    width: 100px; 
+    font-size: 12rem; 
+    margin-top: 6rem; 
+    display: flex;
+    justify-content: center;
+  }
 
-#instructions {
-  height: 90vh;
-  width: 90vw; 
-}
+  /******* INSTRUCTIONS ******/
 
-#instructions h3 {
-  font-size: 5em;  
-}
+  #instructions {
+    height: 90vh;
+    width: 87vw; 
+  }
 
-.instructions-p {
-  font-size: 4rem;
-  color: white; 
-}
+  #instructions h3 {
+    font-size: 5em;
+    line-height: 9rem; 
+  }
 
-#compatibility {
-  font-size: 4rem; 
-  line-height: 5rem; 
-}
+  .instructions-p {
+    font-size: 4.5rem;
+    color: white; 
+  }
+
+  #compatibility {
+    font-size: 3.8rem; 
+    line-height: 5rem; 
+  }
 
 }
 .container {
@@ -154,41 +192,38 @@ h3 {
 /******* LARGE TABLETS, LAPTOPS, AND DESKTOPS ********/
 
 @media screen and (min-width: 1000px) {
-/******* ABOVE THE FOLD ******/
-.above-fold {
-  max-width: 800px;
-  margin: 80px auto;
-  display: flex;
-  flex-direction: column;
-}
+  /******* ABOVE THE FOLD ******/
+  .above-fold {
+    max-width: 800px;
+    margin: 80px auto;
+    display: flex;
+    flex-direction: column;
+  }
 
-.form {
-  width: 150px;
-  margin: 0 auto;
-}
+  .form {
+    width: 150px;
+    margin: 0 auto;
+    padding-left: 8px;
+  }
 
-.form-control {
-  width: 150px;
-  margin: 0 auto;
-}
+  .form-control {
+    width: 136px;
+    margin: 0;
+  }
 
-.btn {
-  margin: 0 auto;
-}
+  .btn {
+    margin: 0 auto;
+  }
 
-#enter-space {
-  margin: 0 3rem; 
-  width: 800px;
-}
+  #enter-space {
+    width: 800px;
+  }
 
-.space-btn {
-  display: inline; 
-}
+  #enter-space button {
+    margin: 1em;
+    width: 315px;
+  } 
 
-#enter-space button {
-  margin: 1em;   
-} 
-
-/******* INSTRUCTIONS ******/
+  /******* INSTRUCTIONS ******/
 
 }

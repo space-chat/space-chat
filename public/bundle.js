@@ -5323,18 +5323,25 @@ function AssetLoader() {
 			"a-assets",
 			{ timeout: "3000" },
 			_react2.default.createElement("img", { id: "blossoms", src: "/images/blossoms.jpg" }),
-			_react2.default.createElement("img", { id: "stars", src: "/images/sky-stars.png" }),
+			_react2.default.createElement("img", { id: "starrySky", src: "/images/sky-stars.png" }),
 			_react2.default.createElement("img", { id: "fractal", src: "/images/fractal.jpg" }),
-			_react2.default.createElement("img", { id: "deer", src: "/images/deer.jpg" }),
-			_react2.default.createElement("img", { id: "cliff", src: "/images/cliff.jpg" }),
-			_react2.default.createElement("img", { id: "gh", src: "/images/gh.jpg" }),
-			_react2.default.createElement("img", { id: "roses", src: "/images/roses.jpg" }),
-			_react2.default.createElement("img", { id: "rainbow", src: "/images/rainbow.jpg" }),
-			_react2.default.createElement("img", { id: "sunset", src: "/images/sunset.jpg" }),
+			_react2.default.createElement("img", { id: "deer", src: "/images/deer.png" }),
+			_react2.default.createElement("img", { id: "gh", src: "/images/gh.png" }),
+			_react2.default.createElement("img", { id: "roses", src: "/images/roses.png" }),
+			_react2.default.createElement("img", { id: "rainbow", src: "/images/rainbow.png" }),
 			_react2.default.createElement("img", { id: "tiedye", src: "/images/tiedye.jpg" }),
 			_react2.default.createElement("img", { id: "colors", src: "/images/colors.jpg" }),
 			_react2.default.createElement("img", { id: "krabi", src: "/images/krabi.jpg" }),
 			_react2.default.createElement("img", { id: "moon", src: "/images/moon.jpg" }),
+			_react2.default.createElement("img", { id: "planet0", src: "/images/gold-lava-texture.jpg" }),
+			_react2.default.createElement("img", { id: "planet1", src: "/images/planet-texture-1.jpg" }),
+			_react2.default.createElement("img", { id: "planet2", src: "/images/planet-texture-2.jpg" }),
+			_react2.default.createElement("img", { id: "planet3", src: "/images/planet-texture-3.jpg" }),
+			_react2.default.createElement("img", { id: "planet4", src: "/images/planet-texture-4.jpg" }),
+			_react2.default.createElement("img", { id: "planet5", src: "/images/planet-texture-5.jpg" }),
+			_react2.default.createElement("img", { id: "planet6", src: "/images/planet-texture-6.png" }),
+			_react2.default.createElement("img", { id: "gold-sparkle", src: "/images/gold-sparkles-texture.jpg" }),
+			_react2.default.createElement("img", { id: "star-particle", src: "/images/star-particle.png" }),
 			_react2.default.createElement("a-mixin", { id: "chair-part", geometry: "primitive: box", material: "color: #BFBFBF" })
 		)
 	);
@@ -10859,7 +10866,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // props passed from Room (or 'Scene') component
 
-// I am thinking the avatars are orbs with dedicated lights, the light is what changes based on sentiment: glowing orbs. If time, with WebRTC of people on them :D
+// IDEA: avatars are orbs with dedicated lights
+// light is what changes based on sentiment: glowing orbs
 
 // state -- where all avatars will be
 // props -- what component type avatars should be
@@ -10881,6 +10889,7 @@ function makeAvatars() {
 	var roster = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	var center = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : centerOfConversation;
 
+	console.log('MAKE-AVATARS is being called', 'ROSTER: ', roster);
 	var userIds = Object.keys(roster);
 	return userIds.map(function (userId, i) {
 		return {
@@ -10990,15 +10999,15 @@ Object.defineProperty(exports, "__esModule", {
 var SCENE_SET = exports.SCENE_SET = 'SCENE_SET';
 
 // ACTIONS
-
-
-// ACTION CREATORS
 var setScene = exports.setScene = function setScene(scene) {
   return {
     type: SCENE_SET,
     payload: scene
   };
 };
+
+// ACTION CREATORS
+
 
 // REDUCER
 var sceneReducer = function sceneReducer() {
@@ -11031,45 +11040,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var initialState = {
   primaryEmotion: [],
-  secondaryEmotion: [],
   primaryIntensity: [],
-  secondaryIntensity: [],
   primaryPersonality: [],
-  extraversion: [],
-  openness: [],
-  conscientiousness: [],
-  agreeableness: [],
   sentimentScore: [],
   speaker: ''
 };
 
-/* ------------------    ACTIONS    ------------------ */
+/* ------------------    CONSTANTS    ------------------ */
 
 var UPDATE_PRIMARY_EMO = exports.UPDATE_PRIMARY_EMO = "UPDATE_PRIMARY_EMO";
-var UPDATE_SECONDARY_EMO = exports.UPDATE_SECONDARY_EMO = "UPDATE_SECONDARY_EMO";
 var UPDATE_PRIMARY_INTENSITY = exports.UPDATE_PRIMARY_INTENSITY = "UPDATE_PRIMARY_INTENSITY";
-var UPDATE_SECONDARY_INTENSITY = exports.UPDATE_SECONDARY_INTENSITY = "UPDATE_SECONDARY_INTENSITY";
 var UPDATE_PRIMARY_PERSONALITY = exports.UPDATE_PRIMARY_PERSONALITY = "UPDATE_PRIMARY_PERSONALITY";
-var UPDATE_EXTRAVERSION = exports.UPDATE_EXTRAVERSION = "UPDATE_EXTRAVERSION";
-var UPDATE_OPENNESS = exports.UPDATE_OPENNESS = "UPDATE_OPENNESS";
-var UPDATE_CONSCIENTIOUSNESS = exports.UPDATE_CONSCIENTIOUSNESS = "UPDATE_CONSCIENTIOUSNESS";
-var UPDATE_AGREEABLENESS = exports.UPDATE_AGREEABLENESS = "UPDATE_AGREEABLENESS";
 var UPDATE_SENTIMENT_SCORE = exports.UPDATE_SENTIMENT_SCORE = "UPDATE_SENTIMENT_SCORE";
 var UPDATE_SPEAKER = exports.UPDATE_SPEAKER = "UPDATE_SPEAKER";
 
-/* ------------------    ACTION CREATORS    ------------------ */
+/* ------------------    ACTIONS    ------------------ */
 // Take sentiment analysis data sent back from server upon calling receiveSentiment()
 
 var primaryEmotion = exports.primaryEmotion = function primaryEmotion(emotion) {
   return {
     type: UPDATE_PRIMARY_EMO,
-    payload: emotion
-  };
-};
-
-var secondaryEmotion = exports.secondaryEmotion = function secondaryEmotion(emotion) {
-  return {
-    type: UPDATE_SECONDARY_EMO,
     payload: emotion
   };
 };
@@ -11081,45 +11071,10 @@ var primaryIntensity = exports.primaryIntensity = function primaryIntensity(valu
   };
 };
 
-var secondaryIntensity = exports.secondaryIntensity = function secondaryIntensity(value) {
-  return {
-    type: UPDATE_SECONDARY_INTENSITY,
-    payload: value
-  };
-};
-
 var primaryPersonality = exports.primaryPersonality = function primaryPersonality(personality) {
   return {
     type: UPDATE_PRIMARY_PERSONALITY,
     payload: personality
-  };
-};
-
-var updateExtraversion = exports.updateExtraversion = function updateExtraversion(score) {
-  return {
-    type: UPDATE_EXTRAVERSION,
-    payload: score
-  };
-};
-
-var updateOpenness = exports.updateOpenness = function updateOpenness(score) {
-  return {
-    type: UPDATE_OPENNESS,
-    payload: score
-  };
-};
-
-var updateConscientiousness = exports.updateConscientiousness = function updateConscientiousness(score) {
-  return {
-    type: UPDATE_CONSCIENTIOUSNESS,
-    payload: score
-  };
-};
-
-var updateAgreeableness = exports.updateAgreeableness = function updateAgreeableness(score) {
-  return {
-    type: UPDATE_AGREEABLENESS,
-    payload: score
   };
 };
 
@@ -11139,8 +11094,6 @@ var updateSpeaker = exports.updateSpeaker = function updateSpeaker(speakerId) {
 
 /* ------------------    REDUCER    ------------------ */
 
-// 'sentimentReducer has a complexity of 10' --- should we break up into emotionReducer (for primary+secondary emotions and respective intensities), personalityReducer, and sentimentReducer (for sentiment score only)?
-
 function sentimentReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments[1];
@@ -11153,36 +11106,12 @@ function sentimentReducer() {
       newState.primaryEmotion = [action.payload].concat(_toConsumableArray(newState.primaryEmotion));
       break;
 
-    case UPDATE_SECONDARY_EMO:
-      newState.secondaryEmotion = [action.payload].concat(_toConsumableArray(newState.secondaryEmotion));
-      break;
-
     case UPDATE_PRIMARY_INTENSITY:
       newState.primaryIntensity = [action.payload].concat(_toConsumableArray(newState.primaryIntensity));
       break;
 
-    case UPDATE_SECONDARY_INTENSITY:
-      newState.secondaryIntensity = [action.payload].concat(_toConsumableArray(newState.secondaryIntensity));
-      break;
-
     case UPDATE_PRIMARY_PERSONALITY:
       newState.primaryPersonality = [action.payload].concat(_toConsumableArray(newState.primaryPersonality));
-      break;
-
-    case UPDATE_EXTRAVERSION:
-      newState.extraversion = [action.payload].concat(_toConsumableArray(newState.extraversion));
-      break;
-
-    case UPDATE_OPENNESS:
-      newState.openness = [action.payload].concat(_toConsumableArray(newState.openness));
-      break;
-
-    case UPDATE_CONSCIENTIOUSNESS:
-      newState.conscientiousness = [action.payload].concat(_toConsumableArray(newState.conscientiousness));
-      break;
-
-    case UPDATE_AGREEABLENESS:
-      newState.agreeableness = [action.payload].concat(_toConsumableArray(newState.agreeableness));
       break;
 
     case UPDATE_SENTIMENT_SCORE:
@@ -20263,7 +20192,7 @@ var Home = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'home-container' },
         _react2.default.createElement(
           'div',
           { className: 'above-fold' },
@@ -20289,11 +20218,7 @@ var Home = function (_Component) {
               'label',
               { className: 'control-label' },
               'Select your language:'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
+            ),
             _react2.default.createElement(
               'select',
               { className: 'form-control', id: 'select', onChange: this.handleLanguageChange },
@@ -20367,45 +20292,49 @@ var Home = function (_Component) {
             { id: 'enter-space' },
             _react2.default.createElement(
               'div',
-              { className: 'space-btn' },
+              { className: 'button-container' },
               _react2.default.createElement(
-                'button',
-                { className: 'btn btn-default', onClick: this.handleClick },
+                'div',
+                { className: 'space-btn' },
                 _react2.default.createElement(
-                  _reactRouter.Link,
-                  { to: '/room', name: 'bubbles' },
-                  'ENTER BUBBLESPACE'
+                  'button',
+                  { className: 'btn btn-default', onClick: this.handleClick },
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/room', name: 'bubbles' },
+                    'ENTER BUBBLES'
+                  )
+                ),
+                _react2.default.createElement(
+                  'button',
+                  { className: 'btn btn-default', onClick: this.handleClick },
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/room', name: 'knots' },
+                    'ENTER PLASMA'
+                  )
                 )
               ),
               _react2.default.createElement(
-                'button',
-                { className: 'btn btn-default', onClick: this.handleClick },
+                'div',
+                { className: 'space-btn' },
                 _react2.default.createElement(
-                  _reactRouter.Link,
-                  { to: '/room', name: 'knots' },
-                  'ENTER KNOTSPACE'
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'space-btn' },
-              _react2.default.createElement(
-                'button',
-                { className: 'btn btn-default', onClick: this.handleClick },
+                  'button',
+                  { className: 'btn btn-default', onClick: this.handleClick },
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/room', name: 'space' },
+                    'ENTER COSMOS'
+                  )
+                ),
                 _react2.default.createElement(
-                  _reactRouter.Link,
-                  { to: '/room', name: 'space' },
-                  'ENTER SPACESPACE'
-                )
-              ),
-              _react2.default.createElement(
-                'button',
-                { className: 'btn btn-default', onClick: this.handleClick },
-                _react2.default.createElement(
-                  _reactRouter.Link,
-                  { to: '/room', name: 'cubes' },
-                  'ENTER CUBESPACE'
+                  'button',
+                  { className: 'btn btn-default', onClick: this.handleClick },
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/room', name: 'cubes' },
+                    'ENTER UFO'
+                  )
                 )
               )
             ),
@@ -20595,9 +20524,9 @@ var _propTypes = __webpack_require__(11);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Scene = __webpack_require__(175);
+var _Space = __webpack_require__(389);
 
-var _Scene2 = _interopRequireDefault(_Scene);
+var _Space2 = _interopRequireDefault(_Space);
 
 var _Bubbles = __webpack_require__(172);
 
@@ -20624,7 +20553,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                (0) Renders dumb <Scene /> component
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                (1) Starts recording and transcribing audio input (thanks to SpeechRecognition API)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                (2) Sets user's chosen language on state
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               (3) Emits a 'join' message to server through socket (via joinRoom())
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               (3) Emits a 'join' message to server through socket (via joinChannel())
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                (4) Sets listeners for 'got sentiment' and 'got message' from server via receiveSentiment() and receiveMessage()
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                (4) When speech transcription is finalized (/when user pauses), emits 'message' msg to server through socket via sendMesssage()
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   - server then processes transcription:
@@ -20635,7 +20564,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ------------------------------------------------ */
 
 // higher order component that allows Room to transcribe speech
-// space scene
 
 
 var propTypes = {
@@ -20666,10 +20594,11 @@ var Room = function (_Component) {
     value: function componentWillMount() {
       //choose a random sky for Bubbles
       var skies = ["#blossoms", "#colors", "#krabi"];
-      //establish new socket connection
+      //establish new socket connection to 'namespace' associated with scene
       (0, _sockets.openSocket)(this.props.scene);
 
       this.setState({
+        bubbleSky: skies[Math.floor(Math.random() * 3)],
         language: this.props.language,
         langDict: {
           en: 'en-US',
@@ -20684,8 +20613,7 @@ var Room = function (_Component) {
           ja: 'ja-JP',
           ko: 'ko-KR',
           ru: 'ru-RU'
-        },
-        bubbleSky: skies[Math.floor(Math.random() * 3)]
+        }
       });
 
       if (!this.props.browserSupportsSpeechRecognition) return null;
@@ -20693,6 +20621,7 @@ var Room = function (_Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      console.log('warning: component will unmount!');
       // disconnect socket, also leaves channels, unsets listeners
       (0, _sockets.closeSocket)(this.state.language);
     }
@@ -20700,7 +20629,9 @@ var Room = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // broadcast language to server
-      (0, _sockets.joinRoom)(this.state.language);
+      (0, _sockets.joinChannel)(this.state.language);
+      // set listener to update roster
+      (0, _sockets.updateRoster)();
       // set listeners to receive sentiment analyses, translated messages
       (0, _sockets.receiveSentiment)();
       (0, _sockets.receiveMessage)(this.state.language);
@@ -20732,18 +20663,11 @@ var Room = function (_Component) {
     key: 'render',
     value: function render() {
       // emotion data
-      var prevEmotion = this.props.sentiment.primaryEmotion[1] || 'joy';
       var currEmotion = this.props.sentiment.primaryEmotion[0] || 'joy';
       var primaryIntensity = this.props.sentiment.primaryIntensity[0] || 0.5;
-      var secondaryIntensity = this.props.sentiment.secondaryIntensity[0] || 0.5;
 
       // personality data
       var primaryPersonality = this.props.sentiment.primaryPersonality[0] || 'default';
-      var extraversion = this.props.sentiment.extraversion[0] || 0.5;
-      var openness = this.props.sentiment.openness[0] || 0.5;
-      var conscientiousness = this.props.sentiment.conscientiousness || 0.5;
-      var agreeableness = this.props.sentiment.agreeableness || 0.5;
-
       // sentiment score
       var sentimentScore = this.props.sentiment.sentimentScore[0] || 0.5;
 
@@ -20756,20 +20680,21 @@ var Room = function (_Component) {
 
       switch (scene) {
         case 'bubbles':
-          sceneComponent = _react2.default.createElement(_Bubbles2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality, sky: this.state.bubbleSky });
+          sceneComponent = _react2.default.createElement(_Bubbles2.default, { currEmotion: currEmotion, primaryPersonality: primaryPersonality, sky: this.state.bubbleSky });
           break;
         case 'knots':
-          sceneComponent = _react2.default.createElement(_Knots2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality, primaryIntensity: primaryIntensity });
+          sceneComponent = _react2.default.createElement(_Knots2.default, { currEmotion: currEmotion, primaryPersonality: primaryPersonality, primaryIntensity: primaryIntensity });
           break;
         case 'space':
-          sceneComponent = _react2.default.createElement(_Scene2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
+          sceneComponent = _react2.default.createElement(_Space2.default, { currEmotion: currEmotion, primaryPersonality: primaryPersonality });
           break;
         case 'cubes':
-          sceneComponent = _react2.default.createElement(_Cubes2.default, { currEmotion: currEmotion, sentimentScore: sentimentScore, primaryPersonality: primaryPersonality });
+          sceneComponent = _react2.default.createElement(_Cubes2.default, { roster: this.props.roster,
+            currEmotion: currEmotion, sentimentScore: sentimentScore });
           break;
       }
 
-      console.log('emotions in Room are', prevEmotion, currEmotion);
+      console.log('emotions in Room are', currEmotion);
 
       return _react2.default.createElement(
         'div',
@@ -20788,8 +20713,9 @@ var EnhancedRoom = (0, _reactSpeechRecognition2.default)(Room);
 var mapState = function mapState(_ref2) {
   var language = _ref2.language,
       sentiment = _ref2.sentiment,
-      scene = _ref2.scene;
-  return { language: language, sentiment: sentiment, scene: scene };
+      scene = _ref2.scene,
+      roster = _ref2.roster;
+  return { language: language, sentiment: sentiment, scene: scene, roster: roster };
 };
 
 exports.default = (0, _reactRedux.connect)(mapState, null)(EnhancedRoom);
@@ -24703,7 +24629,7 @@ module.exports = function(arraybuffer, start, end) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -24727,135 +24653,136 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Bubbles = function (_Component) {
-    _inherits(Bubbles, _Component);
+  _inherits(Bubbles, _Component);
 
-    function Bubbles() {
-        _classCallCheck(this, Bubbles);
+  function Bubbles() {
+    _classCallCheck(this, Bubbles);
 
-        var _this = _possibleConstructorReturn(this, (Bubbles.__proto__ || Object.getPrototypeOf(Bubbles)).call(this));
+    var _this = _possibleConstructorReturn(this, (Bubbles.__proto__ || Object.getPrototypeOf(Bubbles)).call(this));
 
-        _this.state = {
-            color: 'white',
-            scale: 0.7,
-            personality: 'default',
-            pattern: 'trig'
-        };
+    _this.state = {
+      color: 'white',
+      scale: 0.7,
+      personality: 'default',
+      pattern: 'trig'
+    };
 
-        _this.handleSizeOrColor = _this.handleSizeOrColor.bind(_this);
-        return _this;
+    _this.handleSizeOrColor = _this.handleSizeOrColor.bind(_this);
+    return _this;
+  }
+
+  _createClass(Bubbles, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      (0, _bubbles.initScene)();
+      (0, _bubbles.makeBubbles)(200, this.props.sky, this.state.color);
+      (0, _bubbles.animate)();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      var _this2 = this;
+
+      var emotionColors = {
+        anger: '#FF0000', // red
+        surprise: '#FF8300', // orange
+        sadness: '#20A7D2', // blue
+        fear: '#494850', // dark grey
+        joy: '#FBFF00' // yellow
+      };
+
+      //Movement depends on the dominant personality
+      var movement = {
+        extraversion: "trig",
+        conscientiousness: "coolness",
+        openness: "circleZ",
+        agreeableness: "pendulum"
+      };
+
+      //Compare current colors/personality with previous ones
+      var currentColor = this.state.color;
+      var currentPers = this.state.personality;
+      var emotion = this.props.currEmotion;
+      var personality = this.props.primaryPersonality;
+      var color = void 0;
+      var domPersonality = void 0;
+      var scale = void 0;
+
+      color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : this.state.color;
+
+      domPersonality = currentPers !== personality ? personality : this.state.personality;
+
+      var pattern = movement[domPersonality] || "trig";
+      //Bubbles are bigger if the dominant personality is extraversion
+      scale = domPersonality === "extraversion" ? 0.7 : 0.4;
+
+      //Set color (emotion), and scale (personality), and speed (emotion)
+      this.setState({ color: color, scale: scale, pattern: pattern }, function () {
+        if (_this2.state.color !== '#FF8300') {
+          _this2.handleSizeOrColor();
+        } else {
+          //for surprise 
+          (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#FF8300", 3); //orange
+          (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#0FB235", 4); //green
+          (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#5227B2", 5); //purple
+          (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#FFD437", 7); //yellow
+        }
+
+        (0, _bubbles.updatePath)(_this2.state.pattern);
+      });
     }
 
-    _createClass(Bubbles, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            (0, _bubbles.initScene)();
-            (0, _bubbles.makeBubbles)(200, this.props.sky, this.state.color);
-            (0, _bubbles.animate)();
-        }
-    }, {
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps() {
-            var _this2 = this;
+    //Update speed depending on the emotion
 
-            var emotionColors = {
-                anger: '#FF0000', // red
-                surprise: '#FF8300', // orange
-                sadness: '#20A7D2', // blue
-                fear: '#494850', // dark grey
-                joy: '#FBFF00' // yellow
-            };
+  }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate() {
+      if (this.state.color === "#FF0000") (0, _bubbles.updateSpeed)(0.0015);else if (this.state.color === "#494850") (0, _bubbles.updateSpeed)(0.00001);else (0, _bubbles.updateSpeed)(0.0007);
+    }
 
-            //Movement depends on the dominant personality
-            var movement = {
-                extraversion: "trig",
-                conscientiousness: "coolness",
-                openness: "circleZ",
-                agreeableness: "pendulum"
-            };
+    //stop animating when the person leaves bubbles
 
-            //Compare current colors/personality with previous ones
-            var currentColor = this.state.color;
-            var currentPers = this.state.personality;
-            var emotion = this.props.currEmotion;
-            var personality = this.props.primaryPersonality;
-            var color = void 0;
-            var domPersonality = void 0;
-            var scale = void 0;
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      (0, _bubbles.stopAnimating)();
+    }
 
-            color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : this.state.color;
+    //Handles changing for all emotions except surprise
 
-            domPersonality = currentPers !== personality ? personality : this.state.personality;
+  }, {
+    key: 'handleSizeOrColor',
+    value: function handleSizeOrColor() {
+      (0, _bubbles.sizeOrColor)(this.state.scale, this.props.sky, this.state.color, 3);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'a-scene',
+        { 'vr-mode-ui': 'enabled: true' },
+        _react2.default.createElement(_AssetLoader2.default, null),
+        _react2.default.createElement('a-entity', { id: 'bubbleCamera', camera: 'userHeight: 1.6', 'look-controls': true,
+          'mouse-cursor': '' }),
+        _react2.default.createElement('a-sky', { src: this.props.sky })
+      );
+    }
+  }]);
 
-            var pattern = movement[domPersonality] || "trig";
-            //Bubbles are bigger if the dominant personality is extraversion
-            scale = domPersonality === "extraversion" ? 0.7 : 0.4;
-
-            //Set color (emotion), and scale (personality), and speed (emotion)
-            this.setState({ color: color, scale: scale, pattern: pattern }, function () {
-                if (_this2.state.color !== '#FF8300') {
-                    _this2.handleSizeOrColor();
-                } else {
-                    //for surprise 
-                    (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#FF8300", 3); //orange
-                    (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#0FB235", 4); //green
-                    (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#5227B2", 5); //purple
-                    (0, _bubbles.sizeOrColor)(0.4, _this2.props.sky, "#FFD437", 7); //yellow
-                }
-
-                (0, _bubbles.updatePath)(_this2.state.pattern);
-            });
-        }
-
-        //Update speed depending on the emotion
-
-    }, {
-        key: 'componentWillUpdate',
-        value: function componentWillUpdate() {
-            if (this.state.color === "#FF0000") (0, _bubbles.updateSpeed)(0.0015);else if (this.state.color === "#494850") (0, _bubbles.updateSpeed)(0.00001);else (0, _bubbles.updateSpeed)(0.0007);
-        }
-
-        //stop animating when the person leaves bubbles
-
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            (0, _bubbles.stopAnimating)();
-        }
-
-        //Handles changing for all emotions except surprise
-
-    }, {
-        key: 'handleSizeOrColor',
-        value: function handleSizeOrColor() {
-            (0, _bubbles.sizeOrColor)(this.state.scale, this.props.sky, this.state.color, 3);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'a-scene',
-                { 'vr-mode-ui': 'enabled: true' },
-                _react2.default.createElement(_AssetLoader2.default, null),
-                _react2.default.createElement('a-entity', { id: 'bubbleCamera', camera: 'userHeight: 1.6', 'look-controls': true,
-                    'mouse-cursor': '' }),
-                _react2.default.createElement('a-sky', { src: this.props.sky })
-            );
-        }
-    }]);
-
-    return Bubbles;
+  return Bubbles;
 }(_react.Component);
 //Emotions: Change bubble color
-//Anger: Bubbles turn red + increase speed
-//Joy:   Bubbles turn yellow  
-//Sadness: Bubbles turn blue + decrease in #
-//Fear:    Bubbles turn gray + stand still
-//Surprise: Bubbles turn orange and increase in #
+//Anger:              Bubbles turn red + increase speed
+//Joy:                Bubbles turn yellow  
+//Sadness:            Bubbles turn blue + decrease in #
+//Fear:               Bubbles turn gray + stand still
+//Surprise:           Bubbles turn orange and increase in #
+
 //Personality: 
-//Extraversion: Bubbles increase in size and do a "trig"
-//Conscientiousness: Bubbles do a "coolness" pattern
-//Openness: Bubbles do a circleZ pattern
-//Agreeableness: Bubbles do a "pendulum" pattern 
+//Extraversion:       Bubbles increase in size and do a "trig"
+//Conscientiousness:  Bubbles do a "coolness" pattern
+//Openness:           Bubbles do a circleZ pattern
+//Agreeableness:      Bubbles do a "pendulum" pattern 
 
 
 exports.default = Bubbles;
@@ -24900,16 +24827,10 @@ var Cubes = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Cubes.__proto__ || Object.getPrototypeOf(Cubes)).call(this));
 
     _this.state = {
-      numCubes: 150,
+      numCubes: 180,
       cubeImages: ['#deer', '#gh', '#roses', '#rainbow', '#blossoms'],
       color: ['#FFFFFF', 1], // will update based on primary emotion
-      speed: 1, // will update based on sentiment analysis
-      direction: 'clockwise' // will update based on sentiment analysis
-    };
-
-    //this.handleColor = this.handleColor.bind(this)
-    //this.handleSpeed = this.handleSpeed.bind(this)
-    //this.handleDirection = this.handleDirection.bind(this)
+      speed: 1 };
     return _this;
   }
 
@@ -24924,10 +24845,11 @@ var Cubes = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps() {
+
       var emotionColors = {
         anger: ['#FF3333', 3],
-        surprise: ['#ff66cc', 4],
-        sadness: ['#0066ff', 1],
+        surprise: ['#ffffcc', 4],
+        sadness: ['#0066ff', 0.5],
         fear: ['#99CC00', 2],
         joy: ['#FFFFFF', 1]
       };
@@ -24938,39 +24860,33 @@ var Cubes = function (_Component) {
 
       var emotion = this.props.currEmotion;
       var sentiment = this.props.sentimentScore;
-      console.log('extraversion is', this.props.extraversion);
-      var nextSpeed = this.props.sentimentScore / 100;
+
+      var nextSpeed = (1 - sentiment) / 20;
 
       var color = currentColor !== emotionColors[emotion] ? emotionColors[emotion] : currentColor;
 
       var speed = currentSpeed !== nextSpeed ? nextSpeed : currentSpeed;
       console.log('speed is', speed);
 
-      var direction = sentiment > 0.5 ? 'clockwise' : 'counter-clockwise';
-
-      this.setState({ color: color, speed: speed, direction: direction });
+      this.setState({ color: color, speed: speed });
 
       (0, _cubes.updateColor)(this.state.color, this.state.intensity);
       (0, _cubes.updateSpeed)(this.state.speed);
-      (0, _cubes.updateDirection)(this.state.direction);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      (0, _cubes.stopAnimating)();
     }
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'a-scene',
-          { 'vr-mode-ui': 'enabled: true' },
-          _react2.default.createElement(_AssetLoader2.default, null),
-          _react2.default.createElement(
-            'a-entity',
-            { id: 'camera', position: '0 0 20', 'mouse-cursor': '' },
-            _react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
-          ),
-          _react2.default.createElement('a-sky', { id: '#sky', src: '#fractal' })
-        )
+        'a-scene',
+        { 'vr-mode-ui': 'enabled: true', fog: 'type: exponential; color: yellow; density: 0.00015' },
+        _react2.default.createElement(_AssetLoader2.default, null),
+        _react2.default.createElement('a-entity', { id: 'camera', camera: 'userHeight: 1.6', 'look-controls': true, 'mouse-cursor': '' }),
+        _react2.default.createElement('a-sky', { id: '#sky', src: '#fractal' })
       );
     }
   }]);
@@ -25119,20 +25035,14 @@ var Knots = function (_Component) {
 
 			// translate emotional intensity to rotation rate and set rate on state
 			var intensity = this.props.primaryIntensity || 0.5;
-			console.log('intensity is', intensity);
 
-			// 0   1
 			var prevRate = this.state.rate;
 			var nextRate = (1 - intensity) / 25000 + 0.0003;
-			// let nextRate = (1 - intensity) * -4000 <-- flips sense of numbers
-			console.log('nextRate is', nextRate);
 
 			var rate = prevRate !== nextRate ? nextRate : prevRate;
-			console.log('rate is', rate);
 
 			// compare current personality with incoming
 			var personality = this.props.primaryPersonality;
-			console.log('personality is', personality);
 
 			var nextPath = movement[personality];
 			var prevPath = this.state.path;
@@ -25143,10 +25053,12 @@ var Knots = function (_Component) {
 
 			(0, _knots.updateKnotColor)(this.state.colorA, this.state.colorB);
 			(0, _knots.updateLightColor)(this.state.colorC, this.state.colorD);
-			(0, _knots.updateLightRotationRate)(this.state.rate);
 			(0, _knots.updatePath)(this.state.path);
-
-			console.log('props on state are', this.state);
+		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			(0, _knots.stopAnimating)();
 		}
 	}, {
 		key: 'render',
@@ -25161,20 +25073,16 @@ var Knots = function (_Component) {
 			};
 
 			return _react2.default.createElement(
-				'div',
-				null,
+				'a-scene',
+				{ fog: 'type: exponential; color: purple' },
+				_react2.default.createElement(_AssetLoader2.default, null),
+				_react2.default.createElement(_Avatars2.default, { Avatar: Avatar, roster: roster }),
 				_react2.default.createElement(
-					'a-scene',
-					{ fog: 'type: exponential; color: purple' },
-					_react2.default.createElement(_AssetLoader2.default, null),
-					_react2.default.createElement(_Avatars2.default, { Avatar: Avatar, roster: roster }),
-					_react2.default.createElement(
-						'a-entity',
-						{ id: 'camera', position: '0 0 -10', 'mouse-cursor': '' },
-						_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
-					),
-					_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' })
-				)
+					'a-entity',
+					{ id: 'camera', position: '0 0 -10', 'mouse-cursor': '' },
+					_react2.default.createElement('a-camera', { fov: '45', 'user-height': '0' })
+				),
+				_react2.default.createElement('a-sky', { id: 'sky', src: '#tiedye' })
 			);
 		}
 	}]);
@@ -25185,87 +25093,7 @@ var Knots = function (_Component) {
 exports.default = Knots;
 
 /***/ }),
-/* 175 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(5);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _AssetLoader = __webpack_require__(41);
-
-var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
-
-var _Avatars = __webpack_require__(91);
-
-var _Avatars2 = _interopRequireDefault(_Avatars);
-
-var _aframeParticleSystemComponent = __webpack_require__(168);
-
-var _aframeParticleSystemComponent2 = _interopRequireDefault(_aframeParticleSystemComponent);
-
-var _utils = __webpack_require__(95);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Avatar = function Avatar(props) {
-  return _react2.default.createElement(
-    'a-entity',
-    { position: (0, _utils.vecToStr)(props.position), 'particle-system': ['preset: snow', // default, dust, snow, rain
-      'type: 2', // 1 (box), 2(sphere), 3(disc)
-      'accelerationValue: 0 0 0', 'accelerationSpread: 0 10 0', 'positionSpread: 8 8 8', 'color: white', 'maxAge: 1', 'size: 0.09', 'blending: 2', 'direction: 1', 'velocityValue: 5 5 5',
-      // 'velocitySpread: 8 8 8',
-      'rotationAxis: y',
-      // rotationAngle: 0; dust preset is 3.14
-      'particleCount: 50000'].join(';') },
-    _react2.default.createElement('a-sphere', { radius: '3', src: '#moon' })
-  );
-};
-
-var Scene = function Scene(props) {
-
-  // get primary emotion from props, convert it to color for sky animation
-  var emotionColors = {
-    anger: '#FF0000', // red
-    surprise: '#FF8300', // orange
-    sadness: '#20A7D2', // blue
-    fear: '#66ff33', // dark grey
-    joy: '#FBFF00' // yellow
-  };
-
-  var skyColor = emotionColors[props.currEmotion];
-  var prevSkyColor = emotionColors[props.prevEmotion];
-
-  var roster = {
-    a: {},
-    b: {},
-    c: {}
-  };
-
-  return _react2.default.createElement(
-    'a-scene',
-    { 'vr-mode-ui': 'enabled: true' },
-    _react2.default.createElement(_AssetLoader2.default, null),
-    _react2.default.createElement(_Avatars2.default, { Avatar: Avatar, roster: roster, prevSkyColor: skyColor }),
-    _react2.default.createElement('a-light', { color: '' + skyColor, light: 'angle:45;type:spot;target:avatar', angle: '45', position: '-16.717 11.189 17.925', type: 'spot', target: 'avatar', rotation: '0 -18.73571990077792 -6.245239966925973', scale: '1 1 1', visible: 'true' }),
-    _react2.default.createElement('a-light', { color: '' + skyColor, light: 'angle:45;type:spot;target:null', angle: '45', type: 'spot', target: 'avatar' }),
-    _react2.default.createElement('a-sky', {
-      id: 'sky',
-      src: '#stars',
-      color: skyColor })
-  );
-};
-
-exports.default = Scene;
-
-/***/ }),
+/* 175 */,
 /* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25438,16 +25266,16 @@ var mouseX = 0;
 var mouseY = 0;
 var currentScale = 0.2;
 var tickSpeed = 0.00005;
-var directionPath = 'clockwise';
+var animationId = void 0;
 
 //Set up orbital camera, mouse listener, and window resize listener. 
 function initScene() {
 	var camera = document.getElementById('camera');
-	camera.setAttribute('fov', 60); //field of view
+	camera.setAttribute('fov', 45); //field of view
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight); //aspect
 	camera.setAttribute('near', 0.01); //near
 	camera.setAttribute('far', 1000); //far
-	camera.setAttribute('position', { z: 3 });
+	camera.setAttribute('position', { z: 20 });
 	camera.setAttribute('focalLength', 3);
 
 	window.addEventListener('resize', onWindowResize, false);
@@ -25460,7 +25288,7 @@ var createCube = function createCube(images) {
 
 	// set cube position - break into helper func
 	var x = Math.random() * 501 - 250;
-	var y = Math.random() * 501 - 200;
+	var y = Math.random() * 501 - 250;
 	var z = Math.random() * 501 - 200;
 	cube.setAttribute('position', { x: x, y: y, z: z });
 
@@ -25469,18 +25297,10 @@ var createCube = function createCube(images) {
 	cube.setAttribute('material', 'src: ' + images[i]);
 
 	// set cube size
-	var j = Math.floor(Math.random() * (50 - 10) + 10);
+	var j = Math.floor(Math.random() * (40 - 2) + 2);
 	cube.setAttribute('depth', j);
 	cube.setAttribute('height', j);
 	cube.setAttribute('width', j);
-
-	// set cube rotation 
-	var xR = Math.random() * 180;
-	var yR = Math.random() * 180;
-	var zR = Math.random() * 180;
-	cube.setAttribute('rotation', { x: xR, y: 0, z: zR });
-
-	// cube.setAttribute('pivot', '0 0 0')
 
 	// set cube id
 	cubes.push(cube);
@@ -25502,7 +25322,6 @@ var makeCubes = function makeCubes(numCubes, images) {
 
 // make ambient light
 var makeLight = function makeLight() {
-	console.log('making light');
 
 	var light = document.createElement('a-light');
 
@@ -25518,11 +25337,10 @@ var makeLight = function makeLight() {
 
 // Update ambient light color based on emotion
 var updateColor = function updateColor(color) {
-	console.log('updated light color is', color);
 
 	var light = document.getElementById('light');
 
-	light.setAttribute('color', '' + color[0]);
+	//light.setAttribute('color', `${color[0]}`)
 	light.setAttribute('intensity', '' + color[1]);
 };
 
@@ -25531,50 +25349,28 @@ var updateSpeed = function updateSpeed(n) {
 	tickSpeed = n;
 };
 
-// update rotation direction based on sentiment
-var updateDirection = function updateDirection(direction) {
-	directionPath = direction;
-};
-
 var render = function render() {
-	//let camera = document.getElementById('camera')
-	var timer = tickSpeed * Date.now(); //change number for cube rotation speed
-	//let curr = camera.getAttribute('position')
-	// let addx = curr.x + ((mouseX = curr.x) * 0.05)
-	// let addy = curr.y + ((- mouseY - curr.y) * 0.05)
-	// camera.setAttribute('position', { x: addx, y: addy, z: 5})
+	var timer = tickSpeed * Date.now(); //change number for cube 
 
-	// if (directionPath === 'clockwise') {
-	// 	for (let i = 0; i < cubes.length; i++) {
-	// 		let cube = cubes[i]
-	// 		console.log('in clockwise: cube id is', cube.id)
-	// 		let id = cube.id
-	// 		console.log('id is', id)
-	// 		let rotation = cube.getAttribute('rotation')
-	// 		console.log('cube rotation.x and y is', rotation.x, rotation.y)
-	// 		cube.setAttribute('rotation', { x: rotation.x * Math.sin(timer + (Math.PI)) })
-	// 		cube.setAttribute('rotation', { y: rotation.y * Math.sin(timer + (Math.PI)) })
-	// 		// mesh.rotation.x += 0.01;
-	//    	// mesh.rotation.y += 0.02
-	// 	}
-	// } else if (directionPath === 'counter-clockwise') {
-	// 	for (let i = 0; i < cubes.length; i++) {
-	// 		console.log('cubes', cubes.length)
-	// 		var cube = cubes[i]
-	// 		cube.getElementById(`${cube.id}`)
-	// 		cube.setAttribute('position', { x: 8 * Math.sin(timer + i + (2 * Math.PI)) })
-	// 		cube.setAttribute('position', { y: 14 * Math.cos(timer + i + 3 + (2 * Math.PI)) })
-	// 	}
-	// }
+	for (var i = 0, il = cubes.length; i < il; i++) {
+		var cube = cubes[i];
+		cube.setAttribute('rotation', { x: 4 * (timer + i) });
+		cube.setAttribute('rotation', { y: 4 * (timer + i * 5) });
+	}
 };
 
 var animate = function animate() {
-	requestAnimationFrame(animate);
+	animationId = requestAnimationFrame(animate);
 	render();
 };
 
+// stop animating when user leaves scene
+var stopAnimating = function stopAnimating() {
+	cancelAnimationFrame(animationId);
+};
+
 var onWindowResize = function onWindowResize() {
-	var camera = document.getElementById('cubeCamera');
+	var camera = document.getElementById('camera');
 	windowHalfX = window.innerWidth / 2;
 	windowHalfY = window.innerHeight / 2;
 	camera.setAttribute('aspect', window.innerWidth / window.innerHeight);
@@ -25585,7 +25381,7 @@ var onDocumentMouseMove = function onDocumentMouseMove(event) {
 	mouseY = (event.clientY - windowHalfY) / 100;
 };
 
-module.exports = { initScene: initScene, makeCubes: makeCubes, makeLight: makeLight, animate: animate, updateColor: updateColor, updateSpeed: updateSpeed, updateDirection: updateDirection };
+module.exports = { initScene: initScene, makeCubes: makeCubes, makeLight: makeLight, animate: animate, updateColor: updateColor, updateSpeed: updateSpeed, stopAnimating: stopAnimating };
 
 /***/ }),
 /* 178 */
@@ -25600,35 +25396,28 @@ module.exports = { initScene: initScene, makeCubes: makeCubes, makeLight: makeLi
 var knots = [];
 var lightX = void 0;
 var lightY = void 0;
-// let colorA = '#CC0033'
-//let colorB = 'green'  
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 var width = window.innerWidth || 2;
 var height = window.innerHeight || 2;
 var mouseX = 0;
 var mouseY = 0;
-var movementPath = 'trig'; // need to write movement path
+var movementPath = 'trig';
 var tickSpeed = 0.0001;
+var animationId = void 0;
 
 var initScene = function initScene() {
   var camera = document.getElementById('camera');
-  camera.setAttribute('fov', 60); //field of view
+  camera.setAttribute('fov', 60);
   camera.setAttribute('aspect', window.innerWidth / window.innerHeight); //aspect
-  camera.setAttribute('near', 0.01); //near
-  camera.setAttribute('far', 1000); //far
+  camera.setAttribute('near', 0.01);
+  camera.setAttribute('far', 1000);
   camera.setAttribute('position', { z: 3 });
   camera.setAttribute('focalLength', 3);
 
   window.addEventListener('resize', onWindowResize, false);
   document.addEventListener('mousemove', onDocumentMouseMove, false);
 };
-
-// helper function to generate random coords
-// const getRandCoord = () => {
-//   let coord = Math.random() * 60;
-//   return Math.random() < 0.5 ? coord + 10 : coord * -2 - 10;
-// }
 
 // create one random knot
 var createKnot = function createKnot() {
@@ -25647,18 +25436,10 @@ var createKnot = function createKnot() {
   knot.setAttribute('p', '' + Math.round(Math.random() * 10));
   knot.setAttribute('q', '' + Math.round(Math.random() * 10));
 
-  // knot.setAttribute('color', `${colorA}`)
-
   knot.setAttribute('metalness', '' + (Math.random() * 0.7 + 0.5));
   knot.setAttribute('roughness', '' + Math.random());
   knot.setAttribute('segments-radial', '10');
   knot.setAttribute('spherical-env-map', '#tiedye');
-
-  // knot.setAttribute('position', {
-  //   x: `${getRandCoord()}`,
-  //   y: `${getRandCoord()}`,
-  //   z: `${getRandCoord()}`,
-  // })
 
   // give each knot a unique id
   knots.push(knot);
@@ -25750,7 +25531,7 @@ var makeRotatingLightY = function makeRotatingLightY() {
   document.querySelector('a-scene').appendChild(lightY);
 };
 
-var updateLightRotationRate = function updateLightRotationRate(rate) {
+var updateSpeed = function updateSpeed(rate) {
   tickSpeed = rate;
 };
 
@@ -25760,14 +25541,13 @@ var updatePath = function updatePath(pathName) {
 
 var render = function render(timeStamp) {
   var camera = document.getElementById('camera');
-  var timer = tickSpeed * timeStamp; // change tickSpeed for rotating light speed
+  var timer = tickSpeed * timeStamp;
   var curr = camera.getAttribute('position') || { x: 1, y: 1 };
   var addx = curr.x + (mouseX - curr.x) * .05;
   var addy = curr.y + (-mouseY - curr.y) * .05;
   camera.setAttribute('position', { x: addx, y: addy, z: 5 });
 
   // circleZ animation path for lightX
-  //  let light = document.getElementById('lightX')
   lightX.setAttribute('position', { x: 108 * Math.sin(20 * (timer + 2 * Math.PI)) });
   lightX.setAttribute('position', { z: 108 * Math.cos(20 * (timer + 3 + 2 * Math.PI)) });
 
@@ -25803,9 +25583,13 @@ var render = function render(timeStamp) {
 };
 
 var animate = function animate(timeStamp) {
-  requestAnimationFrame(animate);
+  animationId = requestAnimationFrame(animate);
   render(timeStamp);
 };
+
+function stopAnimating() {
+  cancelAnimationFrame(animationId);
+}
 
 var onWindowResize = function onWindowResize() {
   var camera = document.getElementById('camera');
@@ -25819,7 +25603,7 @@ var onDocumentMouseMove = function onDocumentMouseMove(event) {
   mouseY = (event.clientY - windowHalfY) / 100;
 };
 
-module.exports = { initScene: initScene, animate: animate, makeKnots: makeKnots, setAmbientLightA: setAmbientLightA, setAmbientLightB: setAmbientLightB, makeRotatingLightX: makeRotatingLightX, makeRotatingLightY: makeRotatingLightY, updateKnotColor: updateKnotColor, updateLightColor: updateLightColor, updateLightRotationRate: updateLightRotationRate, updatePath: updatePath };
+module.exports = { initScene: initScene, animate: animate, makeKnots: makeKnots, setAmbientLightA: setAmbientLightA, setAmbientLightB: setAmbientLightB, makeRotatingLightX: makeRotatingLightX, makeRotatingLightY: makeRotatingLightY, updateKnotColor: updateKnotColor, updateLightColor: updateLightColor, updateSpeed: updateSpeed, updatePath: updatePath, stopAnimating: stopAnimating };
 
 /***/ }),
 /* 179 */
@@ -25884,7 +25668,8 @@ var _redux = __webpack_require__(53);
 var rootReducer = (0, _redux.combineReducers)({
   language: __webpack_require__(92).default,
   sentiment: __webpack_require__(94).default,
-  scene: __webpack_require__(93).default
+  scene: __webpack_require__(93).default,
+  roster: __webpack_require__(385).default
 });
 
 exports.default = rootReducer;
@@ -25901,7 +25686,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.openSocket = openSocket;
 exports.closeSocket = closeSocket;
-exports.joinRoom = joinRoom;
+exports.joinChannel = joinChannel;
 exports.updateRoster = updateRoster;
 exports.sendMessage = sendMessage;
 exports.receiveMessage = receiveMessage;
@@ -25917,12 +25702,13 @@ var _store2 = _interopRequireDefault(_store);
 
 var _sentimentReducer = __webpack_require__(94);
 
+var _rosterReducer = __webpack_require__(385);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // enable text-to-speech in browser
 var synth = window.speechSynthesis;
 var voices = void 0;
-
 var socket = void 0;
 
 function openSocket(scene) {
@@ -25932,20 +25718,30 @@ function openSocket(scene) {
 }
 
 function closeSocket(language) {
+  console.log('emitting close me event');
   // disconnecting socket handled server-side
   socket.emit('close me', language);
 }
 
-function joinRoom(language) {
+function joinChannel(language) {
   // subscribing to language channel handled server-side
   socket.emit('join request', language);
   voices = synth.getVoices();
 }
 
 function updateRoster() {
-  // when client receives roster, print array of socket id's to console
-  socket.on('roster', function (roster) {
-    return console.log('roster is', roster);
+  // when client added to roster
+  socket.on('roster addition', function (addId) {
+    console.log('received roster add event');
+    // update store with latest addition to roster
+    _store2.default.dispatch((0, _rosterReducer.addToRoster)(addId));
+  });
+
+  // when client removed from roster
+  socket.on('roster deletion', function (deleteId) {
+    console.log('received roster delete event');
+    // update store with deletion from roster
+    _store2.default.dispatch((0, _rosterReducer.deleteFromRoster)(deleteId));
   });
 }
 
@@ -25972,6 +25768,10 @@ function receiveMessage(clientLang) {
 }
 
 function receiveSentiment() {
+  socket.on('got sentiment', function (data) {
+    return _store2.default.dispatch((0, _rosterReducer.gotSentiment)(data));
+  });
+
   socket.on('got sentiment', function (_ref2) {
     var emotion = _ref2.emotion,
         sentiment = _ref2.sentiment,
@@ -25980,11 +25780,11 @@ function receiveSentiment() {
 
     console.log('emotion: ' + emotion, 'sentiment: ' + sentiment, 'personality: ' + personality, 'speaker: ' + speaker);
 
-    // get primary and secondary emotions, and their intensities
+    // Get primary and secondary emotions, and their intensities
     var emotions = emotion[0];
     var sortedEmotions = [['joy', 0.5], ['surprise', 0.5]]; // default
 
-    // rank emotions in sorted array: most intense to least intense
+    // Rank emotions in sorted array: most intense to least intense
     var keys = Object.keys(emotions);
     sortedEmotions = keys.map(function (key) {
       return emotions[key];
@@ -25996,37 +25796,25 @@ function receiveSentiment() {
 
     //Get the dominant personality
     var personalityTraits = personality[0];
-    var keys2 = Object.keys(personalityTraits);
     var primPersonality = "openness";
 
+    //Primary personality
     for (var trait in personalityTraits) {
       if (personalityTraits[trait] > personalityTraits[primPersonality]) {
         primPersonality = trait;
       }
     }
 
-    // Get other indico info
+    // Emotion and sentiment info
     var primEmo = sortedEmotions[0][0]; //primary emotion
-    var secEmo = sortedEmotions[1][0]; //secondary emotion
     var primInt = sortedEmotions[0][1]; //primary emotion's intensity
-    var secInt = sortedEmotions[1][1]; //secondary emotion's intensity
-    var extraversion = personality[0].extraversion || 0.001;
-    var openness = personality[0].agreeableness || 0.001;
-    var conscientiousness = personality[0].agreeableness || 0.001;
-    var agreeableness = personality[0].agreeableness || 0.001;
     var sentScore = sentiment[0]; //sentiment score
 
 
-    // update store with new indico data
+    // Update store with new indico data
     _store2.default.dispatch((0, _sentimentReducer.primaryEmotion)(primEmo));
-    _store2.default.dispatch((0, _sentimentReducer.secondaryEmotion)(secEmo));
     _store2.default.dispatch((0, _sentimentReducer.primaryIntensity)(primInt));
-    _store2.default.dispatch((0, _sentimentReducer.secondaryIntensity)(secInt));
     _store2.default.dispatch((0, _sentimentReducer.primaryPersonality)(primPersonality));
-    _store2.default.dispatch((0, _sentimentReducer.updateExtraversion)(extraversion));
-    _store2.default.dispatch((0, _sentimentReducer.updateOpenness)(openness));
-    _store2.default.dispatch((0, _sentimentReducer.updateConscientiousness)(conscientiousness));
-    _store2.default.dispatch((0, _sentimentReducer.updateAgreeableness)(agreeableness));
     _store2.default.dispatch((0, _sentimentReducer.updateSentiment)(sentScore));
     _store2.default.dispatch((0, _sentimentReducer.updateSpeaker)(speaker));
   });
@@ -52390,6 +52178,1616 @@ function toArray(list, index) {
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 385 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// CONSTANTS
+var ADDED_TO_ROSTER = exports.ADDED_TO_ROSTER = 'ADDED_TO_ROSTER';
+var DELETED_FROM_ROSTER = exports.DELETED_FROM_ROSTER = 'DELETED_FROM_ROSTER';
+var GOT_SENTIMENT = exports.GOT_SENTIMENT = 'GOT_SENTIMENT';
+
+// ACTIONS
+var addToRoster = exports.addToRoster = function addToRoster(id) {
+  return {
+    type: ADDED_TO_ROSTER,
+    payload: id
+  };
+};
+
+var deleteFromRoster = exports.deleteFromRoster = function deleteFromRoster(id) {
+  return {
+    type: DELETED_FROM_ROSTER,
+    payload: id
+  };
+};
+
+var gotSentiment = exports.gotSentiment = function gotSentiment(payload) {
+  return {
+    type: GOT_SENTIMENT,
+    payload: payload
+  };
+};
+
+// ACTION CREATORS
+
+
+// REDUCER
+var rosterReducer = function rosterReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  var newState = Object.assign({}, state);
+
+  switch (action.type) {
+
+    case ADDED_TO_ROSTER:
+      newState[action.payload] = {};
+      return newState;
+
+    case DELETED_FROM_ROSTER:
+      delete newState[action.payload];
+      return newState;
+
+    case GOT_SENTIMENT:
+      newState[action.payload.speaker] = action.payload;
+      return newState;
+
+    default:
+      return state;
+  }
+};
+
+exports.default = rosterReducer;
+
+/***/ }),
+/* 386 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* global AFRAME */
+
+var anime = __webpack_require__(388);
+
+if (typeof AFRAME === 'undefined') {
+  throw new Error('Component attempted to register before AFRAME was available.');
+}
+
+var utils = AFRAME.utils;
+var getComponentProperty = utils.entity.getComponentProperty;
+var setComponentProperty = utils.entity.setComponentProperty;
+var styleParser = utils.styleParser.parse;
+
+/**
+ * Animation component for A-Frame.
+ *
+ * @member {boolean} animationIsPlaying - Used during initialization and scene resume to see
+ *  if animation should be playing.
+ */
+AFRAME.registerComponent('animation', {
+  schema: {
+    delay: {default: 0},
+    dir: {default: ''},
+    dur: {default: 1000},
+    easing: {default: 'easeInQuad'},
+    elasticity: {default: 400},
+    from: {default: ''},
+    loop: {default: false},
+    property: {default: ''},
+    repeat: {default: 0},
+    startEvents: {type: 'array'},
+    pauseEvents: {type: 'array'},
+    resumeEvents: {type: 'array'},
+    restartEvents: {type: 'array'},
+    to: {default: ''}
+  },
+
+  multiple: true,
+
+  init: function () {
+    this.animation = null;
+    this.animationIsPlaying = false;
+    this.config = null;
+    this.playAnimationBound = this.playAnimation.bind(this);
+    this.pauseAnimationBound = this.pauseAnimation.bind(this);
+    this.resumeAnimationBound = this.resumeAnimation.bind(this);
+    this.restartAnimationBound = this.restartAnimation.bind(this);
+    this.repeat = 0;
+  },
+
+  update: function () {
+    var attrName = this.attrName;
+    var data = this.data;
+    var el = this.el;
+    var propType = getPropertyType(el, data.property);
+    var self = this;
+
+    if (!data.property) { return; }
+
+    // Base config.
+    this.repeat = data.repeat;
+    var config = {
+      autoplay: false,
+      begin: function () {
+        el.emit('animationbegin');
+        el.emit(attrName + '-begin');
+      },
+      complete: function () {
+        el.emit('animationcomplete');
+        el.emit(attrName + '-complete');
+        // Repeat.
+        if (--self.repeat > 0) { self.animation.play(); }
+      },
+      direction: data.dir,
+      duration: data.dur,
+      easing: data.easing,
+      elasticity: data.elasticity,
+      loop: data.loop
+    };
+
+    // Customize config based on property type.
+    var updateConfig = configDefault;
+    if (propType === 'vec2' || propType === 'vec3' || propType === 'vec4') {
+      updateConfig = configVector;
+    }
+
+    // Config.
+    this.config = updateConfig(el, data, config);
+    this.animation = anime(this.config);
+
+    // Stop previous animation.
+    this.pauseAnimation();
+
+    if (!this.data.startEvents.length) { this.animationIsPlaying = true; }
+
+    // Play animation if no holding event.
+    this.removeEventListeners();
+    this.addEventListeners();
+  },
+
+  /**
+   * `remove` handler.
+   */
+  remove: function () {
+    this.pauseAnimation();
+    this.removeEventListeners();
+  },
+
+  /**
+   * `pause` handler.
+   */
+  pause: function () {
+    this.pauseAnimation();
+    this.removeEventListeners();
+  },
+
+  /**
+   * `play` handler.
+   */
+  play: function () {
+    var data = this.data;
+    var self = this;
+
+    if (!this.animation || !this.animationIsPlaying) { return; }
+
+    // Delay.
+    if (data.delay) {
+      setTimeout(play, data.delay);
+    } else {
+      play();
+    }
+
+    function play () {
+      self.playAnimation();
+      self.addEventListeners();
+    }
+  },
+
+  addEventListeners: function () {
+    var self = this;
+    var data = this.data;
+    var el = this.el;
+    data.startEvents.map(function (eventName) {
+      el.addEventListener(eventName, self.playAnimationBound);
+    });
+    data.pauseEvents.map(function (eventName) {
+      el.addEventListener(eventName, self.pauseAnimationBound);
+    });
+    data.resumeEvents.map(function (eventName) {
+      el.addEventListener(eventName, self.resumeAnimationBound);
+    });
+    data.restartEvents.map(function (eventName) {
+      el.addEventListener(eventName, self.restartAnimationBound);
+    });
+  },
+
+  removeEventListeners: function () {
+    var self = this;
+    var data = this.data;
+    var el = this.el;
+    data.startEvents.map(function (eventName) {
+      el.removeEventListener(eventName, self.playAnimationBound);
+    });
+    data.pauseEvents.map(function (eventName) {
+      el.removeEventListener(eventName, self.pauseAnimationBound);
+    });
+    data.resumeEvents.map(function (eventName) {
+      el.removeEventListener(eventName, self.resumeAnimationBound);
+    });
+    data.restartEvents.map(function (eventName) {
+      el.removeEventListener(eventName, self.restartAnimationBound);
+    });
+  },
+
+  playAnimation: function () {
+    this.animation = anime(this.config);
+    this.animation.play();
+  },
+
+  pauseAnimation: function () {
+    this.animation.pause();
+  },
+
+  resumeAnimation: function () {
+    this.animation.play();
+  },
+
+  restartAnimation: function () {
+    this.animation.restart();
+  }
+});
+
+/**
+ * Stuff property into generic `property` key.
+ */
+function configDefault (el, data, config) {
+  var from = data.from || getComponentProperty(el, data.property);
+  return AFRAME.utils.extend({}, config, {
+    targets: [{aframeProperty: from}],
+    aframeProperty: data.to,
+    update: function () {
+      setComponentProperty(el, data.property, this.targets[0].aframeProperty);
+    }
+  });
+}
+
+/**
+ * Extend x/y/z/w onto the config.
+ */
+function configVector (el, data, config) {
+  var from = getComponentProperty(el, data.property);
+  if (data.from) { from = AFRAME.utils.coordinates.parse(data.from); }
+  var to = AFRAME.utils.coordinates.parse(data.to);
+  return AFRAME.utils.extend({}, config, {
+    targets: [from],
+    update: function () {
+      setComponentProperty(el, data.property, this.targets[0]);
+    }
+  }, to);
+}
+
+function getPropertyType (el, property) {
+  var split = property.split('.');
+  var componentName = split[0];
+  var propertyName = split[1];
+  var component = el.components[componentName] || AFRAME.components[componentName];
+
+  // Primitives.
+  if (!component) { return null; }
+
+  if (propertyName) {
+    return component.schema[propertyName].type;
+  }
+  return component.schema.type;
+}
+
+
+/***/ }),
+/* 387 */
+/***/ (function(module, exports) {
+
+/**
+ * Layout component for A-Frame.
+ * Some layouts adapted from http://www.vb-helper.com/tutorial_platonic_solids.html
+ */
+AFRAME.registerComponent('layout', {
+  schema: {
+    columns: {default: 1, min: 0, if: {type: ['box']}},
+    margin: {default: 1, min: 0, if: {type: ['box', 'line']}},
+    plane: {default: 'xy'},
+    radius: {default: 1, min: 0, if: {type: ['circle', 'cube', 'dodecahedron', 'pyramid']}},
+    reverse: {default: false},
+    type: {default: 'line', oneOf: ['box', 'circle', 'cube', 'dodecahedron', 'line',
+                                    'pyramid']}
+  },
+
+  /**
+   * Store initial positions in case need to reset on component removal.
+   */
+  init: function () {
+    var self = this;
+    var el = this.el;
+
+    this.children = el.getChildEntities();
+    this.initialPositions = [];
+
+    this.children.forEach(function getInitialPositions (childEl) {
+      if (childEl.hasLoaded) { return _getPositions(); }
+      childEl.addEventListener('loaded', _getPositions);
+      function _getPositions () {
+        var position = childEl.getAttribute('position');
+        self.initialPositions.push([position.x, position.y, position.z]);
+      }
+    });
+
+    el.addEventListener('child-attached', function (evt) {
+      // Only update if direct child attached.
+      if (evt.detail.el.parentNode !== el) { return; }
+      self.children.push(evt.detail.el);
+      self.update();
+    });
+
+    el.addEventListener('child-detached', function (evt) {
+      // Only update if direct child detached.
+      if (self.children.indexOf(evt.detail.el) === -1) { return; }
+      self.children.splice(self.children.indexOf(evt.detail.el), 1);
+      self.initialPositions.splice(self.children.indexOf(evt.detail.el), 1);
+      self.update();
+    });
+  },
+
+  /**
+   * Update child entity positions.
+   */
+  update: function (oldData) {
+    var children = this.children;
+    var data = this.data;
+    var el = this.el;
+    var numChildren = children.length;
+    var positionFn;
+    var positions;
+    var startPosition = el.getAttribute('position');
+
+    // Calculate different positions based on layout shape.
+    switch (data.type) {
+      case 'box': {
+        positionFn = getBoxPositions;
+        break;
+      }
+      case 'circle': {
+        positionFn = getCirclePositions;
+        break;
+      }
+      case 'cube': {
+        positionFn = getCubePositions;
+        break;
+      }
+      case 'dodecahedron': {
+        positionFn = getDodecahedronPositions;
+        break;
+      }
+      case 'pyramid': {
+        positionFn = getPyramidPositions;
+        break;
+      }
+      default: {
+        // Line.
+        positionFn = getLinePositions;
+      }
+    }
+
+    positions = positionFn(data, numChildren, startPosition);
+    if (data.reverse) { positions.reverse(); }
+    setPositions(children, positions);
+  },
+
+  /**
+   * Reset positions.
+   */
+  remove: function () {
+    this.el.removeEventListener('child-attached', this.childAttachedCallback);
+    setPositions(this.children, this.initialPositions);
+  }
+});
+
+/**
+ * Get positions for `box` layout.
+ */
+function getBoxPositions (data, numChildren, startPosition) {
+  var position;
+  var positions = [];
+  var rows = Math.ceil(numChildren / data.columns);
+
+  for (var row = 0; row < rows; row++) {
+    for (var column = 0; column < data.columns; column++) {
+      position = [0, 0, 0];
+      if (data.plane.indexOf('x') === 0) {
+        position[0] = column * data.margin;
+      }
+      if (data.plane.indexOf('y') === 0) {
+        position[1] = column * data.margin;
+      }
+      if (data.plane.indexOf('y') === 1) {
+        position[1] = row * data.margin;
+      }
+      if (data.plane.indexOf('z') === 1) {
+        position[2] = row * data.margin;
+      }
+      positions.push(position);
+    }
+  }
+
+  return positions;
+}
+module.exports.getBoxPositions = getBoxPositions;
+
+/**
+ * Get positions for `circle` layout.
+ * TODO: arcLength.
+ */
+function getCirclePositions (data, numChildren, startPosition) {
+  var positions = [];
+
+  for (var i = 0; i < numChildren; i++) {
+    var rad = i * (2 * Math.PI) / numChildren;
+    var position = [
+      startPosition.x,
+      startPosition.y,
+      startPosition.z
+    ];
+    if (data.plane.indexOf('x') === 0) {
+      position[0] += data.radius * Math.cos(rad);
+    }
+    if (data.plane.indexOf('y') === 0) {
+      position[1] += data.radius * Math.cos(rad);
+    }
+    if (data.plane.indexOf('y') === 1) {
+      position[1] += data.radius * Math.sin(rad);
+    }
+    if (data.plane.indexOf('z') === 1) {
+      position[2] += data.radius * Math.sin(rad);
+    }
+    positions.push(position);
+  }
+  return positions;
+}
+module.exports.getCirclePositions = getCirclePositions;
+
+/**
+ * Get positions for `line` layout.
+ * TODO: 3D margins.
+ */
+function getLinePositions (data, numChildren, startPosition) {
+  data.columns = numChildren;
+  return getBoxPositions(data, numChildren, startPosition);
+}
+module.exports.getLinePositions = getLinePositions;
+
+/**
+ * Get positions for `cube` layout.
+ */
+function getCubePositions (data, numChildren, startPosition) {
+  return transform([
+    [1, 0, 0],
+    [0, 1, 0],
+    [0, 0, 1],
+    [-1, 0, 0],
+    [0, -1, 0],
+    [0, 0, -1],
+  ], startPosition, data.radius / 2);
+}
+module.exports.getCubePositions = getCubePositions;
+
+/**
+ * Get positions for `dodecahedron` layout.
+ */
+function getDodecahedronPositions (data, numChildren, startPosition) {
+  var PHI = (1 + Math.sqrt(5)) / 2;
+  var B = 1 / PHI;
+  var C = 2 - PHI;
+  var NB = -1 * B;
+  var NC = -1 * C;
+
+  return transform([
+    [-1, C, 0],
+    [-1, NC, 0],
+    [0, -1, C],
+    [0, -1, NC],
+    [0, 1, C],
+    [0, 1, NC],
+    [1, C, 0],
+    [1, NC, 0],
+    [B, B, B],
+    [B, B, NB],
+    [B, NB, B],
+    [B, NB, NB],
+    [C, 0, 1],
+    [C, 0, -1],
+    [NB, B, B],
+    [NB, B, NB],
+    [NB, NB, B],
+    [NB, NB, NB],
+    [NC, 0, 1],
+    [NC, 0, -1],
+  ], startPosition, data.radius / 2);
+}
+module.exports.getDodecahedronPositions = getDodecahedronPositions;
+
+/**
+ * Get positions for `pyramid` layout.
+ */
+function getPyramidPositions (data, numChildren, startPosition) {
+  var SQRT_3 = Math.sqrt(3);
+  var NEG_SQRT_1_3 = -1 / Math.sqrt(3);
+  var DBL_SQRT_2_3 = 2 * Math.sqrt(2 / 3);
+
+  return transform([
+    [0, 0, SQRT_3 + NEG_SQRT_1_3],
+    [-1, 0, NEG_SQRT_1_3],
+    [1, 0, NEG_SQRT_1_3],
+    [0, DBL_SQRT_2_3, 0]
+  ], startPosition, data.radius / 2);
+}
+module.exports.getPyramidPositions = getPyramidPositions;
+
+/**
+ * Multiply all coordinates by a scale factor and add translate.
+ *
+ * @params {array} positions - Array of coordinates in array form.
+ * @returns {array} positions
+ */
+function transform (positions, translate, scale) {
+  translate = [translate.x, translate.y, translate.z];
+  return positions.map(function (position) {
+    return position.map(function (point, i) {
+      return point * scale + translate[i];
+    });
+  });
+};
+
+/**
+ * Set position on child entities.
+ *
+ * @param {array} els - Child entities to set.
+ * @param {array} positions - Array of coordinates.
+ */
+function setPositions (els, positions) {
+  els.forEach(function (el, i) {
+    var position = positions[i];
+    el.setAttribute('position', {
+      x: position[0],
+      y: position[1],
+      z: position[2]
+    });
+  });
+}
+
+
+/***/ }),
+/* 388 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+ * Anime v1.1.3
+ * http://anime-js.com
+ * JavaScript animation engine
+ * Copyright (c) 2016 Julian Garnier
+ * http://juliangarnier.com
+ * Released under the MIT license
+ */
+
+(function (root, factory) {
+  if (true) {
+    // AMD. Register as an anonymous module.
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else if (typeof module === 'object' && module.exports) {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    root.anime = factory();
+  }
+}(this, function () {
+
+  var version = '1.1.3';
+
+  // Defaults
+
+  var defaultSettings = {
+    duration: 1000,
+    delay: 0,
+    loop: false,
+    autoplay: true,
+    direction: 'normal',
+    easing: 'easeOutElastic',
+    elasticity: 400,
+    round: false,
+    begin: undefined,
+    update: undefined,
+    complete: undefined
+  }
+
+  // Transforms
+
+  var validTransforms = ['translateX', 'translateY', 'translateZ', 'rotate', 'rotateX', 'rotateY', 'rotateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ', 'skewX', 'skewY'];
+  var transform, transformStr = 'transform';
+
+  // Utils
+
+  var is = {
+    arr: function(a) { return Array.isArray(a) },
+    obj: function(a) { return Object.prototype.toString.call(a).indexOf('Object') > -1 },
+    svg: function(a) { return a instanceof SVGElement },
+    dom: function(a) { return a.nodeType || is.svg(a) },
+    num: function(a) { return !isNaN(parseInt(a)) },
+    str: function(a) { return typeof a === 'string' },
+    fnc: function(a) { return typeof a === 'function' },
+    und: function(a) { return typeof a === 'undefined' },
+    nul: function(a) { return typeof a === 'null' },
+    hex: function(a) { return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a) },
+    rgb: function(a) { return /^rgb/.test(a) },
+    hsl: function(a) { return /^hsl/.test(a) },
+    col: function(a) { return (is.hex(a) || is.rgb(a) || is.hsl(a)) }
+  }
+
+  // Easings functions adapted from http://jqueryui.com/
+
+  var easings = (function() {
+    var eases = {};
+    var names = ['Quad', 'Cubic', 'Quart', 'Quint', 'Expo'];
+    var functions = {
+      Sine: function(t) { return 1 + Math.sin(Math.PI / 2 * t - Math.PI / 2); },
+      Circ: function(t) { return 1 - Math.sqrt( 1 - t * t ); },
+      Elastic: function(t, m) {
+        if( t === 0 || t === 1 ) return t;
+        var p = (1 - Math.min(m, 998) / 1000), st = t / 1, st1 = st - 1, s = p / ( 2 * Math.PI ) * Math.asin( 1 );
+        return -( Math.pow( 2, 10 * st1 ) * Math.sin( ( st1 - s ) * ( 2 * Math.PI ) / p ) );
+      },
+      Back: function(t) { return t * t * ( 3 * t - 2 ); },
+      Bounce: function(t) {
+        var pow2, bounce = 4;
+        while ( t < ( ( pow2 = Math.pow( 2, --bounce ) ) - 1 ) / 11 ) {}
+        return 1 / Math.pow( 4, 3 - bounce ) - 7.5625 * Math.pow( ( pow2 * 3 - 2 ) / 22 - t, 2 );
+      }
+    }
+    names.forEach(function(name, i) {
+      functions[name] = function(t) {
+        return Math.pow( t, i + 2 );
+      }
+    });
+    Object.keys(functions).forEach(function(name) {
+      var easeIn = functions[name];
+      eases['easeIn' + name] = easeIn;
+      eases['easeOut' + name] = function(t, m) { return 1 - easeIn(1 - t, m); };
+      eases['easeInOut' + name] = function(t, m) { return t < 0.5 ? easeIn(t * 2, m) / 2 : 1 - easeIn(t * -2 + 2, m) / 2; };
+      eases['easeOutIn' + name] = function(t, m) { return t < 0.5 ? (1 - easeIn(1 - 2 * t, m)) / 2 : (easeIn(t * 2 - 1, m) + 1) / 2; };
+    });
+    eases.linear = function(t) { return t; };
+    return eases;
+  })();
+
+  // Strings
+
+  var numberToString = function(val) {
+    return (is.str(val)) ? val : val + '';
+  }
+
+  var stringToHyphens = function(str) {
+    return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  }
+
+  var selectString = function(str) {
+    if (is.col(str)) return false;
+    try {
+      var nodes = document.querySelectorAll(str);
+      return nodes;
+    } catch(e) {
+      return false;
+    }
+  }
+
+  // Numbers
+
+  var random = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  // Arrays
+
+  var flattenArray = function(arr) {
+    return arr.reduce(function(a, b) {
+      return a.concat(is.arr(b) ? flattenArray(b) : b);
+    }, []);
+  }
+
+  var toArray = function(o) {
+    if (is.arr(o)) return o;
+    if (is.str(o)) o = selectString(o) || o;
+    if (o instanceof NodeList || o instanceof HTMLCollection) return [].slice.call(o);
+    return [o];
+  }
+
+  var arrayContains = function(arr, val) {
+    return arr.some(function(a) { return a === val; });
+  }
+
+  var groupArrayByProps = function(arr, propsArr) {
+    var groups = {};
+    arr.forEach(function(o) {
+      var group = JSON.stringify(propsArr.map(function(p) { return o[p]; }));
+      groups[group] = groups[group] || [];
+      groups[group].push(o);
+    });
+    return Object.keys(groups).map(function(group) {
+      return groups[group];
+    });
+  }
+
+  var removeArrayDuplicates = function(arr) {
+    return arr.filter(function(item, pos, self) {
+      return self.indexOf(item) === pos;
+    });
+  }
+
+  // Objects
+
+  var cloneObject = function(o) {
+    var newObject = {};
+    for (var p in o) newObject[p] = o[p];
+    return newObject;
+  }
+
+  var mergeObjects = function(o1, o2) {
+    for (var p in o2) o1[p] = !is.und(o1[p]) ? o1[p] : o2[p];
+    return o1;
+  }
+
+  // Colors
+
+  var hexToRgb = function(hex) {
+    var rgx = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    var hex = hex.replace(rgx, function(m, r, g, b) { return r + r + g + g + b + b; });
+    var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    var r = parseInt(rgb[1], 16);
+    var g = parseInt(rgb[2], 16);
+    var b = parseInt(rgb[3], 16);
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+
+  var hslToRgb = function(hsl) {
+    var hsl = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(hsl);
+    var h = parseInt(hsl[1]) / 360;
+    var s = parseInt(hsl[2]) / 100;
+    var l = parseInt(hsl[3]) / 100;
+    var hue2rgb = function(p, q, t) {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1/6) return p + (q - p) * 6 * t;
+      if (t < 1/2) return q;
+      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      return p;
+    }
+    var r, g, b;
+    if (s == 0) {
+      r = g = b = l;
+    } else {
+      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      var p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1/3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1/3);
+    }
+    return 'rgb(' + r * 255 + ',' + g * 255 + ',' + b * 255 + ')';
+  }
+
+  var colorToRgb = function(val) {
+    if (is.rgb(val)) return val;
+    if (is.hex(val)) return hexToRgb(val);
+    if (is.hsl(val)) return hslToRgb(val);
+  }
+
+  // Units
+
+  var getUnit = function(val) {
+    return /([\+\-]?[0-9|auto\.]+)(%|px|pt|em|rem|in|cm|mm|ex|pc|vw|vh|deg)?/.exec(val)[2];
+  }
+
+  var addDefaultTransformUnit = function(prop, val, intialVal) {
+    if (getUnit(val)) return val;
+    if (prop.indexOf('translate') > -1) return getUnit(intialVal) ? val + getUnit(intialVal) : val + 'px';
+    if (prop.indexOf('rotate') > -1 || prop.indexOf('skew') > -1) return val + 'deg';
+    return val;
+  }
+
+  // Values
+
+  var getCSSValue = function(el, prop) {
+    // First check if prop is a valid CSS property
+    if (prop in el.style) {
+      // Then return the property value or fallback to '0' when getPropertyValue fails
+      return getComputedStyle(el).getPropertyValue(stringToHyphens(prop)) || '0';
+    }
+  }
+
+  var getTransformValue = function(el, prop) {
+    var defaultVal = prop.indexOf('scale') > -1 ? 1 : 0;
+    var str = el.style.transform;
+    if (!str) return defaultVal;
+    var rgx = /(\w+)\((.+?)\)/g;
+    var match = [];
+    var props = [];
+    var values = [];
+    while (match = rgx.exec(str)) {
+      props.push(match[1]);
+      values.push(match[2]);
+    }
+    var val = values.filter(function(f, i) { return props[i] === prop; });
+    return val.length ? val[0] : defaultVal;
+  }
+
+  var getAnimationType = function(el, prop) {
+    if ( is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
+    if ( is.dom(el) && (el.getAttribute(prop) || (is.svg(el) && el[prop]))) return 'attribute';
+    if ( is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
+    if (!is.nul(el[prop]) && !is.und(el[prop])) return 'object';
+  }
+
+  var getInitialTargetValue = function(target, prop) {
+    switch (getAnimationType(target, prop)) {
+      case 'transform': return getTransformValue(target, prop);
+      case 'css': return getCSSValue(target, prop);
+      case 'attribute': return target.getAttribute(prop);
+    }
+    return target[prop] || 0;
+  }
+
+  var getValidValue = function(values, val, originalCSS) {
+    if (is.col(val)) return colorToRgb(val);
+    if (getUnit(val)) return val;
+    var unit = getUnit(values.to) ? getUnit(values.to) : getUnit(values.from);
+    if (!unit && originalCSS) unit = getUnit(originalCSS);
+    return unit ? val + unit : val;
+  }
+
+  var decomposeValue = function(val) {
+    var rgx = /-?\d*\.?\d+/g;
+    return {
+      original: val,
+      numbers: numberToString(val).match(rgx) ? numberToString(val).match(rgx).map(Number) : [0],
+      strings: numberToString(val).split(rgx)
+    }
+  }
+
+  var recomposeValue = function(numbers, strings, initialStrings) {
+    return strings.reduce(function(a, b, i) {
+      var b = (b ? b : initialStrings[i - 1]);
+      return a + numbers[i - 1] + b;
+    });
+  }
+
+  // Animatables
+
+  var getAnimatables = function(targets) {
+    var targets = targets ? (flattenArray(is.arr(targets) ? targets.map(toArray) : toArray(targets))) : [];
+    return targets.map(function(t, i) {
+      return { target: t, id: i };
+    });
+  }
+
+  // Properties
+
+  var getProperties = function(params, settings) {
+    var props = [];
+    for (var p in params) {
+      if (!defaultSettings.hasOwnProperty(p) && p !== 'targets') {
+        var prop = is.obj(params[p]) ? cloneObject(params[p]) : {value: params[p]};
+        prop.name = p;
+        props.push(mergeObjects(prop, settings));
+      }
+    }
+    return props;
+  }
+
+  var getPropertiesValues = function(target, prop, value, i) {
+    var values = toArray( is.fnc(value) ? value(target, i) : value);
+    return {
+      from: (values.length > 1) ? values[0] : getInitialTargetValue(target, prop),
+      to: (values.length > 1) ? values[1] : values[0]
+    }
+  }
+
+  // Tweens
+
+  var getTweenValues = function(prop, values, type, target) {
+    var valid = {};
+    if (type === 'transform') {
+      valid.from = prop + '(' + addDefaultTransformUnit(prop, values.from, values.to) + ')';
+      valid.to = prop + '(' + addDefaultTransformUnit(prop, values.to) + ')';
+    } else {
+      var originalCSS = (type === 'css') ? getCSSValue(target, prop) : undefined;
+      valid.from = getValidValue(values, values.from, originalCSS);
+      valid.to = getValidValue(values, values.to, originalCSS);
+    }
+    return { from: decomposeValue(valid.from), to: decomposeValue(valid.to) };
+  }
+
+  var getTweensProps = function(animatables, props) {
+    var tweensProps = [];
+    animatables.forEach(function(animatable, i) {
+      var target = animatable.target;
+      return props.forEach(function(prop) {
+        var animType = getAnimationType(target, prop.name);
+        if (animType) {
+          var values = getPropertiesValues(target, prop.name, prop.value, i);
+          var tween = cloneObject(prop);
+          tween.animatables = animatable;
+          tween.type = animType;
+          tween.from = getTweenValues(prop.name, values, tween.type, target).from;
+          tween.to = getTweenValues(prop.name, values, tween.type, target).to;
+          tween.round = (is.col(values.from) || tween.round) ? 1 : 0;
+          tween.delay = (is.fnc(tween.delay) ? tween.delay(target, i, animatables.length) : tween.delay) / animation.speed;
+          tween.duration = (is.fnc(tween.duration) ? tween.duration(target, i, animatables.length) : tween.duration) / animation.speed;
+          tweensProps.push(tween);
+        }
+      });
+    });
+    return tweensProps;
+  }
+
+  var getTweens = function(animatables, props) {
+    var tweensProps = getTweensProps(animatables, props);
+    var splittedProps = groupArrayByProps(tweensProps, ['name', 'from', 'to', 'delay', 'duration']);
+    return splittedProps.map(function(tweenProps) {
+      var tween = cloneObject(tweenProps[0]);
+      tween.animatables = tweenProps.map(function(p) { return p.animatables });
+      tween.totalDuration = tween.delay + tween.duration;
+      return tween;
+    });
+  }
+
+  var reverseTweens = function(anim, delays) {
+    anim.tweens.forEach(function(tween) {
+      var toVal = tween.to;
+      var fromVal = tween.from;
+      var delayVal = anim.duration - (tween.delay + tween.duration);
+      tween.from = toVal;
+      tween.to = fromVal;
+      if (delays) tween.delay = delayVal;
+    });
+    anim.reversed = anim.reversed ? false : true;
+  }
+
+  var getTweensDuration = function(tweens) {
+    return Math.max.apply(Math, tweens.map(function(tween){ return tween.totalDuration; }));
+  }
+
+  var getTweensDelay = function(tweens) {
+    return Math.min.apply(Math, tweens.map(function(tween){ return tween.delay; }));
+  }
+
+  // will-change
+
+  var getWillChange = function(anim) {
+    var props = [];
+    var els = [];
+    anim.tweens.forEach(function(tween) {
+      if (tween.type === 'css' || tween.type === 'transform' ) {
+        props.push(tween.type === 'css' ? stringToHyphens(tween.name) : 'transform');
+        tween.animatables.forEach(function(animatable) { els.push(animatable.target); });
+      }
+    });
+    return {
+      properties: removeArrayDuplicates(props).join(', '),
+      elements: removeArrayDuplicates(els)
+    }
+  }
+
+  var setWillChange = function(anim) {
+    var willChange = getWillChange(anim);
+    willChange.elements.forEach(function(element) {
+      element.style.willChange = willChange.properties;
+    });
+  }
+
+  var removeWillChange = function(anim) {
+    var willChange = getWillChange(anim);
+    willChange.elements.forEach(function(element) {
+      element.style.removeProperty('will-change');
+    });
+  }
+
+  /* Svg path */
+
+  var getPathProps = function(path) {
+    var el = is.str(path) ? selectString(path)[0] : path;
+    return {
+      path: el,
+      value: el.getTotalLength()
+    }
+  }
+
+  var snapProgressToPath = function(tween, progress) {
+    var pathEl = tween.path;
+    var pathProgress = tween.value * progress;
+    var point = function(offset) {
+      var o = offset || 0;
+      var p = progress > 1 ? tween.value + o : pathProgress + o;
+      return pathEl.getPointAtLength(p);
+    }
+    var p = point();
+    var p0 = point(-1);
+    var p1 = point(+1);
+    switch (tween.name) {
+      case 'translateX': return p.x;
+      case 'translateY': return p.y;
+      case 'rotate': return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
+    }
+  }
+
+  // Progress
+
+  var getTweenProgress = function(tween, time) {
+    var elapsed = Math.min(Math.max(time - tween.delay, 0), tween.duration);
+    var percent = elapsed / tween.duration;
+    var progress = tween.to.numbers.map(function(number, p) {
+      var start = tween.from.numbers[p];
+      var eased = easings[tween.easing](percent, tween.elasticity);
+      var val = tween.path ? snapProgressToPath(tween, eased) : start + eased * (number - start);
+      val = tween.round ? Math.round(val * tween.round) / tween.round : val;
+      return val;
+    });
+    return recomposeValue(progress, tween.to.strings, tween.from.strings);
+  }
+
+  var setAnimationProgress = function(anim, time) {
+    var transforms;
+    anim.currentTime = time;
+    anim.progress = (time / anim.duration) * 100;
+    for (var t = 0; t < anim.tweens.length; t++) {
+      var tween = anim.tweens[t];
+      tween.currentValue = getTweenProgress(tween, time);
+      var progress = tween.currentValue;
+      for (var a = 0; a < tween.animatables.length; a++) {
+        var animatable = tween.animatables[a];
+        var id = animatable.id;
+        var target = animatable.target;
+        var name = tween.name;
+        switch (tween.type) {
+          case 'css': target.style[name] = progress; break;
+          case 'attribute': target.setAttribute(name, progress); break;
+          case 'object': target[name] = progress; break;
+          case 'transform':
+          if (!transforms) transforms = {};
+          if (!transforms[id]) transforms[id] = [];
+          transforms[id].push(progress);
+          break;
+        }
+      }
+    }
+    if (transforms) {
+      if (!transform) transform = (getCSSValue(document.body, transformStr) ? '' : '-webkit-') + transformStr;
+      for (var t in transforms) {
+        anim.animatables[t].target.style[transform] = transforms[t].join(' ');
+      }
+    }
+  }
+
+  // Animation
+
+  var createAnimation = function(params) {
+    var anim = {};
+    anim.animatables = getAnimatables(params.targets);
+    anim.settings = mergeObjects(params, defaultSettings);
+    anim.properties = getProperties(params, anim.settings);
+    anim.tweens = getTweens(anim.animatables, anim.properties);
+    anim.duration = anim.tweens.length ? getTweensDuration(anim.tweens) : params.duration;
+    anim.delay = anim.tweens.length ? getTweensDelay(anim.tweens) : params.delay;
+    anim.currentTime = 0;
+    anim.progress = 0;
+    anim.ended = false;
+    return anim;
+  }
+
+  // Public
+
+  var animations = [];
+  var raf = 0;
+
+  var engine = (function() {
+    var play = function() { raf = requestAnimationFrame(step); };
+    var step = function(t) {
+      if (animations.length) {
+        for (var i = 0; i < animations.length; i++) animations[i].tick(t);
+        play();
+      } else {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+    }
+    return play;
+  })();
+
+  var animation = function(params) {
+
+    var anim = createAnimation(params);
+    var time = {};
+
+    anim.tick = function(now) {
+      anim.ended = false;
+      if (!time.start) time.start = now;
+      time.current = Math.min(Math.max(time.last + now - time.start, 0), anim.duration);
+      setAnimationProgress(anim, time.current);
+      var s = anim.settings;
+      if (time.current >= anim.delay) {
+        if (s.begin) s.begin(anim); s.begin = undefined;
+        if (s.update) s.update(anim);
+      }
+      if (time.current >= anim.duration) {
+        if (s.loop) {
+          time.start = now;
+          if (s.direction === 'alternate') reverseTweens(anim, true);
+          if (is.num(s.loop)) s.loop--;
+        } else {
+          anim.ended = true;
+          anim.pause();
+          if (s.complete) s.complete(anim);
+        }
+        time.last = 0;
+      }
+    }
+
+    anim.seek = function(progress) {
+      setAnimationProgress(anim, (progress / 100) * anim.duration);
+    }
+
+    anim.pause = function() {
+      removeWillChange(anim);
+      var i = animations.indexOf(anim);
+      if (i > -1) animations.splice(i, 1);
+    }
+
+    anim.play = function(params) {
+      anim.pause();
+      if (params) anim = mergeObjects(createAnimation(mergeObjects(params, anim.settings)), anim);
+      time.start = 0;
+      time.last = anim.ended ? 0 : anim.currentTime;
+      var s = anim.settings;
+      if (s.direction === 'reverse') reverseTweens(anim);
+      if (s.direction === 'alternate' && !s.loop) s.loop = 1;
+      setWillChange(anim);
+      animations.push(anim);
+      if (!raf) engine();
+    }
+
+    anim.restart = function() {
+      if (anim.reversed) reverseTweens(anim);
+      anim.pause();
+      anim.seek(0);
+      anim.play();
+    }
+
+    if (anim.settings.autoplay) anim.play();
+
+    return anim;
+
+  }
+
+  // Remove one or multiple targets from all active animations.
+
+  var remove = function(elements) {
+    var targets = flattenArray(is.arr(elements) ? elements.map(toArray) : toArray(elements));
+    for (var i = animations.length-1; i >= 0; i--) {
+      var animation = animations[i];
+      var tweens = animation.tweens;
+      for (var t = tweens.length-1; t >= 0; t--) {
+        var animatables = tweens[t].animatables;
+        for (var a = animatables.length-1; a >= 0; a--) {
+          if (arrayContains(targets, animatables[a].target)) {
+            animatables.splice(a, 1);
+            if (!animatables.length) tweens.splice(t, 1);
+            if (!tweens.length) animation.pause();
+          }
+        }
+      }
+    }
+  }
+
+  animation.version = version;
+  animation.speed = 1;
+  animation.list = animations;
+  animation.remove = remove;
+  animation.easings = easings;
+  animation.getValue = getInitialTargetValue;
+  animation.path = getPathProps;
+  animation.random = random;
+
+  return animation;
+
+}));
+
+
+/***/ }),
+/* 389 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _AssetLoader = __webpack_require__(41);
+
+var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
+
+var _space = __webpack_require__(390);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// Option 1: scattered, rotating planets of various sizes
+function initScene1() {
+  (0, _space.initScene)();
+  (0, _space.initSky)();
+  (0, _space.initLight)();
+  (0, _space.initPlanets)(50);
+  (0, _space.rotatePlanets)();
+}
+
+// Option 2: ring of planets, each with its own orbit of small spheres
+function initScene2() {
+  (0, _space.initScene)();
+  (0, _space.initSky)();
+  (0, _space.initLight)();
+  (0, _space.initPlanetCircle)();
+}
+
+var Scene = function (_Component) {
+  _inherits(Scene, _Component);
+
+  function Scene(props) {
+    _classCallCheck(this, Scene);
+
+    return _possibleConstructorReturn(this, (Scene.__proto__ || Object.getPrototypeOf(Scene)).call(this, props));
+  }
+
+  _createClass(Scene, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      initScene1();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      var emotionColors = {
+        anger: '#FF0000', // red
+        surprise: '#FF8300', // orange
+        sadness: '#20A7D2', // blue
+        fear: '#494850', // dark grey
+        joy: '#FBFF00' // yellow
+      };
+
+      var personalityColorA = {
+        default: 'white',
+        agreeableness: '#FF6666', // salmon
+        conscientiousness: 'fuchsia',
+        openness: 'yellow',
+        extraversion: '#66FFFF' // light neon blue
+      };
+
+      var personalityColorB = {
+        default: 'white',
+        agreeableness: '#FFCCCC', // light salmon-pink
+        conscientiousness: 'blue',
+        openness: 'orange',
+        extraversion: '#66FF33' // light neon green
+      };
+
+      var emotion = this.props.currEmotion;
+      var personality = this.props.primaryPersonality;
+
+      var skyColor = emotionColors[emotion];
+      var starColorA = personalityColorA[personality];
+      var starColorB = personalityColorB[personality];
+
+      (0, _space.updateLightColor)(skyColor);
+      (0, _space.updateSkyColor)(skyColor);
+      (0, _space.initStarField)(starColorA, starColorB);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'a-scene',
+        { 'vr-mode-ui': 'enabled: true' },
+        _react2.default.createElement(_AssetLoader2.default, null),
+        _react2.default.createElement('a-entity', {
+          id: 'sceneCamera',
+          camera: 'userHeight: 1.6',
+          'look-controls': true,
+          'mouse-cursor': '' }),
+        _react2.default.createElement('a-entity', { light: 'type: ambient; color: #CCC' })
+      );
+    }
+  }]);
+
+  return Scene;
+}(_react.Component);
+
+exports.default = Scene;
+
+/***/ }),
+/* 390 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.initScene = initScene;
+exports.initSky = initSky;
+exports.updateSkyColor = updateSkyColor;
+exports.initStarField = initStarField;
+exports.initPlanets = initPlanets;
+exports.rotatePlanets = rotatePlanets;
+exports.initPlanetCircle = initPlanetCircle;
+exports.initLight = initLight;
+exports.updateLightColor = updateLightColor;
+
+var _aframeParticleSystemComponent = __webpack_require__(168);
+
+var _aframeParticleSystemComponent2 = _interopRequireDefault(_aframeParticleSystemComponent);
+
+var _aframeLayoutComponent = __webpack_require__(387);
+
+var _aframeLayoutComponent2 = _interopRequireDefault(_aframeLayoutComponent);
+
+var _aframeAnimationComponent = __webpack_require__(386);
+
+var _aframeAnimationComponent2 = _interopRequireDefault(_aframeAnimationComponent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Set up camera, window resize listener
+function initScene() {
+    var camera = document.getElementById('sceneCamera');
+    camera.setAttribute('fov', 60); //field of view
+    camera.setAttribute('aspect', window.innerWidth / window.innerHeight); //aspect
+    camera.setAttribute('near', 0.01); //near
+    camera.setAttribute('far', 1000); //far
+    camera.setAttribute('focalLength', 3);
+
+    window.addEventListener('resize', onWindowResize, false);
+}
+
+/* --------------------   SKY   ------------------- */
+
+// add background image (starry sky)
+function initSky() {
+    var sky = document.createElement('a-sky');
+    sky.setAttribute('id', 'sky');
+    sky.setAttribute('src', '#starrySky');
+    sky.setAttribute('color', 'white');
+    document.querySelector('a-scene').appendChild(sky);
+}
+
+function updateSkyColor(color) {
+    var sky = document.getElementById('sky');
+    var animation = document.createElement('a-animation');
+    animation.setAttribute('attribute', 'material.color');
+    animation.setAttribute('to', color);
+    animation.setAttribute('ease', 'ease-in-circ');
+    sky.appendChild(animation);
+}
+
+/* -------------------- STARFIELD ------------------- */
+
+// initializes or updates starfield with appropriate color
+function initStarField(colorA, colorB) {
+    if (document.getElementById('stars')) {
+        var oldStars = document.getElementById('stars');
+        oldStars.parentNode.removeChild(oldStars);
+    }
+    var stars = document.createElement('a-entity');
+    stars.setAttribute('id', 'stars');
+    stars.setAttribute('particle-system', ['preset: dust', 'texture: #star-particle', 'color: ' + colorA + ', ' + colorB, 'particleCount: 8000', 'size: 3', 'maxAge: 4'].join(';'));
+    document.querySelector('a-scene').appendChild(stars);
+}
+
+/* -------------------- SCATTERED PLANETS ------------------- */
+
+// returns semi-random xyz coordinates
+function setPosition() {
+    var x = Math.floor(Math.random() * 41) - 20;
+    var y = Math.floor(Math.random() * 41) - 20;
+    var z = Math.floor(Math.random() * 41) - 20;
+    return { x: x, y: y, z: z };
+}
+
+// returns a semi-random texture
+function setPlanetTexture() {
+    var textures = ['#moon', '#planet1', '#planet2', '#planet3', '#planet4', '#planet5', '#planet6'];
+    return textures[Math.floor(Math.random() * textures.length)];
+}
+
+// returns a semi-random radius
+function setPlanetSize() {
+    return Math.random() * 3;
+}
+
+// creates a planet of semi-random size, texture, and position
+function createPlanet() {
+    var planet = document.createElement('a-sphere');
+    var size = setPlanetSize();
+    var position = setPosition();
+    var texture = setPlanetTexture();
+    planet.setAttribute('class', 'planet');
+    planet.setAttribute('position', position);
+    planet.setAttribute('src', texture);
+    planet.setAttribute('scale', size);
+    planet.setAttribute('rotation', "0 0 0");
+    document.querySelector('a-scene').appendChild(planet);
+}
+
+// puts specified number of planets in the sky
+function initPlanets(num) {
+    for (var i = 0; i < num; i++) {
+        createPlanet();
+    }
+}
+
+// makes all planets in the sky spin slowly along y-axis
+function rotatePlanets() {
+    var planets = document.querySelectorAll('.planet');
+    var planetsArray = Array.prototype.slice.call(planets);
+    // console.log('PLANETSSSSS', planetsArray)
+    planetsArray.forEach(function (planet) {
+        var rotate = document.createElement('a-animation');
+        rotate.setAttribute('attribute', 'rotation');
+        rotate.setAttribute('to', '0 360 0');
+        rotate.setAttribute('dur', '10000');
+        rotate.setAttribute('easing', 'linear');
+        rotate.setAttribute('fill', 'forwards');
+        rotate.setAttribute('repeat', 'indefinite');
+        planet.appendChild(rotate);
+    });
+}
+
+/* -------------------- PLANET CIRCLE ------------------- */
+
+// creates a planet with small orbiting spheres
+function initPlanetOrbit(texture) {
+    // create central planet
+    var center = document.createElement('a-sphere');
+    center.setAttribute('scale', '2 2 2');
+    center.setAttribute('src', texture);
+    document.getElementById('planet-circle').appendChild(center);
+
+    // create circle layout for orbit objects
+    var circle = document.createElement('a-entity');
+    circle.setAttribute('layout', 'type: circle; radius: 1.75; plane: xz');
+
+    // create orbit objects
+    for (var i = 0; i < 50; i++) {
+        var sphere = document.createElement('a-sphere');
+        sphere.setAttribute('src', '#gold-sparkle');
+        sphere.setAttribute('opacity', '0.7');
+        sphere.setAttribute('scale', '0.05 0.05 0.05');
+        circle.appendChild(sphere);
+    }
+
+    // creates animation for orbit
+    var orbit = document.createElement('a-animation');
+    orbit.setAttribute('target', '');
+    orbit.setAttribute('attribute', 'rotation');
+    orbit.setAttribute('to', '0 360 0');
+    orbit.setAttribute('dur', '8000');
+    orbit.setAttribute('easing', 'linear');
+    orbit.setAttribute('repeat', 'indefinite');
+
+    circle.appendChild(orbit);
+    center.appendChild(circle);
+}
+
+// creates a circle of planets around the camera, each with its own orbit
+function initPlanetCircle() {
+    // create circle layout
+    var circle = document.createElement('a-entity');
+    circle.setAttribute('id', 'planet-circle');
+    circle.setAttribute('layout', 'type: circle; radius: 15; plane: xz');
+    document.querySelector('a-scene').appendChild(circle);
+
+    // create planets
+    for (var i = 0; i < 7; i++) {
+        initPlanetOrbit('#planet' + i);
+    }
+}
+
+/* -------------------- LIGHTING ------------------- */
+
+function initLight(color) {
+    var light = document.createElement('a-light');
+    light.setAttribute('id', 'light1');
+    light.setAttribute('color', '' + color);
+    light.setAttribute('angle', '45');
+    light.setAttribute('position', '-16.717 11.189 17.925');
+    light.setAttribute('type', 'spot');
+    light.setAttribute('target', 'avatar');
+    light.setAttribute('rotation', '0 -18.73571990077792 -6.245239966925973');
+    light.setAttribute('intensity', '1');
+    document.querySelector('a-scene').appendChild(light);
+}
+
+function updateLightColor(color) {
+    var light = document.getElementById('light1');
+    light.setAttribute('color', '' + color);
+}
+
+/* -------------------- ETC ------------------- */
+
+function onWindowResize() {
+    var camera = document.getElementById('sceneCamera');
+    camera.setAttribute('aspect', window.innerWidth / window.innerHeight);
+}
+
+/* -------------------- CODE IN PROGRESS  ------------------- */
+
+// function createStar() {
+//     var star = document.createElement('a-image')
+//     var position = setPosition()
+//     star.setAttribute('class', 'star')
+//     star.setAttribute('src', '#star-particle')
+//     star.setAttribute('transparent', 'true')
+//     star.setAttribute('position', position)
+//     star.setAttribute('height', '0.5')
+//     star.setAttribute('width', '0.5')
+//     document.getElementById('starField').appendChild(star)
+// }
+
+// export function initStarField2(num) {
+//     var starField = document.createElement('a-entity')
+//     starField.setAttribute('id', 'starField')
+//     starField.setAttribute('color', 'white')
+//     document.querySelector('a-scene').appendChild(starField)
+
+//     for (var i = 0; i < num; i++) {
+//         createStar()
+//     }
+// }
+
+// export function changeStarColor(color) {
+//     var starField = document.getElementById('starField')
+//     var changeColor = document.createElement('a-animation')
+//     changeColor.setAttribute('attribute', 'color')
+//     changeColor.setAttribute('to', color)
+//     changeColor.setAttribute('delay', 0)
+//     starField.appendChild(changeColor)
+// }
 
 /***/ })
 /******/ ]);

@@ -11,21 +11,30 @@ export default function AssetLoader() {
 
 			{/* Sky assets */}
 			<img id="blossoms" src="/images/blossoms.jpg" />
-			<img id="stars" src="/images/sky-stars.png" />
+			<img id="starrySky" src="/images/sky-stars.png" />
 			<img id="fractal" src="/images/fractal.jpg" />
-			<img id="deer" src="/images/deer.jpg" />
-			<img id="cliff" src="/images/cliff.jpg" />
-			<img id="gh" src="/images/gh.jpg" />
-			<img id="roses" src="/images/roses.jpg" />
-			<img id="rainbow" src="/images/rainbow.jpg" />
-			<img id="sunset" src="/images/sunset.jpg" />
+			<img id="deer" src="/images/deer.png" />
+			<img id="gh" src="/images/gh.png" />
+			<img id="roses" src="/images/roses.png" />
+			<img id="rainbow" src="/images/rainbow.png" />
 			<img id="tiedye" src="/images/tiedye.jpg" />
 			<img id="colors" src="/images/colors.jpg" />
 			<img id="krabi" src="/images/krabi.jpg" />
+
+			{/* space scene */}
 			<img id="moon" src="/images/moon.jpg" />
+			<img id="planet0" src="/images/gold-lava-texture.jpg" />
+			<img id="planet1" src="/images/planet-texture-1.jpg" />
+			<img id="planet2" src="/images/planet-texture-2.jpg" />
+			<img id="planet3" src="/images/planet-texture-3.jpg" />
+			<img id="planet4" src="/images/planet-texture-4.jpg" />
+			<img id="planet5" src="/images/planet-texture-5.jpg" />
+			<img id="planet6" src="/images/planet-texture-6.png" />
+			<img id="gold-sparkle" src="/images/gold-sparkles-texture.jpg" />
+			<img id="star-particle" src="/images/star-particle.png" />
 
 
-		{/* Mixin example from Transcend. Mixins are reusable assets. In this case the 'chair-part' was used to compose chairs in the Chair component. */}
+			{/* Mixin example from Transcend. Mixins are reusable assets. In this case the 'chair-part' was used to compose chairs in the Chair component. */}
 			<a-mixin id="chair-part" geometry="primitive: box" material="color: #BFBFBF" />
 		</a-assets>
 	)

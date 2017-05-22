@@ -11,6 +11,8 @@
   "dependencies": {
     "@google-cloud/translate": "^0.8.1",
     "aframe": "^0.5.0",
+    "aframe-animation-component": "^3.2.5",
+    "aframe-layout-component": "^4.1.0",
     "aframe-particle-system-component": "^1.0.10",
     "all": "^0.0.0",
     "axios": "^0.16.1",
