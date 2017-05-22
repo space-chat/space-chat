@@ -4,7 +4,7 @@ import { initScene, initSky, initLight, initStarField, initPlanets, rotatePlanet
 
 // Option 1: scattered, rotating planets of various sizes
 // Option 2: ring of planets, each with its own orbit of small spheres
-function initScene(option) {
+function chooseScene(option) {
   initScene()
   initSky()
   initLight()
@@ -24,7 +24,7 @@ export default class Space extends Component {
   }
 
   componentDidMount() {
-    initScene(1)
+    chooseScene(1)
   }
 
   componentWillReceiveProps() {
