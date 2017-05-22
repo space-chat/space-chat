@@ -204,39 +204,3 @@ function onWindowResize() {
     camera.setAttribute('aspect', window.innerWidth / window.innerHeight)
 }
 
-
-
-
-/* -------------------- CODE IN PROGRESS  ------------------- */
-
-// function createStar() {
-//     var star = document.createElement('a-image')
-//     var position = setPosition()
-//     star.setAttribute('class', 'star')
-//     star.setAttribute('src', '#star-particle')
-//     star.setAttribute('transparent', 'true')
-//     star.setAttribute('position', position)
-//     star.setAttribute('height', '0.5')
-//     star.setAttribute('width', '0.5')
-//     document.getElementById('starField').appendChild(star)
-// }
-
-// export function initStarField2(num) {
-//     var starField = document.createElement('a-entity')
-//     starField.setAttribute('id', 'starField')
-//     starField.setAttribute('color', 'white')
-//     document.querySelector('a-scene').appendChild(starField)
-
-//     for (var i = 0; i < num; i++) {
-//         createStar()
-//     }
-// }
-
-// export function changeStarColor(color) {
-//     var starField = document.getElementById('starField')
-//     var changeColor = document.createElement('a-animation')
-//     changeColor.setAttribute('attribute', 'color')
-//     changeColor.setAttribute('to', color)
-//     changeColor.setAttribute('delay', 0)
-//     starField.appendChild(changeColor)
-// }
