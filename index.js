@@ -45,7 +45,7 @@ function setUpNamespace (namespace) {
     console.log(`new socket ${socket.id} connected to namespace ${nsp.name}`)
 
     // send current roster to the new client
-    Object.keys(nsp.clients().connected).forEach(id => socket.emit('roster addition', id))
+    // Object.keys(nsp.clients().connected).forEach(id => socket.emit('roster addition', id))
 
     socket.on('close me', language => {
       let deleteId = socket.id

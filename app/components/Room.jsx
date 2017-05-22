@@ -20,8 +20,8 @@ import { connect } from 'react-redux'
 import SpeechRecognition from 'react-speech-recognition'
 import PropTypes from 'prop-types'
 
+import Space from './Space.jsx'
 import Bubbles from './Bubbles.jsx'
-import Scene from './Scene.jsx'     // space scene
 import Knots from './Knots.jsx'
 import Cubes from './Cubes.jsx'
 import { openSocket, closeSocket, updateRoster
@@ -128,7 +128,7 @@ class Room extends Component {
         sceneComponent = <Knots currEmotion={currEmotion} primaryPersonality={primaryPersonality} primaryIntensity={primaryIntensity} />
         break
       case 'space':
-        sceneComponent = <Scene currEmotion={currEmotion} />
+        sceneComponent = <Space currEmotion={currEmotion} primaryPersonality={primaryPersonality} />
         break
       case 'cubes':
         sceneComponent = <Cubes roster={this.props.roster} 
