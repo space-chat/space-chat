@@ -27,4 +27,4 @@ Powered by A-Frame, WebGL, socket.io, React.js, Redux, Node.js, Express.js
 ## Future directions
 - [ ] open source release, to allow users to create and submit their own VR worlds
 - [ ] avatars to represent users, which visually respond specifically to that user's message content
-- [ ] incorporation of WebGL audio, to enable users subscribed to the same language to hear each other's voices
+- [ ] incorporation of WebRTC audio, to enable users subscribed to the same language to hear each other's voices
