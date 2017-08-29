@@ -20202,12 +20202,45 @@ var Home = function (_Component) {
             _react2.default.createElement(
               'p',
               { className: 'instructions-p' },
-              'Spacechat is a virtual reality chatroom that allows users to interpret and experience speech with multiple senses. Created by Elsa Brown, Nicole Fish, Keziyah Lewis, and Stefanie Sundby over two weeks as a senior capstone project for The Grace Hopper Program.'
+              'Spacechat is a virtual reality chatroom that allows users to interpret and experience speech with multiple senses. Created by ',
+              _react2.default.createElement(
+                'a',
+                { href: 'http://elsa-brown.com' },
+                'Elsa Brown'
+              ),
+              ', ',
+              _react2.default.createElement(
+                'a',
+                { href: 'https://github.com/thefishter' },
+                'Nicole Fish'
+              ),
+              ', ',
+              _react2.default.createElement(
+                'a',
+                { href: 'http://keziyah.com' },
+                'Keziyah Lewis'
+              ),
+              ', and ',
+              _react2.default.createElement(
+                'a',
+                { href: 'https://github.com/ssundby' },
+                'Stefanie Sundby'
+              ),
+              ' over two weeks as a senior capstone project for ',
+              _react2.default.createElement(
+                'a',
+                { href: 'https://www.gracehopper.com/' },
+                'The Grace Hopper Program.'
+              )
             ),
             _react2.default.createElement(
               'p',
               { className: 'instructions-p' },
-              'View the code on github.'
+              _react2.default.createElement(
+                'a',
+                { href: 'https://github.com/space-chat/space-chat' },
+                'View the code on github.'
+              )
             )
           )
         )

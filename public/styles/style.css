@@ -21,9 +21,14 @@ body {
   justify-content: center;
 }
 
-a, a:hover {
+a {
   color: white; 
   text-decoration: none; 
+ }
+
+ a:hover {
+  color: white;
+  text-decoration: underline;
  }
 
 h3 {
@@ -87,15 +92,11 @@ h3 {
   line-height: 2.5rem; 
 }
 
-#compatibility a {
-  color: blue; 
-}
-
 #about {
 margin-top: 6%;
 margin-left: 12%;
 margin-right: 12%;
-margin-bottom: 14%;
+margin-bottom: 15%;
 }
 
 
