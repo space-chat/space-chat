@@ -20136,7 +20136,7 @@ var Home = function (_Component) {
               _react2.default.createElement(
                 'p',
                 { className: 'instructions-p' },
-                'Enter one of four virtual words and experience an online chatroom like never before. Use Spacechat on a desktop, or a mobile device with a VR headset. '
+                'Enter one of four virtual words and experience an online chatroom like never before. Use Spacechat on a desktop or mobile device with a VR headset. '
               )
             ),
             _react2.default.createElement(
@@ -20164,7 +20164,7 @@ var Home = function (_Component) {
               _react2.default.createElement(
                 'p',
                 { className: 'instructions-p' },
-                'As you and others talk, the virtual space will respond with movement and color changes, depending on how you feel, your personality, or sentiment.'
+                'As you and others talk, the virtual space will respond with movement and color changes depending on how you feel, your personality, and the sentiment of your conversation.'
               )
             )
           ),

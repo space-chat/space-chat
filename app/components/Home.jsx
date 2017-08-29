@@ -80,7 +80,7 @@ class Home extends Component {
           <div className="row">
             <div className="col-md-4 col-xs-12">
               <h3 className="instructions-header">Experience</h3>
-              <p className="instructions-p">Enter one of four virtual words and experience an online chatroom like never before. Use Spacechat on a desktop, or a mobile device with a VR headset. </p>
+              <p className="instructions-p">Enter one of four virtual words and experience an online chatroom like never before. Use Spacechat on a desktop or mobile device with a VR headset. </p>
             </div>
 
             <div className="col-md-4 col-xs-12">
@@ -90,7 +90,7 @@ class Home extends Component {
 
             <div className="col-md-4 col-xs-12">
               <h3 className="instructions-header">Feel</h3>
-              <p className="instructions-p">As you and others talk, the virtual space will respond with movement and color changes, depending on how you feel, your personality, or sentiment.</p>
+              <p className="instructions-p">As you and others talk, the virtual space will respond with movement and color changes depending on how you feel, your personality, and the sentiment of your conversation.</p>
             </div>
 
           </div>
