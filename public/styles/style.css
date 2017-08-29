@@ -68,6 +68,7 @@ h3 {
 
 #instructions {
   height: 80vh;
+  padding-top: 4rem;
 }
 
 #instructions h3 {
@@ -88,6 +89,13 @@ h3 {
 
 #compatibility a {
   color: blue; 
+}
+
+#about {
+margin-top: 6%;
+margin-left: 12%;
+margin-right: 12%;
+margin-bottom: 14%;
 }
 
 
@@ -174,12 +182,16 @@ h3 {
   .instructions-p {
     font-size: 4.5rem;
     color: white; 
-    padding-bottom: 10rem;
+    padding-bottom: 8rem;
   }
 
   #compatibility {
     font-size: 3.8rem; 
     line-height: 5rem; 
+  }
+
+  #about {
+    padding-top: 8rem;
   }
 
 }

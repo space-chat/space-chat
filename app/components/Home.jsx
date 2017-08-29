@@ -97,14 +97,14 @@ class Home extends Component {
 
           <div id="compatibility">
             <p>
-              Before using Spacechat, please make sure you have functioning audio (input & output), and are using a WebGL and Web Speech API compatible desktop or mobile browser (such as Google Chrome). For more information about compatibility, click <a href="http://caniuse.com/#feat=webgl">here</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#Browser_compatibility">here</a>.
+              Before using Spacechat, please make sure you have functioning audio (input & output), and are using a WebGL and Web Speech API compatible<br />desktop or mobile browser (such as Google Chrome). For more information about compatibility, click <a href="http://caniuse.com/#feat=webgl">here</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#Browser_compatibility">here</a>.
             </p>
           </div>
-
-          <div className="down-chevron">
-            <span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+          <div id="about">
+            <h3 className="instructions-header">About</h3>
+            <p className="instructions-p">Spacechat is a virtual reality chatroom that allows users to interpret and experience speech with multiple senses. Created by Elsa Brown, Nicole Fish, Keziyah Lewis, and Stefanie Sundby over two weeks as a senior capstone project for The Grace Hopper Program.</p>
+            <p className="instructions-p">View the code on github.</p>
           </div>
-
         </div>
 
 

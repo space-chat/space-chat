@@ -20174,7 +20174,9 @@ var Home = function (_Component) {
             _react2.default.createElement(
               'p',
               null,
-              'Before using Spacechat, please make sure you have functioning audio (input & output), and are using a WebGL and Web Speech API compatible desktop or mobile browser (such as Google Chrome). For more information about compatibility, click ',
+              'Before using Spacechat, please make sure you have functioning audio (input & output), and are using a WebGL and Web Speech API compatible',
+              _react2.default.createElement('br', null),
+              'desktop or mobile browser (such as Google Chrome). For more information about compatibility, click ',
               _react2.default.createElement(
                 'a',
                 { href: 'http://caniuse.com/#feat=webgl' },
@@ -20191,8 +20193,22 @@ var Home = function (_Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'down-chevron' },
-            _react2.default.createElement('span', { className: 'glyphicon glyphicon-chevron-down', 'aria-hidden': 'true' })
+            { id: 'about' },
+            _react2.default.createElement(
+              'h3',
+              { className: 'instructions-header' },
+              'About'
+            ),
+            _react2.default.createElement(
+              'p',
+              { className: 'instructions-p' },
+              'Spacechat is a virtual reality chatroom that allows users to interpret and experience speech with multiple senses. Created by Elsa Brown, Nicole Fish, Keziyah Lewis, and Stefanie Sundby over two weeks as a senior capstone project for The Grace Hopper Program.'
+            ),
+            _react2.default.createElement(
+              'p',
+              { className: 'instructions-p' },
+              'View the code on github.'
+            )
           )
         )
       );
