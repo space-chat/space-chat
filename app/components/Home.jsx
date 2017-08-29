@@ -85,7 +85,7 @@ class Home extends Component {
 
             <div className="col-md-4 col-xs-12">
               <h3 className="instructions-header">Chat</h3>
-              <p className="instructions-p">Simply talk into your built-in or external microphone on your computer or mobile device. What you say, and what others say to you, will be instantly translated into one of 12 languages.</p>
+              <p className="instructions-p">Speak into your built-in or external microphone on your computer or mobile device. What you say, and what others say to you, will be instantly translated into one of 12 languages.</p>
             </div>
 
             <div className="col-md-4 col-xs-12">
@@ -97,7 +97,7 @@ class Home extends Component {
 
           <div id="compatibility">
             <p>
-              Before using Spacechat, please make sure you have functioning audio (input & output), and that you are using a WebGL and Web Speech API compatible desktop or mobile browser (such as Google Chrome). For more information about compatibility, click <a href="http://caniuse.com/#feat=webgl">here</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#Browser_compatibility">here</a>.
+              Before using Spacechat, please make sure you have functioning audio (input & output), and are using a WebGL and Web Speech API compatible desktop or mobile browser (such as Google Chrome). For more information about compatibility, click <a href="http://caniuse.com/#feat=webgl">here</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#Browser_compatibility">here</a>.
             </p>
           </div>
 

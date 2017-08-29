@@ -162,7 +162,8 @@ h3 {
 
   #instructions {
     height: 90vh;
-    width: 87vw; 
+    width: 87vw;
+    margin-top: -17rem; 
   }
 
   #instructions h3 {
@@ -173,6 +174,7 @@ h3 {
   .instructions-p {
     font-size: 4.5rem;
     color: white; 
+    padding-bottom: 10rem;
   }
 
   #compatibility {
