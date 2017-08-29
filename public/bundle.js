@@ -20239,7 +20239,7 @@ var Home = function (_Component) {
               _react2.default.createElement(
                 'a',
                 { href: 'https://github.com/space-chat/space-chat' },
-                'View the code on github.'
+                'View on GitHub.'
               )
             )
           )

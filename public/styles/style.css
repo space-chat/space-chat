@@ -15,7 +15,7 @@ body {
 /******* ABOVE THE FOLD ******/
 
 .above-fold {
-  margin-bottom: 0; 
+  margin-bottom: 0;
   height: 80vh;
   display: flex;
   flex-direction: column;
@@ -110,10 +110,18 @@ margin-bottom: 15%;
   /******* ABOVE THE FOLD ******/
   .above-fold {
     max-width: 800px;
-    margin: 80px auto;
+    /*margin: 80px auto;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -1rem;
+  /*  margin-bottom: 20px;*/
     display: flex;
     flex-direction: column;
-    height: 100vh; 
+    height: 108vh; 
+  }
+
+  a {
+    text-decoration: underline;
   }
 
   h3 {
@@ -157,6 +165,11 @@ margin-bottom: 15%;
     width: 745px;
   }
 
+  .space-btn a {
+    text-decoration: none;
+    font-size: 3.5rem;
+  }
+
   .glyphicon .glyphicon-chevron-down {
     text-align: center; 
     font-size: 8rem; 
@@ -166,7 +179,7 @@ margin-bottom: 15%;
   .down-chevron {
     margin: 0 auto; 
     width: 100px; 
-    font-size: 12rem; 
+    font-size: 8rem; 
     margin-top: 6rem; 
     display: flex;
     justify-content: center;
@@ -177,7 +190,8 @@ margin-bottom: 15%;
   #instructions {
     height: 90vh;
     width: 87vw;
-    margin-top: -17rem; 
+    margin-top: -17rem;
+    margin-bottom: 20rem; 
   }
 
   #instructions h3 {
