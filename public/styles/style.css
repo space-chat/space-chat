@@ -3,6 +3,7 @@
 /***ALL SCREENS ***/
 body {
   margin: 0px auto;
+  font-family: 'Play', sans-serif;
 }
 
 #app, #sceneComponent {
@@ -14,24 +15,30 @@ body {
 /******* ABOVE THE FOLD ******/
 
 .above-fold {
-  margin-bottom: 0; 
+  margin-bottom: 0;
   height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-a, a:hover {
+a {
   color: white; 
   text-decoration: none; 
  }
 
+ a:hover {
+  color: #49fb35;
+  text-decoration: none;
+ }
+
 h3 {
-  text-align: center
+  font-family: 'Play', sans-serif;
+  text-align: center;
 }
 
 .glyphicon .glyphicon-chevron-down {
-  color: white; 
+  color: white;
 }
 
 .enter-space {
@@ -53,13 +60,16 @@ h3 {
 
 .space-btn > button.btn.btn-default {
   width: 131px;
+  background-color: black;
+  border-radius: 10px;
+  font-size: 24px;
 }
 
 .down-chevron {
   margin: 0 auto; 
   width: 100px; 
-  font-size: 4rem; 
-  margin-top: 3rem; 
+  font-size: 2rem; 
+  margin-top: 2rem; 
   display: flex;
   justify-content: center;
 }
@@ -68,6 +78,7 @@ h3 {
 
 #instructions {
   height: 80vh;
+  padding-top: 4rem;
 }
 
 #instructions h3 {
@@ -86,8 +97,11 @@ h3 {
   line-height: 2.5rem; 
 }
 
-#compatibility a {
-  color: blue; 
+#about {
+margin-top: 6%;
+margin-left: 12%;
+margin-right: 12%;
+margin-bottom: 15%;
 }
 
 
@@ -96,10 +110,18 @@ h3 {
   /******* ABOVE THE FOLD ******/
   .above-fold {
     max-width: 800px;
-    margin: 80px auto;
+    /*margin: 80px auto;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -1rem;
+  /*  margin-bottom: 20px;*/
     display: flex;
     flex-direction: column;
-    height: 100vh; 
+    height: 108vh; 
+  }
+
+  a {
+    text-decoration: underline;
   }
 
   h3 {
@@ -143,6 +165,11 @@ h3 {
     width: 745px;
   }
 
+  .space-btn a {
+    text-decoration: none;
+    font-size: 3.5rem;
+  }
+
   .glyphicon .glyphicon-chevron-down {
     text-align: center; 
     font-size: 8rem; 
@@ -152,7 +179,7 @@ h3 {
   .down-chevron {
     margin: 0 auto; 
     width: 100px; 
-    font-size: 12rem; 
+    font-size: 8rem; 
     margin-top: 6rem; 
     display: flex;
     justify-content: center;
@@ -162,7 +189,9 @@ h3 {
 
   #instructions {
     height: 90vh;
-    width: 87vw; 
+    width: 87vw;
+    margin-top: -17rem;
+    margin-bottom: 20rem; 
   }
 
   #instructions h3 {
@@ -173,11 +202,16 @@ h3 {
   .instructions-p {
     font-size: 4.5rem;
     color: white; 
+    padding-bottom: 8rem;
   }
 
   #compatibility {
     font-size: 3.8rem; 
     line-height: 5rem; 
+  }
+
+  #about {
+    padding-top: 8rem;
   }
 
 }
@@ -216,7 +250,4 @@ h3 {
     margin: 1em;
     width: 315px;
   } 
-
-  /******* INSTRUCTIONS ******/
-
 }

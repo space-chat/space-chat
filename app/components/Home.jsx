@@ -80,31 +80,31 @@ class Home extends Component {
           <div className="row">
             <div className="col-md-4 col-xs-12">
               <h3 className="instructions-header">Experience</h3>
-              <p className="instructions-p">Enter one of four virtual words and experience an online chatroom like never before. Use Spacechat on a desktop, or a mobile device with a VR headset. </p>
+              <p className="instructions-p">Enter one of four virtual words and experience an online chatroom like never before. Use Spacechat on a desktop or mobile device with a VR headset. </p>
             </div>
 
             <div className="col-md-4 col-xs-12">
               <h3 className="instructions-header">Chat</h3>
-              <p className="instructions-p">Simply talk into your built-in or external microphone on your computer or mobile device. What you say, and what others say to you, will be instantly translated into one of 12 languages.</p>
+              <p className="instructions-p">Speak into your built-in or external microphone on your computer or mobile device. What you say, and what others say to you, will be instantly translated into one of 12 languages.</p>
             </div>
 
             <div className="col-md-4 col-xs-12">
               <h3 className="instructions-header">Feel</h3>
-              <p className="instructions-p">As you and others talk, the virtual space will respond with movement and color changes, depending on how you feel, your personality, or sentiment.</p>
+              <p className="instructions-p">As you and others talk, the virtual space will respond with movement and color changes depending on how you feel, your personality, and the sentiment of your conversation.</p>
             </div>
 
           </div>
 
           <div id="compatibility">
             <p>
-              Before using Spacechat, please make sure you have functioning audio (input & output), and that you are using a WebGL and Web Speech API compatible desktop or mobile browser (such as Google Chrome). For more information about compatibility, click <a href="http://caniuse.com/#feat=webgl">here</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#Browser_compatibility">here</a>.
+              Before using Spacechat, please make sure you have functioning audio (input & output), and are using a WebGL and Web Speech API compatible<br />desktop or mobile browser (such as Google Chrome). For more information about compatibility, click <a href="http://caniuse.com/#feat=webgl">here</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#Browser_compatibility">here</a>.
             </p>
           </div>
-
-          <div className="down-chevron">
-            <span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+          <div id="about">
+            <h3 className="instructions-header">About</h3>
+            <p className="instructions-p">Spacechat is a virtual reality chatroom that allows users to interpret and experience speech with multiple senses. Created by <a href="http://elsa-brown.com">Elsa Brown</a>, <a href="https://github.com/thefishter">Nicole Fish</a>, <a href="http://keziyah.com">Keziyah Lewis</a>, and <a href="https://github.com/ssundby">Stefanie Sundby</a> over two weeks as a senior capstone project for <a href="https://www.gracehopper.com/">The Grace Hopper Program.</a></p>
+            <p className="instructions-p"><a href="https://github.com/space-chat/space-chat">View on GitHub.</a></p>
           </div>
-
         </div>
 
 
