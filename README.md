@@ -5,7 +5,6 @@ What if you could experience a conversation beyond words?_
 
 Spacechat is a virtual reality chatroom that allows users to interpret and experience speech with multiple senses. Users enter a mesmerizing digital world where they can speak with others in twelve languages using automatic realtime translation, and watch the emotional content of their conversation rendered dazzlingly in virtual reality. 
 
-http://spacechat.tech  
 Created by @elsa-brown, @thefishter, @keziyah, and @ssundby  
 Powered by A-Frame, WebGL, socket.io, React.js, Redux, Node.js, Express.js  
 
