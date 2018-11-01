@@ -1,12 +1,12 @@
-# SPACECHAT
+# SPACECHATTTTTT
 
-_What if you could magically understand anyone in the world?  
+_What if you could magically understand anyone in the world?
 What if you could experience a conversation beyond words?_
 
-Spacechat is a virtual reality chatroom that allows users to interpret and experience speech with multiple senses. Users enter a mesmerizing digital world where they can speak with others in twelve languages using automatic realtime translation, and watch the emotional content of their conversation rendered dazzlingly in virtual reality. 
+Spacechat is a virtual reality chatroom that allows users to interpret and experience speech with multiple senses. Users enter a mesmerizing digital world where they can speak with others in twelve languages using automatic realtime translation, and watch the emotional content of their conversation rendered dazzlingly in virtual reality.
 
-Created by @elsa-brown, @thefishter, @keziyah, and @ssundby  
-Powered by A-Frame, WebGL, socket.io, React.js, Redux, Node.js, Express.js  
+Created by @elsa-brown, @thefishter, @keziyah, and @ssundby
+Powered by A-Frame, WebGL, socket.io, React.js, Redux, Node.js, Express.js
 
 
 ## An immersive multi-sensory communication experience
