@@ -1,4 +1,4 @@
-# SPACECHATTTTTT
+# SPACECHAT
 
 _What if you could magically understand anyone in the world?
 What if you could experience a conversation beyond words?_
